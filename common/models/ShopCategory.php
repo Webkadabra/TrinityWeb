@@ -33,14 +33,14 @@ use Yii;
  *
  * @property ShopItems[] $shopItems
  */
-class ShopCategory extends \yii\db\ActiveRecord
+class ShopCategory extends \kartik\tree\models\Tree
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'web_shop_category';
+        return '{{%shop_category}}';
     }
 
     /**

@@ -21,7 +21,7 @@ class ShopPackageItems extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'web_shop_package_items';
+        return '{{%shop_package_items}}';
     }
 
     /**

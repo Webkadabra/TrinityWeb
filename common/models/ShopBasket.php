@@ -21,7 +21,7 @@ class ShopBasket extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'web_shop_basket';
+        return '{{%shop_basket}}';
     }
 
     /**

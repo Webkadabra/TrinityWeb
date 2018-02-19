@@ -29,7 +29,7 @@ class ShopItems extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'web_shop_items';
+        return '{{%shop_items}}';
     }
 
     /**
