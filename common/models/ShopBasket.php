@@ -24,6 +24,12 @@ class ShopBasket extends \yii\db\ActiveRecord
         return '{{%shop_basket}}';
     }
 
+    public function __construct($config = array()) {
+        parent::__construct($config);
+        $this->user_id = Yii::$app->user->getId();
+        $this->count = 1;
+    }
+    
     /**
      * @inheritdoc
      */
@@ -56,4 +62,19 @@ class ShopBasket extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ShopItems::className(), ['id' => 'item_id']);
     }
+    
+    public function search($params) {
+        $query = ShopBasket::find()->where(['user_id' => Yii::$app->user->getId()])->with(['shopItem']);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+            'sort'=> [
+                'defaultOrder' => ['id' => SORT_DESC]
+            ]
+        ]);
+        return $dataProvider;
+    }
+    
 }
