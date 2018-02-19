@@ -52,7 +52,7 @@ class ShopBasket extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItem()
+    public function getRelationItem()
     {
         return $this->hasOne(ShopItems::className(), ['id' => 'item_id']);
     }

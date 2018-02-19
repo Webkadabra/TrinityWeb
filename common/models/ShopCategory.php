@@ -91,7 +91,7 @@ class ShopCategory extends \kartik\tree\models\Tree
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopItems()
+    public function getRelationShopItems()
     {
         return $this->hasMany(ShopItems::className(), ['category_id' => 'id']);
     }

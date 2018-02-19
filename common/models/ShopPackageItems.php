@@ -51,7 +51,7 @@ class ShopPackageItems extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopItem()
+    public function getRelationShopItem()
     {
         return $this->hasOne(ShopItems::className(), ['id' => 'shop_item_id']);
     }
@@ -59,7 +59,7 @@ class ShopPackageItems extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopParentItem()
+    public function getRelationShopParentItem()
     {
         return $this->hasOne(ShopItems::className(), ['id' => 'shop_parent_item_id']);
     }

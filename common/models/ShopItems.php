@@ -68,7 +68,7 @@ class ShopItems extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopBaskets()
+    public function getRelationShopBaskets()
     {
         return $this->hasMany(ShopBasket::className(), ['item_id' => 'id']);
     }
@@ -76,7 +76,7 @@ class ShopItems extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
+    public function getRelationCategory()
     {
         return $this->hasOne(ShopCategory::className(), ['id' => 'category_id']);
     }
@@ -84,7 +84,7 @@ class ShopItems extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopPackageItems()
+    public function getRelationGetPackagesItem()
     {
         return $this->hasMany(ShopPackageItems::className(), ['shop_item_id' => 'id']);
     }
@@ -92,7 +92,7 @@ class ShopItems extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopPackageItems0()
+    public function getRelationParentPackageItem()
     {
         return $this->hasMany(ShopPackageItems::className(), ['shop_parent_item_id' => 'id']);
     }
