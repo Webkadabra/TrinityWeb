@@ -33,7 +33,8 @@ use common\modules\forum\models\db\IconsActiveRecord;
     <div id="icon_input_string" style="<?=($model->icon_type == IconsActiveRecord::TYPE_IMAGE ? 'display:none;': '')?>">
         <pre>
     https://fontawesome.com/icons
-    https://getbootstrap.com/docs/3.3/components/#glyphicons</pre>
+    https://getbootstrap.com/docs/3.3/components/#glyphicons
+    need input -> class like "fas fa-pen"</pre>
         <?= $form->field($model, 'icon_string')->textInput(['maxlength' => true, 'id' => 'icon_string']) ?>
     </div>
     <div id="picture_input" style="<?=($model->icon_type == IconsActiveRecord::TYPE_FONT ? 'display:none;': '')?>">
