@@ -509,7 +509,7 @@ class AppHelper extends \yii\base\Component
             if($var[$attribute]) {
                 return Yii::t('common',$var[$attribute]);
             } else {
-                throw new \Exception(Yii::t('common','Строка для перевода пуста'));
+                return 'null';
             }
         } elseif(is_object($var)) {
             if(isset($var->{$attribute}) && $var->{$attribute}) {
