@@ -31,13 +31,6 @@ git clone https://github.com/Qblolz/TrinityWeb.git
 composer install
 ```
 
-### Get source code via Composer
-You can install this application template with `composer` using the following command:
-
-```
-composer create-project --prefer-dist --stability=dev Qblolz/TrinityWeb
-```
-
 ## Manual installation
 
 ### REQUIREMENTS
