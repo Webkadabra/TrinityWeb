@@ -54,14 +54,18 @@ use yii\helpers\Html;
                 </div>
                 <div class="col-xs-3 hidden-xs col-sm-2 col-md-1 text-center-xs">
                     <?php
-                    $mmr = 1500;
                     if($item['relationCharacter']) {
                         $character = $item['relationCharacter'];
                         if($character['relationArenaStats']) {
                             foreach($character['relationArenaStats'] as $mmr_info) {
-                                if($data['type'] == $mmr_info['slot']) {
+                                if($data['type'] === 2 && $mmr_info['slot'] === 0) {
                                     $mmr = $mmr_info['matchMakerRating'];
-                                    break;
+                                } elseif($data['type'] === 3 && $mmr_info['slot'] === 1) {
+                                    $mmr = $mmr_info['matchMakerRating'];
+                                } elseif($data['type'] === 5 && $mmr_info['slot'] === 3) {
+                                    $mmr = $mmr_info['matchMakerRating'];
+                                } else {
+                                    $mmr = 1500;
                                 }
                             }
                         }

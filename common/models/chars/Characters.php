@@ -222,7 +222,7 @@ class Characters extends CoreModel
     * @return \yii\db\ActiveQuery
     */
     public function getRelationArenaStats() {
-        return $this->hasOne(CharacterArenaStats::className(),['guid' => 'guid']);
+        return $this->hasMany(CharacterArenaStats::className(),['guid' => 'guid']);
     }
     /**
     * Связь для получения объекта содержащего данные о характеристиках персонажа
