@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "web_shop_pack_items".
  *
  * @property integer $id
- * @property integer $external_id
- * @property integer $shop_element_id
+ * @property integer $shop_parent_item_id
+ * @property integer $shop_item_id
  *
  * @property ShopItems $shopElement
  */
@@ -20,7 +20,7 @@ class ShopPackItems extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%shop_pack_items}}';
+        return '{{%shop_package_items}}';
     }
 
     /**
@@ -29,8 +29,8 @@ class ShopPackItems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shop_element_id', 'external_id'], 'integer'],
-            [['shop_element_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopItems::className(), 'targetAttribute' => ['shop_element_id' => 'id']],
+            [['shop_item_id', 'shop_parent_item_id'], 'integer'],
+            [['shop_item_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopItems::className(), 'targetAttribute' => ['shop_item_id' => 'id']],
         ];
     }
 
@@ -40,9 +40,9 @@ class ShopPackItems extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('shop', 'ID'),
-            'external_id' => Yii::t('shop', 'Внешний ключ'),
-            'shop_element_id' => Yii::t('shop', 'Товар/услуга'),
+            'id' => Yii::t('common', 'ID'),
+            'shop_parent_item_id' => Yii::t('common', 'Внешний ключ'),
+            'shop_item_id' => Yii::t('common', 'Товар/услуга'),
         ];
     }
 
@@ -51,13 +51,13 @@ class ShopPackItems extends \yii\db\ActiveRecord
      */
     public function getRelationShopElement()
     {
-        return $this->hasOne(ShopItems::className(), ['id' => 'shop_element_id']);
+        return $this->hasOne(ShopItems::className(), ['id' => 'shop_item_id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getRelationShopPack() {
-        return $this->hasOne(Shopitems::className(),['id' => 'external_id']);
+        return $this->hasOne(Shopitems::className(),['id' => 'shop_parent_item_id']);
     }
     
 }

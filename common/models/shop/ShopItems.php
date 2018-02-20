@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace common\models\shop;
 
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -17,7 +17,7 @@ use common\models\armory\ArmoryItemTemplate;
  * @property string $name
  * @property integer $item_id
  * @property integer $cost
- * @property integer $server_id
+ * @property integer $realm_id
  * @property string $discount_end
  *
  * @property relationShopCategory $category
@@ -50,11 +50,11 @@ class ShopItems extends \yii\db\ActiveRecord
     {
         return [
             [['category_id'], 'required'],
-            [['category_id', 'type', 'item_id', 'cost','server_id'], 'integer'],
+            [['category_id', 'type', 'item_id', 'cost','realm_id'], 'integer'],
             [['discount'], 'number'],
             [['name'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['discount_end','package'],'safe']
+            [['package','discount_end'],'safe']
         ];
     }
 
@@ -64,16 +64,16 @@ class ShopItems extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('shop', 'ID'),
-            'category_id' => Yii::t('shop', 'ID категории'),
-            'type' => Yii::t('shop', 'Тип'),
-            'discount' => Yii::t('shop', '% скидки'),
-            'name' => Yii::t('shop', 'Наименование'),
-            'item_id' => Yii::t('shop', 'ID вещи'),
-            'cost' => Yii::t('shop', 'Цена'),
-            'server_id' => Yii::t('shop', 'Сервер'),
-            'discount_end' => Yii::t('shop', 'Дата окончания скидки'),
-            'package' => Yii::t('shop', 'Что входит в набор'),
+            'id' => Yii::t('common', 'ID'),
+            'category_id' => Yii::t('common', 'ID категории'),
+            'type' => Yii::t('common', 'Тип'),
+            'discount' => Yii::t('common', '% скидки'),
+            'name' => Yii::t('common', 'Наименование'),
+            'item_id' => Yii::t('common', 'ID вещи'),
+            'cost' => Yii::t('common', 'Цена'),
+            'realm_id' => Yii::t('common', 'Сервер'),
+            'discount_end' => Yii::t('common', 'Дата окончания скидки'),
+            'package' => Yii::t('common', 'Что входит в набор'),
         ];
     }
 
@@ -90,11 +90,11 @@ class ShopItems extends \yii\db\ActiveRecord
      */
     public function getRelationShopPackItems()
     {
-        return $this->hasMany(ShopPackItems::className(), ['external_id' => 'id']);
+        return $this->hasMany(ShopPackItems::className(), ['shop_parent_item_id' => 'id']);
     }
     
     public function getRelationIssetPacks() {
-        return $this->hasMany(ShopPackItems::className(),['shop_element_id' => 'id']);
+        return $this->hasMany(ShopPackItems::className(),['shop_item_id' => 'id']);
     }
     
     public function getType() {
@@ -105,12 +105,12 @@ class ShopItems extends \yii\db\ActiveRecord
     
     public function getTypes() {
         return [
-            Yii::t('shop','Другое'),
-            Yii::t('shop','Игровая вещь'),
-            Yii::t('shop','Игровая валюта'),
-            Yii::t('shop','Звание в игре'),
-            Yii::t('shop','Набор товаров/услуг'),
-            Yii::t('shop','Для учётной записи'),
+            Yii::t('common','Другое'),
+            Yii::t('common','Игровая вещь'),
+            Yii::t('common','Игровая валюта'),
+            Yii::t('common','Звание в игре'),
+            Yii::t('common','Набор товаров/услуг'),
+            Yii::t('common','Для учётной записи'),
         ];
     }
     
@@ -118,7 +118,7 @@ class ShopItems extends \yii\db\ActiveRecord
         $query = ShopItems::find();
         $this->load($params);
         
-        $query->andWhere(['server_id' => ['',Yii::$app->user->identity->realm_id]]);
+        $query->andWhere(['realm_id' => ['',Yii::$app->user->identity->realm_id]]);
         
         if($this->type) {
             $query->andWhere(['type' => $this->type]);
@@ -157,14 +157,12 @@ class ShopItems extends \yii\db\ActiveRecord
         if (!$this->validate()) {
             return $dataProvider;
         }
-        if($this->discount_end === '') $this->discount_end = null;
         $query->andFilterWhere([
             'type' => $this->type,
             'discount' => $this->discount,
-            'discount_end' => $this->discount_end,
             'item_id' => $this->item_id,
             'cost' => $this->cost,
-            'server_id' => $this->server_id,
+            'realm_id' => $this->realm_id,
             'category_id' => $this->category_id,
         ]);
         $query->andFilterWhere(['like', 'name', $this->name]);
@@ -184,7 +182,7 @@ class ShopItems extends \yii\db\ActiveRecord
                 if($exist) {
                     foreach($exist as $key => $pack_item) {
                         if($item['id'] == $pack_item->id) {
-                            $pack_item->shop_element_id = $item['shop_element_id'];
+                            $pack_item->shop_item_id = $item['shop_item_id'];
                             $pack_item->save();
                             $find = true;
                             unset($exist[$key]);
@@ -195,8 +193,8 @@ class ShopItems extends \yii\db\ActiveRecord
                 }
                 if($find === false) {
                     $pack_item = new ShopPackItems();
-                    $pack_item->external_id = $this->id;
-                    $pack_item->shop_element_id = $item['shop_element_id'];
+                    $pack_item->shop_parent_item_id = $this->id;
+                    $pack_item->shop_item_id = $item['shop_item_id'];
                     $pack_item->save();
                 }
             }
@@ -211,7 +209,7 @@ class ShopItems extends \yii\db\ActiveRecord
     
     public function getDiscountInfo() {
         if(strtotime($this->discount_end) > time()) {
-            return Yii::t('shop',", Скидка ({discount}%) истечёт через - {time_to_end}", [
+            return Yii::t('common',", Скидка ({discount}%) истечёт через - {time_to_end}", [
                 'discount' => $this->discount,
                 'time_to_end' => date('d:H:i:s',strtotime($this->discount_end) - time()),
             ]);

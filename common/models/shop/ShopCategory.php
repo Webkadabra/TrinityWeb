@@ -79,30 +79,30 @@ class ShopCategory extends \kartik\tree\models\Tree
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('shop', 'ID'),
-            'root' => Yii::t('shop', 'Root'),
-            'lvl' => Yii::t('shop', 'Lvl'),
-            'icon' => Yii::t('shop', 'Icon'),
-            'icon_type' => Yii::t('shop', 'Icon Type'),
-            'active' => Yii::t('shop', 'Active'),
-            'visible' => Yii::t('shop', 'Visible'),
-            'disabled' => Yii::t('shop', 'Disabled'),
-            'selected' => Yii::t('shop', 'Selected'),
-            'readonly' => Yii::t('shop', 'Readonly'),
-            'collapsed' => Yii::t('shop', 'Collapsed'),
-            'movable_d' => Yii::t('shop', 'Movable D'),
-            'movable_u' => Yii::t('shop', 'Movable U'),
-            'movable_l' => Yii::t('shop', 'Movable L'),
-            'movable_r' => Yii::t('shop', 'Movable R'),
-            'removable' => Yii::t('shop', 'Removable'),
-            'removable_all' => Yii::t('shop', 'Removable All'),
-            'name' => Yii::t('shop', 'Наименование категории'),
-            'discount' => Yii::t('shop', '% скидки'),
-            'discount_end' => Yii::t('shop', 'Окончание скидки'),
-            'lft' => Yii::t('shop', 'Lft'),
-            'rgt' => Yii::t('shop', 'Rgt'),
-            'created_at' => Yii::t('shop', 'Создан'),
-            'updated_at' => Yii::t('shop', 'Изменён'),
+            'id' => Yii::t('common', 'ID'),
+            'root' => Yii::t('common', 'Root'),
+            'lvl' => Yii::t('common', 'Lvl'),
+            'icon' => Yii::t('common', 'Icon'),
+            'icon_type' => Yii::t('common', 'Icon Type'),
+            'active' => Yii::t('common', 'Active'),
+            'visible' => Yii::t('common', 'Visible'),
+            'disabled' => Yii::t('common', 'Disabled'),
+            'selected' => Yii::t('common', 'Selected'),
+            'readonly' => Yii::t('common', 'Readonly'),
+            'collapsed' => Yii::t('common', 'Collapsed'),
+            'movable_d' => Yii::t('common', 'Movable D'),
+            'movable_u' => Yii::t('common', 'Movable U'),
+            'movable_l' => Yii::t('common', 'Movable L'),
+            'movable_r' => Yii::t('common', 'Movable R'),
+            'removable' => Yii::t('common', 'Removable'),
+            'removable_all' => Yii::t('common', 'Removable All'),
+            'name' => Yii::t('common', 'Наименование категории'),
+            'discount' => Yii::t('common', '% скидки'),
+            'discount_end' => Yii::t('common', 'Окончание скидки'),
+            'lft' => Yii::t('common', 'Lft'),
+            'rgt' => Yii::t('common', 'Rgt'),
+            'created_at' => Yii::t('common', 'Создан'),
+            'updated_at' => Yii::t('common', 'Изменён'),
         ];
     }
 
@@ -135,7 +135,7 @@ class ShopCategory extends \kartik\tree\models\Tree
             $childs_array = self::generateShopMenu($_model);
             
             $items[$_model->id] = [
-                'label' => Yii::t('shop', $_model->name),
+                'label' => Yii::t('common', $_model->name),
                 'url' => ['index','ShopItems[category_id]' => $_model->id],
                 'items' => $childs_array ? $childs_array : [],
             ];
