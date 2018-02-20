@@ -59,12 +59,12 @@ JS;
     <div class="row">
         <div class="col-md-4">
             <?php echo $form->field($model, 'name')->textInput([
-                'placeholder' => Yii::t('app','Оставить пустым если заполнено поле "Вещь"'),
+                'placeholder' => Yii::t('backend','Оставить пустым если заполнено поле "Вещь"'),
             ]) ?>
         </div>
         <div class="col-md-4">
             <?php echo $form->field($model, 'item_id')->textInput([
-                'placeholder' => Yii::t('app','Оставить пустым если заполнено поле "Наименование"'),
+                'placeholder' => Yii::t('backend','Оставить пустым если заполнено поле "Наименование"'),
             ]) ?>
         </div>
     </div>
@@ -107,14 +107,14 @@ JS;
                     ],
                     [
                         'name'  => 'shop_item_id',
-                        'title' => Yii::t('app','Элемент магазина'),
+                        'title' => Yii::t('backend','Элемент магазина'),
                         'type'  => \kartik\select2\Select2::className(),
                         'enableError' => true,
                         'options' => function($model) use($callBack) {
                             return [
                                 'initValueText'=> $callBack['model']->getShopItemNameById($model['shop_item_id']),
                                 "class" =>  'form-control',
-                                'options' => ['placeholder' => Yii::t('app','Начните вводить для поиска...')],
+                                'options' => ['placeholder' => Yii::t('backend','Начните вводить для поиска...')],
                                 'pluginOptions' => [
                                     'allowClear' => true,
                                     'minimumInputLength' => 2,

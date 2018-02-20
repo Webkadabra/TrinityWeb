@@ -244,6 +244,13 @@ $bundle = BackendAsset::register($this);
                         'options' => ['class' => 'header']
                     ],
                     [
+                        'label' => Yii::t('backend', 'Магазин'),
+                        'icon' => '<i class="fa fa-shopping-cart"></i>',
+                        'url' => ['/shop/index'],
+                        'active' => (\Yii::$app->controller->id == 'shop'),
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    [
                         'label' => Yii::t('backend', 'Users'),
                         'icon' => '<i class="fa fa-users"></i>',
                         'url' => ['/user/index'],

@@ -43,6 +43,13 @@ class ShopItems extends \yii\db\ActiveRecord
         return '{{%shop_items}}';
     }
     
+    public function beforeSave($insert) {
+        if($this->discount_end == '') {
+            $this->discount_end = null;
+        }
+        return parent::beforeSave($insert);
+    }
+    
     /**
      * @inheritdoc
      */
@@ -65,11 +72,11 @@ class ShopItems extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('common', 'ID'),
-            'category_id' => Yii::t('common', 'ID категории'),
+            'category_id' => Yii::t('common', 'Категория'),
             'type' => Yii::t('common', 'Тип'),
             'discount' => Yii::t('common', '% скидки'),
             'name' => Yii::t('common', 'Наименование'),
-            'item_id' => Yii::t('common', 'ID вещи'),
+            'item_id' => Yii::t('common', 'Вещь'),
             'cost' => Yii::t('common', 'Цена'),
             'realm_id' => Yii::t('common', 'Сервер'),
             'discount_end' => Yii::t('common', 'Дата окончания скидки'),

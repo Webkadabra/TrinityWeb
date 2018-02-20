@@ -19,4 +19,15 @@
 return [
     'Права доступа' => 'RBAC',
     'Модули' => 'Modules',
+    'Магазин' => 'Store',
+    'Упарвление категорией' => 'Manage category',
+    'Добавить элемент' => 'Add element',
+    'Просмотреть категорию' => 'View category',
+    'Список категорий' => 'List of categories',
+    '% скидки' => 'percent discount',
+    'Дата окончания' => 'date end of discount',
+    'Элемент магазина' => 'Item in store',
+    'Начните вводить для поиска...' => 'Start typing for search...',
+    'Оставить пустым если заполнено поле "Вещь"' => 'Leave blank if the "Item" field is filled',
+    'Оставить пустым если заполнено поле "Наименование"' => 'Leave blank if the "Name" field is filled',
 ];

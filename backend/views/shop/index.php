@@ -4,7 +4,7 @@ use kartik\tree\TreeView;
 
 echo TreeView::widget([
     'query' => $query->addOrderBy('root, lft'), 
-    'headingOptions' => ['label' => Yii::t('app','Список категорий')],
+    'headingOptions' => ['label' => Yii::t('backend','Список категорий')],
     'mainTemplate' => '<div>{wrapper}</div><div>{detail}</div>',
     'treeOptions' => [
         'style' => 'height: 200px;',

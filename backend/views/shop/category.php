@@ -11,7 +11,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
 
 <p>
     <?= Html::a(
-        Yii::t('backend', 'Добавить {modelClass}', ['modelClass' => 'элемент']),
+        Yii::t('backend', 'Добавить элемент'),
         ['create', 'category' => $searchModel->category_id],
         ['class' => 'btn btn-success']) ?>
 </p>
