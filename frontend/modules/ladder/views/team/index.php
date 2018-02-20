@@ -58,11 +58,14 @@ use yii\helpers\Html;
                         $character = $item['relationCharacter'];
                         if($character['relationArenaStats']) {
                             foreach($character['relationArenaStats'] as $mmr_info) {
+                                //type 2v2 to slot = 0 for 2v2
                                 if($data['type'] === 2 && $mmr_info['slot'] === 0) {
                                     $mmr = $mmr_info['matchMakerRating'];
+                                //type 3v3 to slot = 1 for 3v3
                                 } elseif($data['type'] === 3 && $mmr_info['slot'] === 1) {
                                     $mmr = $mmr_info['matchMakerRating'];
-                                } elseif($data['type'] === 5 && $mmr_info['slot'] === 3) {
+                                //type 5v5 to slot = 2 for 5v5
+                                } elseif($data['type'] === 5 && $mmr_info['slot'] === 2) {
                                     $mmr = $mmr_info['matchMakerRating'];
                                 } else {
                                     $mmr = 1500;
