@@ -8,7 +8,7 @@ use trntv\yii\datetime\DateTimeWidget;
         if(!$node->isNewRecord) {
             echo Html::a(Yii::t('backend','Просмотреть категорию'), [
                 '/shop/category','id' => $node->id,
-            ]);
+            ], ['class' => 'btn btn-default']);
         }
         ?>
     </div>
