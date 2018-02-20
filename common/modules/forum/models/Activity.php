@@ -200,7 +200,7 @@ class Activity extends ActivityActiveRecord
         $members = Podium::getInstance()->podiumCache->get('forum.memberscount');
         if ($members === false) {
             $members = User::find()->where(['!=', 'status', User::STATUS_REGISTERED])->count();
-            Podium::getInstance()->podiumCache->set('forum.memberscount', $members);
+            Podium::getInstance()->podiumCache->set('forum.memberscount', $members, 120);
         }
         return $members;
     }
