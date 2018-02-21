@@ -7,11 +7,11 @@ return [
         'podium' => 'common\modules\forum\Podium',
     ],
     'controllerMap' => [
+        'translate' => [
+            'class' => common\modules\i18n\commands\TranslatemanagerController::className(),
+        ],
         'command-bus' => [
             'class' => trntv\bus\console\BackgroundBusController::class,
-        ],
-        'message' => [
-            'class' => console\controllers\ExtendedMessageController::class
         ],
         'migrate' => [
             'class' => yii\console\controllers\MigrateController::class,
