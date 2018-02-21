@@ -35,7 +35,7 @@ class Modal extends YiiModal
     {
         $this->header = Html::tag('h4', $this->header, ['class' => 'modal-title', 'id' => $this->id . 'Label']);
         $this->options['aria-labelledby'] = $this->id . 'Label';
-        $this->footer = Html::button(Yii::t('podium/view', 'Cancel'), ['class' => 'btn btn-default', 'data-dismiss' => 'modal'])
+        $this->footer = Html::button(Yii::t('view', 'Cancel'), ['class' => 'btn btn-default', 'data-dismiss' => 'modal'])
                 . "\n" . Html::a($this->footer, $this->footerConfirmUrl, $this->footerConfirmOptions);
 
         parent::init();

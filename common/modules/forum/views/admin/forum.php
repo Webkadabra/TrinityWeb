@@ -16,9 +16,9 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('podium/view', 'List Forums');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Administration Dashboard'), 'url' => ['admin/index']];
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Categories List'), 'url' => ['admin/categories']];
+$this->title = Yii::t('view', 'List Forums');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Administration Dashboard'), 'url' => ['admin/index']];
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Categories List'), 'url' => ['admin/categories']];
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
@@ -29,11 +29,11 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
 <div class="row">
     <div class="col-md-3 col-sm-4">
         <ul class="nav nav-pills nav-stacked">
-            <li role="presentation"><a href="<?= Url::to(['admin/categories']) ?>"><span class="glyphicon glyphicon-list"></span> <?= Yii::t('podium/view', 'Categories List') ?></a></li>
+            <li role="presentation"><a href="<?= Url::to(['admin/categories']) ?>"><span class="glyphicon glyphicon-list"></span> <?= Yii::t('view', 'Categories List') ?></a></li>
 <?php foreach ($categories as $category): ?>
             <li role="presentation"><a href="<?= Url::to(['admin/new-forum', 'cid' => $category->id]) ?>"><span class="glyphicon glyphicon-chevron-right"></span> <?= Html::encode($category->name) ?></a></li>
 <?php endforeach; ?>
-            <li role="presentation"><a href="<?= Url::to(['admin/new-category']) ?>"><span class="glyphicon glyphicon-plus"></span> <?= Yii::t('podium/view', 'Create new category') ?></a></li>
+            <li role="presentation"><a href="<?= Url::to(['admin/new-category']) ?>"><span class="glyphicon glyphicon-plus"></span> <?= Yii::t('view', 'Create new category') ?></a></li>
         </ul>
     </div>
     <div class="col-md-6 col-sm-8">

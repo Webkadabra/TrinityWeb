@@ -15,7 +15,7 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
 ?>
 <div class="row podium-post" id="post<?= $model->id ?>">
     <div class="col-sm-2" id="postAvatar<?= $model->id ?>">
-        <?= Html::checkbox('post[]', false, ['value' => $model->id, 'label' => Yii::t('podium/view', 'Select this post')]) ?>
+        <?= Html::checkbox('post[]', false, ['value' => $model->id, 'label' => Yii::t('view', 'Select this post')]) ?>
     </div>
     <div class="col-sm-10" id="postContent<?= $model->id ?>">
         <div class="popover podium">
@@ -24,12 +24,12 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
                 <small class="pull-right">
                     <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->created_at, 'long') ?>"><?= Podium::getInstance()->formatter->asRelativeTime($model->created_at) ?></span>
 <?php if ($model->edited && $model->edited_at): ?>
-                    <em>(<?= Yii::t('podium/view', 'Edited') ?> <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->edited_at, 'long') ?>"><?= Podium::getInstance()->formatter->asRelativeTime($model->edited_at) ?>)</span></em>
+                    <em>(<?= Yii::t('view', 'Edited') ?> <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->edited_at, 'long') ?>"><?= Podium::getInstance()->formatter->asRelativeTime($model->edited_at) ?>)</span></em>
 <?php endif; ?>
                 </small>
                 <?= $model->author->podiumTag ?>
                 <small>
-                    <span class="label label-info" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Number of posts') ?>"><?= $model->author->postsCount ?></span>
+                    <span class="label label-info" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Number of posts') ?>"><?= $model->author->postsCount ?></span>
                 </small>
             </div>
             <div class="popover-content podium-content">

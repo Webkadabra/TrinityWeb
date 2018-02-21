@@ -40,7 +40,7 @@ class PageSizer extends Widget
         Yii::$app->session->set('per-page', $size);
 
         return Html::tag('div', Html::tag('div',
-            Html::label(Yii::t('podium/view', 'Results per page'), 'per-page')
+            Html::label(Yii::t('view', 'Results per page'), 'per-page')
             . ' '
             . Html::dropDownList('per-page', $size, $this->pageSizes, ['class' => 'form-control input-sm', 'id' => 'per-page']),
             ['class' => 'form-group']

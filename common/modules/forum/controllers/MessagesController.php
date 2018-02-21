@@ -87,7 +87,7 @@ class MessagesController extends BaseController
         $podiumUser = User::findMe();
 
         if (Message::tooMany($podiumUser->id)) {
-            $this->warning(Yii::t('podium/flash', 'You have reached maximum {max_messages, plural, =1{ message} other{ messages}} per {max_minutes, plural, =1{ minute} other{ minutes}} limit. Wait few minutes before sending a new message.', [
+            $this->warning(Yii::t('flash', 'You have reached maximum {max_messages, plural, =1{ message} other{ messages}} per {max_minutes, plural, =1{ minute} other{ minutes}} limit. Wait few minutes before sending a new message.', [
                 'max_messages' => Message::SPAM_MESSAGES,
                 'max_minutes' => Message::SPAM_WAIT
             ]));
@@ -115,22 +115,22 @@ class MessagesController extends BaseController
                     );
                 }
                 if (empty($model->receiversId)) {
-                    $model->addError('receiversId', Yii::t('podium/view', 'You have to select at least one message receiver.'));
+                    $model->addError('receiversId', Yii::t('view', 'You have to select at least one message receiver.'));
                     $errors = true;
                 } else {
                     foreach ($model->receiversId as $r) {
                         if ($r == $podiumUser->id) {
-                            $model->addError('receiversId', Yii::t('podium/view', 'You can not send message to yourself.'));
+                            $model->addError('receiversId', Yii::t('view', 'You can not send message to yourself.'));
                             $errors = true;
                         } elseif ($podiumUser->isIgnoredBy($r)) {
-                            $model->addError('receiversId', Yii::t('podium/view', 'One of the selected members ignores you and has been removed from message receivers.'));
+                            $model->addError('receiversId', Yii::t('view', 'One of the selected members ignores you and has been removed from message receivers.'));
                             $errors = true;
                         } else {
                             $member = User::find()->where(['id' => (int)$r, 'status' => User::STATUS_ACTIVE])->limit(1)->one();
                             if ($member) {
                                 $validated[] = $member->id;
                                 if (count($validated) > Message::MAX_RECEIVERS) {
-                                    $model->addError('receiversId', Yii::t('podium/view', 'You can send message up to a maximum of 10 receivers at once.'));
+                                    $model->addError('receiversId', Yii::t('view', 'You can send message up to a maximum of 10 receivers at once.'));
                                     $errors = true;
                                     break;
                                 }
@@ -141,10 +141,10 @@ class MessagesController extends BaseController
                 }
                 if (!$errors) {
                     if ($model->send()) {
-                        $this->success(Yii::t('podium/flash', 'Message has been sent.'));
+                        $this->success(Yii::t('flash', 'Message has been sent.'));
                         return $this->redirect(['messages/inbox']);
                     }
-                    $this->error(Yii::t('podium/flash', 'Sorry! There was some error while sending your message.'));
+                    $this->error(Yii::t('flash', 'Sorry! There was some error while sending your message.'));
                 }
             }
         }
@@ -161,7 +161,7 @@ class MessagesController extends BaseController
         $podiumUser = User::findMe();
 
         if (Message::tooMany($podiumUser->id)) {
-            $this->warning(Yii::t('podium/flash', 'You have reached maximum {max_messages, plural, =1{ message} other{ messages}} per {max_minutes, plural, =1{ minute} other{ minutes}} limit. Wait few minutes before sending a new message.', [
+            $this->warning(Yii::t('flash', 'You have reached maximum {max_messages, plural, =1{ message} other{ messages}} per {max_minutes, plural, =1{ minute} other{ minutes}} limit. Wait few minutes before sending a new message.', [
                 'max_messages' => Message::SPAM_MESSAGES,
                 'max_minutes' => Message::SPAM_WAIT
             ]));
@@ -173,7 +173,7 @@ class MessagesController extends BaseController
                     $q->where(['receiver_id' => $podiumUser->id]);
                 }])->limit(1)->one();
         if (empty($reply)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the message with the given ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the message with the given ID.'));
             return $this->redirect(['messages/inbox']);
         }
 
@@ -184,12 +184,12 @@ class MessagesController extends BaseController
                 if (!$podiumUser->isIgnoredBy($model->receiversId[0])) {
                     $model->replyto = $reply->id;
                     if ($model->send()) {
-                        $this->success(Yii::t('podium/flash', 'Message has been sent.'));
+                        $this->success(Yii::t('flash', 'Message has been sent.'));
                         return $this->redirect(['messages/inbox']);
                     }
-                    $this->error(Yii::t('podium/flash', 'Sorry! There was some error while sending your message.'));
+                    $this->error(Yii::t('flash', 'Sorry! There was some error while sending your message.'));
                 } else {
-                    $this->error(Yii::t('podium/flash', 'Sorry! This member ignores you so you can not send the message.'));
+                    $this->error(Yii::t('flash', 'Sorry! This member ignores you so you can not send the message.'));
                 }
             }
         }
@@ -223,7 +223,7 @@ class MessagesController extends BaseController
                 ['!=', 'sender_status', Message::STATUS_DELETED]
             ])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the message with the given ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the message with the given ID.'));
             return $this->redirect(['messages/inbox']);
         }
         $model->markRead();
@@ -247,7 +247,7 @@ class MessagesController extends BaseController
                 ['!=', 'receiver_status', MessageReceiver::STATUS_DELETED]
             ])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the message with the given ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the message with the given ID.'));
             return $this->redirect(['messages/inbox']);
         }
         $model->markRead();

@@ -43,7 +43,7 @@ class ActionColumn extends YiiActionColumn
     public function init()
     {
         parent::init();
-        $this->header = Yii::t('podium/view', 'Actions');
+        $this->header = Yii::t('view', 'Actions');
         $this->grid->view->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
     }
 

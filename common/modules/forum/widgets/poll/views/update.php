@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <strong><?= Yii::t('podium/view', 'Edit Poll'); ?></strong>
+        <strong><?= Yii::t('view', 'Edit Poll'); ?></strong>
     </div>
     <div class="panel-body">
         <?= $this->render('_form', [

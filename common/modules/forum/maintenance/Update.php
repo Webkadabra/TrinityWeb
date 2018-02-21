@@ -51,7 +51,7 @@ class Update extends Maintenance
         if ($currentStep >= $maxStep) {
             return [
                 'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Weird... Update should already complete...'),
+                'result' => Yii::t('flash', 'Weird... Update should already complete...'),
                 'percent' => 100
             ];
         }
@@ -59,7 +59,7 @@ class Update extends Maintenance
         if (!isset($this->versionSteps[$currentStep])) {
             return [
                 'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Update aborted! Can not find the requested update step.'),
+                'result' => Yii::t('flash', 'Update aborted! Can not find the requested update step.'),
                 'percent' => 100,
             ];
         }
@@ -106,20 +106,20 @@ class Update extends Maintenance
     protected function updateValue($name, $value)
     {
         if (empty($name)) {
-            return Yii::t('podium/flash', 'Installation aborted! Column name missing.');
+            return Yii::t('flash', 'Installation aborted! Column name missing.');
         }
         if ($value === null) {
-            return Yii::t('podium/flash', 'Installation aborted! Column value missing.');
+            return Yii::t('flash', 'Installation aborted! Column value missing.');
         }
         try {
             Podium::getInstance()->podiumConfig->set($name, $value);
-            return $this->returnSuccess(Yii::t('podium/flash', 'Config setting {name} has been updated to {value}.', [
+            return $this->returnSuccess(Yii::t('flash', 'Config setting {name} has been updated to {value}.', [
                 'name'  => $name,
                 'value' => $value,
             ]));
         } catch (Exception $e) {
             return $this->returnError($e->getMessage(), __METHOD__,
-                Yii::t('podium/flash', 'Error during configuration updating')
+                Yii::t('flash', 'Error during configuration updating')
             );
         }
     }

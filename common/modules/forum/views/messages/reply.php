@@ -16,8 +16,8 @@ use common\modules\forum\widgets\editor\EditorBasic;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'Reply to Message');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'My Profile'), 'url' => ['profile/index']];
+$this->title = Yii::t('view', 'Reply to Message');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'My Profile'), 'url' => ['profile/index']];
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
@@ -34,26 +34,26 @@ $loggedId = User::loggedId();
         <br>
         <?php $form = ActiveForm::begin(['id' => 'message-form']); ?>
             <div class="row">
-                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('podium/view', 'Send to') ?></p></div>
+                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('view', 'Send to') ?></p></div>
                 <div class="col-md-9"><p class="form-control-static"><?= $reply->sender->getPodiumTag(true) ?></p>
                     <?= $form->field($model, 'receiversId[]')->hiddenInput(['value' => $model->receiversId[0]])->label(false) ?>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('podium/view', 'Message Topic') ?></p></div>
+                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('view', 'Message Topic') ?></p></div>
                 <div class="col-md-9">
-                    <?= $form->field($model, 'topic')->textInput(['placeholder' => Yii::t('podium/view', 'Message Topic'), 'autofocus' => true])->label(false) ?>
+                    <?= $form->field($model, 'topic')->textInput(['placeholder' => Yii::t('view', 'Message Topic'), 'autofocus' => true])->label(false) ?>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('podium/view', 'Message Content') ?></p></div>
+                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('view', 'Message Content') ?></p></div>
                 <div class="col-md-9">
                     <?= $form->field($model, 'content')->label(false)->widget(EditorBasic::className()) ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-9 col-md-offset-3">
-                    <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Send Message'), ['class' => 'btn btn-block btn-primary', 'name' => 'send-button']) ?>
+                    <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Send Message'), ['class' => 'btn btn-block btn-primary', 'name' => 'send-button']) ?>
                 </div>
             </div>
         <?php ActiveForm::end(); ?>

@@ -145,11 +145,11 @@ $bundle = BackendAsset::register($this);
                         ]
                     ],
                     [
-                        'label' => Yii::t('backend', 'Модули'),
+                        'label' => Yii::t('backend', 'Modules'),
                         'options' => ['class' => 'header']
                     ],
                     [
-                        'label' => Yii::t('backend', 'Права доступа'),
+                        'label' => Yii::t('backend', 'RBAC'),
                         'icon' => '<i class="fa fa-bolt"></i>',
                         'url' => '#',
                         'options' => ['class' => 'treeview'],
@@ -232,7 +232,7 @@ $bundle = BackendAsset::register($this);
                                 'url' => ['/forum/admin/logs'],
                             ],
                             [
-                                'label' => Yii::t('common','Иконки'),
+                                'label' => Yii::t('common','Icons'),
                                 'icon' => '<i class="fa fa-bookmark"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'icons'),
                                 'url' => ['/forum/admin/icons'],
@@ -262,17 +262,40 @@ $bundle = BackendAsset::register($this);
                         'url' => '#',
                         'icon' => '<i class="fa fa-cogs"></i>',
                         'options' => ['class' => 'treeview'],
-                        'active' => in_array(\Yii::$app->controller->id,['i18n-source-message','i18n-message','key-storage','file-storage','cache','file-manager','system-information', 'log']),
+                        'active' => in_array(\Yii::$app->controller->id,['language','key-storage','file-storage','cache','file-manager','system-information', 'log']),
                         'items' => [
                             [
                                 'label' => Yii::t('backend', 'i18n'),
                                 'url' => '#',
                                 'icon' => '<i class="fa fa-flag"></i>',
                                 'options' => ['class' => 'treeview'],
-                                'active' => in_array(\Yii::$app->controller->id,['i18n-source-message','i18n-message']),
+                                'active' => in_array(\Yii::$app->controller->id,['language']),
                                 'items' => [
-                                    ['label' => Yii::t('backend', 'i18n Source Message'), 'url' => ['/i18n/i18n-source-message/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'i18n-source-message')],
-                                    ['label' => Yii::t('backend', 'i18n Message'), 'url' => ['/i18n/i18n-message/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'i18n-message')],
+                                    [
+                                        'label' => Yii::t('language', 'List of languages'),
+                                        'url' => ['/translatemanager/language/list'],
+                                        'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                    ],
+                                    [
+                                        'label' => Yii::t('language', 'Import'),
+                                        'url' => ['/translatemanager/language/import'],
+                                        'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                    ],
+                                    [
+                                        'label' => Yii::t('language', 'Export'),
+                                        'url' => ['/translatemanager/language/export'],
+                                        'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                    ],
+                                    [
+                                        'label' => Yii::t('language', 'Scan'),
+                                        'url' => ['/translatemanager/language/scan'],
+                                        'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                    ],
+                                    [
+                                        'label' => Yii::t('language', 'Optimize'),
+                                        'url' => ['/translatemanager/language/optimizer'],
+                                        'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                    ],
                                 ]
                             ],
                             ['label' => Yii::t('backend', 'Key-Value Storage'), 'url' => ['/key-storage/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'key-storage')],

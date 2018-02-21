@@ -13,8 +13,8 @@ use yii\grid\CheckboxColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('podium/view', 'Moderators');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Administration Dashboard'), 'url' => ['admin/index']];
+$this->title = Yii::t('view', 'Moderators');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Administration Dashboard'), 'url' => ['admin/index']];
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -23,7 +23,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
 <?php if (empty($moderators)): ?>
 <div class="row">
     <div class="col-sm-12">
-        <h3><?= Yii::t('podium/view', 'No moderators have been added yet.') ?></h3>
+        <h3><?= Yii::t('view', 'No moderators have been added yet.') ?></h3>
     </div>
 </div>
 <?php else: ?>
@@ -41,7 +41,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         </ul>
     </div>
     <div class="col-sm-9">
-        <h4><?= Yii::t('podium/view', 'List Forums') ?></h4>
+        <h4><?= Yii::t('view', 'List Forums') ?></h4>
         <?= Html::beginForm(); ?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
@@ -57,13 +57,13 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'id',
-            'label' => Yii::t('podium/view', 'ID'),
+            'label' => Yii::t('view', 'ID'),
             'contentOptions' => ['class' => 'col-sm-1 text-center'],
             'headerOptions' => ['class' => 'col-sm-1 text-center'],
         ],
         [
             'attribute' => 'name',
-            'label' => Yii::t('podium/view', 'Name'),
+            'label' => Yii::t('view', 'Name'),
             'format' => 'raw',
             'value' => function ($model) use ($mod) {
                 return Html::encode($model->name) . ($model->isMod($mod->id) ? Html::hiddenInput('pre[]', $model->id) : '');
@@ -78,14 +78,14 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
             'buttons' => [
                 'mod' => function($url, $model) use ($mod) {
                     if ($model->isMod($mod->id)) {
-                        return Html::a('<span class="glyphicon glyphicon-remove"></span> ' . Yii::t('podium/view', 'Remove'), $url, ActionColumn::buttonOptions([
+                        return Html::a('<span class="glyphicon glyphicon-remove"></span> ' . Yii::t('view', 'Remove'), $url, ActionColumn::buttonOptions([
                             'class' => 'btn btn-danger btn-xs',
-                            'title' => Yii::t('podium/view', 'Remove from moderation list')
+                            'title' => Yii::t('view', 'Remove from moderation list')
                         ]));
                     }
-                    return Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('podium/view', 'Add'), $url, ActionColumn::buttonOptions([
+                    return Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('view', 'Add'), $url, ActionColumn::buttonOptions([
                         'class' => 'btn btn-success btn-xs',
-                        'title' => Yii::t('podium/view', 'Add to moderation list')
+                        'title' => Yii::t('view', 'Add to moderation list')
                     ]));
                 },
             ],
@@ -95,7 +95,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         <?= Html::hiddenInput('mod_id', $mod->id) ?>
         <div class="row">
             <div class="col-sm-12">
-                <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Selected Moderation List'), [
+                <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Save Selected Moderation List'), [
                     'class' => 'btn btn-primary btn-sm',
                     'name' => 'save-button'
                 ]) ?>

@@ -52,12 +52,12 @@ class ForumPostController extends ForumThreadController
     {
         $post = Post::verify($cid, $fid, $tid, $pid);
         if (empty($post)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the post you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the post you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if ($post->thread->locked == 1 && !User::can(Rbac::PERM_UPDATE_THREAD, ['item' => $post->thread])) {
-            $this->info(Yii::t('podium/flash', 'This thread is locked.'));
+            $this->info(Yii::t('flash', 'This thread is locked.'));
             return $this->redirect([
                 'forum/thread',
                 'cid' => $post->forum->category->id,
@@ -68,17 +68,17 @@ class ForumPostController extends ForumThreadController
         }
 
         if (!User::can(Rbac::PERM_DELETE_OWN_POST, ['post' => $post]) && !User::can(Rbac::PERM_DELETE_POST, ['item' => $post])) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
         $postData = Yii::$app->request->post('post');
         if ($postData) {
             if ($postData != $post->id) {
-                $this->error(Yii::t('podium/flash', 'Sorry! There was an error while deleting the post.'));
+                $this->error(Yii::t('flash', 'Sorry! There was an error while deleting the post.'));
             } else {
                 if ($post->podiumDelete()) {
-                    $this->success(Yii::t('podium/flash', 'Post has been deleted.'));
+                    $this->success(Yii::t('flash', 'Post has been deleted.'));
                     if (Thread::find()->where(['id' => $post->thread->id])->exists()) {
                         return $this->redirect([
                             'forum/forum',
@@ -95,7 +95,7 @@ class ForumPostController extends ForumThreadController
                         'slug' => $post->thread->slug
                     ]);
                 }
-                $this->error(Yii::t('podium/flash', 'Sorry! There was an error while deleting the post.'));
+                $this->error(Yii::t('flash', 'Sorry! There was an error while deleting the post.'));
             }
         }
         return $this->render('deletepost', ['model' => $post]);
@@ -118,22 +118,22 @@ class ForumPostController extends ForumThreadController
             'threadSlug' => $slug
         ]))->verify();
         if (empty($thread)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the thread you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if (!User::can(Rbac::PERM_DELETE_POST, ['item' => $thread])) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
         $posts = Yii::$app->request->post('post');
         if ($posts) {
             if (!is_array($posts)) {
-                $this->error(Yii::t('podium/flash', 'You have to select at least one post.'));
+                $this->error(Yii::t('flash', 'You have to select at least one post.'));
             } else {
                 if ($thread->podiumDeletePosts($posts)) {
-                    $this->success(Yii::t('podium/flash', 'Posts have been deleted.'));
+                    $this->success(Yii::t('flash', 'Posts have been deleted.'));
                     if (Thread::find()->where(['id' => $thread->id])->exists()) {
                         return $this->redirect([
                             'forum/thread',
@@ -150,7 +150,7 @@ class ForumPostController extends ForumThreadController
                         'slug' => $thread->forum->slug
                     ]);
                 }
-                $this->error(Yii::t('podium/flash', 'Sorry! There was an error while deleting the posts.'));
+                $this->error(Yii::t('flash', 'Sorry! There was an error while deleting the posts.'));
             }
         }
         return $this->render('deleteposts', [
@@ -172,12 +172,12 @@ class ForumPostController extends ForumThreadController
     {
         $post = Post::verify($cid, $fid, $tid, $pid);
         if (empty($post)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the post you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the post you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if ($post->thread->locked == 1 && !User::can(Rbac::PERM_UPDATE_THREAD, ['item' => $post->thread])) {
-            $this->info(Yii::t('podium/flash', 'This thread is locked.'));
+            $this->info(Yii::t('flash', 'This thread is locked.'));
             return $this->redirect([
                 'forum/thread',
                 'cid' => $post->forum->category->id,
@@ -187,7 +187,7 @@ class ForumPostController extends ForumThreadController
             ]);
         }
         if (!User::can(Rbac::PERM_UPDATE_OWN_POST, ['post' => $post]) && !User::can(Rbac::PERM_UPDATE_POST, ['item' => $post])) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
@@ -210,10 +210,10 @@ class ForumPostController extends ForumThreadController
                     $preview = true;
                 } else {
                     if ($post->podiumEdit($isFirstPost)) {
-                        $this->success(Yii::t('podium/flash', 'Post has been updated.'));
+                        $this->success(Yii::t('flash', 'Post has been updated.'));
                         return $this->redirect(['show', 'id' => $post->id]);
                     }
-                    $this->error(Yii::t('podium/flash', 'Sorry! There was an error while updating the post. Contact administrator about this problem.'));
+                    $this->error(Yii::t('flash', 'Sorry! There was an error while updating the post. Contact administrator about this problem.'));
                 }
             }
         }
@@ -241,12 +241,12 @@ class ForumPostController extends ForumThreadController
             'threadSlug' => $slug
         ]))->verify();
         if (empty($thread)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the thread you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if (!User::can(Rbac::PERM_MOVE_POST, ['item' => $thread])) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
@@ -256,19 +256,19 @@ class ForumPostController extends ForumThreadController
             $newname = Yii::$app->request->post('newname');
             $newforum = Yii::$app->request->post('newforum');
             if (empty($posts) || !is_array($posts)) {
-                $this->error(Yii::t('podium/flash', 'You have to select at least one post.'));
+                $this->error(Yii::t('flash', 'You have to select at least one post.'));
             } else {
                 if (!is_numeric($newthread) || $newthread < 0) {
-                    $this->error(Yii::t('podium/flash', 'You have to select a thread for this posts to be moved to.'));
+                    $this->error(Yii::t('flash', 'You have to select a thread for this posts to be moved to.'));
                 } else {
                     if ($newthread == 0 && (empty($newname) || empty($newforum) || !is_numeric($newforum) || $newforum < 1)) {
-                        $this->error(Yii::t('podium/flash', 'If you want to move posts to a new thread you have to enter its name and select parent forum.'));
+                        $this->error(Yii::t('flash', 'If you want to move posts to a new thread you have to enter its name and select parent forum.'));
                     } else {
                         if ($newthread == $thread->id) {
-                            $this->error(Yii::t('podium/flash', 'Are you trying to move posts from this thread to this very same thread?'));
+                            $this->error(Yii::t('flash', 'Are you trying to move posts from this thread to this very same thread?'));
                         } else {
                             if ($thread->podiumMovePostsTo($newthread, $posts, $newname, $newforum)) {
-                                $this->success(Yii::t('podium/flash', 'Posts have been moved.'));
+                                $this->success(Yii::t('flash', 'Posts have been moved.'));
                                 if (Thread::find()->where(['id' => $thread->id])->exists()) {
                                     return $this->redirect([
                                         'forum/thread',
@@ -285,7 +285,7 @@ class ForumPostController extends ForumThreadController
                                     'slug' => $thread->forum->slug
                                 ]);
                             }
-                            $this->error(Yii::t('podium/flash', 'Sorry! There was an error while moving the posts.'));
+                            $this->error(Yii::t('flash', 'Sorry! There was an error while moving the posts.'));
                         }
                     }
                 }
@@ -296,7 +296,7 @@ class ForumPostController extends ForumThreadController
         $forums = Forum::find()->orderBy(['name' => SORT_ASC]);
         $threads = Thread::find()->orderBy(['name' => SORT_ASC]);
 
-        $list = [0 => Yii::t('podium/view', 'Create new thread')];
+        $list = [0 => Yii::t('view', 'Create new thread')];
         $listforum = [];
         $options = [];
         foreach ($categories->each() as $cat) {
@@ -352,12 +352,12 @@ class ForumPostController extends ForumThreadController
                 'forum_id' => $fid
             ])->limit(1)->one();
         if (empty($thread)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the thread you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if ($thread->locked == 1 && !User::can(Rbac::PERM_UPDATE_THREAD, ['item' => $thread])) {
-            $this->info(Yii::t('podium/flash', 'This thread is locked.'));
+            $this->info(Yii::t('flash', 'This thread is locked.'));
             return $this->redirect([
                 'forum/thread',
                 'cid' => $thread->forum->category->id,
@@ -368,7 +368,7 @@ class ForumPostController extends ForumThreadController
         }
 
         if (!User::can(Rbac::PERM_CREATE_POST)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
@@ -394,13 +394,13 @@ class ForumPostController extends ForumThreadController
                     $preview = true;
                 } else {
                     if ($model->podiumNew($previous)) {
-                        $this->success(Yii::t('podium/flash', 'New reply has been added.'));
+                        $this->success(Yii::t('flash', 'New reply has been added.'));
                         if (!empty($previous) && $previous->author_id == User::loggedId() && $this->module->podiumConfig->get('merge_posts')) {
                             return $this->redirect(['forum/show', 'id' => $previous->id]);
                         }
                         return $this->redirect(['forum/show', 'id' => $model->id]);
                     }
-                    $this->error(Yii::t('podium/flash', 'Sorry! There was an error while adding the reply. Contact administrator about this problem.'));
+                    $this->error(Yii::t('flash', 'Sorry! There was an error while adding the reply. Contact administrator about this problem.'));
                 }
             }
         }
@@ -425,12 +425,12 @@ class ForumPostController extends ForumThreadController
     {
         $post = Post::verify($cid, $fid, $tid, $pid);
         if (empty($post)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the post you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the post you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if (User::can(Rbac::PERM_UPDATE_POST, ['item' => $post])) {
-            $this->info(Yii::t('podium/flash', "You don't have to report this post since you are allowed to modify it."));
+            $this->info(Yii::t('flash', "You don't have to report this post since you are allowed to modify it."));
             return $this->redirect([
                 'forum/edit',
                 'cid' => $post->forum->category->id,
@@ -441,7 +441,7 @@ class ForumPostController extends ForumThreadController
         }
 
         if ($post->author_id == User::loggedId()) {
-            $this->info(Yii::t('podium/flash', 'You can not report your own post. Please contact the administrator or moderators if you have got any concerns regarding your post.'));
+            $this->info(Yii::t('flash', 'You can not report your own post. Please contact the administrator or moderators if you have got any concerns regarding your post.'));
             return $this->redirect([
                 'forum/thread',
                 'cid' => $post->forum->category->id,
@@ -455,7 +455,7 @@ class ForumPostController extends ForumThreadController
         $model->scenario = 'report';
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->podiumReport($post)) {
-                $this->success(Yii::t('podium/flash', 'Thank you for your report. The moderation team will take a look at this post.'));
+                $this->success(Yii::t('flash', 'Thank you for your report. The moderation team will take a look at this post.'));
                 return $this->redirect([
                     'forum/thread',
                     'cid' => $post->forum->category->id,
@@ -464,7 +464,7 @@ class ForumPostController extends ForumThreadController
                     'slug' => $post->thread->slug
                 ]);
             }
-            $this->error(Yii::t('podium/flash', 'Sorry! There was an error while notifying the moderation team. Contact administrator about this problem.'));
+            $this->error(Yii::t('flash', 'Sorry! There was an error while notifying the moderation team. Contact administrator about this problem.'));
         }
         return $this->render('report', ['model' => $model, 'post' => $post]);
     }
@@ -483,7 +483,7 @@ class ForumPostController extends ForumThreadController
             'error' => 1,
             'msg' => Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Error while voting on this post!'),
+                . ' ' . Yii::t('view', 'Error while voting on this post!'),
                 ['class' => 'text-danger']
             ),
         ];
@@ -491,7 +491,7 @@ class ForumPostController extends ForumThreadController
         if ($this->module->user->isGuest) {
             $data['msg'] = Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Please sign in to vote on this post'),
+                . ' ' . Yii::t('view', 'Please sign in to vote on this post'),
                 ['class' => 'text-info']
             );
             return Json::encode($data);
@@ -506,7 +506,7 @@ class ForumPostController extends ForumThreadController
                 if ($post->thread->locked) {
                     $data['msg'] = Html::tag('span',
                         Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                        . ' ' . Yii::t('podium/view', 'This thread is locked.'),
+                        . ' ' . Yii::t('view', 'This thread is locked.'),
                         ['class' => 'text-info']
                     );
                     return Json::encode($data);
@@ -515,7 +515,7 @@ class ForumPostController extends ForumThreadController
                 if ($post->author_id == User::loggedId()) {
                     $data['msg'] = Html::tag('span',
                         Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                        . ' ' . Yii::t('podium/view', 'You can not vote on your own post!'),
+                        . ' ' . Yii::t('view', 'You can not vote on your own post!'),
                         ['class' => 'text-info']
                     );
                     return Json::encode($data);
@@ -529,7 +529,7 @@ class ForumPostController extends ForumThreadController
                     } elseif ($votes['count'] >= 10) {
                         $data['msg'] = Html::tag('span',
                             Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                            . ' ' . Yii::t('podium/view', '{max} votes per hour limit reached!', ['max' => 10]),
+                            . ' ' . Yii::t('view', '{max} votes per hour limit reached!', ['max' => 10]),
                             ['class' => 'text-danger']
                         );
                         return Json::encode($data);
@@ -546,7 +546,7 @@ class ForumPostController extends ForumThreadController
                         'summ' => $post->likes - $post->dislikes,
                         'msg' => Html::tag('span',
                             Html::tag('span', '', ['class' => 'glyphicon glyphicon-ok-circle'])
-                            . ' ' . Yii::t('podium/view', 'Your vote has been saved!'),
+                            . ' ' . Yii::t('view', 'Your vote has been saved!'),
                             ['class' => 'text-success']
                         ),
                     ];
@@ -563,10 +563,10 @@ class ForumPostController extends ForumThreadController
     public function actionMarkSeen()
     {
         if (Thread::podiumMarkAllSeen()) {
-            $this->success(Yii::t('podium/flash', 'All unread threads have been marked as seen.'));
+            $this->success(Yii::t('flash', 'All unread threads have been marked as seen.'));
             return $this->redirect(['forum/index']);
         }
-        $this->error(Yii::t('podium/flash', 'Sorry! There was an error while marking threads as seen. Contact administrator about this problem.'));
+        $this->error(Yii::t('flash', 'Sorry! There was an error while marking threads as seen. Contact administrator about this problem.'));
         return $this->redirect(['forum/unread-posts']);
     }
 }

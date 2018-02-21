@@ -28,8 +28,8 @@ if (!empty($filters)) {
     'itemView'         => '/elements/forum/_thread',
     'summary'          => '',
     'emptyText'        => $filtersOn
-                            ? Yii::t('podium/view', 'No threads matching the filters can be found.')
-                            : Yii::t('podium/view', 'No threads have been added yet.'),
+                            ? Yii::t('view', 'No threads matching the filters can be found.')
+                            : Yii::t('view', 'No threads have been added yet.'),
     'emptyTextOptions' => ['tag' => 'td', 'class' => 'text-muted', 'colspan' => 4],
     'options'          => ['tag' => 'tbody'],
     'itemOptions'      => ['tag' => 'tr', 'class' => 'podium-thread-line']

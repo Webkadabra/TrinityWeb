@@ -3,9 +3,9 @@ $config = [
     'name' => 'RF-studio',
     'vendorPath' => __DIR__ . '/../../vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
-    'sourceLanguage' => 'ru',
-    'language' => 'ru',
-    'bootstrap' => ['log','forum'],
+    'sourceLanguage' => 'ru-RU',
+    'language' => 'ru-RU',
+    'bootstrap' => ['log','forum','translatemanager'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
@@ -19,6 +19,48 @@ $config = [
             'rbacComponent' => 'authManager',
             'cacheComponent' => 'cache',
             'userNameField' => 'username',
+        ],
+        'translatemanager' => [
+            'class' => 'common\modules\i18n\Module',
+            'root' => ['@frontend','@backend','@common','@console'],               // The root directory of the project scan.
+            'scanRootParentDirectory' => true, // Whether scan the defined `root` parent directory, or the folder itself.
+                                               // IMPORTANT: for detailed instructions read the chapter about root configuration.
+            'layout' => '/main',         // Name of the used layout. If using own layout use 'null'.
+            'allowedIPs' => ['*'],  // IP addresses from which the translation interface is accessible.
+            'roles' => ['admin'],               // For setting access levels to the translating interface.
+            'tmpDir' => '@runtime',         // Writable directory for the client-side temporary language files.
+                                            // IMPORTANT: must be identical for all applications (the AssetsManager serves the JavaScript files containing language elements from this directory).
+            'phpTranslators' => ['::t'],    // list of the php function for translating messages.
+            'jsTranslators' => ['lajax.t'], // list of the js function for translating messages.
+            'patterns' => ['*.js', '*.php'],// list of file extensions that contain language elements.
+            'ignoredCategories' => ['yii'], // these categories won't be included in the language database.
+            'ignoredItems' => ['config'],   // these files will not be processed.
+            'scanTimeLimit' => null,        // increase to prevent "Maximum execution time" errors, if null the default max_execution_time will be used
+            'searchEmptyCommand' => '!',    // the search string to enter in the 'Translation' search field to find not yet translated items, set to null to disable this feature
+            'defaultExportStatus' => 1,     // the default selection of languages to export, set to 0 to select all languages by default
+            'defaultExportFormat' => 'json',// the default format for export, can be 'json' or 'xml'
+            'tables' => [                   // Properties of individual tables
+                [
+                    'connection' => 'db',   // connection identifier
+                    'table' => '{{%language}}',         // table name
+                    'columns' => ['name', 'name_ascii'],// names of multilingual fields
+                    'category' => 'database-table-name',// the category is the database table name
+                ]
+            ],
+            'scanners' => [ // define this if you need to override default scanners (below)
+                'common\modules\i18n\services\scanners\ScannerPhpFunction',
+                'common\modules\i18n\services\scanners\ScannerPhpArray',
+                'common\modules\i18n\services\scanners\ScannerJavaScriptFunction',
+                'common\modules\i18n\services\scanners\ScannerDatabase',
+            ],
+        ],
+    ],
+    'controllerMap' => [
+        'migrate' => [
+            'class' => 'yii\console\controllers\MigrateController',
+            'migrationNamespaces' => [
+                'common\modules\i18n\migrations\namespaced',
+            ],
         ],
     ],
     'components' => [
@@ -113,36 +155,15 @@ $config = [
         ],
         'i18n' => [
             'translations' => [
-                'app' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages',
-                    'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
+                '*' => [
+                    'class' => 'common\components\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'ru-RU',
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
                 ],
-                'common' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages',
-                    'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
-                ],
-                'backend' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages',
-                    'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
-                ],
-                'frontend' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages',
-                    'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
-                ],
-                /* Uncomment this code to use DbMessageSource
-                 '*'=> [
-                    'class' => 'yii\i18n\DbMessageSource',
-                    'sourceMessageTable'=>'{{%i18n_source_message}}',
-                    'messageTable'=>'{{%i18n_message}}',
-                    'enableCaching' => YII_ENV_DEV,
-                    'cachingDuration' => 3600,
-                    'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
-                ],
-                */
             ],
         ],
         'fileStorage' => [
@@ -189,10 +210,11 @@ $config = [
             'en-US' => 'English (US)',
             'ru-RU' => 'Русский (РФ)',
             'uk-UA' => 'Українська (Україна)',
-            'es' => 'Español',
-            'vi' => 'Tiếng Việt',
+            'es-ES' => 'Español',
+            'vi-VN' => 'Tiếng Việt',
             'zh-CN' => '简体中文',
             'pl-PL' => 'Polski (PL)',
+            'pt-BR' => 'Portuguese',
         ],
     ],
 ];

@@ -26,17 +26,17 @@ $loggedId = User::loggedId();
 <?php if (!empty($model->end_at)): ?>
                 <small class="pull-right">
                     <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->end_at, 'long') ?>">
-                        <?= Yii::t('podium/view', 'Poll ends') ?>: <?= Podium::getInstance()->formatter->asRelativeTime($model->end_at) ?>
+                        <?= Yii::t('view', 'Poll ends') ?>: <?= Podium::getInstance()->formatter->asRelativeTime($model->end_at) ?>
                     </span>
                 </small>
 <?php endif; ?>
-                <?= Yii::t('podium/view', 'Poll') ?>: <strong><?= Html::encode($model->question) ?></strong>
+                <?= Yii::t('view', 'Poll') ?>: <strong><?= Html::encode($model->question) ?></strong>
             </div>
             <div class="popover-content podium-content">
 <?php if (!$voted): ?>
                 <?= Html::beginForm('#', 'post', ['class' => 'podium-poll-form']) ?>
                     <?= Html::hiddenInput('poll_id', $model->id) ?>
-                    <p class="small"><?= Yii::t('podium/view', 'Select {n, plural, =1{only # answer} other{max # answers}}', ['n' => $model->votes]) ?>:</p>
+                    <p class="small"><?= Yii::t('view', 'Select {n, plural, =1{only # answer} other{max # answers}}', ['n' => $model->votes]) ?>:</p>
 <?php foreach ($model->answers as $answer): ?>
                     <p>
                         <label>
@@ -50,9 +50,9 @@ $loggedId = User::loggedId();
                     </p>
 <?php endforeach; ?>
                     <ul class="list-inline">
-                        <li><button class="btn btn-primary podium-poll-vote"><span class="glyphicon glyphicon-ok-sign"></span> <?= Yii::t('podium/view', 'Vote') ?></button></li>
+                        <li><button class="btn btn-primary podium-poll-vote"><span class="glyphicon glyphicon-ok-sign"></span> <?= Yii::t('view', 'Vote') ?></button></li>
 <?php if (!$hidden): ?>
-                        <li><button class="btn btn-default podium-poll-show-results"><?= Yii::t('podium/view', 'See results') ?></button></li>
+                        <li><button class="btn btn-default podium-poll-show-results"><?= Yii::t('view', 'See results') ?></button></li>
 <?php endif; ?>
                         <li class="podium-poll-info"></li>
                     </ul>
@@ -61,12 +61,12 @@ $loggedId = User::loggedId();
 <?php if ($display === false && ($model->author_id == $loggedId || User::can(Rbac::PERM_UPDATE_POST, ['item' => $model->thread]))): ?>
                     <ul class="podium-action-bar list-inline">
                         <li>
-                            <a href="<?= Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-info btn-xs <?= $model->votesCount ? 'disabled text-muted' : '' ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Edit Poll') ?>">
+                            <a href="<?= Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-info btn-xs <?= $model->votesCount ? 'disabled text-muted' : '' ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Edit Poll') ?>">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Delete Poll') ?>">
+                            <a href="<?= Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Delete Poll') ?>">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </li>
@@ -101,18 +101,18 @@ $loggedId = User::loggedId();
 <?php endforeach; ?>
 <?php endif; ?>
 <?php if (!$hidden && !$voted): ?>
-                    <button class="btn btn-default podium-poll-show-form"><?= Yii::t('podium/view', 'Back to poll') ?></button>
+                    <button class="btn btn-default podium-poll-show-form"><?= Yii::t('view', 'Back to poll') ?></button>
 <?php endif; ?>
 
 <?php if ($display === false && ($model->author_id == $loggedId || User::can(Rbac::PERM_UPDATE_POST, ['item' => $model->thread]))): ?>
                     <ul class="podium-action-bar list-inline">
                         <li>
-                            <a href="<?= Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-info btn-xs <?= $model->votesCount ? 'disabled text-muted' : '' ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Edit Poll') ?>">
+                            <a href="<?= Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-info btn-xs <?= $model->votesCount ? 'disabled text-muted' : '' ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Edit Poll') ?>">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
                         </li>
                         <li>
-                            <a href="<?= Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Delete Poll') ?>">
+                            <a href="<?= Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Delete Poll') ?>">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </li>

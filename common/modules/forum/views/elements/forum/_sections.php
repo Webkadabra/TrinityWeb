@@ -14,6 +14,6 @@
         'itemView'     => '/elements/forum/_section',
         'separator'    => "\n<br>\n",
         'summary'      => '',
-        'emptyText'    => '<h3>' . Yii::t('podium/view', 'No categories have been added yet.') . '</h3>',
+        'emptyText'    => '<h3>' . Yii::t('view', 'No categories have been added yet.') . '</h3>',
     ]); ?>
 </div>

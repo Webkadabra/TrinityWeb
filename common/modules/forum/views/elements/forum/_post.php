@@ -94,21 +94,21 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                     </span>
 <?php if ($model->edited && $model->edited_at): ?>
                     <em>
-                        (<?= Yii::t('podium/view', 'Edited') ?>
+                        (<?= Yii::t('view', 'Edited') ?>
                         <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->edited_at, 'long') ?>">
                             <?= Podium::getInstance()->formatter->asRelativeTime($model->edited_at) ?>)
                         </span>
                     </em>
 <?php endif; ?>
                     &mdash;
-                    <span class="podium-rating label label-<?= $ratingClass ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Rating') ?>">
+                    <span class="podium-rating label label-<?= $ratingClass ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Rating') ?>">
                         <?= $rating ?>
                     </span>
                     <span class="podium-rating-details hidden label label-default">+<?= $model->likes ?> / -<?= $model->dislikes ?></span>
                 </small>
                 <?= $model->author->podiumTag ?>
                 <small>
-                    <span class="label label-info" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Number of posts') ?>">
+                    <span class="label label-info" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Number of posts') ?>">
                         <?= $model->author->postsCount ?>
                     </span>
                 </small>
@@ -142,7 +142,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             class="btn btn-info btn-xs podium-quote"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Reply with quote') ?>">
+                            title="<?= Yii::t('view', 'Reply with quote') ?>">
                             <span class="glyphicon glyphicon-leaf"></span>
                         </button></li>
 <?php endif; ?>
@@ -153,7 +153,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             data-pjax="0"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Edit Post') ?>">
+                            title="<?= Yii::t('view', 'Edit Post') ?>">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a></li>
 <?php endif; ?>
@@ -165,7 +165,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             data-post-id="<?= $model->id ?>"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Thumb up') ?>">
+                            title="<?= Yii::t('view', 'Thumb up') ?>">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                         </a></li>
 <?php else: ?>
@@ -175,7 +175,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             data-post-id="<?= $model->id ?>"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Thumb up') ?>">
+                            title="<?= Yii::t('view', 'Thumb up') ?>">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                         </a></li>
 <?php endif; ?>
@@ -186,7 +186,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             data-post-id="<?= $model->id ?>"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Thumb down') ?>">
+                            title="<?= Yii::t('view', 'Thumb down') ?>">
                             <span class="glyphicon glyphicon-thumbs-down"></span>
                         </a></li>
 <?php else: ?>
@@ -196,7 +196,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             data-post-id="<?= $model->id ?>"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Thumb down') ?>">
+                            title="<?= Yii::t('view', 'Thumb down') ?>">
                             <span class="glyphicon glyphicon-thumbs-down"></span>
                         </a></li>
 <?php endif; ?>
@@ -206,7 +206,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             data-pjax="0"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Report post') ?>">
+                            title="<?= Yii::t('view', 'Report post') ?>">
                             <span class="glyphicon glyphicon-flag"></span>
                         </a></li>
 <?php endif; ?>
@@ -217,7 +217,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                             data-pjax="0"
                             data-toggle="tooltip"
                             data-placement="top"
-                            title="<?= Yii::t('podium/view', 'Delete Post') ?>">
+                            title="<?= Yii::t('view', 'Delete Post') ?>">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a></li>
 <?php endif; ?>

@@ -49,16 +49,16 @@ class ForumThreadController extends BaseController
                 'permission' => Rbac::PERM_LOCK_THREAD,
                 'boolAttribute' => 'locked',
                 'switcher' => 'podiumLock',
-                'onMessage' => Yii::t('podium/flash', 'Thread has been locked.'),
-                'offMessage' => Yii::t('podium/flash', 'Thread has been unlocked.')
+                'onMessage' => Yii::t('flash', 'Thread has been locked.'),
+                'offMessage' => Yii::t('flash', 'Thread has been unlocked.')
             ],
             'pin' => [
                 'class' => 'common\modules\forum\actions\ThreadAction',
                 'permission' => Rbac::PERM_PIN_THREAD,
                 'boolAttribute' => 'pinned',
                 'switcher' => 'podiumPin',
-                'onMessage' => Yii::t('podium/flash', 'Thread has been pinned.'),
-                'offMessage' => Yii::t('podium/flash', 'Thread has been unpinned.')
+                'onMessage' => Yii::t('flash', 'Thread has been pinned.'),
+                'offMessage' => Yii::t('flash', 'Thread has been unpinned.')
             ],
         ];
     }
@@ -80,22 +80,22 @@ class ForumThreadController extends BaseController
             'threadSlug' => $slug
         ]))->verify();
         if (empty($thread)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the thread you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if (!User::can(Rbac::PERM_DELETE_THREAD, ['item' => $thread])) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
         $postData = Yii::$app->request->post('thread');
         if ($postData) {
             if ($postData != $thread->id) {
-                $this->error(Yii::t('podium/flash', 'Sorry! There was an error while deleting the thread.'));
+                $this->error(Yii::t('flash', 'Sorry! There was an error while deleting the thread.'));
             } else {
                 if ($thread->podiumDelete()) {
-                    $this->success(Yii::t('podium/flash', 'Thread has been deleted.'));
+                    $this->success(Yii::t('flash', 'Thread has been deleted.'));
                     return $this->redirect([
                         'forum/forum',
                         'cid' => $thread->forum->category_id,
@@ -103,7 +103,7 @@ class ForumThreadController extends BaseController
                         'slug' => $thread->forum->slug
                     ]);
                 }
-                $this->error(Yii::t('podium/flash', 'Sorry! There was an error while deleting the thread.'));
+                $this->error(Yii::t('flash', 'Sorry! There was an error while deleting the thread.'));
             }
         }
         return $this->render('delete', ['model' => $thread]);
@@ -126,22 +126,22 @@ class ForumThreadController extends BaseController
             'threadSlug' => $slug
         ]))->verify();
         if (empty($thread)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the thread you are looking for.'));
             return $this->redirect(['forum/index']);
         }
 
         if (!User::can(Rbac::PERM_MOVE_THREAD, ['item' => $thread])) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
         $forum = Yii::$app->request->post('forum');
         if ($forum) {
             if (!is_numeric($forum) || $forum < 1 || $forum == $thread->forum->id) {
-                $this->error(Yii::t('podium/flash', 'You have to select the new forum.'));
+                $this->error(Yii::t('flash', 'You have to select the new forum.'));
             } else {
                 if ($thread->podiumMoveTo($forum)) {
-                    $this->success(Yii::t('podium/flash', 'Thread has been moved.'));
+                    $this->success(Yii::t('flash', 'Thread has been moved.'));
                     return $this->redirect([
                         'forum/thread',
                         'cid' => $thread->forum->category->id,
@@ -150,7 +150,7 @@ class ForumThreadController extends BaseController
                         'slug' => $thread->slug
                     ]);
                 }
-                $this->error(Yii::t('podium/flash', 'Sorry! There was an error while moving the thread.'));
+                $this->error(Yii::t('flash', 'Sorry! There was an error while moving the thread.'));
             }
         }
 
@@ -189,18 +189,18 @@ class ForumThreadController extends BaseController
     public function actionNewThread($cid = null, $fid = null)
     {
         if (!User::can(Rbac::PERM_CREATE_THREAD)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
 
         $forum = Forum::find()->where(['id' => $fid, 'category_id' => $cid])->limit(1)->one();
         if (empty($forum)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the forum you are looking for.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find the forum you are looking for.'));
             return $this->redirect(['forum/index']);
         }
         
         if(!User::can(Rbac::PERM_CREATE_THREAD_IN_CLOSED_CATEGORY,['category' => $forum->category]) && !$forum->category->create_thread) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->redirect(['forum/index']);
         }
         
@@ -220,7 +220,7 @@ class ForumThreadController extends BaseController
                     $preview = true;
                 } else {
                     if ($model->podiumNew()) {
-                        $this->success(Yii::t('podium/flash', 'New thread has been created.'));
+                        $this->success(Yii::t('flash', 'New thread has been created.'));
                         return $this->redirect([
                             'forum/thread',
                             'cid' => $forum->category->id,
@@ -229,7 +229,7 @@ class ForumThreadController extends BaseController
                             'slug' => $model->slug
                         ]);
                     }
-                    $this->error(Yii::t('podium/flash', 'Sorry! There was an error while creating the thread. Contact administrator about this problem.'));
+                    $this->error(Yii::t('flash', 'Sorry! There was an error while creating the thread. Contact administrator about this problem.'));
                 }
             }
         }

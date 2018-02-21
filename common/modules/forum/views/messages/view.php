@@ -16,21 +16,21 @@ use common\modules\forum\widgets\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('podium/view', 'View Message');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'My Profile'), 'url' => ['profile/index']];
+$this->title = Yii::t('view', 'View Message');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'My Profile'), 'url' => ['profile/index']];
 if ($type == 'received') {
-    Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Messages Inbox'), 'url' => ['messages/inbox']];
+    Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Messages Inbox'), 'url' => ['messages/inbox']];
 }
 else {
-    Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Sent Messages'), 'url' => ['messages/sent']];
+    Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Sent Messages'), 'url' => ['messages/sent']];
 }
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
 
-$loadOlder    = '<span class="glyphicon glyphicon-import"></span> ' . Yii::t('podium/view', 'Load older messages');
-$loadingOlder = '<span class="glyphicon glyphicon-hourglass"></span> ' . Yii::t('podium/view', 'Loading messages...');
-$lastOne      = '<span class="glyphicon glyphicon-stop"></span> ' . Yii::t('podium/view', 'Last message in the thread');
+$loadOlder    = '<span class="glyphicon glyphicon-import"></span> ' . Yii::t('view', 'Load older messages');
+$loadingOlder = '<span class="glyphicon glyphicon-hourglass"></span> ' . Yii::t('view', 'Loading messages...');
+$lastOne      = '<span class="glyphicon glyphicon-stop"></span> ' . Yii::t('view', 'Last message in the thread');
 $this->registerJs("var loading = false; $('.load-messages').click(function (e) { e.preventDefault(); if (loading === false) { loading = true; $('.load-messages').html('$loadingOlder').addClass('disabled'); $.post('" . Url::to(['messages/load']) . "', {message:$(this).data('last')}, null, 'json').fail(function(){ console.log('Message Load Error!'); }).done(function(data){ $('#loadedMessages').append(data.messages); if (parseInt(data.more) > 0) { $('.load-messages').html('$loadOlder').removeClass('disabled').data('last', data.more); } else { $('.load-messages').html('$lastOne') } }).always(function(){ loading = false; }); } });");
 
 $loggedId = User::loggedId();
@@ -59,9 +59,9 @@ $loggedId = User::loggedId();
                             <?= $model->parsedContent ?>
                             <div class="text-right">
 <?php if ($type == 'received'): ?>
-                                <a href="<?= Url::to(['messages/reply', 'id' => $model->id]) ?>" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('podium/view', 'Reply to Message') ?>"><span class="glyphicon glyphicon-share-alt"></span></a>
+                                <a href="<?= Url::to(['messages/reply', 'id' => $model->id]) ?>" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('view', 'Reply to Message') ?>"><span class="glyphicon glyphicon-share-alt"></span></a>
 <?php endif; ?>
-                                <span data-toggle="modal" data-target="#podiumModal"><button class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('podium/view', 'Delete Message') ?>"><span class="glyphicon glyphicon-trash"></span></button></span>
+                                <span data-toggle="modal" data-target="#podiumModal"><button class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('view', 'Delete Message') ?>"><span class="glyphicon glyphicon-trash"></span></button></span>
                             </div>
                         </div>
                     </div>
@@ -87,10 +87,10 @@ $loggedId = User::loggedId();
 
 <?php Modal::begin([
     'id' => 'podiumModal',
-    'header' => Yii::t('podium/view', 'Delete Message'),
-    'footer' => Yii::t('podium/view', 'Delete Message'),
+    'header' => Yii::t('view', 'Delete Message'),
+    'footer' => Yii::t('view', 'Delete Message'),
     'footerConfirmOptions' => ['class' => 'btn btn-danger'],
     'footerConfirmUrl' => Url::to(['messages/delete-' . $type, 'id' => $id])
  ]) ?>
-<?= Yii::t('podium/view', 'Are you sure you want to delete this message?') ?>
+<?= Yii::t('view', 'Are you sure you want to delete this message?') ?>
 <?php Modal::end();

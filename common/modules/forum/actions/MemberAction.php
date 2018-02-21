@@ -29,7 +29,7 @@ class MemberAction extends Action
     public function run($id = null, $slug = null)
     {
         if (!is_numeric($id) || $id < 1 || empty($slug)) {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find the user you are looking for.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! We can not find the user you are looking for.'));
             return $this->controller->redirect(['members/index']);
         }
 
@@ -42,7 +42,7 @@ class MemberAction extends Action
             ]
         ])->limit(1)->one();
         if (empty($user)) {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find the user you are looking for.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! We can not find the user you are looking for.'));
             return $this->controller->redirect(['members/index']);
         }
         return $this->controller->render($this->view, ['user' => $user]);

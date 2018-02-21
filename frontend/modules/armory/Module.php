@@ -48,7 +48,6 @@ class Module extends \yii\base\Module implements BootstrapInterface
             'class' => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'ru',
             'basePath' => '@armory/messages',
-            'on missingTranslation' => ['\backend\modules\i18n\Module', 'missingTranslation']
         ];
     }
     

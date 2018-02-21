@@ -127,16 +127,16 @@ class Readers extends Widget
         $out = '';
         switch ($this->what) {
             case 'forum':
-                $out .= Yii::t('podium/view', 'Browsing this forum') . ': ';
+                $out .= Yii::t('view', 'Browsing this forum') . ': ';
                 break;
             case 'topic':
-                $out .= Yii::t('podium/view', 'Reading this thread') . ': ';
+                $out .= Yii::t('view', 'Reading this thread') . ': ';
                 break;
             case 'unread':
-                $out .= Yii::t('podium/view', 'Browsing unread threads') . ': ';
+                $out .= Yii::t('view', 'Browsing unread threads') . ': ';
                 break;
             case 'members':
-                $out .= Yii::t('podium/view', 'Browsing the members') . ': ';
+                $out .= Yii::t('view', 'Browsing the members') . ': ';
                 break;
         }
 
@@ -145,7 +145,7 @@ class Readers extends Widget
         $anonymous = $this->getAnonymousUsers($url);
         if ($anonymous) {
             $out .= Html::tag('span',
-                Yii::t('podium/view', '{n, plural, =1{# anonymous user} other{# anonymous users}}', [
+                Yii::t('view', '{n, plural, =1{# anonymous user} other{# anonymous users}}', [
                     'n' => $anonymous
                 ])
             ) . ' ';
@@ -153,7 +153,7 @@ class Readers extends Widget
         $guests = $this->getGuestUsers($url);
         if ($guests) {
             $out .= Html::tag('span',
-                Yii::t('podium/view', '{n, plural, =1{# guest} other{# guests}}', [
+                Yii::t('view', '{n, plural, =1{# guest} other{# guests}}', [
                     'n' => $guests
                 ])
             );

@@ -16,7 +16,7 @@ use common\modules\forum\widgets\Readers;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = Yii::t('podium/view', 'Members List');
+$this->title = Yii::t('view', 'Members List');
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -24,13 +24,13 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
     <li role="presentation" class="active">
         <a href="<?= Url::to(['members/index']) ?>">
             <span class="glyphicon glyphicon-user"></span>
-            <?= Yii::t('podium/view', 'Members List') ?>
+            <?= Yii::t('view', 'Members List') ?>
         </a>
     </li>
     <li role="presentation">
         <a href="<?= Url::to(['members/mods']) ?>">
             <span class="glyphicon glyphicon-scissors"></span>
-            <?= Yii::t('podium/view', 'Moderation Team') ?>
+            <?= Yii::t('view', 'Moderation Team') ?>
         </a>
     </li>
 </ul>
@@ -41,7 +41,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
     'columns' => [
         [
             'attribute' => 'username',
-            'label' => Yii::t('podium/view', 'Username'),
+            'label' => Yii::t('view', 'Username'),
             'format' => 'raw',
             'value' => function ($model) {
                 return Html::a($model->podiumName, ['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug], ['data-pjax' => '0']);
@@ -49,7 +49,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'role',
-            'label' => Yii::t('podium/view', 'Role'),
+            'label' => Yii::t('view', 'Role'),
             'format' => 'raw',
             'filter' => User::getRoles(),
             'value' => function ($model) {
@@ -58,19 +58,19 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'created_at',
-            'label' => Yii::t('podium/view', 'Joined'),
+            'label' => Yii::t('view', 'Joined'),
             'format' => 'datetime'
         ],
         [
             'attribute' => 'threads_count',
-            'label' => Yii::t('podium/view', 'Threads'),
+            'label' => Yii::t('view', 'Threads'),
             'value' => function ($model) {
                 return $model->threadsCount;
             },
         ],
         [
             'attribute' => 'posts_count',
-            'label' => Yii::t('podium/view', 'Posts'),
+            'label' => Yii::t('view', 'Posts'),
             'value' => function ($model) {
                 return $model->postsCount;
             },
@@ -81,13 +81,13 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
             'buttons' => [
                 'view' => function($url, $model) {
                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug], ActionColumn::buttonOptions([
-                        'title' => Yii::t('podium/view', 'View Member')
+                        'title' => Yii::t('view', 'View Member')
                     ]));
                 },
                 'pm' => function($url, $model) {
                     if ($model->id !== User::loggedId()) {
                         return Html::a('<span class="glyphicon glyphicon-envelope"></span>', ['messages/new', 'user' => $model->id], ActionColumn::buttonOptions([
-                            'title' => Yii::t('podium/view', 'Send Message')
+                            'title' => Yii::t('view', 'Send Message')
                         ]));
                     }
                     return ActionColumn::mutedButton('glyphicon glyphicon-envelope');
@@ -99,8 +99,8 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-default">
     <div class="panel-body small">
         <ul class="list-inline pull-right">
-            <li><a href="<?= Url::to(['forum/index']) ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Go to the main page') ?>"><span class="glyphicon glyphicon-home"></span></a></li>
-            <li><a href="#top" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Go to the top') ?>"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
+            <li><a href="<?= Url::to(['forum/index']) ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Go to the main page') ?>"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="#top" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Go to the top') ?>"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
         </ul>
         <?= Readers::widget(['what' => 'members']) ?>
     </div>

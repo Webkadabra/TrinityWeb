@@ -68,7 +68,7 @@ class ProfileController extends BaseController
             if ($model->validate()) {
                 if ($model->save(false)) {
                     Log::info('Profile updated', $model->id, __METHOD__);
-                    $this->success(Yii::t('podium/flash', 'Your profile details have been updated.'));
+                    $this->success(Yii::t('flash', 'Your profile details have been updated.'));
                     return $this->refresh();
                 }
             }
@@ -111,9 +111,9 @@ class ProfileController extends BaseController
         $postData = Yii::$app->request->post();
         if ($postData) {
             if (Subscription::remove(!empty($postData['selection']) ? $postData['selection'] : [])) {
-                $this->success(Yii::t('podium/flash', 'Subscription list has been updated.'));
+                $this->success(Yii::t('flash', 'Subscription list has been updated.'));
             } else {
-                $this->error(Yii::t('podium/flash', 'Sorry! There was an error while unsubscribing the thread list.'));
+                $this->error(Yii::t('flash', 'Sorry! There was an error while unsubscribing the thread list.'));
             }
             return $this->refresh();
         }
@@ -131,28 +131,28 @@ class ProfileController extends BaseController
     {
         $model = Subscription::find()->where(['id' => $id, 'user_id' => User::loggedId()])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Subscription with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Subscription with this ID.'));
             return $this->redirect(['profile/subscriptions']);
         }
         if ($model->post_seen == Subscription::POST_SEEN) {
             if ($model->unseen()) {
-                $this->success(Yii::t('podium/flash', 'Thread has been marked unseen.'));
+                $this->success(Yii::t('flash', 'Thread has been marked unseen.'));
             } else {
                 Log::error('Error while marking thread', $model->id, __METHOD__);
-                $this->error(Yii::t('podium/flash', 'Sorry! There was some error while marking the thread.'));
+                $this->error(Yii::t('flash', 'Sorry! There was some error while marking the thread.'));
             }
             return $this->redirect(['profile/subscriptions']);
         }
         if ($model->post_seen == Subscription::POST_NEW) {
             if ($model->seen()) {
-                $this->success(Yii::t('podium/flash', 'Thread has been marked seen.'));
+                $this->success(Yii::t('flash', 'Thread has been marked seen.'));
             } else {
                 Log::error('Error while marking thread', $model->id, __METHOD__);
-                $this->error(Yii::t('podium/flash', 'Sorry! There was some error while marking the thread.'));
+                $this->error(Yii::t('flash', 'Sorry! There was some error while marking the thread.'));
             }
             return $this->redirect(['profile/subscriptions']);
         }
-        $this->error(Yii::t('podium/flash', 'Sorry! Subscription has got the wrong status.'));
+        $this->error(Yii::t('flash', 'Sorry! Subscription has got the wrong status.'));
         return $this->redirect(['profile/subscriptions']);
     }
 
@@ -165,15 +165,15 @@ class ProfileController extends BaseController
     {
         $model = Subscription::find()->where(['id' => (int)$id, 'user_id' => User::loggedId()])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Subscription with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Subscription with this ID.'));
             return $this->redirect(['profile/subscriptions']);
         }
         if ($model->delete()) {
             $this->module->podiumCache->deleteElement('user.subscriptions', User::loggedId());
-            $this->success(Yii::t('podium/flash', 'Thread has been unsubscribed.'));
+            $this->success(Yii::t('flash', 'Thread has been unsubscribed.'));
         } else {
             Log::error('Error while deleting subscription', $model->id, __METHOD__);
-            $this->error(Yii::t('podium/flash', 'Sorry! There was some error while deleting the subscription.'));
+            $this->error(Yii::t('flash', 'Sorry! There was some error while deleting the subscription.'));
         }
         return $this->redirect(['profile/subscriptions']);
     }
@@ -193,7 +193,7 @@ class ProfileController extends BaseController
             'error' => 1,
             'msg' => Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Error while adding this subscription!'),
+                . ' ' . Yii::t('view', 'Error while adding this subscription!'),
                 ['class' => 'text-danger']
             ),
         ];
@@ -201,7 +201,7 @@ class ProfileController extends BaseController
         if (Podium::getInstance()->user->isGuest) {
             $data['msg'] = Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Please sign in to subscribe to this thread'),
+                . ' ' . Yii::t('view', 'Please sign in to subscribe to this thread'),
                 ['class' => 'text-info']
             );
         }
@@ -211,7 +211,7 @@ class ProfileController extends BaseController
             if (!empty($subscription)) {
                 $data['msg'] = Html::tag('span',
                     Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                    . ' ' . Yii::t('podium/view', 'You are already subscribed to this thread.'),
+                    . ' ' . Yii::t('view', 'You are already subscribed to this thread.'),
                     ['class' => 'text-info']
                 );
             } else {
@@ -220,7 +220,7 @@ class ProfileController extends BaseController
                         'error' => 0,
                         'msg'   => Html::tag('span',
                             Html::tag('span', '', ['class' => 'glyphicon glyphicon-ok-circle'])
-                            . ' ' . Yii::t('podium/view', 'You have subscribed to this thread!'),
+                            . ' ' . Yii::t('view', 'You have subscribed to this thread!'),
                             ['class' => 'text-success']
                         ),
                     ];

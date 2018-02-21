@@ -34,9 +34,9 @@ class Log
     public static function getTypes()
     {
         return [
-            1 => Yii::t('podium/view', 'error'),
-            2 => Yii::t('podium/view', 'warning'),
-            4 => Yii::t('podium/view', 'info')
+            1 => Yii::t('view', 'error'),
+            2 => Yii::t('view', 'warning'),
+            4 => Yii::t('view', 'info')
         ];
     }
 

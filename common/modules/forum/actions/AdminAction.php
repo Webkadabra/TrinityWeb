@@ -54,7 +54,7 @@ class AdminAction extends Action
     {
         $model = User::find()->where(['id' => $id])->limit(1)->one();
         if (empty($model)) {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find User with this ID.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! We can not find User with this ID.'));
             return $this->controller->redirect(['admin/members']);
         }
         if ($model->role != $this->fromRole) {

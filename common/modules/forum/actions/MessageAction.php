@@ -61,7 +61,7 @@ class MessageAction extends Action
     public function run($id = null)
     {
         if (!is_numeric($id) || $id < 1) {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find the message you are looking for.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! We can not find the message you are looking for.'));
             return $this->controller->redirect($this->redirectRoute);
         }
         $model = $this->modelQuery->where([
@@ -70,14 +70,14 @@ class MessageAction extends Action
                 ['!=', $this->type . '_status', $this->deletedStatus]
             ])->limit(1)->one();
         if (empty($model)) {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find the message with the given ID.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! We can not find the message with the given ID.'));
             return $this->controller->redirect($this->redirectRoute);
         }
         if ($model->remove()) {
-            $this->controller->success(Yii::t('podium/flash', 'Message has been deleted.'));
+            $this->controller->success(Yii::t('flash', 'Message has been deleted.'));
         } else {
             Log::error('Error while deleting message', $model->id, __METHOD__);
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not delete this message. Contact administrator about this problem.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! We can not delete this message. Contact administrator about this problem.'));
         }
         return $this->controller->redirect($this->redirectRoute);
     }

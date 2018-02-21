@@ -39,19 +39,19 @@ else {
                 <small class="pull-right">
                     <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->postData->created_at, 'long') ?>"><?= Podium::getInstance()->formatter->asRelativeTime($model->postData->created_at) ?></span>
 <?php if ($model->postData->edited && $model->postData->edited_at): ?>
-                    <em>(<?= Yii::t('podium/view', 'Edited') ?> <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->postData->edited_at, 'long') ?>"><?= Podium::getInstance()->formatter->asRelativeTime($model->postData->edited_at) ?>)</span></em>
+                    <em>(<?= Yii::t('view', 'Edited') ?> <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->postData->edited_at, 'long') ?>"><?= Podium::getInstance()->formatter->asRelativeTime($model->postData->edited_at) ?>)</span></em>
 <?php endif; ?>
                 </small>
                 <?= $model->postData->author->podiumTag ?>
                 <small>
-                    <span class="label label-info" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Number of posts') ?>"><?= $model->postData->author->postsCount ?></span>
+                    <span class="label label-info" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Number of posts') ?>"><?= $model->postData->author->postsCount ?></span>
                 </small>
             </div>
             <div class="popover-content podium-content">
                 <a href="<?= Url::to(['forum/thread', 'cid' => $model->postData->thread->category_id, 'fid' => $model->postData->forum_id, 'id' => $model->postData->thread_id, 'slug' => $model->postData->thread->slug]) ?>"><span class="glyphicon glyphicon-comment"></span> <?= $thread ?></a><br><br>
                 <?= $content ?>
                 <div class="podium-action-bar">
-                    <a href="<?= Url::to(['forum/show', 'id' => $model->postData->id]) ?>" class="btn btn-default btn-xs" data-pjax="0" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Direct link to this post') ?>"><span class="glyphicon glyphicon-link"></span></a>
+                    <a href="<?= Url::to(['forum/show', 'id' => $model->postData->id]) ?>" class="btn btn-default btn-xs" data-pjax="0" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('view', 'Direct link to this post') ?>"><span class="glyphicon glyphicon-link"></span></a>
                 </div>
             </div>
         </div>

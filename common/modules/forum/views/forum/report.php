@@ -11,8 +11,8 @@ use common\modules\forum\widgets\editor\EditorBasic;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'Report post');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Main Forum'), 'url' => ['forum/index']];
+$this->title = Yii::t('view', 'Report post');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Main Forum'), 'url' => ['forum/index']];
 Yii::$app->params['breadcrumbs'][] = ['label' => $post->forum->category->name, 'url' => ['forum/category', 'id' => $post->forum->category->id, 'slug' => $post->forum->category->slug]];
 Yii::$app->params['breadcrumbs'][] = ['label' => $post->forum->name, 'url' => ['forum/forum', 'cid' => $post->forum->category->id, 'id' => $post->forum->id, 'slug' => $post->forum->slug]];
 Yii::$app->params['breadcrumbs'][] = ['label' => $post->thread->name, 'url' => ['forum/thread', 'cid' => $post->forum->category->id, 'fid' => $post->forum->id, 'id' => $post->thread->id, 'slug' => $post->thread->slug]];
@@ -29,7 +29,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
                     <div class="row">
                         <div class="col-sm-12">
                             <?= $form->field($model, 'content')
-                                ->label(Yii::t('podium/view', 'Complaint'))
+                                ->label(Yii::t('view', 'Complaint'))
                                 ->widget(EditorBasic::className()) ?>
                         </div>
                     </div>
@@ -37,7 +37,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Report post'), [
+                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Report post'), [
                                 'class' => 'btn btn-block btn-danger', 'name' => 'save-button'
                             ]) ?>
                         </div>

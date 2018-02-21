@@ -89,30 +89,30 @@ class MembersController extends BaseController
                 ['!=', 'status', User::STATUS_REGISTERED]
             ])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Member with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Member with this ID.'));
             return $this->redirect(['members/index']);
         }
 
         $logged = User::loggedId();
 
         if ($model->id == $logged) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You can not ignore your own account.'));
+            $this->error(Yii::t('flash', 'Sorry! You can not ignore your own account.'));
             return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
         }
 
         if ($model->id == User::ROLE_ADMIN) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You can not ignore Administrator.'));
+            $this->error(Yii::t('flash', 'Sorry! You can not ignore Administrator.'));
             return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
         }
 
         if ($model->updateIgnore($logged)) {
             if ($model->isIgnoredBy($logged)) {
-                $this->success(Yii::t('podium/flash', 'User is now ignored.'));
+                $this->success(Yii::t('flash', 'User is now ignored.'));
             } else {
-                $this->success(Yii::t('podium/flash', 'User is not ignored anymore.'));
+                $this->success(Yii::t('flash', 'User is not ignored anymore.'));
             }
         } else {
-            $this->error(Yii::t('podium/flash', 'Sorry! There was some error while performing this action.'));
+            $this->error(Yii::t('flash', 'Sorry! There was some error while performing this action.'));
         }
         return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
     }
@@ -161,7 +161,7 @@ class MembersController extends BaseController
                 ]
             ])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Member with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Member with this ID.'));
             return $this->redirect(['members/index']);
         }
         return $this->render('view', ['model' => $model]);
@@ -184,25 +184,25 @@ class MembersController extends BaseController
                 ['!=', 'status', User::STATUS_REGISTERED]
             ])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Member with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Member with this ID.'));
             return $this->redirect(['members/index']);
         }
 
         $logged = User::loggedId();
 
         if ($model->id == $logged) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You can not befriend your own account.'));
+            $this->error(Yii::t('flash', 'Sorry! You can not befriend your own account.'));
             return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
         }
 
         if ($model->updateFriend($logged)) {
             if ($model->isBefriendedBy($logged)) {
-                $this->success(Yii::t('podium/flash', 'User is your friend now.'));
+                $this->success(Yii::t('flash', 'User is your friend now.'));
             } else {
-                $this->success(Yii::t('podium/flash', 'User is not your friend anymore.'));
+                $this->success(Yii::t('flash', 'User is not your friend anymore.'));
             }
         } else {
-            $this->error(Yii::t('podium/flash', 'Sorry! There was some error while performing this action.'));
+            $this->error(Yii::t('flash', 'Sorry! There was some error while performing this action.'));
         }
         return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
     }

@@ -92,7 +92,7 @@ class PollActiveRecord extends ActiveRecord
         }
         $this->editAnswers = $filtered;
         if (count($this->editAnswers) < 2) {
-            $this->addError('editAnswers', Yii::t('podium/view', 'You have to add at least 2 options.'));
+            $this->addError('editAnswers', Yii::t('view', 'You have to add at least 2 options.'));
         }
     }
 
@@ -102,10 +102,10 @@ class PollActiveRecord extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'question' => Yii::t('podium/view', 'Question'),
-            'votes' => Yii::t('podium/view', 'Number of votes'),
-            'hidden' => Yii::t('podium/view', 'Hide results before voting'),
-            'end' => Yii::t('podium/view', 'Poll ends at'),
+            'question' => Yii::t('view', 'Question'),
+            'votes' => Yii::t('view', 'Number of votes'),
+            'hidden' => Yii::t('view', 'Hide results before voting'),
+            'end' => Yii::t('view', 'Poll ends at'),
         ];
     }
 

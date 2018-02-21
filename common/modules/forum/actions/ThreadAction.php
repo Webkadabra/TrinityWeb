@@ -77,19 +77,19 @@ class ThreadAction extends Action
     {
         $thread = $this->getThread($cid, $fid, $id, $slug);
         if (empty($thread)) {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! We can not find the thread you are looking for.'));
             return $this->controller->redirect(['forum/index']);
         }
 
         if (!User::can($this->permission, ['item' => $thread])) {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! You do not have the required permission to perform this action.'));
             return $this->controller->redirect(['forum/index']);
         }
 
         if (call_user_func([$thread, $this->switcher])) {
             $this->controller->success($thread->{$this->boolAttribute} ? $this->onMessage : $this->offMessage);
         } else {
-            $this->controller->error(Yii::t('podium/flash', 'Sorry! There was an error while updating the thread.'));
+            $this->controller->error(Yii::t('flash', 'Sorry! There was an error while updating the thread.'));
         }
         return $this->controller->redirect([
             'forum/thread',

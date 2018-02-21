@@ -64,7 +64,7 @@ class PostActiveRecord extends ActiveRecord
     public function rules()
     {
         return [
-            ['topic', 'required', 'message' => Yii::t('podium/view', 'Topic can not be blank.'), 'on' => ['firstPost']],
+            ['topic', 'required', 'message' => Yii::t('view', 'Topic can not be blank.'), 'on' => ['firstPost']],
             ['topic', 'filter', 'filter' => function ($value) {
                 return HtmlPurifier::process(trim($value));
             }, 'on' => ['firstPost']],

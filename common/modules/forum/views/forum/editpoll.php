@@ -11,8 +11,8 @@ use common\modules\forum\widgets\poll\Poll;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'Edit Poll');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Main Forum'), 'url' => ['forum/index']];
+$this->title = Yii::t('view', 'Edit Poll');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Main Forum'), 'url' => ['forum/index']];
 Yii::$app->params['breadcrumbs'][] = ['label' => $model->thread->forum->category->name, 'url' => ['forum/category', 'id' => $model->thread->forum->category->id, 'slug' => $model->thread->forum->category->slug]];
 Yii::$app->params['breadcrumbs'][] = ['label' => $model->thread->forum->name, 'url' => ['forum/forum', 'cid' => $model->thread->forum->category->id, 'id' => $model->thread->forum->id, 'slug' => $model->thread->forum->slug]];
 Yii::$app->params['breadcrumbs'][] = ['label' => $model->thread->name, 'url' => ['forum/thread', 'cid' => $model->thread->forum->category->id, 'fid' => $model->thread->forum->id, 'id' => $model->thread->id, 'slug' => $model->thread->slug]];
@@ -30,10 +30,10 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-8">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Poll'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Save Poll'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
                         </div>
                         <div class="col-sm-4">
-                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span> ' . Yii::t('podium/view', 'Cancel'), ['forum/thread', 'cid' => $model->thread->forum->category->id, 'fid' => $model->thread->forum->id, 'id' => $model->thread->id, 'slug' => $model->thread->slug], ['class' => 'btn btn-block btn-default', 'name' => 'cancel-button']) ?>
+                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span> ' . Yii::t('view', 'Cancel'), ['forum/thread', 'cid' => $model->thread->forum->category->id, 'fid' => $model->thread->forum->id, 'id' => $model->thread->id, 'slug' => $model->thread->slug], ['class' => 'btn btn-block btn-default', 'name' => 'cancel-button']) ?>
                         </div>
                     </div>
                 </div>

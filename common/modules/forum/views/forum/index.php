@@ -11,7 +11,7 @@ use common\modules\forum\Podium;
 use common\modules\forum\widgets\LatestPosts;
 use yii\helpers\Url;
 
-$this->title = Yii::t('podium/view', 'Main Forum');
+$this->title = Yii::t('view', 'Main Forum');
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -21,7 +21,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-3">
 <?php if (!Podium::getInstance()->user->isGuest): ?>
-        <a href="<?= Url::to(['forum/unread-posts']) ?>" class="btn btn-info btn-xs btn-block"><span class="glyphicon glyphicon-flash"></span> <?= Yii::t('podium/view', 'Unread posts') ?></a><br>
+        <a href="<?= Url::to(['forum/unread-posts']) ?>" class="btn btn-info btn-xs btn-block"><span class="glyphicon glyphicon-flash"></span> <?= Yii::t('view', 'Unread posts') ?></a><br>
 <?php endif ?>
         <?= LatestPosts::widget(); ?>
     </div>

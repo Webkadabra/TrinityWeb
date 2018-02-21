@@ -37,7 +37,7 @@ class Avatar extends Widget
     {
         $avatar = Html::img(Helper::defaultAvatar(), [
             'class' => 'podium-avatar img-responsive center-block',
-            'alt' => Yii::t('podium/view', 'user deleted')
+            'alt' => Yii::t('view', 'user deleted')
         ]);
         $name = Helper::deletedUserTag(true);
         $character_string = null;

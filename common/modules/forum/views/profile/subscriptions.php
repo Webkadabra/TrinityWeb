@@ -12,8 +12,8 @@ use common\modules\forum\widgets\gridview\GridView;
 use yii\grid\CheckboxColumn;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'Subscriptions');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'My Profile'), 'url' => ['profile/index']];
+$this->title = Yii::t('view', 'Subscriptions');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'My Profile'), 'url' => ['profile/index']];
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -22,7 +22,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         <?= $this->render('/elements/profile/_navbar', ['active' => 'subscriptions']) ?>
     </div>
     <div class="col-md-9 col-sm-8">
-        <h4><?= Yii::t('podium/view', 'Subscriptions') ?></h4>
+        <h4><?= Yii::t('view', 'Subscriptions') ?></h4>
         <?= Html::beginForm(); ?>
 <?= GridView::widget([
     'dataProvider'   => $dataProvider,
@@ -37,7 +37,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'thread.name',
-            'label' => Yii::t('podium/view', "Thread's Name"),
+            'label' => Yii::t('view', "Thread's Name"),
             'format' => 'raw',
             'value' => function ($model) {
                 return Html::a($model->thread->name, ['forum/show', 'id' => $model->thread->latest->id], ['class' => 'center-block']);
@@ -47,7 +47,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
             'attribute' => 'post_seen',
             'headerOptions' => ['class' => 'text-center'],
             'contentOptions' => ['class' => 'text-center'],
-            'label' => Yii::t('podium/view', 'New Posts'),
+            'label' => Yii::t('view', 'New Posts'),
             'format' => 'raw',
             'value' => function ($model) {
                 return $model->post_seen ? '' : '<span class="glyphicon glyphicon-ok-sign"></span>';
@@ -59,16 +59,16 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
             'buttons' => [
                 'mark' => function($url, $model) {
                     if ($model->post_seen) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-close"></span> <span class="hidden-sm">' . Yii::t('podium/view', 'Mark unseen') . '</span>', $url, [
+                        return Html::a('<span class="glyphicon glyphicon-eye-close"></span> <span class="hidden-sm">' . Yii::t('view', 'Mark unseen') . '</span>', $url, [
                             'class' => 'btn btn-warning btn-xs'
                         ]);
                     }
-                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-sm">' . Yii::t('podium/view', 'Mark seen') . '</span>', $url, [
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-sm">' . Yii::t('view', 'Mark seen') . '</span>', $url, [
                         'class' => 'btn btn-success btn-xs'
                     ]);
                 },
                 'delete' => function($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-trash"></span> <span class="hidden-sm">' . Yii::t('podium/view', 'Unsubscribe') . '</span>', $url, [
+                    return Html::a('<span class="glyphicon glyphicon-trash"></span> <span class="hidden-sm">' . Yii::t('view', 'Unsubscribe') . '</span>', $url, [
                         'class' => 'btn btn-danger btn-xs'
                     ]);
                 },
@@ -78,7 +78,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
 ]); ?>
             <div class="row">
                 <div class="col-sm-12">
-                    <?= Html::submitButton('<span class="glyphicon glyphicon-trash"></span> ' . Yii::t('podium/view', 'Unsubscribe Selected Threads'), ['class' => 'btn btn-danger btn-sm', 'name' => 'delete-button']) ?>
+                    <?= Html::submitButton('<span class="glyphicon glyphicon-trash"></span> ' . Yii::t('view', 'Unsubscribe Selected Threads'), ['class' => 'btn btn-danger btn-sm', 'name' => 'delete-button']) ?>
                 </div>
             </div>
         <?= Html::endForm(); ?>

@@ -86,7 +86,7 @@ class User extends UserActiveRecord
             [['username', 'email', 'password', 'passwordRepeat', 'tos'], 'required', 'except' => ['account']],
             ['currentPassword', 'required'],
             ['currentPassword', 'validateCurrentPassword'],
-            [['email', 'new_email'], 'email', 'message' => Yii::t('podium/view', 'This is not a valid e-mail address.')],
+            [['email', 'new_email'], 'email', 'message' => Yii::t('view', 'This is not a valid e-mail address.')],
             ['email', 'unique'],
             ['new_email', 'unique', 'targetAttribute' => 'email'],
             [['password', 'newPassword'], 'passwordRequirements'],
@@ -97,7 +97,7 @@ class User extends UserActiveRecord
             ['inherited_id', 'integer'],
             ['status', 'default', 'value' => self::STATUS_REGISTERED],
             ['role', 'default', 'value' => self::ROLE_MEMBER],
-            ['tos', 'compare', 'compareValue' => 1, 'message' => Yii::t('podium/view', 'You have to read and agree on ToS.')],
+            ['tos', 'compare', 'compareValue' => 1, 'message' => Yii::t('view', 'You have to read and agree on ToS.')],
         ];
 
         if (Podium::getInstance()->podiumConfig->get('recaptcha_sitekey') !== '' && Podium::getInstance()->podiumConfig->get('recaptcha_secretkey') !== '') {
@@ -281,9 +281,9 @@ class User extends UserActiveRecord
     public static function getRoles()
     {
         return [
-            self::ROLE_MEMBER => Yii::t('podium/view', 'Member'),
-            self::ROLE_MODERATOR => Yii::t('podium/view', 'Moderator'),
-            self::ROLE_ADMIN => Yii::t('podium/view', 'Admin'),
+            self::ROLE_MEMBER => Yii::t('view', 'Member'),
+            self::ROLE_MODERATOR => Yii::t('view', 'Moderator'),
+            self::ROLE_ADMIN => Yii::t('view', 'Admin'),
         ];
     }
 
@@ -294,8 +294,8 @@ class User extends UserActiveRecord
     public static function getModRoles()
     {
         return [
-            self::ROLE_MODERATOR => Yii::t('podium/view', 'Moderator'),
-            self::ROLE_ADMIN => Yii::t('podium/view', 'Admin'),
+            self::ROLE_MODERATOR => Yii::t('view', 'Moderator'),
+            self::ROLE_ADMIN => Yii::t('view', 'Admin'),
         ];
     }
 
@@ -306,9 +306,9 @@ class User extends UserActiveRecord
     public static function getStatuses()
     {
         return [
-            self::STATUS_ACTIVE => Yii::t('podium/view', 'Active'),
-            self::STATUS_BANNED => Yii::t('podium/view', 'Banned'),
-            self::STATUS_REGISTERED => Yii::t('podium/view', 'Registered'),
+            self::STATUS_ACTIVE => Yii::t('view', 'Active'),
+            self::STATUS_BANNED => Yii::t('view', 'Banned'),
+            self::STATUS_REGISTERED => Yii::t('view', 'Registered'),
         ];
     }
 

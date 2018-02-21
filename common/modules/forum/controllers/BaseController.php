@@ -86,17 +86,17 @@ class BaseController extends YiiController
     public static function warnings()
     {
         return [
-            'maintenance' => Yii::t('podium/flash', 'Podium is currently in the Maintenance mode. All users without Administrator privileges are redirected to {maintenancePage}. You can switch the mode off at {settingsPage}.', [
-                'maintenancePage' => Html::a(Yii::t('podium/flash', 'Maintenance page'), ['forum/maintenance']),
-                'settingsPage' => Html::a(Yii::t('podium/flash', 'Settings page'), ['admin/settings']),
+            'maintenance' => Yii::t('flash', 'Podium is currently in the Maintenance mode. All users without Administrator privileges are redirected to {maintenancePage}. You can switch the mode off at {settingsPage}.', [
+                'maintenancePage' => Html::a(Yii::t('flash', 'Maintenance page'), ['forum/maintenance']),
+                'settingsPage' => Html::a(Yii::t('flash', 'Settings page'), ['admin/settings']),
             ]),
-            'email' => Yii::t('podium/flash', 'No e-mail address has been set for your account! Go to {link} to add one.', [
-                'link' => Html::a(Yii::t('podium/view', 'Profile') . ' > ' . Yii::t('podium/view', 'Account Details'), ['profile/details'])
+            'email' => Yii::t('flash', 'No e-mail address has been set for your account! Go to {link} to add one.', [
+                'link' => Html::a(Yii::t('view', 'Profile') . ' > ' . Yii::t('view', 'Account Details'), ['profile/details'])
             ]),
-            'old_version' => Yii::t('podium/flash', 'It looks like there is a new version of Podium database! {link}', [
-                'link' => Html::a(Yii::t('podium/view', 'Update Podium'), ['install/level-up'])
+            'old_version' => Yii::t('flash', 'It looks like there is a new version of Podium database! {link}', [
+                'link' => Html::a(Yii::t('view', 'Update Podium'), ['install/level-up'])
             ]),
-            'new_version' => Yii::t('podium/flash', 'Module version appears to be older than database! Please verify your database.')
+            'new_version' => Yii::t('flash', 'Module version appears to be older than database! Please verify your database.')
         ];
     }
 
@@ -213,8 +213,8 @@ class BaseController extends YiiController
                         if (!User::createInheritedAccount()) {
                             throw new InvalidConfigException('There was an error while creating inherited user account. Podium can not run with the current configuration. Please contact administrator about this problem.');
                         }
-                        $this->success(Yii::t('podium/flash', 'Hey! Your new forum account has just been automatically created! Go to {link} to complement it.', [
-                            'link' => Html::a(Yii::t('podium/view', 'Profile'), ['profile/details'])
+                        $this->success(Yii::t('flash', 'Hey! Your new forum account has just been automatically created! Go to {link} to complement it.', [
+                            'link' => Html::a(Yii::t('view', 'Profile'), ['profile/details'])
                         ]));
                     } elseif (!User::updateInheritedAccount()) {
                         throw new InvalidConfigException('There was an error while updating inherited user account. Podium can not run with the current configuration. Please contact administrator about this problem.');

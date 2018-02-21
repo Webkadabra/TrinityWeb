@@ -56,9 +56,9 @@ class AdminForumController extends BaseController
     public function actionClear()
     {
         if ($this->module->podiumCache->flush()) {
-            $this->success(Yii::t('podium/flash', 'Cache has been cleared.'));
+            $this->success(Yii::t('flash', 'Cache has been cleared.'));
         } else {
-            $this->error(Yii::t('podium/flash', 'Sorry! There was some error while clearing the cache.'));
+            $this->error(Yii::t('flash', 'Sorry! There was some error while clearing the cache.'));
         }
         return $this->redirect(['admin/settings']);
     }
@@ -77,12 +77,12 @@ class AdminForumController extends BaseController
         if ($model->load(Yii::$app->request->post())) {
             if (User::can(Rbac::PERM_CHANGE_SETTINGS)) {
                 if ($model->save()) {
-                    $this->success(Yii::t('podium/flash', 'Content has been saved.'));
+                    $this->success(Yii::t('flash', 'Content has been saved.'));
                 } else {
-                    $this->error(Yii::t('podium/flash', 'Sorry! There was some error while saving the content.'));
+                    $this->error(Yii::t('flash', 'Sorry! There was some error while saving the content.'));
                 }
             } else {
-                $this->error(Yii::t('podium/flash', 'You are not allowed to perform this action.'));
+                $this->error(Yii::t('flash', 'You are not allowed to perform this action.'));
             }
             return $this->refresh();
         }
@@ -98,16 +98,16 @@ class AdminForumController extends BaseController
     {
         $model = Category::find()->where(['id' => $id])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Category with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Category with this ID.'));
             return $this->redirect(['admin/categories']);
         }
         if ($model->delete()) {
             PodiumCache::clearAfter('categoryDelete');
             Log::info('Category deleted', $model->id, __METHOD__);
-            $this->success(Yii::t('podium/flash', 'Category has been deleted.'));
+            $this->success(Yii::t('flash', 'Category has been deleted.'));
         } else {
             Log::error('Error while deleting category', $model->id, __METHOD__);
-            $this->error(Yii::t('podium/flash', 'Sorry! There was some error while deleting the category.'));
+            $this->error(Yii::t('flash', 'Sorry! There was some error while deleting the category.'));
         }
         return $this->redirect(['admin/categories']);
     }
@@ -122,16 +122,16 @@ class AdminForumController extends BaseController
     {
         $model = Forum::find()->where(['id' => $id, 'category_id' => $cid])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Forum with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Forum with this ID.'));
             return $this->redirect(['admin/forums', 'cid' => $cid]);
         }
         if ($model->delete()) {
             PodiumCache::clearAfter('forumDelete');
             Log::info('Forum deleted', $model->id, __METHOD__);
-            $this->success(Yii::t('podium/flash', 'Forum has been deleted.'));
+            $this->success(Yii::t('flash', 'Forum has been deleted.'));
         } else {
             Log::error('Error while deleting forum', $model->id, __METHOD__);
-            $this->error(Yii::t('podium/flash', 'Sorry! There was some error while deleting the forum.'));
+            $this->error(Yii::t('flash', 'Sorry! There was some error while deleting the forum.'));
         }
         return $this->redirect(['admin/forums', 'cid' => $cid]);
     }
@@ -145,16 +145,16 @@ class AdminForumController extends BaseController
     {
         $model = Category::find()->where(['id' => $id])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Category with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Category with this ID.'));
             return $this->redirect(['admin/categories']);
         }
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 Log::info('Category updated', $model->id, __METHOD__);
-                $this->success(Yii::t('podium/flash', 'Category has been updated.'));
+                $this->success(Yii::t('flash', 'Category has been updated.'));
                 return $this->refresh();
             }
-            $this->error(Yii::t('podium/flash', 'Sorry! There was an error while updating the category.'));
+            $this->error(Yii::t('flash', 'Sorry! There was an error while updating the category.'));
         }
         return $this->render('category', [
             'model' => $model,
@@ -172,16 +172,16 @@ class AdminForumController extends BaseController
     {
         $model = Forum::find()->where(['id' => $id, 'category_id' => $cid])->limit(1)->one();
         if (empty($model)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Forum with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Forum with this ID.'));
             return $this->redirect(['admin/forums', 'cid' => $cid]);
         }
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 Log::info('Forum updated', $model->id, __METHOD__);
-                $this->success(Yii::t('podium/flash', 'Forum has been updated.'));
+                $this->success(Yii::t('flash', 'Forum has been updated.'));
                 return $this->refresh();
             }
-            $this->error(Yii::t('podium/flash', 'Sorry! There was an error while updating the forum.'));
+            $this->error(Yii::t('flash', 'Sorry! There was an error while updating the forum.'));
         }
         return $this->render('forum', [
             'model' => $model,
@@ -226,7 +226,7 @@ class AdminForumController extends BaseController
         $model->sort = 0;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Log::info('Category added', $model->id, __METHOD__);
-            $this->success(Yii::t('podium/flash', 'New category has been created.'));
+            $this->success(Yii::t('flash', 'New category has been created.'));
             return $this->redirect(['admin/categories']);
         }
         return $this->render('category', [
@@ -244,7 +244,7 @@ class AdminForumController extends BaseController
     {
         $category = Category::find()->where(['id' => $cid])->limit(1)->one();
         if (empty($category)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find Category with this ID.'));
+            $this->error(Yii::t('flash', 'Sorry! We can not find Category with this ID.'));
             return $this->redirect(['admin/categories']);
         }
         
@@ -269,12 +269,12 @@ class AdminForumController extends BaseController
             if (User::can(Rbac::PERM_CHANGE_SETTINGS)) {
                 if ($model->update($data)) {
                     Log::info('Settings updated', null, __METHOD__);
-                    $this->success(Yii::t('podium/flash', 'Settings have been updated.'));
+                    $this->success(Yii::t('flash', 'Settings have been updated.'));
                     return $this->refresh();
                 }
-                $this->error(Yii::t('podium/flash', "One of the setting's values is too long (255 characters max)."));
+                $this->error(Yii::t('flash', "One of the setting's values is too long (255 characters max)."));
             } else {
-                $this->error(Yii::t('podium/flash', 'You are not allowed to perform this action.'));
+                $this->error(Yii::t('flash', 'You are not allowed to perform this action.'));
             }
         }
         return $this->render('settings', ['model' => $model]);
@@ -292,7 +292,7 @@ class AdminForumController extends BaseController
         if (!User::can(Rbac::PERM_UPDATE_CATEGORY)) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'You are not allowed to perform this action.'),
+                . ' ' . Yii::t('view', 'You are not allowed to perform this action.'),
                 ['class' => 'text-danger']
             );
         }
@@ -302,7 +302,7 @@ class AdminForumController extends BaseController
         if (!is_numeric($modelId) || !is_numeric($new)) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Sorry! Sorting parameters are wrong.'),
+                . ' ' . Yii::t('view', 'Sorry! Sorting parameters are wrong.'),
                 ['class' => 'text-danger']
             );
         }
@@ -311,20 +311,20 @@ class AdminForumController extends BaseController
         if (empty($moved)) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Sorry! We can not find Category with this ID.'),
+                . ' ' . Yii::t('view', 'Sorry! We can not find Category with this ID.'),
                 ['class' => 'text-danger']
             );
         }
         if ($moved->newOrder((int)$new)) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-ok-circle'])
-                . ' ' . Yii::t('podium/view', "New categories' order has been saved."),
+                . ' ' . Yii::t('view', "New categories' order has been saved."),
                 ['class' => 'text-success']
             );
         }
         return Html::tag('span',
             Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-            . ' ' . Yii::t('podium/view', "Sorry! We can not save new categories' order."),
+            . ' ' . Yii::t('view', "Sorry! We can not save new categories' order."),
             ['class' => 'text-danger']
         );
     }
@@ -341,7 +341,7 @@ class AdminForumController extends BaseController
         if (!User::can(Rbac::PERM_UPDATE_FORUM)) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'You are not allowed to perform this action.'),
+                . ' ' . Yii::t('view', 'You are not allowed to perform this action.'),
                 ['class' => 'text-danger']
             );
         }
@@ -352,7 +352,7 @@ class AdminForumController extends BaseController
         if (!is_numeric($modelId) || !is_numeric($modelCategory) || !is_numeric($new)) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Sorry! Sorting parameters are wrong.'),
+                . ' ' . Yii::t('view', 'Sorry! Sorting parameters are wrong.'),
                 ['class' => 'text-danger']
             );
         }
@@ -362,20 +362,20 @@ class AdminForumController extends BaseController
         if (empty($moved) || empty($modelCategory) || $moved->category_id != $movedCategory->id) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-                . ' ' . Yii::t('podium/view', 'Sorry! We can not find Forum with this ID.'),
+                . ' ' . Yii::t('view', 'Sorry! We can not find Forum with this ID.'),
                 ['class' => 'text-danger']
             );
         }
         if ($moved->newOrder((int)$new)) {
             return Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-ok-circle'])
-                . ' ' . Yii::t('podium/view', "New forums' order has been saved."),
+                . ' ' . Yii::t('view', "New forums' order has been saved."),
                 ['class' => 'text-success']
             );
         }
         return Html::tag('span',
             Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
-            . ' ' . Yii::t('podium/view', "Sorry! We can not save new forums' order."),
+            . ' ' . Yii::t('view', "Sorry! We can not save new forums' order."),
             ['class' => 'text-danger']
         );
     }

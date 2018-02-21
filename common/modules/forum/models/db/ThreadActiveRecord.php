@@ -114,7 +114,7 @@ class ThreadActiveRecord extends ActiveRecord
     public function rules()
     {
         return [
-            ['name', 'required', 'message' => Yii::t('podium/view', 'Topic can not be blank.')],
+            ['name', 'required', 'message' => Yii::t('view', 'Topic can not be blank.')],
             ['post', 'required', 'on' => ['new']],
             ['post', 'string', 'min' => 10, 'on' => ['new']],
             ['post', 'filter', 'filter' => function ($value) {
@@ -156,7 +156,7 @@ class ThreadActiveRecord extends ActiveRecord
             }
             $this->pollAnswers = $filtered;
             if (count($this->pollAnswers) < 2) {
-                $this->addError('pollAnswers', Yii::t('podium/view', 'You have to add at least 2 options.'));
+                $this->addError('pollAnswers', Yii::t('view', 'You have to add at least 2 options.'));
             }
         }
     }
@@ -169,10 +169,10 @@ class ThreadActiveRecord extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pollAuestion' => Yii::t('podium/view', 'Question'),
-            'pollVotes' => Yii::t('podium/view', 'Number of votes'),
-            'pollHidden' => Yii::t('podium/view', 'Hide results before voting'),
-            'pollEnd' => Yii::t('podium/view', 'Poll ends at'),
+            'pollAuestion' => Yii::t('view', 'Question'),
+            'pollVotes' => Yii::t('view', 'Number of votes'),
+            'pollHidden' => Yii::t('view', 'Hide results before voting'),
+            'pollEnd' => Yii::t('view', 'Poll ends at'),
         ];
     }
 

@@ -13,8 +13,8 @@ use common\modules\forum\widgets\gridview\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'Logs');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Administration Dashboard'), 'url' => ['admin/index']];
+$this->title = Yii::t('view', 'Logs');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Administration Dashboard'), 'url' => ['admin/index']];
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -35,11 +35,11 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
     'columns' => [
         [
             'attribute' => 'id',
-            'label' => Yii::t('podium/view', 'ID'),
+            'label' => Yii::t('view', 'ID'),
         ],
         [
             'attribute' => 'level',
-            'label' => Yii::t('podium/view', 'Level'),
+            'label' => Yii::t('view', 'Level'),
             'encodeLabel' => false,
             'filter' => Log::getTypes(),
             'format' => 'raw',
@@ -56,14 +56,14 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'category',
-            'label' => Yii::t('podium/view', 'Category'),
+            'label' => Yii::t('view', 'Category'),
             'value' => function ($model) {
                 return str_replace('common\modules\forum', '', $model->category);
             },
         ],
         [
             'attribute' => 'log_time',
-            'label' => Yii::t('podium/view', 'Time'),
+            'label' => Yii::t('view', 'Time'),
             'filter' => false,
             'value' => function ($model) {
                 return Podium::getInstance()->formatter->asDatetime(floor($model->log_time), 'medium');
@@ -71,11 +71,11 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'ip',
-            'label' => Yii::t('podium/view', 'IP'),
+            'label' => Yii::t('view', 'IP'),
         ],
         [
             'attribute' => 'message',
-            'label' => Yii::t('podium/view', 'Message'),
+            'label' => Yii::t('view', 'Message'),
             'format' => 'raw',
             'value' => function ($model) {
                 return nl2br(Html::encode($model->message));
@@ -83,14 +83,14 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'model',
-            'label' => Yii::t('podium/view', 'Model ID'),
+            'label' => Yii::t('view', 'Model ID'),
             'value' => function ($model) {
                 return $model->model !== null ? $model->model : '';
             },
         ],
         [
             'attribute' => 'user',
-            'label' => Yii::t('podium/view', 'Who'),
+            'label' => Yii::t('view', 'Who'),
             'value' => function ($model) {
                 return $model->user !== null ? $model->user : '';
             },

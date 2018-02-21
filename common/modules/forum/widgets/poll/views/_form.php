@@ -5,7 +5,7 @@ use kartik\date\DatePicker;
 $answers = 0;
 $options = [];
 for ($a = 1; $a <= 10; $a++) {
-    $opts = ['placeholder' => Yii::t('podium/view', 'Leave empty to remove')];
+    $opts = ['placeholder' => Yii::t('view', 'Leave empty to remove')];
     $opts['id'] = 'thread-poll_answers' . ($a > 1 ? '_' . $a : '');
     if (!empty($model->$pollAnswers[$a - 1])) {
         $opts['value'] = $model->$pollAnswers[$a - 1];
@@ -50,12 +50,12 @@ $fieldLayoutShort = [
 <?php foreach ($options as $index => $option): ?>
 <div class="row <?= $index > 2 ? 'podium-poll-opt-' . $index : '' ?> <?= $option['value'] === null && $index > 2 ? 'hide' : '' ?>">
     <?= $form->field($model, $pollAnswers .'[]', $fieldLayoutLong)
-            ->label(Yii::t('podium/view', 'Option #{n}', ['n' => $index]), ['for' => $option['id']])
+            ->label(Yii::t('view', 'Option #{n}', ['n' => $index]), ['for' => $option['id']])
             ->textInput($option); ?>
 </div>
 <?php endforeach; ?>
 <div class="row podium-poll-plus">
     <div class="col-sm-offset-3 col-sm-9">
-        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> <?= Yii::t('podium/view', 'One more'); ?></button>
+        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> <?= Yii::t('view', 'One more'); ?></button>
     </div>
 </div>

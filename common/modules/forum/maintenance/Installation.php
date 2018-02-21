@@ -56,18 +56,18 @@ class Installation extends Maintenance
             }
             $transaction->commit();
             return $this->returnSuccess(
-                Yii::t('podium/flash', 'Administrator account has been created.')
-                . ' ' . Html::tag('strong', Yii::t('podium/flash', 'Login') . ':')
+                Yii::t('flash', 'Administrator account has been created.')
+                . ' ' . Html::tag('strong', Yii::t('flash', 'Login') . ':')
                 . ' ' . Html::tag('kbd', self::DEFAULT_USERNAME)
-                . ' ' . Html::tag('strong', Yii::t('podium/flash', 'Password') . ':')
+                . ' ' . Html::tag('strong', Yii::t('flash', 'Password') . ':')
                 . ' ' . Html::tag('kbd', self::DEFAULT_USERNAME)
                 . '<br>'
-                . Html::tag('strong', Yii::t('podium/flash', 'Remember to change these credentials after first login!'), ['class' => 'text-danger'])
+                . Html::tag('strong', Yii::t('flash', 'Remember to change these credentials after first login!'), ['class' => 'text-danger'])
             );
         } catch (Exception $e) {
             $transaction->rollBack();
             return $this->returnError($e->getMessage(), __METHOD__,
-                Yii::t('podium/flash', 'Error during account creating')
+                Yii::t('flash', 'Error during account creating')
             );
         }
     }
@@ -81,7 +81,7 @@ class Installation extends Maintenance
     {
         if (empty($this->module->adminId)) {
             $this->type = self::TYPE_WARNING;
-            return Yii::t('podium/flash', 'No administrator privileges have been set!');
+            return Yii::t('flash', 'No administrator privileges have been set!');
         }
         try {
             $identity = Podium::getInstance()->user->identityClass;
@@ -94,7 +94,7 @@ class Installation extends Maintenance
                 throw new Exception('Can not find administrator username!');
             }
         } catch (Exception $e) {
-            return $this->returnWarning(Yii::t('podium/flash', 'Cannot find inherited user of given ID. No administrator privileges have been set.'));
+            return $this->returnWarning(Yii::t('flash', 'Cannot find inherited user of given ID. No administrator privileges have been set.'));
         }
 
         $transaction = $this->db->beginTransaction();
@@ -111,13 +111,13 @@ class Installation extends Maintenance
                 throw new Exception(VarDumper::dumpAsString($admin->errors));
             }
             $transaction->commit();
-            return $this->returnSuccess(Yii::t('podium/flash', 'Administrator privileges have been set for the user of ID {id}.', [
+            return $this->returnSuccess(Yii::t('flash', 'Administrator privileges have been set for the user of ID {id}.', [
                 'id' => $this->module->adminId
             ]));
         } catch (Exception $e) {
             $transaction->rollBack();
             return $this->returnError($e->getMessage(), __METHOD__,
-                Yii::t('podium/flash', 'Error during account creating')
+                Yii::t('flash', 'Error during account creating')
             );
         }
     }
@@ -155,10 +155,10 @@ class Installation extends Maintenance
                         ['version', Podium::getInstance()->version],
                     ]
                 )->execute();
-            return $this->returnSuccess(Yii::t('podium/flash', 'Default Config settings have been added.'));
+            return $this->returnSuccess(Yii::t('flash', 'Default Config settings have been added.'));
         } catch (Exception $e) {
             return $this->returnError($e->getMessage(), __METHOD__,
-                Yii::t('podium/flash', 'Error during settings adding')
+                Yii::t('flash', 'Error during settings adding')
             );
         }
     }
@@ -207,10 +207,10 @@ class Installation extends Maintenance
                         ],
                     ]
                 )->execute();
-            return $this->returnSuccess(Yii::t('podium/flash', 'Default Content has been added.'));
+            return $this->returnSuccess(Yii::t('flash', 'Default Content has been added.'));
         } catch (Exception $e) {
             return $this->returnError($e->getMessage(), __METHOD__,
-                Yii::t('podium/flash', 'Error during content adding')
+                Yii::t('flash', 'Error during content adding')
             );
         }
     }
@@ -223,10 +223,10 @@ class Installation extends Maintenance
     {
         try {
             (new Rbac())->add($this->authManager);
-            return $this->returnSuccess(Yii::t('podium/flash', 'Access roles have been created.'));
+            return $this->returnSuccess(Yii::t('flash', 'Access roles have been created.'));
         } catch (Exception $e) {
             return $this->returnError($e->getMessage(), __METHOD__,
-                Yii::t('podium/flash', 'Error during access roles creating')
+                Yii::t('flash', 'Error during access roles creating')
             );
         }
     }
@@ -251,7 +251,7 @@ class Installation extends Maintenance
             return [
                 'drop' => false,
                 'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Weird... Installation should already complete...'),
+                'result' => Yii::t('flash', 'Weird... Installation should already complete...'),
                 'percent' => 100
             ];
         }
@@ -259,7 +259,7 @@ class Installation extends Maintenance
             return [
                 'drop' => false,
                 'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Installation aborted! Can not find the requested installation step.'),
+                'result' => Yii::t('flash', 'Installation aborted! Can not find the requested installation step.'),
                 'percent' => 100,
             ];
         }
@@ -297,7 +297,7 @@ class Installation extends Maintenance
                     return [
                         'drop' => false,
                         'type' => $this->type,
-                        'result' => Yii::t('podium/flash', 'Installation aborted! Can not find the requested drop step.'),
+                        'result' => Yii::t('flash', 'Installation aborted! Can not find the requested drop step.'),
                         'percent' => 100,
                     ];
                 }

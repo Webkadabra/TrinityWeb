@@ -14,8 +14,8 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'New Thread');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Main Forum'), 'url' => ['forum/index']];
+$this->title = Yii::t('view', 'New Thread');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Main Forum'), 'url' => ['forum/index']];
 Yii::$app->params['breadcrumbs'][] = ['label' => $forum->category->name, 'url' => ['forum/category', 'id' => $forum->category->id, 'slug' => $forum->category->slug]];
 Yii::$app->params['breadcrumbs'][] = ['label' => $forum->name, 'url' => ['forum/forum', 'cid' => $forum->category->id, 'id' => $forum->id, 'slug' => $forum->slug]];
 Yii::$app->params['breadcrumbs'][] = $this->title;
@@ -26,7 +26,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-10 col-sm-offset-1">
         <?= Alert::widget([
             'body' => '<strong><small>'
-                        . Yii::t('podium/view', 'Post Preview')
+                        . Yii::t('view', 'Post Preview')
                         . '</small></strong>:<hr>'
                         . $model->parsedPost
                         . (Podium::getInstance()->podiumConfig->get('allow_polls') ? Poll::preview($model) : null),
@@ -43,7 +43,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'name')->textInput(['autofocus' => true])->label(Yii::t('podium/view', 'Topic')); ?>
+                            <?= $form->field($model, 'name')->textInput(['autofocus' => true])->label(Yii::t('view', 'Topic')); ?>
                         </div>
                     </div>
                     <div class="row">
@@ -53,7 +53,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'subscribe')->checkbox()->label(Yii::t('podium/view', 'Subscribe to this thread')); ?>
+                            <?= $form->field($model, 'subscribe')->checkbox()->label(Yii::t('view', 'Subscribe to this thread')); ?>
                         </div>
                     </div>
 <?php if (Podium::getInstance()->podiumConfig->get('allow_polls')): ?>
@@ -68,13 +68,13 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
                     <div class="row">
                         <div class="col-sm-8">
                             <?= Html::submitButton(
-                                '<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Create new thread'),
+                                '<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Create new thread'),
                                 ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']
                             ); ?>
                         </div>
                         <div class="col-sm-4">
                             <?= Html::submitButton(
-                                '<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'),
+                                '<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('view', 'Preview'),
                                 ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']
                             ); ?>
                         </div>

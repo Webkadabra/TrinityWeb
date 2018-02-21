@@ -60,7 +60,7 @@ class ResetForm extends Model
         if (empty($user)) {
             return [
                 true,
-                Yii::t('podium/flash', 'Sorry! We can not find the account with that user name or e-mail address.'),
+                Yii::t('flash', 'Sorry! We can not find the account with that user name or e-mail address.'),
                 false
             ];
         }
@@ -72,20 +72,20 @@ class ResetForm extends Model
         if (empty($user->email)) {
             return [
                 true,
-                Yii::t('podium/flash', 'Sorry! There is no e-mail address saved with your account. Contact administrator about resetting password.'),
+                Yii::t('flash', 'Sorry! There is no e-mail address saved with your account. Contact administrator about resetting password.'),
                 true
             ];
         }
         if (!$this->sendResetEmail($user)) {
             return [
                 true,
-                Yii::t('podium/flash', 'Sorry! There was some error while sending you the password reset link. Contact administrator about this problem.'),
+                Yii::t('flash', 'Sorry! There was some error while sending you the password reset link. Contact administrator about this problem.'),
                 true
             ];
         }
         return [
             false,
-            Yii::t('podium/flash', 'The password reset link has been sent to your e-mail address.'),
+            Yii::t('flash', 'The password reset link has been sent to your e-mail address.'),
             true
         ];
     }

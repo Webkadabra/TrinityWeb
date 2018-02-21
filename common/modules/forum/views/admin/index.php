@@ -12,7 +12,7 @@ use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
-$this->title = Yii::t('podium/view', 'Administration Dashboard');
+$this->title = Yii::t('view', 'Administration Dashboard');
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
@@ -24,7 +24,7 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
 <div class="row">
     <div class="col-sm-3">
         <div class="panel panel-success">
-            <div class="panel-heading"><?= Yii::t('podium/view', 'Newest members') ?></div>
+            <div class="panel-heading"><?= Yii::t('view', 'Newest members') ?></div>
             <table class="table">
 <?php foreach ($members as $member): ?>
                 <tr>
@@ -41,15 +41,15 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
     </div>
     <div class="col-sm-9">
         <div class="panel panel-info table-responsive">
-            <div class="panel-heading"><?= Yii::t('podium/view', 'Newest posts') ?></div>
+            <div class="panel-heading"><?= Yii::t('view', 'Newest posts') ?></div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th><?= Yii::t('podium/view', 'Thread') ?></th>
-                        <th><?= Yii::t('podium/view', 'Preview') ?></th>
-                        <th><?= Yii::t('podium/view', 'Author') ?></th>
-                        <th><?= Yii::t('podium/view', 'Date') ?></th>
-                        <th><?= Yii::t('podium/view', 'Thumbs') ?></th>
+                        <th><?= Yii::t('view', 'Thread') ?></th>
+                        <th><?= Yii::t('view', 'Preview') ?></th>
+                        <th><?= Yii::t('view', 'Author') ?></th>
+                        <th><?= Yii::t('view', 'Date') ?></th>
+                        <th><?= Yii::t('view', 'Thumbs') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
                             <a href="<?= Url::to(['forum/show', 'id' => $post->id]) ?>"><?= Html::encode($post->thread->name) ?></a>
                         </td>
                         <td>
-                            <span data-toggle="popover" data-container="body" data-placement="right" data-trigger="hover focus" data-html="true" data-content="<small><?= str_replace('"', '&quote;', StringHelper::truncateWords($post->parsedContent, 20, '...', true)) ?></small>" title="<?= Yii::t('podium/view', 'Post Preview') ?>">
+                            <span data-toggle="popover" data-container="body" data-placement="right" data-trigger="hover focus" data-html="true" data-content="<small><?= str_replace('"', '&quote;', StringHelper::truncateWords($post->parsedContent, 20, '...', true)) ?></small>" title="<?= Yii::t('view', 'Post Preview') ?>">
                                 <span class="glyphicon glyphicon-leaf"></span>
                             </span>
                         </td>

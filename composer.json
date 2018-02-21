@@ -70,6 +70,7 @@
     "yiisoft/yii2-gii": "^2.0.0",
     "yiisoft/yii2-faker": "^2.0.0",
     "codeception/codeception": "^2.3.0",
+    "friendsofphp/php-cs-fixer": "^2.1",
     "codeception/verify": "^0.3.1"
   },
   "autoload-dev": {

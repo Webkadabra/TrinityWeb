@@ -16,8 +16,8 @@ use kartik\select2\Select2;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'Forum Details');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'My Profile'), 'url' => ['profile/index']];
+$this->title = Yii::t('view', 'Forum Details');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'My Profile'), 'url' => ['profile/index']];
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
@@ -37,27 +37,27 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
                                 'data'          => Helper::timeZones(),
                                 'theme'         => Select2::THEME_KRAJEE,
                                 'showToggleAll' => false,
-                                'options'       => ['placeholder' => Yii::t('podium/view', 'Select your time zone for proper dates display...')],
+                                'options'       => ['placeholder' => Yii::t('view', 'Select your time zone for proper dates display...')],
                                 'pluginOptions' => ['allowClear' => true],
-                            ])->label(Yii::t('podium/view', 'Time Zone'))
-                            ->hint(Html::a(Yii::t('podium/view', 'What is my time zone?'), 'http://www.timezoneconverter.com/cgi-bin/findzone', ['target' => '_blank'])); ?>
+                            ])->label(Yii::t('view', 'Time Zone'))
+                            ->hint(Html::a(Yii::t('view', 'What is my time zone?'), 'http://www.timezoneconverter.com/cgi-bin/findzone', ['target' => '_blank'])); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'anonymous')->checkbox(['uncheck' => 0])->label(Yii::t('podium/view', 'Hide username while forum viewing')) ?>
+                            <?= $form->field($model, 'anonymous')->checkbox(['uncheck' => 0])->label(Yii::t('view', 'Hide username while forum viewing')) ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'location')->textInput(['autocomplete' => 'off'])->label(Yii::t('podium/view', 'Whereabouts')) ?>
+                            <?= $form->field($model, 'location')->textInput(['autocomplete' => 'off'])->label(Yii::t('view', 'Whereabouts')) ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <?= $form
                                 ->field($model, 'signature')
-                                ->label(Yii::t('podium/view', 'Signature under each post'))
+                                ->label(Yii::t('view', 'Signature under each post'))
                                 ->widget(EditorBasic::className()) ?>
                         </div>
                     </div>
@@ -65,7 +65,7 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save changes'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Save changes'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
                         </div>
                     </div>
                 </div>

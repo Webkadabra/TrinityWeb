@@ -36,7 +36,7 @@ class Message extends MessageActiveRecord
      */
     public static function re()
     {
-        return Yii::t('podium/view', 'Re:');
+        return Yii::t('view', 'Re:');
     }
 
     /**
@@ -207,18 +207,18 @@ class Message extends MessageActiveRecord
             }
             $logged = User::loggedId();
             $this->sender_id = $logged;
-            $this->topic = Yii::t('podium/view', 'Complaint about the post #{id}', ['id' => $post->id]);
+            $this->topic = Yii::t('view', 'Complaint about the post #{id}', ['id' => $post->id]);
             if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
                 $this->content .= "\n\n---\n"
-                            . '[' . Yii::t('podium/view', 'Direct link to this post') . '](' . Url::to(['forum/show', 'id' => $post->id]) . ')'
+                            . '[' . Yii::t('view', 'Direct link to this post') . '](' . Url::to(['forum/show', 'id' => $post->id]) . ')'
                             . "\n\n---\n"
-                            . '**' . Yii::t('podium/view', 'Post contents') . '**'
+                            . '**' . Yii::t('view', 'Post contents') . '**'
                             . $post->content;
             } else {
                 $this->content .= '<hr>'
-                            . Html::a(Yii::t('podium/view', 'Direct link to this post'), ['forum/show', 'id' => $post->id])
+                            . Html::a(Yii::t('view', 'Direct link to this post'), ['forum/show', 'id' => $post->id])
                             . '<hr>'
-                            . '<p>' . Yii::t('podium/view', 'Post contents') . '</p>'
+                            . '<p>' . Yii::t('view', 'Post contents') . '</p>'
                             . '<blockquote>' . $post->content . '</blockquote>';
             }
             $this->sender_status = self::STATUS_DELETED;

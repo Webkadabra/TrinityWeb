@@ -14,8 +14,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\JsExpression;
 
-$this->title = Yii::t('podium/view', 'New Message');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'My Profile'), 'url' => ['profile/index']];
+$this->title = Yii::t('view', 'New Message');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'My Profile'), 'url' => ['profile/index']];
 Yii::$app->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
@@ -30,7 +30,7 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
         <br>
         <?php $form = ActiveForm::begin(['id' => 'message-form']); ?>
             <div class="row">
-                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('podium/view', 'Send to') ?></p></div>
+                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('view', 'Send to') ?></p></div>
 <?php if (!empty($to)): ?>
                 <div class="col-md-9">
                     <p class="form-control-static"><?= $to->getPodiumTag(true) ?></p>
@@ -40,7 +40,7 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
 <?php if (!empty($friends)): ?>
                 <div class="col-md-4">
                     <?= $form->field($model, 'friendsId[]')->widget(Select2::classname(), [
-                            'options'       => ['placeholder' => Yii::t('podium/view', 'Select a friend...')],
+                            'options'       => ['placeholder' => Yii::t('view', 'Select a friend...')],
                             'theme'         => Select2::THEME_KRAJEE,
                             'showToggleAll' => false,
                             'data'          => $friends,
@@ -51,13 +51,13 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
                             ],
                         ])->label(false); ?>
                 </div>
-                <div class="col-md-1"><p class="form-control-static"><?= Yii::t('podium/view', 'and/or') ?></p></div>
+                <div class="col-md-1"><p class="form-control-static"><?= Yii::t('view', 'and/or') ?></p></div>
                 <div class="col-md-4">
 <?php else: ?>
                 <div class="col-md-9">
 <?php endif; ?>
                     <?= $form->field($model, 'receiversId[]')->widget(Select2::classname(), [
-                            'options'       => ['placeholder' => Yii::t('podium/view', 'Select a member...')],
+                            'options'       => ['placeholder' => Yii::t('view', 'Select a member...')],
                             'theme'         => Select2::THEME_KRAJEE,
                             'showToggleAll' => false,
                             'pluginOptions' => [
@@ -76,20 +76,20 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
 <?php endif; ?>
             </div>
             <div class="row">
-                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('podium/view', 'Message Topic') ?></p></div>
+                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('view', 'Message Topic') ?></p></div>
                 <div class="col-md-9">
-                    <?= $form->field($model, 'topic')->textInput(['placeholder' => Yii::t('podium/view', 'Message Topic')])->label(false) ?>
+                    <?= $form->field($model, 'topic')->textInput(['placeholder' => Yii::t('view', 'Message Topic')])->label(false) ?>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('podium/view', 'Message Content') ?></p></div>
+                <div class="col-md-3 text-right"><p class="form-control-static"><?= Yii::t('view', 'Message Content') ?></p></div>
                 <div class="col-md-9">
                     <?= $form->field($model, 'content')->label(false)->widget(EditorBasic::className()) ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-9 col-md-offset-3">
-                    <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Send Message'), ['class' => 'btn btn-block btn-primary', 'name' => 'send-button']) ?>
+                    <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Send Message'), ['class' => 'btn btn-block btn-primary', 'name' => 'send-button']) ?>
                 </div>
             </div>
         <?php ActiveForm::end(); ?>

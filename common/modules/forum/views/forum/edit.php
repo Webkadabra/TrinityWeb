@@ -12,8 +12,8 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 
-$this->title = Yii::t('podium/view', 'Edit Post');
-Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Main Forum'), 'url' => ['forum/index']];
+$this->title = Yii::t('view', 'Edit Post');
+Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('view', 'Main Forum'), 'url' => ['forum/index']];
 Yii::$app->params['breadcrumbs'][] = ['label' => $model->forum->category->name, 'url' => ['forum/category', 'id' => $model->forum->category->id, 'slug' => $model->forum->category->slug]];
 Yii::$app->params['breadcrumbs'][] = ['label' => $model->forum->name, 'url' => ['forum/forum', 'cid' => $model->forum->category->id, 'id' => $model->forum->id, 'slug' => $model->forum->slug]];
 Yii::$app->params['breadcrumbs'][] = ['label' => $model->thread->name, 'url' => ['forum/thread', 'cid' => $model->forum->category->id, 'fid' => $model->thread->forum->id, 'id' => $model->thread->id, 'slug' => $model->thread->slug]];
@@ -25,7 +25,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-10 col-sm-offset-1">
         <?= Alert::widget([
             'body' => '<strong><small>'
-                        . Yii::t('podium/view', 'Post Preview')
+                        . Yii::t('view', 'Post Preview')
                         . '</small></strong>:<hr>'
                         . $model->parsedContent,
             'options' => ['class' => 'alert-info alert-preview']
@@ -42,7 +42,7 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
 <?php if ($isFirstPost): ?>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'topic')->textInput(['autofocus' => true])->label(Yii::t('podium/view', 'Topic')) ?>
+                            <?= $form->field($model, 'topic')->textInput(['autofocus' => true])->label(Yii::t('view', 'Topic')) ?>
                         </div>
                     </div>
 <?php endif; ?>
@@ -55,10 +55,10 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-8">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Post'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('view', 'Save Post'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
                         </div>
                         <div class="col-sm-4">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']) ?>
+                            <?= Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']) ?>
                         </div>
                     </div>
                 </div>

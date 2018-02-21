@@ -60,7 +60,7 @@ class ReactivateForm extends Model
         if (empty($user)) {
             return [
                 true,
-                Yii::t('podium/flash', 'Sorry! We can not find the account with that user name or e-mail address.'),
+                Yii::t('flash', 'Sorry! We can not find the account with that user name or e-mail address.'),
                 false
             ];
         }
@@ -72,20 +72,20 @@ class ReactivateForm extends Model
         if (empty($user->email)) {
             return [
                 true,
-                Yii::t('podium/flash', 'Sorry! There is no e-mail address saved with your account. Contact administrator about reactivating.'),
+                Yii::t('flash', 'Sorry! There is no e-mail address saved with your account. Contact administrator about reactivating.'),
                 true
             ];
         }
         if (!$this->sendReactivationEmail($user)) {
             return [
                 true,
-                Yii::t('podium/flash', 'Sorry! There was some error while sending you the account activation link. Contact administrator about this problem.'),
+                Yii::t('flash', 'Sorry! There was some error while sending you the account activation link. Contact administrator about this problem.'),
                 true
             ];
         }
         return [
             false,
-            Yii::t('podium/flash', 'The account activation link has been sent to your e-mail address.'),
+            Yii::t('flash', 'The account activation link has been sent to your e-mail address.'),
             true
         ];
     }

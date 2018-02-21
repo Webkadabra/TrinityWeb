@@ -40,7 +40,7 @@ class PermissionDeniedRule extends PodiumRoleRule
             return !User::can($this->perm);
         };
         $this->denyCallback = function () {
-            Yii::$app->session->addFlash('danger', Yii::t('podium/flash', 'You are not allowed to perform this action.'), true);
+            Yii::$app->session->addFlash('danger', Yii::t('flash', 'You are not allowed to perform this action.'), true);
             return Yii::$app->response->redirect([Podium::getInstance()->prepareRoute($this->redirect)]);
         };
     }

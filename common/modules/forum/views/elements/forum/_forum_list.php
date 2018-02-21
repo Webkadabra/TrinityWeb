@@ -15,7 +15,7 @@ use yii\widgets\ListView;
     'dataProvider'     => (new Forum())->search($category,true),
     'itemView'         => '/elements/forum/_forum',
     'summary'          => '',
-    'emptyText'        => Yii::t('podium/view', 'No forums have been added yet.'),
+    'emptyText'        => Yii::t('view', 'No forums have been added yet.'),
     'emptyTextOptions' => ['tag' => 'td', 'class' => 'text-muted', 'colspan' => 4],
     'options'          => ['tag' => 'tbody', 'class' => null],
     'itemOptions'      => ['tag' => 'tr']

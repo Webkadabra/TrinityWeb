@@ -29,7 +29,7 @@ class LatestPosts extends Widget
     public function run()
     {
         $out = Html::beginTag('div', ['class' => 'panel panel-default widget']) . "\n";
-        $out .= Html::tag('div', Yii::t('podium/view', 'Latest posts'), ['class' => 'panel-heading']) . "\n";
+        $out .= Html::tag('div', Yii::t('view', 'Latest posts'), ['class' => 'panel-heading']) . "\n";
 
         $latest = Post::getLatest(is_numeric($this->posts) && $this->posts > 0 ? $this->posts : 5);
 
@@ -46,7 +46,7 @@ class LatestPosts extends Widget
             $out .= Html::endTag('table') . "\n";
         } else {
             $out .= Html::beginTag('div', ['class' => 'panel-body']) . "\n";
-            $out .= Html::tag('small', Yii::t('podium/view', 'No posts have been added yet.')) . "\n";
+            $out .= Html::tag('small', Yii::t('view', 'No posts have been added yet.')) . "\n";
             $out .= Html::endTag('div') . "\n";
         }
 

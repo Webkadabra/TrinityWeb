@@ -95,7 +95,7 @@ abstract class UserActiveRecord extends ActiveRecord implements IdentityInterfac
             !preg_match('~[0-9]~', $this->$attribute) ||
             mb_strlen($this->$attribute, 'UTF-8') < 6 ||
             mb_strlen($this->$attribute, 'UTF-8') > 100) {
-            $this->addError($attribute, Yii::t('podium/view', 'Password must contain uppercase and lowercase letter, digit, and be at least 6 characters long.'));
+            $this->addError($attribute, Yii::t('view', 'Password must contain uppercase and lowercase letter, digit, and be at least 6 characters long.'));
         }
     }
 
@@ -390,7 +390,7 @@ abstract class UserActiveRecord extends ActiveRecord implements IdentityInterfac
     {
         if (!$this->hasErrors()) {
             if (!$this->validatePassword($this->currentPassword)) {
-                $this->addError($attribute, Yii::t('podium/view', 'Current password is incorrect.'));
+                $this->addError($attribute, Yii::t('view', 'Current password is incorrect.'));
             }
         }
     }
@@ -425,7 +425,7 @@ abstract class UserActiveRecord extends ActiveRecord implements IdentityInterfac
     {
         if (!$this->hasErrors()) {
             if (!preg_match('/^[\p{L}][\w\p{L}]{2,254}$/u', $this->username)) {
-                $this->addError($attribute, Yii::t('podium/view', 'Username must start with a letter, contain only letters, digits and underscores, and be at least 3 characters long.'));
+                $this->addError($attribute, Yii::t('view', 'Username must start with a letter, contain only letters, digits and underscores, and be at least 3 characters long.'));
             }
         }
     }

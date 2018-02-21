@@ -48,17 +48,17 @@ class CodeMirror extends InputWidget
         $view = $this->view;
         CodeMirrorAsset::register($view);
         $js = 'var CodeMirrorLabels = {
-    bold: "' . Yii::t('podium/view', 'Bold') . '",
-    italic: "' . Yii::t('podium/view', 'Italic') . '",
-    header: "' . Yii::t('podium/view', 'Header') . '",
-    inlinecode: "' . Yii::t('podium/view', 'Inline code') . '",
-    blockcode: "' . Yii::t('podium/view', 'Block code') . '",
-    quote: "' . Yii::t('podium/view', 'Quote') . '",
-    bulletedlist: "' . Yii::t('podium/view', 'Bulleted list') . '",
-    orderedlist: "' . Yii::t('podium/view', 'Ordered list') . '",
-    link: "' . Yii::t('podium/view', 'Link') . '",
-    image: "' . Yii::t('podium/view', 'Image') . '",
-    help: "' . Yii::t('podium/view', 'Help') . '",
+    bold: "' . Yii::t('view', 'Bold') . '",
+    italic: "' . Yii::t('view', 'Italic') . '",
+    header: "' . Yii::t('view', 'Header') . '",
+    inlinecode: "' . Yii::t('view', 'Inline code') . '",
+    blockcode: "' . Yii::t('view', 'Block code') . '",
+    quote: "' . Yii::t('view', 'Quote') . '",
+    bulletedlist: "' . Yii::t('view', 'Bulleted list') . '",
+    orderedlist: "' . Yii::t('view', 'Ordered list') . '",
+    link: "' . Yii::t('view', 'Link') . '",
+    image: "' . Yii::t('view', 'Image') . '",
+    help: "' . Yii::t('view', 'Help') . '",
 };var CodeMirrorSet = "' . $this->type . '";';
         $view->registerJs($js, View::POS_BEGIN);
     }

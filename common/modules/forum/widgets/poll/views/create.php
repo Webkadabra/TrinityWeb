@@ -11,14 +11,14 @@ JS
 echo Html::activeHiddenInput($model, 'pollAdded', ['id' => 'poll_added']);
 ?>
 <button class="btn btn-success podium-poll-add <?= $model->pollAdded ? 'hide' : '' ?>">
-    <span class="glyphicon glyphicon-tasks"></span> <?= Yii::t('podium/view', 'Add poll to this thread'); ?>
+    <span class="glyphicon glyphicon-tasks"></span> <?= Yii::t('view', 'Add poll to this thread'); ?>
 </button>
 
 <div class="new-poll <?= $model->pollAdded ? '' : 'hide' ?>">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <button class="btn btn-xs btn-danger pull-right podium-poll-discard"><span class="glyphicon glyphicon-remove"></span> <?= Yii::t('podium/view', 'Discard poll'); ?></button>
-            <strong><?= Yii::t('podium/view', 'New poll'); ?></strong>
+            <button class="btn btn-xs btn-danger pull-right podium-poll-discard"><span class="glyphicon glyphicon-remove"></span> <?= Yii::t('view', 'Discard poll'); ?></button>
+            <strong><?= Yii::t('view', 'New poll'); ?></strong>
         </div>
         <div class="panel-body">
             <?= $this->render('_form', [

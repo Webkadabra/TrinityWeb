@@ -179,38 +179,38 @@ class Thread extends ThreadActiveRecord
      */
     public function getDescription()
     {
-        $description = Yii::t('podium/view', 'No New Posts');
+        $description = Yii::t('view', 'No New Posts');
         $append = false;
 
         if ($this->locked) {
-            $description = Yii::t('podium/view', 'Locked Thread');
+            $description = Yii::t('view', 'Locked Thread');
             $append = true;
         } elseif ($this->pinned) {
-            $description = Yii::t('podium/view', 'Pinned Thread');
+            $description = Yii::t('view', 'Pinned Thread');
             $append = true;
         } elseif ($this->posts >= Podium::getInstance()->podiumConfig->get('hot_minimum')) {
-            $description = Yii::t('podium/view', 'Hot Thread');
+            $description = Yii::t('view', 'Hot Thread');
             $append = true;
         }
         if ($this->userView) {
             if ($this->new_post_at > $this->userView->new_last_seen) {
                 if (!$append) {
-                    $description = Yii::t('podium/view', 'New Posts');
+                    $description = Yii::t('view', 'New Posts');
                 } else {
-                    $description .= ' (' . Yii::t('podium/view', 'New Posts') . ')';
+                    $description .= ' (' . Yii::t('view', 'New Posts') . ')';
                 }
             } elseif ($this->edited_post_at > $this->userView->edited_last_seen) {
                 if (!$append) {
-                    $description = Yii::t('podium/view', 'Edited Posts');
+                    $description = Yii::t('view', 'Edited Posts');
                 } else {
-                    $description = ' (' . Yii::t('podium/view', 'Edited Posts') . ')';
+                    $description = ' (' . Yii::t('view', 'Edited Posts') . ')';
                 }
             }
         } else {
             if (!$append) {
-                $description = Yii::t('podium/view', 'New Posts');
+                $description = Yii::t('view', 'New Posts');
             } else {
-                $description .= ' (' . Yii::t('podium/view', 'New Posts') . ')';
+                $description .= ' (' . Yii::t('view', 'New Posts') . ')';
             }
         }
         return $description;

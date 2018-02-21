@@ -9,20 +9,20 @@
 
 use yii\helpers\Html;
 
-$typeName = $type == 'topics' ? Yii::t('podium/view', 'threads') : Yii::t('podium/view', 'posts');
+$typeName = $type == 'topics' ? Yii::t('view', 'threads') : Yii::t('view', 'posts');
 
 ?>
 <div class="row">
     <div class="col-sm-12">
         <h4>
 <?php if (!empty($query) && !empty($author)): ?>
-            <?= Yii::t('podium/view', 'Search for {type} with "{query}" by "{author}"', ['query' => Html::encode($query), 'author' => Html::encode($author), 'type' => $typeName]) ?>
+            <?= Yii::t('view', 'Search for {type} with "{query}" by "{author}"', ['query' => Html::encode($query), 'author' => Html::encode($author), 'type' => $typeName]) ?>
 <?php elseif (!empty($query) && empty($author)): ?>
-            <?= Yii::t('podium/view', 'Search for {type} with "{query}"', ['query' => Html::encode($query), 'type' => $typeName]) ?>
+            <?= Yii::t('view', 'Search for {type} with "{query}"', ['query' => Html::encode($query), 'type' => $typeName]) ?>
 <?php elseif (empty($query) && !empty($author)): ?>
-            <?= Yii::t('podium/view', 'Search for {type} by "{author}"', ['author' => Html::encode($author), 'type' => $typeName]) ?>
+            <?= Yii::t('view', 'Search for {type} by "{author}"', ['author' => Html::encode($author), 'type' => $typeName]) ?>
 <?php else: ?>
-            <?= Yii::t('podium/view', 'Search for {type}', ['type' => $typeName]) ?>
+            <?= Yii::t('view', 'Search for {type}', ['type' => $typeName]) ?>
 <?php endif; ?>
         </h4>
     </div>
