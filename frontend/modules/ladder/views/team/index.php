@@ -54,6 +54,7 @@ use yii\helpers\Html;
                 </div>
                 <div class="col-xs-3 hidden-xs col-sm-2 col-md-1 text-center-xs">
                     <?php
+                    $mmr = 1500;
                     if($item['relationCharacter']) {
                         $character = $item['relationCharacter'];
                         if($character['relationArenaStats']) {
@@ -67,8 +68,6 @@ use yii\helpers\Html;
                                 //type 5v5 to slot = 2 for 5v5
                                 } elseif($data['type'] === 5 && $mmr_info['slot'] === 2) {
                                     $mmr = $mmr_info['matchMakerRating'];
-                                } else {
-                                    $mmr = 1500;
                                 }
                             }
                         }
