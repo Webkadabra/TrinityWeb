@@ -20,7 +20,7 @@ at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
 
 ### Get source code
 #### Download sources
-https://github.com/trntv/yii2-starter-kit/archive/master.zip
+https://github.com/Qblolz/TrinityWeb/archive/master.zip
 
 #### Or clone repository manually
 ```
