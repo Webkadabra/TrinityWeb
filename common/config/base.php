@@ -27,7 +27,7 @@ $config = [
                                                // IMPORTANT: for detailed instructions read the chapter about root configuration.
             'layout' => '/main',         // Name of the used layout. If using own layout use 'null'.
             'allowedIPs' => ['*'],  // IP addresses from which the translation interface is accessible.
-            'roles' => ['admin'],               // For setting access levels to the translating interface.
+            'roles' => ['admin', 'interpreter'],               // For setting access levels to the translating interface.
             'tmpDir' => '@runtime',         // Writable directory for the client-side temporary language files.
                                             // IMPORTANT: must be identical for all applications (the AssetsManager serves the JavaScript files containing language elements from this directory).
             'phpTranslators' => ['::t'],    // list of the php function for translating messages.
