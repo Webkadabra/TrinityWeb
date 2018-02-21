@@ -75,10 +75,7 @@ class SettingsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $locale = $model->getModel('profile')->locale;
             Yii::$app->session->setFlash('forceUpdateLocale');
-            Yii::$app->session->setFlash('alert', [
-                'options' => ['class' => 'alert-success'],
-                'body' => Yii::t('frontend', 'Your account has been successfully saved', [], $locale)
-            ]);
+            Yii::$app->session->setFlash('success', Yii::t('frontend', 'Your account has been successfully saved', [], $locale));
             return $this->refresh();
         }
         return $this->render('index', ['model' => $model]);

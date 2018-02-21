@@ -250,36 +250,20 @@ class SignInController extends \yii\web\Controller
                 ]));
                 if ($sentSuccess) {
                     Yii::$app->session->setFlash(
-                        'alert',
-                        [
-                            'options' => ['class' => 'alert-success'],
-                            'body' => Yii::t('frontend', 'Welcome to {app-name}. Email with your login information was sent to your email.', [
-                                'app-name' => Yii::$app->name
-                            ])
-                        ]
-                    );
+                        'success', Yii::t('frontend', 'Welcome to {app-name}. Email with your login information was sent to your email.', [
+                            'app-name' => Yii::$app->name
+                        ]));
                 }
 
             } else {
                 // We already have a user with this email. Do what you want in such case
                 if ($user->email && User::find()->where(['email' => $user->email])->count()) {
                     Yii::$app->session->setFlash(
-                        'alert',
-                        [
-                            'options' => ['class' => 'alert-danger'],
-                            'body' => Yii::t('frontend', 'We already have a user with email {email}', [
-                                'email' => $user->email
-                            ])
-                        ]
-                    );
+                    'danger', Yii::t('frontend', 'We already have a user with email {email}', [
+                        'email' => $user->email
+                    ]));
                 } else {
-                    Yii::$app->session->setFlash(
-                        'alert',
-                        [
-                            'options' => ['class' => 'alert-danger'],
-                            'body' => Yii::t('frontend', 'Error while oauth process.')
-                        ]
-                    );
+                    Yii::$app->session->setFlash('danger', Yii::t('frontend', 'Error while oauth process.'));
                 }
 
             };
