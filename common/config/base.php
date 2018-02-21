@@ -155,6 +155,15 @@ $config = [
         ],
         'i18n' => [
             'translations' => [
+                'app' => [
+                    'class' => 'common\components\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'ru-RU',
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
+                ],
                 '*' => [
                     'class' => 'common\components\i18n\DbMessageSource',
                     'db' => 'db',
