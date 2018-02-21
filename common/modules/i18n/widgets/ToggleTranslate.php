@@ -101,12 +101,14 @@ class ToggleTranslate extends Widget
      */
     public function run()
     {
-        if (!Yii::$app->session->has(Module::SESSION_KEY_ENABLE_TRANSLATE)) {
+        if(Yii::$app->user->isGuest) {
             return;
+        } else {
+            if(Yii::$app->user->identity->id !== 1) return;
         }
-
+        
         $this->_registerAssets();
-
+        
         echo strtr($this->template, [
             '{text}' => Yii::t('language', 'Toggle translate'),
             '{position}' => $this->position,
