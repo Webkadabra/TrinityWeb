@@ -50,18 +50,18 @@ class Guild extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guildid' => Yii::t('app', 'Guildid'),
-            'name' => Yii::t('app', 'Name'),
-            'leaderguid' => Yii::t('app', 'Leaderguid'),
-            'EmblemStyle' => Yii::t('app', 'Emblem Style'),
-            'EmblemColor' => Yii::t('app', 'Emblem Color'),
-            'BorderStyle' => Yii::t('app', 'Border Style'),
-            'BorderColor' => Yii::t('app', 'Border Color'),
-            'BackgroundColor' => Yii::t('app', 'Background Color'),
-            'info' => Yii::t('app', 'Info'),
-            'motd' => Yii::t('app', 'Motd'),
-            'createdate' => Yii::t('app', 'Createdate'),
-            'BankMoney' => Yii::t('app', 'Bank Money'),
+            'guildid' => 'Guildid',
+            'name' => 'Name',
+            'leaderguid' => 'Leaderguid',
+            'EmblemStyle' => 'Emblem Style',
+            'EmblemColor' => 'Emblem Color',
+            'BorderStyle' => 'Border Style',
+            'BorderColor' => 'Border Color',
+            'BackgroundColor' => 'Background Color',
+            'info' => 'Info',
+            'motd' => 'Motd',
+            'createdate' => 'Createdate',
+            'BankMoney' => 'Bank Money',
         ];
     }
 }

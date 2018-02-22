@@ -39,10 +39,10 @@ class CharacterSpell extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'spell' => Yii::t('app', 'Spell'),
-            'active' => Yii::t('app', 'Active'),
-            'disabled' => Yii::t('app', 'Disabled'),
+            'guid' => 'Guid',
+            'spell' => 'Spell',
+            'active' => 'Active',
+            'disabled' => 'Disabled',
         ];
     }
 }

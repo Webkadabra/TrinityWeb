@@ -56,17 +56,17 @@ class ArmoryGlyphproperties extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'spell' => Yii::t('common', 'Spell'),
-            'type' => Yii::t('common', 'Type'),
-            'name_de_de' => Yii::t('common', 'Name De De'),
-            'name_zh_cn' => Yii::t('common', 'Name Zh Cn'),
-            'name_en_gb' => Yii::t('common', 'Name En Gb'),
-            'name_ru_ru' => Yii::t('common', 'Name Ru Ru'),
-            'description_de_de' => Yii::t('common', 'Description De De'),
-            'description_zh_cn' => Yii::t('common', 'Description Zh Cn'),
-            'description_en_gb' => Yii::t('common', 'Description En Gb'),
-            'description_ru_ru' => Yii::t('common', 'Description Ru Ru'),
+            'id' => 'ID',
+            'spell' => 'Spell',
+            'type' => 'Type',
+            'name_de_de' => 'Name De De',
+            'name_zh_cn' => 'Name Zh Cn',
+            'name_en_gb' => 'Name En Gb',
+            'name_ru_ru' => 'Name Ru Ru',
+            'description_de_de' => 'Description De De',
+            'description_zh_cn' => 'Description Zh Cn',
+            'description_en_gb' => 'Description En Gb',
+            'description_ru_ru' => 'Description Ru Ru',
         ];
     }
 

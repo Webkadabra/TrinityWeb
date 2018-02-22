@@ -52,21 +52,21 @@ class ArenaTeam extends CoreModel
     public function attributeLabels()
     {
         return [
-            'arenaTeamId' => Yii::t('app', 'Arena Team ID'),
-            'name' => Yii::t('app', 'Название'),
-            'captainGuid' => Yii::t('app', 'Captain Guid'),
-            'type' => Yii::t('app', 'Тип'),
-            'rating' => Yii::t('app', 'Рейтинг'),
-            'seasonGames' => Yii::t('app', 'Игр в сезоне'),
-            'seasonWins' => Yii::t('app', 'Побед в сезоне'),
-            'weekGames' => Yii::t('app', 'Недельных игр'),
-            'weekWins' => Yii::t('app', 'Недельных побед'),
-            'rank' => Yii::t('app', 'Ранг'),
-            'backgroundColor' => Yii::t('app', 'Background Color'),
-            'emblemStyle' => Yii::t('app', 'Emblem Style'),
-            'emblemColor' => Yii::t('app', 'Emblem Color'),
-            'borderStyle' => Yii::t('app', 'Border Style'),
-            'borderColor' => Yii::t('app', 'Border Color'),
+            'arenaTeamId' => 'Arena Team ID',
+            'name' => Yii::t('common', 'Название'),
+            'captainGuid' => 'Captain Guid',
+            'type' => Yii::t('common', 'Тип'),
+            'rating' => Yii::t('common', 'Рейтинг'),
+            'seasonGames' => Yii::t('common', 'Игр в сезоне'),
+            'seasonWins' => Yii::t('common', 'Побед в сезоне'),
+            'weekGames' => Yii::t('common', 'Недельных игр'),
+            'weekWins' => Yii::t('common', 'Недельных побед'),
+            'rank' => Yii::t('common', 'Ранг'),
+            'backgroundColor' => 'Background Color',
+            'emblemStyle' => 'Emblem Style',
+            'emblemColor' => 'Emblem Color',
+            'borderStyle' => 'Border Style',
+            'borderColor' => 'Border Color',
         ];
     }
     /**

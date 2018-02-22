@@ -46,8 +46,8 @@ class ArmorySpellIcon extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Id' => Yii::t('common', 'ID'),
-            'Name' => Yii::t('common', 'Name'),
+            'Id' => 'ID',
+            'Name' => 'Name',
         ];
     }
 }

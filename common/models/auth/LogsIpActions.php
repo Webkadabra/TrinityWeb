@@ -72,13 +72,13 @@ class LogsIpActions extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
+            'id' => 'ID',
             'account_id' => Yii::t('common', 'ID Уч. записи'),
             'character_guid' => Yii::t('common', 'ID Персонажа'),
             'type' => Yii::t('common', 'Тип'),
             'ip' => Yii::t('common', 'IP'),
             'systemnote' => Yii::t('common', 'Системное сообщение'),
-            'unixtime' => Yii::t('common', 'Unixtime'),
+            'unixtime' => 'Unixtime',
             'time' => Yii::t('common', 'Время'),
             'comment' => Yii::t('common', 'Комментарий'),
         ];

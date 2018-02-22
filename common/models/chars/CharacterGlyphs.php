@@ -45,14 +45,14 @@ class CharacterGlyphs extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'talentGroup' => Yii::t('app', 'Talent Group'),
-            'glyph1' => Yii::t('app', 'Glyph1'),
-            'glyph2' => Yii::t('app', 'Glyph2'),
-            'glyph3' => Yii::t('app', 'Glyph3'),
-            'glyph4' => Yii::t('app', 'Glyph4'),
-            'glyph5' => Yii::t('app', 'Glyph5'),
-            'glyph6' => Yii::t('app', 'Glyph6'),
+            'guid' => 'Guid',
+            'talentGroup' => 'Talent Group',
+            'glyph1' => 'Glyph1',
+            'glyph2' => 'Glyph2',
+            'glyph3' => 'Glyph3',
+            'glyph4' => 'Glyph4',
+            'glyph5' => 'Glyph5',
+            'glyph6' => 'Glyph6',
         ];
     }
     /**

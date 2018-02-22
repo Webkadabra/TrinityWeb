@@ -40,7 +40,7 @@ class ShopPackItems extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
+            'id' => 'ID',
             'shop_parent_item_id' => Yii::t('common', 'Внешний ключ'),
             'shop_item_id' => Yii::t('common', 'Товар/услуга'),
         ];

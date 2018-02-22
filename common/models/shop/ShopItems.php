@@ -71,7 +71,7 @@ class ShopItems extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
+            'id' => 'ID',
             'category_id' => Yii::t('common', 'Категория'),
             'type' => Yii::t('common', 'Тип'),
             'discount' => Yii::t('common', '% скидки'),

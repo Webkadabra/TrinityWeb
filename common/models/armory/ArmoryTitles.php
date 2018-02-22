@@ -59,20 +59,20 @@ class ArmoryTitles extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'title_M_de_de' => Yii::t('common', 'Title  M De De'),
-            'title_M_zh_cn' => Yii::t('common', 'Title  M Zh Cn'),
-            'title_M_en_gb' => Yii::t('common', 'Title  M En Gb'),
-            'title_M_es_es' => Yii::t('common', 'Title  M Es Es'),
-            'title_M_fr_fr' => Yii::t('common', 'Title  M Fr Fr'),
-            'title_M_ru_ru' => Yii::t('common', 'Title  M Ru Ru'),
-            'title_F_de_de' => Yii::t('common', 'Title  F De De'),
-            'title_F_zh_cn' => Yii::t('common', 'Title  F Zh Cn'),
-            'title_F_en_gb' => Yii::t('common', 'Title  F En Gb'),
-            'title_F_es_es' => Yii::t('common', 'Title  F Es Es'),
-            'title_F_fr_fr' => Yii::t('common', 'Title  F Fr Fr'),
-            'title_F_ru_ru' => Yii::t('common', 'Title  F Ru Ru'),
-            'place' => Yii::t('common', 'Place'),
+            'id' => 'ID',
+            'title_M_de_de' => 'Title  M De De',
+            'title_M_zh_cn' => 'Title  M Zh Cn',
+            'title_M_en_gb' => 'Title  M En Gb',
+            'title_M_es_es' => 'Title  M Es Es',
+            'title_M_fr_fr' => 'Title  M Fr Fr',
+            'title_M_ru_ru' => 'Title  M Ru Ru',
+            'title_F_de_de' => 'Title  F De De',
+            'title_F_zh_cn' => 'Title  F Zh Cn',
+            'title_F_en_gb' => 'Title  F En Gb',
+            'title_F_es_es' => 'Title  F Es Es',
+            'title_F_fr_fr' => 'Title  F Fr Fr',
+            'title_F_ru_ru' => 'Title  F Ru Ru',
+            'place' => 'Place',
         ];
     }
 }

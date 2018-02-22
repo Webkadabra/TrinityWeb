@@ -38,9 +38,9 @@ class CharacterArenaStats extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'slot' => Yii::t('app', 'Slot'),
-            'matchMakerRating' => Yii::t('app', 'ММР'),
+            'guid' => 'Guid',
+            'slot' => 'Slot',
+            'matchMakerRating' => Yii::t('common', 'ММР'),
         ];
     }
 }

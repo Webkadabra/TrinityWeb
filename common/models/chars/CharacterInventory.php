@@ -37,10 +37,10 @@ class CharacterInventory extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'bag' => Yii::t('app', 'Bag'),
-            'slot' => Yii::t('app', 'Slot'),
-            'item' => Yii::t('app', 'Item'),
+            'guid' => 'Guid',
+            'bag' => 'Bag',
+            'slot' => 'Slot',
+            'item' => 'Item',
         ];
     }
     /**

@@ -46,8 +46,8 @@ class ArmoryIcons extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'displayid' => Yii::t('common', 'Displayid'),
-            'icon' => Yii::t('common', 'Icon'),
+            'displayid' => 'Displayid',
+            'icon' => 'Icon',
         ];
     }
 }

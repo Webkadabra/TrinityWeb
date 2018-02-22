@@ -32,12 +32,12 @@ class CharacterHomebind extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'mapId' => Yii::t('app', 'Map ID'),
-            'zoneId' => Yii::t('app', 'Zone ID'),
-            'posX' => Yii::t('app', 'Pos X'),
-            'posY' => Yii::t('app', 'Pos Y'),
-            'posZ' => Yii::t('app', 'Pos Z'),
+            'guid' => 'Guid',
+            'mapId' => 'Map ID',
+            'zoneId' => 'Zone ID',
+            'posX' => 'Pos X',
+            'posY' => 'Pos Y',
+            'posZ' => 'Pos Z',
         ];
     }
 }

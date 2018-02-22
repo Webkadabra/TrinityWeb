@@ -41,10 +41,10 @@ class CharacterSkills extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'skill' => Yii::t('app', 'Skill'),
-            'value' => Yii::t('app', 'Значение'),
-            'max' => Yii::t('app', 'Максимальное значение'),
+            'guid' => 'Guid',
+            'skill' => 'Skill',
+            'value' => Yii::t('common', 'Значение'),
+            'max' => Yii::t('common', 'Максимальное значение'),
         ];
     }
     /**

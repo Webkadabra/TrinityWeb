@@ -46,8 +46,8 @@ class ShopBasket extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'user_id' => Yii::t('common', 'ID пользователя'),
+            'id' => 'ID',
+            'user_id' => Yii::t('common', 'Пользователь'),
             'shop_element_id' => Yii::t('common', 'Товар/услуга'),
             'count' => Yii::t('common', 'Кол-во'),
         ];

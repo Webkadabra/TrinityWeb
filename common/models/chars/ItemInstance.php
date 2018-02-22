@@ -52,20 +52,20 @@ class ItemInstance extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'itemEntry' => Yii::t('app', 'Item Entry'),
-            'owner_guid' => Yii::t('app', 'Owner Guid'),
-            'creatorGuid' => Yii::t('app', 'Creator Guid'),
-            'giftCreatorGuid' => Yii::t('app', 'Gift Creator Guid'),
-            'count' => Yii::t('app', 'Count'),
-            'duration' => Yii::t('app', 'Duration'),
-            'charges' => Yii::t('app', 'Charges'),
-            'flags' => Yii::t('app', 'Flags'),
-            'enchantments' => Yii::t('app', 'Enchantments'),
-            'randomPropertyId' => Yii::t('app', 'Random Property ID'),
-            'durability' => Yii::t('app', 'Durability'),
-            'playedTime' => Yii::t('app', 'Played Time'),
-            'text' => Yii::t('app', 'Text'),
+            'guid' => 'Guid',
+            'itemEntry' => 'Item Entry',
+            'owner_guid' => 'Owner Guid',
+            'creatorGuid' => 'Creator Guid',
+            'giftCreatorGuid' => 'Gift Creator Guid',
+            'count' => 'Count',
+            'duration' => 'Duration',
+            'charges' => 'Charges',
+            'flags' => 'Flags',
+            'enchantments' => 'Enchantments',
+            'randomPropertyId' => 'Random Property ID',
+            'durability' => 'Durability',
+            'playedTime' => 'Played Time',
+            'text' => 'Text',
         ];
     }
     /**

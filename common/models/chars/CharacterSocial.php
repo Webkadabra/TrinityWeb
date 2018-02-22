@@ -44,10 +44,10 @@ class CharacterSocial extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'friend' => Yii::t('app', 'Friend'),
-            'flags' => Yii::t('app', 'Flags'),
-            'note' => Yii::t('app', 'Note'),
+            'guid' => 'Guid',
+            'friend' => 'Friend',
+            'flags' => 'Flags',
+            'note' => 'Note',
         ];
     }
     /**

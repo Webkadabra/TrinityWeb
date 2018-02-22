@@ -38,9 +38,9 @@ class CharacterTalent extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'spell' => Yii::t('app', 'Spell'),
-            'talentGroup' => Yii::t('app', 'Talent Group'),
+            'guid' => 'Guid',
+            'spell' => 'Spell',
+            'talentGroup' => 'Talent Group',
         ];
     }
 }

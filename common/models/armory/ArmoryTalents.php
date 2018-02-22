@@ -53,15 +53,15 @@ class ArmoryTalents extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'TalentID' => Yii::t('common', 'Talent ID'),
-            'TalentTab' => Yii::t('common', 'Talent Tab'),
-            'Row' => Yii::t('common', 'Row'),
-            'Col' => Yii::t('common', 'Col'),
-            'Rank_1' => Yii::t('common', 'Rank 1'),
-            'Rank_2' => Yii::t('common', 'Rank 2'),
-            'Rank_3' => Yii::t('common', 'Rank 3'),
-            'Rank_4' => Yii::t('common', 'Rank 4'),
-            'Rank_5' => Yii::t('common', 'Rank 5'),
+            'TalentID' => 'Talent ID',
+            'TalentTab' => 'Talent Tab',
+            'Row' => 'Row',
+            'Col' => 'Col',
+            'Rank_1' => 'Rank 1',
+            'Rank_2' => 'Rank 2',
+            'Rank_3' => 'Rank 3',
+            'Rank_4' => 'Rank 4',
+            'Rank_5' => 'Rank 5',
         ];
     }
 

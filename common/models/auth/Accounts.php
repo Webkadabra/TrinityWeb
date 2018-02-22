@@ -80,15 +80,15 @@ class Accounts extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => 'ID',
             'username' => Yii::t('app', 'Имя учётной записи'),
             'sha_pass_hash' => Yii::t('app', 'ХЭШ пароля'),
             'sessionkey' => Yii::t('app', 'ключ сессии'),
-            'v' => Yii::t('app', 'V'),
-            's' => Yii::t('app', 'S'),
+            'v' => 'V',
+            's' => 'S',
             'token_key' => Yii::t('app', 'токен'),
             'email' => Yii::t('app', 'email'),
-            'reg_mail' => Yii::t('app', 'registration email'),
+            'reg_mail' => 'registration email',
             'joindate' => Yii::t('app', 'дата регистрации'),
             'last_ip' => Yii::t('app', 'последний ip'),
             'last_attempt_ip' => Yii::t('app', 'последний входной ip'),
@@ -99,7 +99,7 @@ class Accounts extends \yii\db\ActiveRecord
             'online' => Yii::t('app', 'Онлайн ?'),
             'expansion' => Yii::t('app', 'Аддон'),
             'mutetime' => Yii::t('app', 'Мут'),
-            'mutereason' => Yii::t('app', 'Mutereason'),
+            'mutereason' => 'Mutereason',
             'muteby' => Yii::t('app', 'Молчание от'),
             'locale' => Yii::t('app', 'Язык'),
             'os' => Yii::t('app', 'ОС'),

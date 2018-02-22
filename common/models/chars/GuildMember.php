@@ -44,11 +44,11 @@ class GuildMember extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guildid' => Yii::t('app', 'Guildid'),
-            'guid' => Yii::t('app', 'Guid'),
-            'rank' => Yii::t('app', 'Rank'),
-            'pnote' => Yii::t('app', 'Pnote'),
-            'offnote' => Yii::t('app', 'Offnote'),
+            'guildid' => 'Guildid',
+            'guid' => 'Guid',
+            'rank' => 'Rank',
+            'pnote' => 'Pnote',
+            'offnote' => 'Offnote',
         ];
     }
     /**

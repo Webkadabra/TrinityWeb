@@ -40,9 +40,9 @@ class CharacterAchievement extends CoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => Yii::t('app', 'Guid'),
-            'achievement' => Yii::t('app', 'Achievement'),
-            'date' => Yii::t('app', 'Date'),
+            'guid' => 'Guid',
+            'achievement' => 'Achievement',
+            'date' => 'Date',
         ];
     }
     /**

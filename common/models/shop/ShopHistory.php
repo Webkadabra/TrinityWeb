@@ -44,14 +44,14 @@ class ShopHistory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'user_id' => Yii::t('common', 'User ID'),
-            'realm_id' => Yii::t('common', 'Realm ID'),
-            'character_id' => Yii::t('common', 'Character ID'),
-            'is_gift' => Yii::t('common', 'Is Gift'),
-            'operation_data' => Yii::t('common', 'Operation Data'),
-            'operation_time' => Yii::t('common', 'Operation Time'),
-            'operation_cost' => Yii::t('common', 'Operation Cost'),
+            'id' => 'ID',
+            'user_id' => Yii::t('common', 'Пользователь'),
+            'realm_id' => Yii::t('common', 'Сервер'),
+            'character_id' => Yii::t('common', 'Персонаж'),
+            'is_gift' => Yii::t('common', 'Подарок ?'),
+            'operation_data' => Yii::t('common', 'Дата операции'),
+            'operation_time' => Yii::t('common', 'Время операции'),
+            'operation_cost' => Yii::t('common', 'Итоговая стоимость'),
         ];
     }
     

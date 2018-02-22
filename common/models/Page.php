@@ -70,7 +70,7 @@ class Page extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
+            'id' => 'ID',
             'slug' => Yii::t('common', 'Slug'),
             'title' => Yii::t('common', 'Title'),
             'body' => Yii::t('common', 'Body'),

@@ -55,15 +55,15 @@ class ArmoryTalentTab extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'name_de_de' => Yii::t('common', 'Name De De'),
-            'name_zh_cn' => Yii::t('common', 'Name Zh Cn'),
-            'name_en_gb' => Yii::t('common', 'Name En Gb'),
-            'name_es_es' => Yii::t('common', 'Name Es Es'),
-            'name_fr_fr' => Yii::t('common', 'Name Fr Fr'),
-            'name_ru_ru' => Yii::t('common', 'Name Ru Ru'),
-            'refmask_chrclasses' => Yii::t('common', 'Refmask Chrclasses'),
-            'tab_number' => Yii::t('common', 'Tab Number'),
+            'id' => 'ID',
+            'name_de_de' => 'Name De De',
+            'name_zh_cn' => 'Name Zh Cn',
+            'name_en_gb' => 'Name En Gb',
+            'name_es_es' => 'Name Es Es',
+            'name_fr_fr' => 'Name Fr Fr',
+            'name_ru_ru' => 'Name Ru Ru',
+            'refmask_chrclasses' => 'Refmask Chrclasses',
+            'tab_number' => 'Tab Number',
         ];
     }
 

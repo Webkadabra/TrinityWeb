@@ -42,13 +42,13 @@ class ArenaTeamMember extends CoreModel
     public function attributeLabels()
     {
         return [
-            'arenaTeamId' => Yii::t('app', 'Arena Team ID'),
-            'guid' => Yii::t('app', 'Guid'),
-            'weekGames' => Yii::t('app', 'Недельных игр'),
-            'weekWins' => Yii::t('app', 'Недельных побед'),
-            'seasonGames' => Yii::t('app', 'Игр в сезоне'),
-            'seasonWins' => Yii::t('app', 'Побед в сезоне'),
-            'personalRating' => Yii::t('app', 'личный рейтинг'),
+            'arenaTeamId' => 'Arena Team ID',
+            'guid' => 'Guid',
+            'weekGames' => Yii::t('common', 'Недельных игр'),
+            'weekWins' => Yii::t('common', 'Недельных побед'),
+            'seasonGames' => Yii::t('common', 'Игр в сезоне'),
+            'seasonWins' => Yii::t('common', 'Побед в сезоне'),
+            'personalRating' => Yii::t('common', 'личный рейтинг'),
         ];
     }
     /**
