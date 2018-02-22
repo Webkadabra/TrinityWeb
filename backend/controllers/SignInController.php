@@ -44,6 +44,11 @@ class SignInController extends Controller
                         'allow' => true,
                         'roles' => ['?', '@'],
                         'actions' => ['error']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['account','profile', 'avatar-upload', 'avatar-delete']
                     ]
                 ],
             ],
