@@ -7,6 +7,7 @@ use common\models\User;
 
 ?>
 <div class="timeline-item">
+    
     <span class="time">
         <i class="fa fa-clock-o"></i>
         <?php echo Yii::$app->formatter->asRelativeTime($model->created_at) ?>
@@ -34,4 +35,5 @@ use common\models\User;
         }
         ?>
     </div>
+    
 </div>
