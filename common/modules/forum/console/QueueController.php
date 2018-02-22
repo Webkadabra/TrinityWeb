@@ -119,11 +119,14 @@ class QueueController extends Controller
             return Yii::$app->commandBus->handle(new SendEmailCommand([
                 'to' => $email['email'],
                 'subject' => $email['subject'],
-                'body' => strip_tags(str_replace(
-                    ['<br>', '<br/>', '<br />', '</p>'],
-                    "\n",
-                    $email['content']
-                )),
+                'view' => 'layouts/text',
+                'params' => [
+                    'content' => strip_tags(str_replace(
+                        ['<br>', '<br/>', '<br />', '</p>'],
+                        "\n",
+                        $email['content']
+                    )),
+                ],
             ]));
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
