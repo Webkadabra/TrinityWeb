@@ -183,50 +183,50 @@ $bundle = BackendAsset::register($this);
                         ]
                     ],
                     [
-                        'label' => Yii::t('podium/view','Forum'),
+                        'label' => Yii::t('view','Forum'),
                         'icon' => '<i class="fa fa-tasks"></i>',
                         'url' => '#',
                         'visible' => Yii::$app->user->can('administrator'),
                         'active' => (\Yii::$app->controller->module->id == 'forum'),
                         'items' => [
                             [
-                                'label' => Yii::t('podium/view','Dashboard'),
+                                'label' => Yii::t('view','Dashboard'),
                                 'icon' => '<i class="fa fa-cog"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'index'),
                                 'url' => ['/forum/admin/index'],
                             ],
                             [
-                                'label' => Yii::t('podium/view','Forums'),
+                                'label' => Yii::t('view','Forums'),
                                 'icon' => '<i class="fa fa-list-ul"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'categories'),
                                 'url' => ['/forum/admin/categories'],
                             ],
                             [
-                                'label' => Yii::t('podium/view','Members'),
+                                'label' => Yii::t('view','Members'),
                                 'icon' => '<i class="fa fa-vcard"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'members'),
                                 'url' => ['/forum/admin/members'],
                             ],
                             [
-                                'label' => Yii::t('podium/view','Moderators'),
+                                'label' => Yii::t('view','Moderators'),
                                 'icon' => '<i class="fa fa-user-circle"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'mods'),
                                 'url' => ['/forum/admin/mods'],
                             ],
                             [
-                                'label' => Yii::t('podium/view','Contents'),
+                                'label' => Yii::t('view','Contents'),
                                 'icon' => '<i class="fa fa-vcard"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'contents'),
                                 'url' => ['/forum/admin/contents'],
                             ],
                             [
-                                'label' => Yii::t('podium/view','Settings'),
+                                'label' => Yii::t('view','Settings'),
                                 'icon' => '<i class="fa fa-cogs"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'settings'),
                                 'url' => ['/forum/admin/settings'],
                             ],
                             [
-                                'label' => Yii::t('podium/view','Logs'),
+                                'label' => Yii::t('view','Logs'),
                                 'icon' => '<i class="fa fa-list"></i>',
                                 'active' => (\Yii::$app->controller->id == 'admin' && \Yii::$app->controller->action->id == 'logs'),
                                 'url' => ['/forum/admin/logs'],

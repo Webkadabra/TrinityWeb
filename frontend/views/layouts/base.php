@@ -79,10 +79,10 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 ],
             ],
             [
-                'label' => Yii::t('podium/view', 'Forum'),
+                'label' => Yii::t('view', 'Forum'),
                 'url' => ['/forum/forum/index'],
                 'linkOptions' => [
-                    'data-hover' => Yii::t('podium/view', 'Forum'),
+                    'data-hover' => Yii::t('view', 'Forum'),
                 ],
             ],
             [
@@ -129,7 +129,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 ]
             ],
             [
-                'label' => Yii::t('podium/view', 'Messages') . ($messageCount ? ' ' . Html::tag('span', $messageCount, ['class' => 'badge']) : '' ),
+                'label' => Yii::t('view', 'Messages') . ($messageCount ? ' ' . Html::tag('span', $messageCount, ['class' => 'badge']) : '' ),
                 'visible' => !Yii::$app->user->isGuest,
                 'encode' => false,
                 'linkOptions' => [
@@ -137,16 +137,16 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 ],
                 'items'=>[
                     [
-                        'label' => Yii::t('podium/view', 'Inbox') . ($messageCount ? ' ' . Html::tag('span', $messageCount, ['class' => 'badge']) : ''),
+                        'label' => Yii::t('view', 'Inbox') . ($messageCount ? ' ' . Html::tag('span', $messageCount, ['class' => 'badge']) : ''),
                         'url' => ['/forum/messages/inbox'],
                         'encode' => false,
                     ],
                     [
-                        'label' => Yii::t('podium/view', 'Sent Messages'),
+                        'label' => Yii::t('view', 'Sent Messages'),
                         'url' => ['/forum/messages/sent']
                     ],
                     [
-                        'label' => Yii::t('podium/view', 'New Message'),
+                        'label' => Yii::t('view', 'New Message'),
                         'url' => ['/forum/messages/new']
                     ],
                 ]
