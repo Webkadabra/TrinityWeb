@@ -14,6 +14,7 @@ use yii\di\Instance;
 use yii\helpers\Console;
 use yii\mail\BaseMailer;
 use common\modules\forum\Podium;
+use common\commands\SendEmailCommand;
 
 /**
  * Podium command line tool to send emails.
@@ -115,17 +116,15 @@ class QueueController extends Controller
     public function send($email, $fromName, $fromEmail)
     {
         try {
-            $mailer = Yii::$app->mailer->compose();
-            $mailer->setFrom([$fromEmail => $fromName]);
-            $mailer->setTo($email['email']);
-            $mailer->setSubject($email['subject']);
-            $mailer->setHtmlBody($email['content']);
-            $mailer->setTextBody(strip_tags(str_replace(
-                ['<br>', '<br/>', '<br />', '</p>'],
-                "\n",
-                $email['content']
-            )));
-            return $mailer->send();
+            return Yii::$app->commandBus->handle(new SendEmailCommand([
+                'to' => $email['email'],
+                'subject' => $email['subject'],
+                'body' => strip_tags(str_replace(
+                    ['<br>', '<br/>', '<br />', '</p>'],
+                    "\n",
+                    $email['content']
+                )),
+            ]));
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
@@ -154,7 +153,6 @@ class QueueController extends Controller
                     ->execute();
                 return true;
             }
-
             $attempt = $email['attempt'] + 1;
             if ($attempt <= $maxAttempts) {
                 $this

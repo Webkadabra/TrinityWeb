@@ -107,7 +107,7 @@ $config = [
                 'username' => env('SMTP_USERNAME'),
                 'password' => env('SMTP_PASSWORD'),
                 'port' => env('SMTP_PORT'),
-                'encryption' => 'ssl',
+                'encryption' => 'tls',
             ],
         ],
         'db' => [

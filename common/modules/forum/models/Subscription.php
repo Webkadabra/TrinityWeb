@@ -84,22 +84,27 @@ class Subscription extends SubscriptionActiveRecord
             foreach ($subs->each() as $sub) {
                 $sub->post_seen = self::POST_NEW;
                 if ($sub->save()) {
-                    if ($email !== false && !empty($sub->user->email)) {
-                        if (Email::queue(
-                                $sub->user->email,
-                                str_replace('{forum}', $forum, $email->topic),
-                                str_replace('{forum}', $forum, str_replace('{link}', Html::a(
-                                        Url::to(['forum/last', 'id' => $sub->thread_id], true),
-                                        Url::to(['forum/last', 'id' => $sub->thread_id], true)
-                                    ), $email->content)),
-                                $sub->user_id
-                            )) {
-                            Log::info('Subscription notice link queued', $sub->user_id, __METHOD__);
+                    $user = $sub->user->findGeneralAccount();
+                    if (isset($user)) {
+                        if ($email !== false && !empty($user->email)) {
+                            if (Email::queue(
+                                    $user->email,
+                                    str_replace('{forum}', $forum, $email->topic),
+                                    str_replace('{forum}', $forum, str_replace('{link}', Html::a(
+                                            Url::to(['forum/last', 'id' => $sub->thread_id], true),
+                                            Url::to(['forum/last', 'id' => $sub->thread_id], true)
+                                        ), $email->content)),
+                                    $sub->user_id
+                                )) {
+                                Log::info('Subscription notice link queued', $sub->user_id, __METHOD__);
+                            } else {
+                                Log::error('Error while queuing subscription notice link', $sub->user_id, __METHOD__);
+                            }
                         } else {
-                            Log::error('Error while queuing subscription notice link', $sub->user_id, __METHOD__);
+                            Log::warning('Error while queuing subscription notice link - no email set', $sub->user_id, __METHOD__);
                         }
                     } else {
-                        Log::warning('Error while queuing subscription notice link - no email set', $sub->user_id, __METHOD__);
+                        Log::warning('Error while queuing subscription notice link - not find general user', $sub->user_id, __METHOD__);
                     }
                 }
             }

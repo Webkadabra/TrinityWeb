@@ -6,6 +6,20 @@ return [
     'modules' => [
         'podium' => 'common\modules\forum\Podium',
     ],
+    'components' => [
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => env('SMTP_CONSOLE_HOST'),
+                'username' => env('SMTP_USERNAME'),
+                'password' => env('SMTP_PASSWORD'),
+                'port' => env('SMTP_PORT'),
+                'encryption' => '',
+            ],
+        ],
+    ],
     'controllerMap' => [
         'translate' => [
             'class' => common\modules\i18n\commands\TranslatemanagerController::className(),
