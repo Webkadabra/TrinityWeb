@@ -82,10 +82,7 @@ class SignInController extends Controller
     {
         $model = Yii::$app->user->identity->userProfile;
         if ($model->load($_POST) && $model->save()) {
-            Yii::$app->session->setFlash('alert', [
-                'options' => ['class' => 'alert-success'],
-                'body' => Yii::t('backend', 'Your profile has been successfully saved', [], $model->locale)
-            ]);
+            Yii::$app->session->setFlash('success', Yii::t('backend', 'Your profile has been successfully saved', [], $model->locale));
             return $this->refresh();
         }
         return $this->render('profile', ['model' => $model]);
@@ -104,10 +101,7 @@ class SignInController extends Controller
                 $user->setPassword($model->password);
             }
             $user->save();
-            Yii::$app->session->setFlash('alert', [
-                'options' => ['class' => 'alert-success'],
-                'body' => Yii::t('backend', 'Your account has been successfully saved')
-            ]);
+            Yii::$app->session->setFlash('success', Yii::t('backend', 'Your account has been successfully saved'));
             return $this->refresh();
         }
         return $this->render('account', ['model' => $model]);
