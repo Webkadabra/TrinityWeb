@@ -3,6 +3,8 @@
  * @author Eugene Terentev <eugene@terentev.net>
  * @var $model common\models\TimelineEvent
  */
+use common\models\User;
+
 ?>
 <div class="timeline-item">
     <span class="time">
@@ -22,10 +24,14 @@
     </div>
 
     <div class="timeline-footer">
-        <?php echo \yii\helpers\Html::a(
-            Yii::t('backend', 'View user'),
-            ['/user/view', 'id' => $model->data['user_id']],
-            ['class' => 'btn btn-success btn-sm']
-        ) ?>
+        <?php
+        if(Yii::$app->user->can(User::PERM_ACCESS_TO_USES)) {
+            echo \yii\helpers\Html::a(
+                Yii::t('backend', 'View user'),
+                ['/user/view', 'id' => $model->data['user_id']],
+                ['class' => 'btn btn-success btn-sm']
+            );
+        }
+        ?>
     </div>
 </div>
