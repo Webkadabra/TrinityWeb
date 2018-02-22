@@ -17,6 +17,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 
 class SignInController extends Controller
 {
@@ -26,6 +27,26 @@ class SignInController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@', '?'],
+                        'actions' => ['login']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'actions' => ['logout']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['?', '@'],
+                        'actions' => ['error']
+                    ]
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -75,7 +96,7 @@ class SignInController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-        return $this->goHome();
+        return $this->redirect(['login']);
     }
 
     public function actionProfile()

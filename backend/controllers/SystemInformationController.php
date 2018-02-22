@@ -10,10 +10,31 @@ use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 
+use yii\filters\AccessControl;
+use common\models\User;
+
 class SystemInformationController extends Controller
 {
     public $layout = 'common';
-
+    
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [
+                            'index',
+                        ],
+                        'allow' => true,
+                        'permissions' => [User::PERM_ACCESS_TO_SYS_INFORMATION]
+                    ],
+                ],
+            ],
+        ]);
+    }
+    
     public function actionIndex()
     {
         $provider = Factory::create();

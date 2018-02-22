@@ -41,7 +41,7 @@ class Component extends \yii\base\Component
     private function _initTranslation()
     {
         $module = Yii::$app->getModule('translatemanager');
-
+        
         if ($module->checkAccess() && $this->_checkRoles($module->roles)) {
             Yii::$app->session->set(Module::SESSION_KEY_ENABLE_TRANSLATE, true);
         }

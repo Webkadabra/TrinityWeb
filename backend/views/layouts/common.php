@@ -7,6 +7,7 @@ use backend\models\SystemLog;
 use backend\widgets\Menu;
 use common\models\TimelineEvent;
 use common\widgets\Alert;
+use common\models\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -122,7 +123,11 @@ $bundle = BackendAsset::register($this);
                 'items' => [
                     [
                         'label' => Yii::t('backend', 'Main'),
-                        'options' => ['class' => 'header']
+                        'options' => ['class' => 'header'],
+                        'visible' => (
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_TIMELINE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_CONTENT)
+                            ),
                     ],
                     [
                         'label' => Yii::t('backend', 'Timeline'),
@@ -130,22 +135,45 @@ $bundle = BackendAsset::register($this);
                         'url' => ['/timeline-event/index'],
                         'badge' => TimelineEvent::find()->today()->count(),
                         'badgeBgClass' => 'label-success',
+                        'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_TIMELINE),
                     ],
                     [
+                        'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_CONTENT),
                         'label' => Yii::t('backend', 'Content'),
                         'url' => '#',
                         'icon' => '<i class="fa fa-edit"></i>',
                         'options' => ['class' => 'treeview'],
                         'active' => in_array(\Yii::$app->controller->id,['page','article','article-category','widget-text','widget-menu','widget-carousel']),
                         'items' => [
-                            ['label' => Yii::t('backend', 'Static pages'), 'url' => ['/page/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'page')],
-                            ['label' => Yii::t('backend', 'Articles'), 'url' => ['/article/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'article')],
-                            ['label' => Yii::t('backend', 'Article Categories'), 'url' => ['/article-category/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'article-category')],
-                            ['label' => Yii::t('backend', 'Carousel Widgets'), 'url' => ['/widget-carousel/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'widget-carousel')],
+                            [
+                                'label' => Yii::t('backend', 'Static pages'),
+                                'url' => ['/page/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'active' => (\Yii::$app->controller->id == 'page')
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Articles'),
+                                'url' => ['/article/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'active' => (\Yii::$app->controller->id == 'article')
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Article Categories'),
+                                'url' => ['/article-category/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'active' => (\Yii::$app->controller->id == 'article-category')
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Carousel Widgets'),
+                                'url' => ['/widget-carousel/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'active' => (\Yii::$app->controller->id == 'widget-carousel')
+                            ],
                         ]
                     ],
                     [
                         'label' => Yii::t('backend', 'Modules'),
+                        'visible' => (Yii::$app->user->can(User::PERM_ACCESS_TO_FORUM) || Yii::$app->user->can(User::PERM_ACCESS_TO_RBAC)),
                         'options' => ['class' => 'header']
                     ],
                     [
@@ -154,7 +182,7 @@ $bundle = BackendAsset::register($this);
                         'url' => '#',
                         'options' => ['class' => 'treeview'],
                         'active' => (\Yii::$app->controller->module->id == 'rbac'),
-                        'visible' => Yii::$app->user->can('administrator'),
+                        'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_RBAC),
                         'items' => [
                             [
                                 'label' => Yii::t('rbac-admin','Roles'),
@@ -186,7 +214,7 @@ $bundle = BackendAsset::register($this);
                         'label' => Yii::t('view','Forum'),
                         'icon' => '<i class="fa fa-tasks"></i>',
                         'url' => '#',
-                        'visible' => Yii::$app->user->can('administrator'),
+                        'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_FORUM),
                         'active' => (\Yii::$app->controller->module->id == 'forum'),
                         'items' => [
                             [
@@ -241,27 +269,47 @@ $bundle = BackendAsset::register($this);
                     ],
                     [
                         'label' => Yii::t('backend', 'System'),
-                        'options' => ['class' => 'header']
+                        'options' => ['class' => 'header'],
+                        'visible' => (
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_STORE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_USES) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_I18N) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_KEY_VALUE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_FILE_STORAGE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_CACHE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_FILE_MANAGER) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_SYS_INFORMATION) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_LOGS)
+                            )
                     ],
                     [
                         'label' => Yii::t('backend', 'Магазин'),
                         'icon' => '<i class="fa fa-shopping-cart"></i>',
                         'url' => ['/shop/index'],
                         'active' => (\Yii::$app->controller->id == 'shop'),
-                        'visible' => Yii::$app->user->can('administrator')
+                        'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_STORE)
                     ],
                     [
                         'label' => Yii::t('backend', 'Users'),
                         'icon' => '<i class="fa fa-users"></i>',
                         'url' => ['/user/index'],
                         'active' => (\Yii::$app->controller->id == 'user'),
-                        'visible' => Yii::$app->user->can('administrator')
+                        'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_USES)
                     ],
                     [
                         'label' => Yii::t('backend', 'Other'),
                         'url' => '#',
                         'icon' => '<i class="fa fa-cogs"></i>',
                         'options' => ['class' => 'treeview'],
+                        'visible' => (
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_I18N) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_KEY_VALUE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_FILE_STORAGE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_CACHE) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_FILE_MANAGER) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_SYS_INFORMATION) ||
+                                Yii::$app->user->can(User::PERM_ACCESS_TO_LOGS)
+                            ),
                         'active' => in_array(\Yii::$app->controller->id,['language','key-storage','file-storage','cache','file-manager','system-information', 'log']),
                         'items' => [
                             [
@@ -269,6 +317,7 @@ $bundle = BackendAsset::register($this);
                                 'url' => '#',
                                 'icon' => '<i class="fa fa-flag"></i>',
                                 'options' => ['class' => 'treeview'],
+                                'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_I18N),
                                 'active' => in_array(\Yii::$app->controller->id,['language']),
                                 'items' => [
                                     [
@@ -298,18 +347,42 @@ $bundle = BackendAsset::register($this);
                                     ],
                                 ]
                             ],
-                            ['label' => Yii::t('backend', 'Key-Value Storage'), 'url' => ['/key-storage/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'key-storage')],
-                            ['label' => Yii::t('backend', 'File Storage'), 'url' => ['/file-storage/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>', 'active' => (\Yii::$app->controller->id == 'file-storage')],
-                            ['label' => Yii::t('backend', 'Cache'), 'url' => ['/cache/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
-                            ['label' => Yii::t('backend', 'File Manager'), 'url' => ['/file-manager/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            [
+                                'label' => Yii::t('backend', 'Key-Value Storage'),
+                                'url' => ['/key-storage/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_KEY_VALUE),
+                                'active' => (\Yii::$app->controller->id == 'key-storage')
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'File Storage'),
+                                'url' => ['/file-storage/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_FILE_STORAGE),
+                                'active' => (\Yii::$app->controller->id == 'file-storage')
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Cache'),
+                                'url' => ['/cache/index'],
+                                'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_CACHE),
+                                'icon' => '<i class="fa fa-angle-double-right"></i>'
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'File Manager'),
+                                'url' => ['/file-manager/index'],
+                                'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_FILE_MANAGER),
+                                'icon' => '<i class="fa fa-angle-double-right"></i>'
+                            ],
                             [
                                 'label' => Yii::t('backend', 'System Information'),
                                 'url' => ['/system-information/index'],
+                                'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_SYS_INFORMATION),
                                 'icon' => '<i class="fa fa-angle-double-right"></i>'
                             ],
                             [
                                 'label' => Yii::t('backend', 'Logs'),
                                 'url' => ['/log/index'],
+                                'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_LOGS),
                                 'icon' => '<i class="fa fa-angle-double-right"></i>',
                                 'badge' => SystemLog::find()->count(),
                                 'badgeBgClass' => 'label-danger',

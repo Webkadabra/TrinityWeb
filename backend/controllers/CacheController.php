@@ -11,6 +11,8 @@ use yii\caching\TagDependency;
 use yii\data\ArrayDataProvider;
 use yii\web\Controller;
 use yii\web\HttpException;
+use common\models\User;
+use yii\filters\AccessControl;
 
 /**
  * Class CacheController
@@ -18,6 +20,28 @@ use yii\web\HttpException;
  */
 class CacheController extends Controller
 {
+    
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [
+                            'index',
+                            'flush-cache',
+                            'flush-cache-key',
+                            'flush-cache-tag',
+                        ],
+                        'allow' => true,
+                        'permissions' => [User::PERM_ACCESS_TO_CACHE]
+                    ],
+                ],
+            ],
+        ]);
+    }
+    
     /**
      * @return string
      */

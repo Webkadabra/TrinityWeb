@@ -21,6 +21,8 @@ class m150625_214101_roles extends Migration
         $this->auth->addChild($admin, $manager);
         
         $intepreter = $this->auth->createRole(User::ROLE_INTERPRETER);
+        $this->auth->add($intepreter);
+        $this->auth->addChild($admin, $intepreter);
         
         $this->auth->assign($admin, 1);
         $this->auth->assign($manager, 2);

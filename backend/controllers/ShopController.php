@@ -14,6 +14,9 @@ use common\models\shop\ShopItems;
 use common\models\shop\ShopPackItems;
 use yii\data\ActiveDataFilter;
 
+use yii\filters\AccessControl;
+use common\models\User;
+
 /**
  * PageController implements the CRUD actions for Page model.
  */
@@ -22,6 +25,22 @@ class ShopController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [
+                            'index',
+                            'create',
+                            'update',
+                            'delete',
+                            'category'
+                        ],
+                        'allow' => true,
+                        'permissions' => [User::PERM_ACCESS_TO_STORE]
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

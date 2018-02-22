@@ -8,6 +8,8 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+use common\models\User;
 
 /**
  * KeyStorageController implements the CRUD actions for KeyStorageItem model.
@@ -17,6 +19,21 @@ class KeyStorageController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [
+                            'index',
+                            'create',
+                            'update',
+                            'delete'
+                        ],
+                        'allow' => true,
+                        'permissions' => [User::PERM_ACCESS_TO_KEY_VALUE]
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

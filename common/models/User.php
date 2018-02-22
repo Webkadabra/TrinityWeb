@@ -58,6 +58,21 @@ class User extends ActiveRecord implements IdentityInterface
     const EVENT_AFTER_SIGNUP = 'afterSignup';
     const EVENT_AFTER_LOGIN = 'afterLogin';
     
+    const PERM_LOGIN_TO_BACKEND = 'loginToBackend';
+    const PERM_ACCESS_TO_TIMELINE = 'timeline_access';
+    const PERM_ACCESS_TO_CONTENT = 'content_access';
+    const PERM_ACCESS_TO_RBAC = 'rbac_access';
+    const PERM_ACCESS_TO_FORUM = 'forum_access';
+    const PERM_ACCESS_TO_I18N = 'i18n_access';
+    const PERM_ACCESS_TO_KEY_VALUE = 'key-value_access';
+    const PERM_ACCESS_TO_FILE_STORAGE = 'file-storage_access';
+    const PERM_ACCESS_TO_CACHE = 'cache_access';
+    const PERM_ACCESS_TO_FILE_MANAGER = 'file-manager_access';
+    const PERM_ACCESS_TO_SYS_INFORMATION = 'sys-information_access';
+    const PERM_ACCESS_TO_LOGS = 'logs_access';
+    const PERM_ACCESS_TO_STORE = 'store_access';
+    const PERM_ACCESS_TO_USES = 'users_access';
+    
     /**
      * Expansion - WOTLK
      */

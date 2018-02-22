@@ -8,6 +8,10 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+
+use common\models\User;
+
 
 /**
  * FileStorageController implements the CRUD actions for FileStorageItem model.
@@ -17,6 +21,23 @@ class FileStorageController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [
+                            'upload-imperavi',
+                            'upload',
+                            'upload-delete',
+                            'index',
+                            'view',
+                            'delete'
+                        ],
+                        'allow' => true,
+                        'permissions' => [User::PERM_ACCESS_TO_FILE_STORAGE]
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

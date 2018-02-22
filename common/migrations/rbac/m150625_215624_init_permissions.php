@@ -6,11 +6,11 @@ class m150625_215624_init_permissions extends Migration
 {
     public function up()
     {
-        $managerRole = $this->auth->getRole(\common\models\User::ROLE_MODERATOR);
+        $moderatorRole = $this->auth->getRole(\common\models\User::ROLE_MODERATOR);
         $intepreterRole = $this->auth->getRole(\common\models\User::ROLE_INTERPRETER);
-        $loginToBackend = $this->auth->createPermission('loginToBackend');
+        $loginToBackend = $this->auth->createPermission(\common\models\User::PERM_LOGIN_TO_BACKEND);
         $this->auth->add($loginToBackend);
-        $this->auth->addChild($managerRole, $loginToBackend);
+        $this->auth->addChild($moderatorRole, $loginToBackend);
         $this->auth->addChild($intepreterRole, $loginToBackend);
     }
 
