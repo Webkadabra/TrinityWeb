@@ -14,6 +14,11 @@ use yii\helpers\Html;
     <title><?php echo Html::encode($this->title) ?></title>
     <meta name="robots" content="noindex,follow" />
     <meta property="og:url" content="https:/" />
+    
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.ico" />
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon"/>
+    
     <?php $this->head() ?>
     <?php echo Html::csrfMetaTags() ?>
 </head>
