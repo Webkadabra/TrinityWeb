@@ -160,11 +160,6 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
 </div>
 
 <footer class="footer">
-    <?php
-    echo \common\modules\i18n\widgets\ToggleTranslate::widget([
-    'position' => \common\modules\i18n\widgets\ToggleTranslate::POSITION_BOTTOM_RIGHT,
-   ]);
-    ?>
     <div class="container">
         <p class="pull-left rf-studio-aqua">
             &copy; RF-studio <?php echo date('Y') ?>
