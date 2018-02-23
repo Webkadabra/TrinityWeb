@@ -515,6 +515,7 @@ class AppHelper extends \yii\base\Component
             if(isset($var->{$attribute}) && $var->{$attribute}) {
                 return Yii::t('common',$var->{$attribute});
             } else {
+                return 'null';
                 throw new \Exception(Yii::t('common','Отсутствует аттрибут у объекта для перевода'));
             }
         } elseif(is_string($var)) {
