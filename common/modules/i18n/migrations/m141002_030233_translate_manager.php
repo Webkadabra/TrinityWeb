@@ -27,7 +27,7 @@ class m141002_030233_translate_manager extends Migration
         ['da-DK', 'da', 'dk', 'Dansk', 'Danish', 0],
         ['de-DE', 'de', 'de', 'Deutsch', 'German', 0],
         ['el-GR', 'el', 'gr', 'Ελληνικά', 'Greek', 0],
-        ['en-GB', 'en', 'gb', 'English (UK)', 'English (UK)', 1],
+        ['en-GB', 'en', 'gb', 'English (UK)', 'English (UK)', 0],
         ['en-PI', 'en', 'pi', 'English (Pirate)', 'English (Pirate)', 0],
         ['en-UD', 'en', 'ud', 'English (Upside Down)', 'English (Upside Down)', 0],
         ['en-US', 'en', 'us', 'English (US)', 'English (US)', 1],

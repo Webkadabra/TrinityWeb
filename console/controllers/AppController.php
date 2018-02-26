@@ -53,7 +53,6 @@ class AppController extends Controller
         \Yii::$app->runAction('rbac-migrate/up', ['interactive' => $this->interactive]);
         \Yii::$app->runAction('forum/install/init', ['interactive' => $this->interactive]);
         \Yii::$app->runAction('translate/base', ['interactive' => $this->interactive]);
-        
     }
     
     /**
