@@ -43,13 +43,17 @@ class AppController extends Controller
      * @throws \yii\console\Exception
      */
     public function actionSetup()
-    {
+    {   
+        $this->runAction('drop', ['interactive' => $this->interactive]);
         $this->runAction('set-writable', ['interactive' => $this->interactive]);
         $this->runAction('set-executable', ['interactive' => $this->interactive]);
         $this->runAction('set-keys', ['interactive' => $this->interactive]);
         $this->setGenerateCharactersConfig(Yii::getAlias('@common') . '/config/');
         \Yii::$app->runAction('migrate/up', ['interactive' => $this->interactive]);
         \Yii::$app->runAction('rbac-migrate/up', ['interactive' => $this->interactive]);
+        \Yii::$app->runAction('forum/install/init', ['interactive' => $this->interactive]);
+        \Yii::$app->runAction('translate/base', ['interactive' => $this->interactive]);
+        
     }
     
     /**
@@ -90,6 +94,24 @@ class AppController extends Controller
         }
     }
 
+    /**
+     * Drops all tables in the armory database.
+     * @throws \yii\db\Exception
+     */
+    public function actionArmoryDrop()
+    {
+        $dbName = Yii::$app->armory_db->createCommand('SELECT DATABASE()')->queryScalar();
+        if ($this->confirm('This will install clear armory dump of current database and drop existing tables in database [' . $dbName . '].')) {
+            Yii::$app->armory_db->createCommand("SET foreign_key_checks = 0")->execute();
+            $tables = Yii::$app->armory_db->schema->getTableNames();
+            foreach ($tables as $table) {
+                $this->stdout('Dropping table ' . $table . PHP_EOL, Console::FG_RED);
+                Yii::$app->armory_db->createCommand()->dropTable($table)->execute();
+            }
+            Yii::$app->armory_db->createCommand("SET foreign_key_checks = 1");
+            
+        }
+    }
 
     /**
      * Adds write permissions

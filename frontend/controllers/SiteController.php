@@ -31,7 +31,7 @@ class SiteController extends Controller
             ]
         ];
     }
-
+    
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();

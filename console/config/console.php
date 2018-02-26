@@ -9,8 +9,6 @@ return [
     'components' => [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'layoutsPath' => '@common/mail/layouts',
-            'viewsPath' => '@common/mail',
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',

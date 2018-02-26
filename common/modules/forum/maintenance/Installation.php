@@ -4,6 +4,7 @@ namespace common\modules\forum\maintenance;
 
 use common\modules\forum\models\Content;
 use common\modules\forum\models\User;
+use common\modules\forum\db\UserQuery;
 use common\modules\forum\Podium;
 use common\modules\forum\PodiumConfig;
 use common\modules\forum\rbac\Rbac;
@@ -11,6 +12,8 @@ use Exception;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
+
+use common\models\User as AppUser;
 
 /**
  * Podium Installation
@@ -83,32 +86,56 @@ class Installation extends Maintenance
             $this->type = self::TYPE_WARNING;
             return Yii::t('flash', 'No administrator privileges have been set!');
         }
-        try {
-            $identity = Podium::getInstance()->user->identityClass;
-            $inheritedUser = $identity::findIdentity($this->module->adminId);
-            if (!$inheritedUser) {
-                throw new Exception('Can not find administrator account!');
+        if(!is_a(Yii::$app,'yii\console\Application')) {
+            try {
+                $identity = Podium::getInstance()->user->identityClass;
+                $inheritedUser = $identity::findIdentity($this->module->adminId);
+                if (!$inheritedUser) {
+                    throw new Exception('Can not find administrator account!');
+                }
+                $userNameField = $this->module->userNameField;
+                if ($userNameField !== null && empty($inheritedUser->$userNameField)) {
+                    throw new Exception('Can not find administrator username!');
+                }
+            } catch (Exception $e) {
+                return $this->returnWarning(Yii::t('flash', 'Cannot find inherited user of given ID. No administrator privileges have been set.'));
             }
-            $userNameField = $this->module->userNameField;
-            if ($userNameField !== null && empty($inheritedUser->$userNameField)) {
-                throw new Exception('Can not find administrator username!');
+        } else {
+            try {
+                $inheritedUser = AppUser::findOne($this->module->adminId);
+                if (!$inheritedUser) {
+                    throw new Exception('Can not find administrator account!');
+                }
+                $userNameField = $this->module->userNameField;
+                if ($userNameField !== null && empty($inheritedUser->$userNameField)) {
+                    throw new Exception('Can not find administrator username!');
+                }
+            } catch (Exception $e) {
+                return $this->returnWarning(Yii::t('flash', 'Cannot find inherited user of given ID. No administrator privileges have been set.'));
             }
-        } catch (Exception $e) {
-            return $this->returnWarning(Yii::t('flash', 'Cannot find inherited user of given ID. No administrator privileges have been set.'));
         }
-
         $transaction = $this->db->beginTransaction();
         try {
-            $admin = new User();
-            $admin->setScenario('installation');
-            $admin->setAttributes([
-                'inherited_id' => $this->module->adminId,
-                'username' => $userNameField ? $inheritedUser->$userNameField : self::DEFAULT_USERNAME,
-                'status' => User::STATUS_ACTIVE,
-                'role' => User::ROLE_ADMIN,
-            ], false);
-            if (!$admin->save()) {
-                throw new Exception(VarDumper::dumpAsString($admin->errors));
+            if(!is_a(Yii::$app,'yii\console\Application')) {
+                $admin = new User();
+                $admin->setScenario('installation');
+                $admin->setAttributes([
+                    'inherited_id' => $this->module->adminId,
+                    'username' => $userNameField ? $inheritedUser->$userNameField : self::DEFAULT_USERNAME,
+                    'status' => User::STATUS_ACTIVE,
+                    'role' => User::ROLE_ADMIN,
+                ], false);
+                if (!$admin->save()) {
+                    throw new Exception(VarDumper::dumpAsString($admin->errors));
+                }
+            } else {
+                $query = new UserQuery(User::className());
+                $query->createCommand()->insert(User::tableName(), [
+                    'inherited_id' => $this->module->adminId,
+                    'username' => $userNameField ? $inheritedUser->$userNameField : self::DEFAULT_USERNAME,
+                    'status' => User::STATUS_ACTIVE,
+                    'role' => User::ROLE_ADMIN,
+                ]);
             }
             $transaction->commit();
             return $this->returnSuccess(Yii::t('flash', 'Administrator privileges have been set for the user of ID {id}.', [
@@ -268,6 +295,54 @@ class Installation extends Maintenance
         $result = call_user_func_array([$this, $this->steps[$currentStep]['call']], $this->steps[$currentStep]['data']);
 
         Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
+
+        return [
+            'drop' => false,
+            'type' => $this->type,
+            'result' => $result,
+            'table' => $this->rawTable,
+            'percent' => $this->countPercent($currentStep, $maxStep),
+        ];
+    }
+    
+    /**
+     * Proceeds next installation step.
+     * @return array
+     * @since 0.2
+     */
+    public function nextStepConsole()
+    {
+        $currentStep = 0;
+        if(file_exists('steps')) {
+            $currentStep = file_get_contents('steps');
+        }
+        
+        if ($currentStep === 0) {
+            file_put_contents('steps', count($this->steps));
+        }
+        
+        if(file_exists('steps')) {
+            $maxStep = file_get_contents('steps');
+        } else {
+            $maxStep = 0;
+        }
+
+        $this->type = self::TYPE_ERROR;
+        $this->table = '...';
+        
+        if (!isset($this->steps[$currentStep])) {
+            return [
+                'drop' => false,
+                'type' => $this->type,
+                'result' => Yii::t('flash', 'Installation aborted! Can not find the requested installation step.'),
+                'percent' => 100,
+            ];
+        }
+
+        $this->table = $this->steps[$currentStep]['table'];
+        $result = call_user_func_array([$this, $this->steps[$currentStep]['call']], $this->steps[$currentStep]['data']);
+
+        file_put_contents('steps', ++$currentStep);
 
         return [
             'drop' => false,

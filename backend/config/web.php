@@ -41,7 +41,7 @@ $config = [
         ],
         'treemanager' =>  [
             'class' => '\kartik\tree\Module',
-        ]
+        ],
     ],
 ];
 
