@@ -498,25 +498,30 @@ class AppHelper extends \yii\base\Component
     * @param string $attribute Default - null | Значение для объекта или массива с чего брать строковое значение
     * @return i18n string
     */
-    public function i18nAttribute($var, $attribute = null) {
-        $lang = strtolower(explode('-',Yii::$app->language)[0]);
-        if($lang == 'en') {
-            $attribute .=  '_en_gb';
-        } else {
-            $attribute .=  '_' . $lang . '_' . $lang;
+    public function i18nAttribute($var, $base_attribute = null) {
+        $lang_1 = strtolower(explode('-',Yii::$app->language)[0]);
+        $lang_2 = strtolower(explode('-',Yii::$app->language)[0]);
+        $attribute = $base_attribute;
+        switch($lang_1) {
+            case 'en':
+                $attribute .=  '_en_gb';
+                break;
+            default:
+                $attribute .= '_' . $lang_1 . '_' . $lang;
+                break;
         }
+        
         if(is_array($var)) {
             if($var[$attribute]) {
                 return Yii::t('common',$var[$attribute]);
             } else {
-                return 'null';
+                return $var[$base_attribute . '_ru_ru'];
             }
         } elseif(is_object($var)) {
             if(isset($var->{$attribute}) && $var->{$attribute}) {
                 return Yii::t('common',$var->{$attribute});
             } else {
-                return 'null';
-                throw new \Exception(Yii::t('common','Отсутствует аттрибут у объекта для перевода'));
+                return $var->{$base_attribute . '_ru_ru'};
             }
         } elseif(is_string($var)) {
             return Yii::t('common',$var);
