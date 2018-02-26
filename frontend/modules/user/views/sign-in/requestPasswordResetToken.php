@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
                 <?php echo $form->field($model, 'email') ?>
                 <div class="form-group">
-                    <?php echo Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
+                    <?php echo Html::submitButton(Yii::t('frontend','Send'), ['class' => 'btn btn-primary']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
