@@ -529,7 +529,4 @@ class AppHelper extends \yii\base\Component
             return $var;
         }
     }
-    public function getLang() {
-        return strtolower(explode('-',Yii::$app->language)[0]);
-    }
 }
