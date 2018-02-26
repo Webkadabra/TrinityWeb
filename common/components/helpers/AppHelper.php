@@ -500,14 +500,14 @@ class AppHelper extends \yii\base\Component
     */
     public function i18nAttribute($var, $base_attribute = null) {
         $lang_1 = strtolower(explode('-',Yii::$app->language)[0]);
-        $lang_2 = strtolower(explode('-',Yii::$app->language)[0]);
+        $lang_2 = strtolower(explode('-',Yii::$app->language)[1]);
         $attribute = $base_attribute;
         switch($lang_1) {
             case 'en':
                 $attribute .=  '_en_gb';
                 break;
             default:
-                $attribute .= '_' . $lang_1 . '_' . $lang;
+                $attribute .= '_' . $lang_1 . '_' . strtolower($lang_2);
                 break;
         }
         
