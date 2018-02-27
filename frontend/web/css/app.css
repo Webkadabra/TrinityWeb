@@ -59,6 +59,19 @@ a.desc:after {content: "\e152";}
 .no-gutters [class^='col-'] {
     padding: 0px;
 }
+.alert {
+    border-radius: 0px;
+    color:#36BBA6;
+    border-color: rgba(136, 136, 136, 0.45);
+}
+.alert-success {
+    background-color: rgba(83, 222, 217, 0.25);
+}
+.alert-warning {}
+.alert-info {}
+.alert-default {}
+.alert-danger {}
+.alert-primary {}
 .btn {
     padding: 8px 10px;
     border-radius: 0px;
