@@ -13,10 +13,7 @@ use Yii;
  * @property int $character_id
  * @property int $is_gift
  * @property integer $operation_cur
- * @property integer $operation_status
  * @property string $operation_data
- * @property string $operation_desc
- * @property string $operation_sign
  * @property int $operation_time
  * @property int $operation_cost
  */
@@ -38,7 +35,7 @@ class ShopHistory extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'realm_id', 'character_id', 'operation_data', 'operation_time'], 'required'],
-            [['user_id', 'realm_id', 'character_id', 'is_gift', 'operation_time', 'operation_cost'], 'integer'],
+            [['user_id', 'realm_id', 'character_id', 'is_gift', 'operation_time', 'operation_cost', 'operation_cur'], 'integer'],
             [['operation_data'], 'string'],
         ];
     }
@@ -57,6 +54,7 @@ class ShopHistory extends \yii\db\ActiveRecord
             'operation_data' => Yii::t('common', 'Дата операции'),
             'operation_time' => Yii::t('common', 'Время операции'),
             'operation_cost' => Yii::t('common', 'Итоговая стоимость'),
+            'operation_cur' => Yii::t('common', 'Чем оплатил'),
         ];
     }
     

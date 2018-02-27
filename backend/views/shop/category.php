@@ -45,7 +45,8 @@ Yii::$app->params['breadcrumbs'][] = $this->title;
             }
         ],
         'discount',
-        'cost',      
+        'dCoins',      
+        'vCoins',      
         [
             'attribute' => 'realm_id',
             'filter' => Yii::$app->CharactersDbHelper::getServers(true),

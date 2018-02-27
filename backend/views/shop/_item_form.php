@@ -139,7 +139,8 @@ JS;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4"><?php echo $form->field($model, 'cost')->textInput() ?></div>
+        <div class="col-md-4"><?php echo $form->field($model, 'vCoins')->textInput() ?></div>
+        <div class="col-md-4"><?php echo $form->field($model, 'dCoins')->textInput() ?></div>
         <div class="col-md-4"><?php echo $form->field($model, 'realm_id')->dropDownList(array_merge([''],Yii::$app->CharactersDbHelper::getServers(true))) ?></div>
     </div>
     <div class="row">

@@ -16,7 +16,8 @@ use common\models\armory\ArmoryItemTemplate;
  * @property double $discount
  * @property string $name
  * @property integer $item_id
- * @property integer $cost
+ * @property integer $dCoins
+ * @property integer $vCoins
  * @property integer $realm_id
  * @property string $discount_end
  *
@@ -57,7 +58,7 @@ class ShopItems extends \yii\db\ActiveRecord
     {
         return [
             [['category_id'], 'required'],
-            [['category_id', 'type', 'item_id', 'cost','realm_id'], 'integer'],
+            [['category_id', 'type', 'item_id', 'dCoins', 'vCoins','realm_id'], 'integer'],
             [['discount'], 'number'],
             [['name'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
@@ -77,7 +78,8 @@ class ShopItems extends \yii\db\ActiveRecord
             'discount' => Yii::t('common', '% скидки'),
             'name' => Yii::t('common', 'Наименование'),
             'item_id' => Yii::t('common', 'Вещь'),
-            'cost' => Yii::t('common', 'Цена'),
+            'dCoins' => Yii::t('common', 'donate коины'),
+            'vCoins' => Yii::t('common', 'vote коины'),
             'realm_id' => Yii::t('common', 'Сервер'),
             'discount_end' => Yii::t('common', 'Дата окончания скидки'),
             'package' => Yii::t('common', 'Что входит в набор'),
@@ -130,8 +132,11 @@ class ShopItems extends \yii\db\ActiveRecord
         if($this->type) {
             $query->andWhere(['type' => $this->type]);
         }
-        if($this->cost) {
-            $query->andWhere(['cost' => $this->cost]);
+        if($this->dCoins) {
+            $query->andWhere(['dCoins' => $this->dCoins]);
+        }
+        if($this->vCoins) {
+            $query->andWhere(['vCoins' => $this->vCoins]);
         }
         if($this->category_id) {
             $query->andWhere(['category_id' => $this->category_id]);
@@ -168,7 +173,8 @@ class ShopItems extends \yii\db\ActiveRecord
             'type' => $this->type,
             'discount' => $this->discount,
             'item_id' => $this->item_id,
-            'cost' => $this->cost,
+            'dCoins' => $this->dCoins,
+            'vCoins' => $this->vCoins,
             'realm_id' => $this->realm_id,
             'category_id' => $this->category_id,
         ]);
@@ -225,13 +231,7 @@ class ShopItems extends \yii\db\ActiveRecord
         }
     }
     public function getCost() {
-        
-        if(strtotime($this->discount_end) > time())
-            $cost = $this->cost * ( 1 - ($this->discount / 100));
-        else
-            $cost = $this->cost;
-        
-        return $cost;
+        return -1;
     }
     
     public function getRelationItemInfo() {
