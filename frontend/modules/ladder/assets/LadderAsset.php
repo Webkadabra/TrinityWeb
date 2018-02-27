@@ -43,9 +43,6 @@ class LadderAsset extends AssetBundle
      * @var array
      */
     public $depends = [
-        //YiiAsset::class,
-        //BootstrapAsset::class,
         FrontendAsset::class,
-        //Html5shiv::class,        
     ];
 }

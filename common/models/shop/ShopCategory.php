@@ -33,7 +33,6 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property relationShopItems[] $shopItems
  */
 class ShopCategory extends \kartik\tree\models\Tree
 {
@@ -114,30 +113,48 @@ class ShopCategory extends \kartik\tree\models\Tree
         return $this->hasMany(ShopItems::className(), ['category_id' => 'id']);
     }
     
-    public function getRelationChilds() {
-        return $this->hasMany(ShopCategory::className(),['root' => 'id'])->andWhere(['!=','lvl',0])->orderBy(['lft' => SORT_ASC]);
+    public function getChilds() {
+        return $this->children($this->lvl === 0 ? $this->lvl + 1 : $this->lvl);
     }
     
-    public function generateAdminMenu() {
-        //todo
-        return [];
-    }
-    
-    public function generateShopMenu($model = null) {
-        if(!$model) {
+    public function generateShopMenu($activeCategory = null, $parentModel = null,$baseRootModel = null) {
+        
+        $cid = Yii::$app->request->get('cid');
+        
+        if($cid && $activeCategory === null) {
+            $activeCategory = self::findOne($cid);
+        }
+        
+        if(!$parentModel) {
             $models = self::find()->where(['lvl' => 0])->orderBy(['lft' => SORT_ASC])->all();
         } else {
-            $models = $model->relationChilds;
+            $models = $parentModel->getChilds()->all();
         }
+        
         $items = [];
-        foreach($models as $_model) {
+        
+        foreach($models as $model) {
             
-            $childs_array = self::generateShopMenu($_model);
+            if($baseRootModel === null) $baseRootModel = $model;
+            $childs_array = self::generateShopMenu($activeCategory, $model, $baseRootModel);
+
+            $is_opened = false;
             
-            $items[$_model->id] = [
-                'label' => Yii::t('common', $_model->name),
-                'url' => ['index','ShopItems[category_id]' => $_model->id],
+            if($activeCategory) {
+                if($activeCategory->id == $model->id) {
+                    $is_opened = true;
+                } else {
+                    if($activeCategory->isChildOf($model)) {
+                        $is_opened = true;
+                    }
+                }
+            }
+            
+            $items[$model->id] = [
+                'label' => Yii::t('common', $model->name),
+                'url' => ['index','cid' => $model->id],
                 'items' => $childs_array ? $childs_array : [],
+                'active' => $is_opened,
             ];
         }
         return $items;

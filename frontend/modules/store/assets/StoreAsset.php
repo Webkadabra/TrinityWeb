@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace frontend\modules\user\assets;
+namespace frontend\modules\store\assets;
 
 use yii\bootstrap\BootstrapAsset;
 use yii\web\AssetBundle;
@@ -18,25 +18,25 @@ use frontend\assets\FrontendAsset;
 /**
  * Frontend application asset
  */
-class UserAsset extends AssetBundle
+class StoreAsset extends AssetBundle
 {
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@userPanel';
+    public $sourcePath = '@store';
 
     /**
      * @var array
      */
     public $css = [
-        'css/user-panel.css',
+        'css/store.css',
     ];
 
     /**
      * @var array
      */
     public $js = [
-        'js/user-panel.js',
+        'js/store.js',
     ];
 
     /**
