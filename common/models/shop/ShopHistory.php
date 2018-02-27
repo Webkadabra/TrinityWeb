@@ -12,12 +12,17 @@ use Yii;
  * @property int $realm_id
  * @property int $character_id
  * @property int $is_gift
+ * @property integer $operation_cur
+ * @property integer $operation_status
  * @property string $operation_data
+ * @property string $operation_desc
+ * @property string $operation_sign
  * @property int $operation_time
  * @property int $operation_cost
  */
 class ShopHistory extends \yii\db\ActiveRecord
 {
+    
     /**
      * @inheritdoc
      */

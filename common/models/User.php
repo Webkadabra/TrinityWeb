@@ -36,6 +36,8 @@ use common\modules\forum\models\User as ForumUser;
  * @property string $oauth_client_user_id
  * @property string $publicIdentity
  * @property integer $status
+ * @property integer $vCoin
+ * @property integer $dCoin
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $logged_at

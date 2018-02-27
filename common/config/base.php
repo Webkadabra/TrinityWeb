@@ -227,6 +227,7 @@ $config = [
             'zh-CN' => '简体中文',
             'pl-PL' => 'Polski (PL)',
             'pt-BR' => 'Portuguese',
+            'th-TH' => 'Thai',
         ],
     ],
 ];

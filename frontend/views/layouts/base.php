@@ -164,6 +164,11 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
         <p class="pull-left rf-studio-aqua">
             &copy; RF-studio <?php echo date('Y') ?>
         </p>
+        <p class="pull-right">
+            <a href="//www.free-kassa.ru/">
+                <img src="//www.free-kassa.ru/img/fk_btn/14.png">
+            </a>
+        </p>
     </div>
 </footer>
 <?php $this->endContent() ?>
