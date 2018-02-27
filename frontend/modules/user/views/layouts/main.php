@@ -42,10 +42,10 @@ $this->beginContent('@frontend/views/layouts/base.php')
                         ],
                     ],
                     [
-                        'label' => Yii::t('cp', 'История уч. записи'),
+                        'label' => Yii::t('cp', 'История игровой уч. записи'),
                         'url' => ['/panel/logs/index'],
                         'linkOptions' => [
-                            'data-hover' => Yii::t('cp', 'История уч. записи'),
+                            'data-hover' => Yii::t('cp', 'История игровой уч. записи'),
                         ],
                     ],
                     [

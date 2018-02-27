@@ -64,7 +64,7 @@ class SettingsController extends Controller
     {
         
         Yii::$app->params['breadcrumbs'][] = [
-            'label' => Yii::t('cp','Настройки учётной записи')
+            'label' => Yii::t('cp','Настройки игровой учётной записи')
         ];
         
         $accountForm = new AccountForm();
