@@ -39,6 +39,11 @@ class ShopItems extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    
+    public function __construct($config = array()) {
+        parent::__construct($config);
+    }
+    
     public static function tableName()
     {
         return '{{%shop_items}}';

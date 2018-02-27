@@ -59,6 +59,10 @@ class ShopController extends Controller
     
     protected function modelForm($model) {
         if($model) {
+            
+            if(!$model->vCoins) $model->vCoins = 0;
+            if(!$model->dCoins) $model->dCoins = 0;
+            
             foreach($model->relationShopPackItems as $key => $element) {
                 $model->package[$key] = [
                     'id' => $element->id,
