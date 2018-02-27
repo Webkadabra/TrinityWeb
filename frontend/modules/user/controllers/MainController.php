@@ -32,6 +32,10 @@ class MainController extends Controller
      */
     public function actionIndex()
     {
+        Yii::$app->params['breadcrumbs'][] = [
+            'label' => Yii::t('cp','Общая информация')
+        ];
+        
         return $this->render('index');
     }
 }

@@ -48,6 +48,13 @@ $this->beginContent('@frontend/views/layouts/base.php')
                             'data-hover' => Yii::t('cp', 'История уч. записи'),
                         ],
                     ],
+                    [
+                        'label' => Yii::t('cp', 'Настройки уч. записи'),
+                        'url' => ['/panel/settings/index'],
+                        'linkOptions' => [
+                            'data-hover' => Yii::t('cp', 'Настройки уч. записи'),
+                        ],
+                    ],
                 ]
             ]); ?>
             <div class="clearfix"></div>

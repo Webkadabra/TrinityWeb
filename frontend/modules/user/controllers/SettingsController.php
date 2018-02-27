@@ -62,6 +62,11 @@ class SettingsController extends Controller
      */
     public function actionIndex()
     {
+        
+        Yii::$app->params['breadcrumbs'][] = [
+            'label' => Yii::t('cp','Настройки учётной записи')
+        ];
+        
         $accountForm = new AccountForm();
         $accountForm->setUser(Yii::$app->user->identity);
 

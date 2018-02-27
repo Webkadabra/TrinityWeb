@@ -110,7 +110,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
                 'items'=>[
                     [
                         'label' => Yii::t('frontend', 'Личный кабинет'),
-                        'url' => ['/panel/settings/index']
+                        'url' => ['/panel/main/index']
                     ],
                     [
                         'label' => Yii::t('frontend', 'Настройки форума'),
