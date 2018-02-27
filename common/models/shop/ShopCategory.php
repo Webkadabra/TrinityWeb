@@ -133,6 +133,7 @@ class ShopCategory extends \kartik\tree\models\Tree
         
         $items = [];
         
+        
         foreach($models as $model) {
             
             if($baseRootModel === null) $baseRootModel = $model;
@@ -158,6 +159,29 @@ class ShopCategory extends \kartik\tree\models\Tree
             ];
         }
         return $items;
+    }
+    
+    public static function buildBreadCrumbs() {
+        
+        $cid = Yii::$app->request->get('cid');
+        
+        if($cid) {
+            $activeCategory = self::findOne($cid);
+            
+            $parents = $activeCategory->parents()->asArray()->all();
+            
+            foreach($parents as $parent) {
+                Yii::$app->params['breadcrumbs'][] = [
+                    'label' => Yii::t('common',$parent['name']),
+                    'url' => ['/store/main/index','cid' => $parent['id']],
+                ];
+            }
+            
+            Yii::$app->params['breadcrumbs'][] = [
+                'label' => Yii::t('common',$activeCategory->name),
+            ];
+            
+        }
     }
     
 }

@@ -5,6 +5,8 @@ namespace frontend\modules\store\controllers;
 use Yii;
 use yii\web\Controller;
 
+use common\models\shop\ShopCategory;
+
 class MainController extends Controller
 {
     /**
@@ -12,6 +14,7 @@ class MainController extends Controller
      */
     public function actionIndex()
     {
+        ShopCategory::buildBreadCrumbs();
         return $this->render('index');
     }
 }

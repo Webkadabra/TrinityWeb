@@ -7,12 +7,14 @@ use yii\filters\AccessControl;
 use yii\base\BootstrapInterface;
 use yii\web\GroupUrlRule;
 
+use common\models\shop\ShopCategory;
+
 class Module extends \yii\base\Module implements BootstrapInterface
 {
     /**
      * @var string
      */
-    public $controllerNamespace = 'frontend\modules\armory\controllers';
+    public $controllerNamespace = 'frontend\modules\store\controllers';
     
     /**
      * @inheritdoc
