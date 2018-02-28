@@ -57,6 +57,11 @@ class ShopItems extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
     
+    public function afterSave($insert, $changedAttributes) {
+        Yii::$app->cache->flush();
+        parent::afterSave($insert, $changedAttributes);
+    }
+    
     /**
      * @inheritdoc
      */

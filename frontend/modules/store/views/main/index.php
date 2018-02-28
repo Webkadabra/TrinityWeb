@@ -7,6 +7,8 @@ use yii\bootstrap\ActiveForm;
 
 use frontend\modules\store\models\SearchForm;
 
+$this->registerJsFile('https://cdn.cavernoftime.com/api/tooltip.js');
+
 if($counter) {
     $pages = new Pagination(['totalCount' => $counter, 'defaultPageSize' => SearchForm::PAGE_SIZE]);
 }
@@ -80,18 +82,60 @@ $form = ActiveForm::begin([
     </div>
 <?php ActiveForm::end(); ?>
 
-<div class="row">
+<div id="store-list">
+    <?php
+    if($category_discount_info) {
+        ?>
+        <h4 class="text-center">
+            <?=Yii::t('store','На эту категорию действует скидка в размере {discount}%.<br/>Скидки суммируются!', [
+                'discount' => $category_discount_info['value'],
+            ])?>
+        </h4>
+        <?php
+    }
+    ?>
+    <hr/>
     <?php
     if($searchResult) {
-        foreach($searchResult as $item) {?>
-        <div class="row">
-            <div class="col-xs-push-3 col-xs-6 col-sm-push-4 col-sm-4 col-md-push-4 col-md-4 flat character_armory_find_result">
-                <pre>
-                    <?php
-                    print_r($item);
-                    ?>
-                </pre>
+        foreach($searchResult as $item) {
+            if($item['relationItemInfo']) {
+                $data_item = [
+                    'item_url' => Yii::$app->AppHelper->buildDBUrl($item['item_id'], Yii::$app->AppHelper::$TYPE_ITEM),
+                    'icon_url' => Yii::$app->AppHelper->buildItemIconUrl(null, $item['relationItemInfo']['relationIcon']['icon']),
+                    'rel_item' => null,
+                ];
+            } else {
+                $data_item = [
+                    'item_url' => 'self',
+                    'icon_url' => '',
+                    'rel_item' => null,
+                ];
+            }
+        ?>
+        <div class="row store-item">
+            <div class="col-xs-1 text-center">
+                <img src="<?=$data_item['icon_url']?>" class="store-item-icon" />
             </div>
+            <div class="col-xs-7">
+                <a href="<?=$data_item['item_url']?>" target="_blank">
+                    <?=$item['name']?>
+                </a>
+            </div>
+            <div class="text-center rf-studio-gold col-xs-<?=($item['discount'] ? 1 : 2)?>">
+                <?=$item['dCoins']?>
+            </div>
+            <div class="text-center rf-studio-silver col-xs-<?=($item['discount'] ? 1 : 2)?>">
+                <?=$item['vCoins']?>
+            </div>
+            <?php
+            if($item['discount']) {
+            ?>
+                <div class="text-center col-xs-2">
+                    -<?=$item['discount']?>%
+                </div>
+            <?php
+            }
+            ?>
         </div>
         <?php
         }

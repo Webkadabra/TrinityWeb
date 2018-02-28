@@ -104,7 +104,12 @@ class ShopCategory extends \kartik\tree\models\Tree
             'updated_at' => Yii::t('common', 'Изменён'),
         ];
     }
-
+    
+    public function afterSave($insert, $changedAttributes) {
+        Yii::$app->cache->flush();
+        parent::afterSave($insert, $changedAttributes);
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -168,20 +173,23 @@ class ShopCategory extends \kartik\tree\models\Tree
         if($cid) {
             $activeCategory = self::findOne($cid);
             
-            $parents = $activeCategory->parents()->asArray()->all();
-            
-            foreach($parents as $parent) {
+            if($activeCategory) {
+                $parents = $activeCategory->parents()->asArray()->all();
+
+                foreach($parents as $parent) {
+                    Yii::$app->params['breadcrumbs'][] = [
+                        'label' => Yii::t('common',$parent['name']),
+                        'url' => ['/store/main/index','cid' => $parent['id']],
+                    ];
+                }
                 Yii::$app->params['breadcrumbs'][] = [
-                    'label' => Yii::t('common',$parent['name']),
-                    'url' => ['/store/main/index','cid' => $parent['id']],
+                    'label' => Yii::t('common',$activeCategory->name),
                 ];
+                return true;
             }
-            
-            Yii::$app->params['breadcrumbs'][] = [
-                'label' => Yii::t('common',$activeCategory->name),
-            ];
-            
+            return false;
         }
+        return true;
     }
     
 }

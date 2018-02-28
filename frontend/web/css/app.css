@@ -48,6 +48,8 @@ a.desc:after {content: "\e152";}
 .image-grayscale {-webkit-filter: grayscale(100%);-moz-filter: grayscale(100%);-ms-filter: grayscale(100%);-o-filter: grayscale(100%);filter: grayscale(100%);filter: gray;}
 .noselect {-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
 .tltp {cursor: pointer;}
+.rf-studio-gold {color: gold;}
+.rf-studio-silver {color: #8eb670;}
 .rf-studio-black {color: #333;}
 .rf-studio-white {color: #C5C0C0;}
 .rf-studio-orange {color: #e84d3b;}

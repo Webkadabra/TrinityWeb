@@ -34,6 +34,11 @@ class ShopPackItems extends \yii\db\ActiveRecord
         ];
     }
 
+    public function afterSave($insert, $changedAttributes) {
+        Yii::$app->cache->flush();
+        parent::afterSave($insert, $changedAttributes);
+    }
+    
     /**
      * @inheritdoc
      */

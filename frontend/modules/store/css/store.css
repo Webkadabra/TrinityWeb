@@ -2,3 +2,9 @@
 #store-container > #left-side > .store-category-list {
     border-color: #1e2026;
 }
+#store-container #store-list .store-item {
+    margin-top: 5px;
+}
+#store-container #store-list .store-item .store-item-icon {
+    width: 22px;
+}
