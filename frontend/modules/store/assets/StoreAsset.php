@@ -14,6 +14,7 @@ use yii\web\YiiAsset;
 use common\assets\Html5shiv;
 
 use frontend\assets\FrontendAsset;
+use kartik\sidenav\SideNavAsset;
 
 /**
  * Frontend application asset
@@ -43,6 +44,7 @@ class StoreAsset extends AssetBundle
      * @var array
      */
     public $depends = [
+        SideNavAsset::class,
         FrontendAsset::class,
     ];
 }

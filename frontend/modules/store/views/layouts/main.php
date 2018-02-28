@@ -24,16 +24,21 @@ $this->beginContent('@frontend/views/layouts/base.php')
 
         <?= Alert::widget() ?>
         
-        <div class="row">
-            <div class="col-xs-12 col-md-3">
+        <div class="row" id="store-container">
+            <div class="col-xs-12 col-md-3" id="left-side">
                 <?= SideNav::widget([
                     'type' => SideNav::TYPE_DEFAULT,
                     'heading' => Yii::t('store','Категории'),
                     'items' => ShopCategory::generateShopMenu(),
+                    'containerOptions' => [
+                        'class' => 'store-category-list widget'
+                    ]
                 ]);?>
             </div>
-            <div class="col-xs-12 col-md-9">
-                <?php echo $content ?>
+            <div class="col-xs-12 col-md-9" id="right-side">
+                <div class="flat">
+                    <?php echo $content ?>
+                </div>
             </div>
         </div>
     </div>

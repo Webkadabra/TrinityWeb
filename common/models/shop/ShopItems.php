@@ -20,6 +20,7 @@ use common\models\armory\ArmoryItemTemplate;
  * @property integer $vCoins
  * @property integer $realm_id
  * @property string $discount_end
+ * @property bool $visible
  *
  * @property relationShopCategory $category
  * @property realtionShopPackItems[] $shopPackItems
@@ -67,7 +68,7 @@ class ShopItems extends \yii\db\ActiveRecord
             [['discount'], 'number'],
             [['name'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['package','discount_end'],'safe']
+            [['package','discount_end', 'visible'],'safe']
         ];
     }
 

@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 
 use common\models\shop\ShopCategory;
+use frontend\modules\store\models\SearchForm;
 
 class MainController extends Controller
 {
@@ -15,6 +16,14 @@ class MainController extends Controller
     public function actionIndex()
     {
         ShopCategory::buildBreadCrumbs();
-        return $this->render('index');
+        
+        $searchModel = new SearchForm();
+        $data = $searchModel->findItems(Yii::$app->request->queryParams);
+        
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'searchResult' => $data['result'],
+            'counter' => $data['counter']
+        ]);
     }
 }

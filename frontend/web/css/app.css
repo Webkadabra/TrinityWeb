@@ -288,8 +288,24 @@ ul.nav > .open > a:focus {
 .nav > li > a:focus {
     background-color: inherit;
 }
+.kv-sidenav .active > ul {background-color: inherit;}
+.kv-sidenav ul {position:relative;}
+.kv-sidenav > li > ul.nav:before {left: 4%;}
+.kv-sidenav > li > ul > li > ul.nav:before {left: 9%;}
+.kv-sidenav > li > ul > li > ul > li > ul.nav:before {left: 14%;}
+.kv-sidenav li ul.nav:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: white;
+    display: block;
+}
+.kv-sidenav .nav a {padding-left: 8%;}
+.kv-sidenav .nav .nav a {padding-left: 13%;}
+.kv-sidenav .nav .nav .nav a {padding-left: 17%;}
 .nav-tabs > li > a {border: 0px;}
-ul.nav > li a, .dropdown-menu > li > a:hover {color: #777;}
+ul.nav > li a, .dropdown-menu > li > a:hover {color: #777; border-bottom: 0px;}
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
