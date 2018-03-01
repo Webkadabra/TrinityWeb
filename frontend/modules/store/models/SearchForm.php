@@ -95,6 +95,8 @@ class SearchForm extends Model
             $this->cat_ids[] = $this->category;
         }
         
+        if(!isset($this->getFieldsToSotring()[$this->field_order])) $this->field_order = ShopItems::primaryKey();
+        
         $query = ShopItems::find()
                 ->where(['visible' => true])
                 ->asArray()->orderBy([$this->field_order => $this->order])
@@ -106,6 +108,8 @@ class SearchForm extends Model
         
         $query->andFilterWhere(['<=', 'vCoins', $this->vCoinsTo]);
         $query->andFilterWhere(['>=', 'vCoins', $this->vCoinsFrom]);
+        
+        $query->andFilterWhere(['like', 'name', $this->query]);
         
         if($this->discount) {
             $query->andWhere(['not', ['discount' => null]]);
