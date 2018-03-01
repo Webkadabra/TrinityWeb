@@ -67,7 +67,7 @@ class SetLocaleAction extends Action
     public function run($locale)
     {
         if (!is_array($this->locales) || !in_array($locale, $this->locales, true)) {
-            throw new InvalidParamException('Unacceptable locale');
+            $locale = 'ru-RU';
         }
         $cookie = new Cookie([
             'name' => $this->localeCookieName,
