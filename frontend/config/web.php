@@ -32,6 +32,11 @@ $config = [
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
+                'twitch' => [
+                    'class' => 'common\components\oauth\Twitch',
+                    'clientId' => env('TWITCH_CLIENT_ID'),
+                    'clientSecret' => env('TWITCH_CLIENT_SECRET')
+                ],
                 'github' => [
                     'class' => 'yii\authclient\clients\GitHub',
                     'clientId' => env('GITHUB_CLIENT_ID'),

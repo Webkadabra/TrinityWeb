@@ -38,6 +38,10 @@ a.desc:after {content: "\e152";}
     margin-top: 5px;
     color: #999;
 }
+.auth-icon.twitch {
+    background: url(/img/authchoice.png) no-repeat;
+    background-position: 0 -406px;
+}
 .error-summary {
     color: #a94442;
     background: #fdf7f7;

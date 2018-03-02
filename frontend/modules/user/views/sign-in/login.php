@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php echo $form->field($model, 'identity') ?>
                 <?php echo $form->field($model, 'password')->passwordInput() ?>
                 <?php echo $form->field($model, 'rememberMe')->checkbox() ?>
-                <div style="color:#999;margin:1em 0">
+                <div style="color:#999;margin:1em 0;">
                     <?php echo Yii::t('frontend', 'If you forgot your password you can reset it <a href="{link}">here</a>', [
                         'link'=>yii\helpers\Url::to(['sign-in/request-password-reset'])
                     ]) ?>
