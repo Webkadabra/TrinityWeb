@@ -201,7 +201,7 @@ $form = ActiveForm::begin([
                                         <?php
                                         echo $form->field($model_form,'count')
                                                 ->textInput([
-                                                    'placeholder' => Yii::t('store','Введите кол-во...')
+                                                    'placeholder' => Yii::t('store','количество')
                                                 ])->label(false)->error(false);
                                         ?>
                                     </div>
