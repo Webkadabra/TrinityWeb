@@ -8,3 +8,11 @@
 #store-container #store-list .store-item .store-item-icon {
     width: 22px;
 }
+#store-container #store-list .store-item .store-item-icon,
+#store-container #store-list .store-item .store-item-name,
+#store-container #store-list .store-item .store-item-cost {
+    padding: 10px 0px;
+}
+#store-container #store-list #basket #basket-block {
+    margin-bottom: 5px;
+}

@@ -100,7 +100,7 @@ class SearchForm extends Model
         $query = ShopItems::find()
                 ->where(['visible' => true])
                 ->asArray()->orderBy([$this->field_order => $this->order])
-                ->with(['relationItemInfo.relationIcon']);
+                ->with(['relationItemInfo.relationIcon', 'relationCategory']);
         
         $query->andFilterWhere(['category_id' => $this->cat_ids]);
         $query->andFilterWhere(['<=', 'dCoins', $this->dCoinsTo]);

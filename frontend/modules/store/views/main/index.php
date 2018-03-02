@@ -1,10 +1,11 @@
 <?php
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 use yii\data\Pagination;
 use yii\widgets\LinkPager;
-use yii\bootstrap\ActiveForm;
-
+use yii\widgets\ActiveForm;
+use frontend\modules\store\models\BasketForm;
 use frontend\modules\store\models\SearchForm;
 
 $this->registerJsFile('https://cdn.cavernoftime.com/api/tooltip.js');
@@ -81,7 +82,6 @@ $form = ActiveForm::begin([
         </div>
     </div>
 <?php ActiveForm::end(); ?>
-
 <div id="store-list">
     <?php
     if($category_discount_info) {
@@ -95,51 +95,145 @@ $form = ActiveForm::begin([
     }
     ?>
     <hr/>
+    <?php Pjax::begin(['id' => 'basket'])?>
+        <div id="basket-block">
+            <a href="<?=Url::to(['basket'])?>" data-pjax="0">
+                <div style="font-size:20px;" class="text-center">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> <?=$basket->countItems()?>
+                </div>
+            </a>
+        </div>
+    <?php Pjax::end(); ?>
     <?php
     if($searchResult) {
-        foreach($searchResult as $item) {
-            if($item['relationItemInfo']) {
-                $data_item = [
-                    'item_url' => Yii::$app->AppHelper->buildDBUrl($item['item_id'], Yii::$app->AppHelper::$TYPE_ITEM),
-                    'icon_url' => Yii::$app->AppHelper->buildItemIconUrl(null, $item['relationItemInfo']['relationIcon']['icon']),
-                    'rel_item' => null,
-                ];
-            } else {
-                $data_item = [
-                    'item_url' => 'self',
-                    'icon_url' => '',
-                    'rel_item' => null,
-                ];
-            }
         ?>
-        <div class="row store-item">
-            <div class="col-xs-1 text-center">
-                <img src="<?=$data_item['icon_url']?>" class="store-item-icon" />
-            </div>
-            <div class="col-xs-7">
-                <a href="<?=$data_item['item_url']?>" target="_blank">
-                    <?=$item['name']?>
-                </a>
-            </div>
-            <div class="text-center rf-studio-gold col-xs-<?=($item['discount'] ? 1 : 2)?>">
-                <?=$item['dCoins']?>
-            </div>
-            <div class="text-center rf-studio-silver col-xs-<?=($item['discount'] ? 1 : 2)?>">
-                <?=$item['vCoins']?>
-            </div>
+        <div class="row">
             <?php
-            if($item['discount']) {
+            foreach($searchResult as $item) {
+                if($item['relationItemInfo']) {
+                    $data_item = [
+                        'item_url' => Yii::$app->AppHelper->buildDBUrl($item['item_id'], Yii::$app->AppHelper::$TYPE_ITEM),
+                        'icon_url' => Yii::$app->AppHelper->buildItemIconUrl(null, $item['relationItemInfo']['relationIcon']['icon']),
+                        'rel_item' => null,
+                    ];
+                } else {
+                    $data_item = [
+                        'item_url' => 'self',
+                        'icon_url' => '',
+                        'rel_item' => null,
+                    ];
+                }
             ?>
-                <div class="text-center col-xs-2">
-                    -<?=$item['discount']?>%
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-default widget store-item">
+                    <div class="panel-heading">
+                        <div class="row display-flex items-middle">
+                            <div class="col-xs-1 col-sm-3 text-center">
+                                <img src="<?=$data_item['icon_url']?>" class="store-item-icon" />
+                            </div>
+                            <div class="col-xs-11 col-sm-9">
+                                <a href="<?=$data_item['item_url']?>" class="store-item-name" target="_blank">
+                                    <?=$item['name']?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row text-center">
+                            <div class="col-xs-6">
+                                <?php
+                                if(!$item['discount']) {
+                                ?>
+                                    <span class="rf-studio-gold">
+                                        <?=$item['dCoins']?>
+                                    </span>
+                                <?php
+                                } else {
+                                    $cost = $item['dCoins'] * ($item['discount'] / 100);
+                                    if($item['relationCategory']) {
+                                        if($item['relationCategory']['discount']) {
+                                            $cost = $cost * ($item['relationCategory']['discount'] / 100);
+                                        }
+                                    }
+                                ?>
+                                    <span class="rf-studio-gray text-line-through">
+                                        <?=$item['dCoins']?>
+                                    </span>
+                                    <span class="rf-studio-gold">
+                                        <?=(int)$cost?>
+                                    </span>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="col-xs-6">
+                                <?php
+                                if(!$item['discount']) {
+                                ?>
+                                    <span class="rf-studio-silver">
+                                        <?=$item['vCoins']?>
+                                    </span>
+                                <?php
+                                } else {
+                                    $cost = $item['vCoins'] * ($item['discount'] / 100);
+                                    if($item['relationCategory']) {
+                                        if($item['relationCategory']['discount']) {
+                                            $cost = $cost * ($item['relationCategory']['discount'] / 100);
+                                        }
+                                    }
+                                ?>
+                                    <span class="rf-studio-gray text-line-through">
+                                        <?=$item['vCoins']?>
+                                    </span>
+                                    <span class="rf-studio-silver">
+                                        <?=(int)$cost?>
+                                    </span>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <?php Pjax::begin([
+                            'id' => 'pjax_container_' . $item['id'],
+                            'options' => [
+                                'class' => 'store_pjax_item'
+                            ]
+                        ])?>
+                            <?php $form = ActiveForm::begin([
+                                'id' => 'store_form_' . $item['id'],
+                                'options' => ['data-pjax' => true],
+                            ]);
+                                $model_form = new BasketForm(['item_id' => $item['id']]);
+                                echo $form->field($model_form, 'item_id')->hiddenInput()->label(false);
+                                ?>
+                                <div class="row">
+                                    <div class="col-xs-7 col-md-5">
+                                        <?php
+                                        echo $form->field($model_form,'count')
+                                                ->textInput([
+                                                    'placeholder' => Yii::t('store','Введите кол-во...')
+                                                ])->label(false)->error(false);
+                                        ?>
+                                    </div>
+                                    <div class="col-xs-5 col-md-7">
+                                        <?php
+                                        echo Html::submitButton(Yii::t('store', 'Добавить'), [
+                                            'class' => 'btn btn-primary',
+                                            'name' => 'add-button',
+                                        ]) ?>
+                                    </div>
+                                </div>
+                            <?php $form::end();?>
+                        <?php Pjax::end(); ?>
+                    </div>
                 </div>
+            </div>
             <?php
             }
             ?>
         </div>
-        <?php
-        }
-        ?>
     <div class="col-xs-push-3 col-xs-6 col-sm-push-4 col-sm-4 col-md-push-5 col-md-4">
     <?php
         echo LinkPager::widget([

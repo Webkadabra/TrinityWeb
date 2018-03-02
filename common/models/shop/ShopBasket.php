@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
  *
  * @property integer $id
  * @property integer $user_id
- * @property integer $shop_element_id
+ * @property integer $item_id
  * @property integer $count
  */
 class ShopBasket extends \yii\db\ActiveRecord
@@ -35,8 +35,8 @@ class ShopBasket extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'shop_element_id'], 'required'],
-            [['user_id', 'shop_element_id','count'], 'integer'],
+            [['user_id', 'item_id'], 'required'],
+            [['user_id', 'item_id','count'], 'integer'],
         ];
     }
 
@@ -48,36 +48,12 @@ class ShopBasket extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => Yii::t('common', 'Пользователь'),
-            'shop_element_id' => Yii::t('common', 'Товар/услуга'),
+            'item_id' => Yii::t('common', 'Товар/услуга'),
             'count' => Yii::t('common', 'Кол-во'),
         ];
     }
     
     public function getRelationShopItem() {
-        return $this->hasOne(ShopItems::className(),['id' => 'shop_element_id']);
-    }
-    
-    public function search($params) {
-        $query = self::find()->where(['user_id' => Yii::$app->user->getId()])->with(['relationShopItem']);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 5,
-            ],
-            'sort'=> [
-                'defaultOrder' => ['id' => SORT_DESC]
-            ]
-        ]);
-        return $dataProvider;
-    }
-    
-    public function push($user_id, $element_id, $count = 1) {
-        //todo
-    }
-    
-    public function calculate() {
-        $total_cost = 0;
-        //todo
-        return $total_cost;
+        return $this->hasOne(ShopItems::className(),['id' => 'item_id']);
     }
 }

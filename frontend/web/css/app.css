@@ -51,6 +51,7 @@ a.desc:after {content: "\e152";}
 .rf-studio-gold {color: gold;}
 .rf-studio-silver {color: #8eb670;}
 .rf-studio-black {color: #333;}
+.rf-studio-gray {color: #ccc;}
 .rf-studio-white {color: #C5C0C0;}
 .rf-studio-orange {color: #e84d3b;}
 .rf-studio-green {color: #5cb85c;}
@@ -61,6 +62,8 @@ a.desc:after {content: "\e152";}
 .no-gutters [class^='col-'] {
     padding: 0px;
 }
+.display-flex {display: flex;}
+.items-middle {align-items: center;}
 .alert {
     border-radius: 0px;
     color:#36BBA6;
@@ -200,6 +203,9 @@ textarea {
     color: #36BBA6;
     background-color: #C5C0C0;
     border-radius: 10px;
+}
+.text-line-through {
+    text-decoration: line-through;
 }
 
 /*# menu */
@@ -467,6 +473,7 @@ ul.nav > li.active > a:focus {
     padding: 10px 5px;
     border: 0px;
 }
+.widget .panel-footer,
 .widget .panel-heading {
     background-color: inherit;
     border-bottom-color: #C5C0C0;
