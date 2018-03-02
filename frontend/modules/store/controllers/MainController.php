@@ -24,7 +24,7 @@ class MainController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'basket'],
                         'allow' => true,
                         'roles' => ['@'],
                     ]
@@ -64,4 +64,11 @@ class MainController extends Controller
             'basket' => $basket,
         ]);
     }
+    
+    public function actionBasket() {
+        Yii::$app->params['breadcrumbs'][] = ['label' => Yii::t('store','Корзина')];
+        $this->layout = '/main_full';
+        return $this->render('basket');
+    }
+    
 }

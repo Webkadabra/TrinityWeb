@@ -11,7 +11,6 @@ $this->beginContent('@frontend/views/layouts/base.php')
 ?>
 <div class="push-header">
     <div class="container">
-        
         <?php echo Breadcrumbs::widget([
             'links' => isset(Yii::$app->params['breadcrumbs']) ? Yii::$app->params['breadcrumbs'] : [],
         ]) ?>

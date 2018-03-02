@@ -57,16 +57,18 @@ if($counter) {
                 <?=($character['relationGuild'] ? $character['relationGuild']['relationGuild']['name'] : '')?>
             </div>
         </div>
-    <?php
+        <?php
         }?>
-<div class="row">
-    <div class="col-xs-push-3 col-xs-6 col-sm-push-4 col-sm-4 col-md-push-5 col-md-4">
+        <div class="row">
+            <div class="col-xs-push-3 col-xs-6 col-sm-push-4 col-sm-4 col-md-push-5 col-md-4">
+            <?php
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                ]);
+            ?>
+            </div>
+        </div>
     <?php
-        echo LinkPager::widget([
-            'pagination' => $pages,
-        ]);
     }
     ?>
-    </div>
-</div>
 <?php ActiveForm::end(); ?>
