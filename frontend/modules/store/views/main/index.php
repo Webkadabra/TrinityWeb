@@ -144,9 +144,7 @@ $form = ActiveForm::begin([
                                 <?php
                                 if(!$item['discount']) {
                                 ?>
-                                    <span class="rf-studio-gold">
-                                        <?=$item['dCoins']?>
-                                    </span>
+                                    <span class="rf-studio-gold"><?=$item['dCoins']?></span>
                                 <?php
                                 } else {
                                     $cost = $item['dCoins'] * ($item['discount'] / 100);
@@ -156,12 +154,8 @@ $form = ActiveForm::begin([
                                         }
                                     }
                                 ?>
-                                    <span class="rf-studio-gray text-line-through">
-                                        <?=$item['dCoins']?>
-                                    </span>
-                                    <span class="rf-studio-gold">
-                                        <?=(int)$cost?>
-                                    </span>
+                                    <span class="rf-studio-gray text-line-through"><?=$item['dCoins']?></span>
+                                    <span class="rf-studio-gold"><?=(int)$cost?></span>
                                 <?php
                                 }
                                 ?>
@@ -170,9 +164,7 @@ $form = ActiveForm::begin([
                                 <?php
                                 if(!$item['discount']) {
                                 ?>
-                                    <span class="rf-studio-silver">
-                                        <?=$item['vCoins']?>
-                                    </span>
+                                    <span class="rf-studio-silver"><?=$item['vCoins']?></span>
                                 <?php
                                 } else {
                                     $cost = $item['vCoins'] * ($item['discount'] / 100);
@@ -182,12 +174,8 @@ $form = ActiveForm::begin([
                                         }
                                     }
                                 ?>
-                                    <span class="rf-studio-gray text-line-through">
-                                        <?=$item['vCoins']?>
-                                    </span>
-                                    <span class="rf-studio-silver">
-                                        <?=(int)$cost?>
-                                    </span>
+                                    <span class="rf-studio-gray text-line-through"><?=$item['vCoins']?></span>
+                                    <span class="rf-studio-silver"><?=(int)$cost?></span>
                                 <?php
                                 }
                                 ?>
