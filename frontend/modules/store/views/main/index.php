@@ -124,7 +124,7 @@ $form = ActiveForm::begin([
                     ];
                 }
             ?>
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                 <div class="panel panel-default widget store-item">
                     <div class="panel-heading">
                         <div class="row display-flex items-middle">
@@ -209,7 +209,7 @@ $form = ActiveForm::begin([
                                 echo $form->field($model_form, 'item_id')->hiddenInput()->label(false);
                                 ?>
                                 <div class="row">
-                                    <div class="col-xs-7 col-md-5">
+                                    <div class="col-xs-7 col-md-5 col-lg-6">
                                         <?php
                                         echo $form->field($model_form,'count')
                                                 ->textInput([
@@ -217,7 +217,7 @@ $form = ActiveForm::begin([
                                                 ])->label(false)->error(false);
                                         ?>
                                     </div>
-                                    <div class="col-xs-5 col-md-7">
+                                    <div class="col-xs-5 col-md-7 col-lg-6">
                                         <?php
                                         echo Html::submitButton(Yii::t('store', 'Добавить'), [
                                             'class' => 'btn btn-primary',

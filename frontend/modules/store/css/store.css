@@ -4,6 +4,7 @@
 }
 #store-container #store-list .store-item {
     margin-top: 5px;
+    min-height: 240px;
 }
 #store-container #store-list .store-item .store-item-icon {
     width: 22px;
