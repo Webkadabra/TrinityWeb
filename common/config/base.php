@@ -71,8 +71,12 @@ $config = [
             'assignmentTable' => '{{%rbac_auth_assignment}}',
             'ruleTable' => '{{%rbac_auth_rule}}'
         ],
-        'CharactersDbHelper' => 'common\components\helpers\CharactersDbHelper',
-        'AppHelper' => 'common\components\helpers\AppHelper',
+        'CharactersDbHelper' => [
+            'class' => 'common\components\helpers\CharactersDbHelper'
+        ],
+        'AppHelper' => [
+            'class' => 'common\components\helpers\AppHelper'
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
             'cachePath' => '@common/runtime/cache'

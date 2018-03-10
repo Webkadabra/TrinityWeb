@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Module;
 use yii\console\Controller;
 use yii\helpers\Console;
+use common\models\auth\Accounts;
+use common\models\User;
 
 /**
  * @author Eugene Terentev <eugene@terentev.net>
@@ -53,6 +55,28 @@ class AppController extends Controller
         \Yii::$app->runAction('rbac-migrate/up', ['interactive' => $this->interactive]);
         \Yii::$app->runAction('forum/install/init', ['interactive' => $this->interactive]);
         \Yii::$app->runAction('translate/base', ['interactive' => $this->interactive]);
+    }
+
+    public function actionSyncAccounts() {
+        $limit = 1000;
+        $page = 0;
+        $models = Accounts::find()->offset($page * $limit)->limit($limit)->all();
+        while($models) {
+            foreach ($models as $model) {
+                $user = User::findOne(['external_id' => $model->id]);
+                if(!$user) {
+                    $user = new User();
+                    $user->password_hash = $model->sha_pass_hash;
+                    $user->username = $model->username;
+                    $user->email = $model->email;
+                    $user->external_id = $model->id;
+                    $user->save();
+                    $user->afterSignup();
+                }
+            }
+            $page++;
+            $models = Accounts::find()->offset($page * $limit)->limit($limit)->all();
+        }
     }
     
     /**

@@ -4,7 +4,9 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'console\controllers',
     'modules' => [
-        'podium' => 'common\modules\forum\Podium',
+        'podium' => [
+            'class' => 'common\modules\forum\Podium',
+        ],
     ],
     'components' => [
         'mailer' => [
