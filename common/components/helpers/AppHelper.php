@@ -512,7 +512,7 @@ class AppHelper extends \yii\base\Component
         }
         
         if(is_array($var)) {
-            if($var[$attribute]) {
+            if(isset($var[$attribute])) {
                 return Yii::t('common',$var[$attribute]);
             } else {
                 return $var[$base_attribute . '_ru_ru'];
