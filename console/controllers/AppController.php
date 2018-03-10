@@ -72,7 +72,6 @@ class AppController extends Controller
                     $user->external_id = $model->id;
                     $user->status = User::STATUS_ACTIVE;
                     $user->save();
-                    pre($user);
                     $user->afterSignup();
                 }
             }
