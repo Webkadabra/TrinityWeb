@@ -344,7 +344,6 @@ class User extends ActiveRecord implements IdentityInterface
         $this->trigger(self::EVENT_AFTER_SIGNUP);
         // Default role
         $auth = Yii::$app->authManager;
-        $this->save();
         $auth->assign($auth->getRole(User::ROLE_USER), $this->getId());
         if(!(Yii::$app instanceof \yii\console\Application)) {
             $this->checkIssetForumAccount();
