@@ -119,8 +119,8 @@ class SignInController extends \yii\web\Controller
                         ));
                 } else {
                     Yii::$app->getUser()->login($user);
-                    Yii::$app->CharactersDbHelper->setDefault();
                 }
+                Yii::$app->CharactersDbHelper->setDefault();
                 return $this->goHome();
             }
         }
