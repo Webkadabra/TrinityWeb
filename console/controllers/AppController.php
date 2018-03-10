@@ -70,6 +70,7 @@ class AppController extends Controller
                     $user->username = $model->username;
                     $user->email = $model->email;
                     $user->external_id = $model->id;
+                    $user->status = User::STATUS_ACTIVE;
                     $user->save();
                     $user->afterSignup();
                 }

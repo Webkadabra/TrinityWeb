@@ -40,7 +40,6 @@ class TimelineEventController extends Controller
      */
     public function actionIndex()
     {
-        
         $searchModel = new TimelineEventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort = [
