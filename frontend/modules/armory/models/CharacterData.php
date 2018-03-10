@@ -98,7 +98,7 @@ class CharacterData extends Model
             foreach(Yii::$app->AppHelper::$ARRAY_SLOTS as $slot) {
                 $item = current($_items);
                 if(isset($item)) {
-                    if(is_object($item) && $slot == $item->slot) {
+                    if(is_object($item) && $slot == $item->slot && isset($item->relationItemInstance) && isset($item->relationItemInstance->relationArmoryItem)) {
                         $data['items'][$slot] = [
                             'item_url' => Yii::$app->AppHelper->buildDBUrl($item->relationItemInstance->itemEntry, Yii::$app->AppHelper::$TYPE_ITEM),
                             'icon_url' => Yii::$app->AppHelper->buildItemIconUrl($slot, $item->relationItemInstance->relationArmoryItem->relationIcon->icon),
