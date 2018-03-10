@@ -8,7 +8,7 @@ $this->title = $model->title;
 Yii::$app->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content">
-    <article class="article-item flat">
+    <article class="article-item flat clearfix">
         <h2 class="article-title">
             <?php echo $model->title ?>
         </h2>
