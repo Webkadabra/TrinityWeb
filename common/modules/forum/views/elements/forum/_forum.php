@@ -19,6 +19,11 @@ use yii\helpers\Url;
     <a href="<?= Url::to(['forum/forum', 'cid' => $model->category_id, 'id' => $model->id, 'slug' => $model->slug]) ?>" class="rf-aqua">
         <?= Html::encode($model->name) ?>
     </a>
+    <?php if (!empty($model->sub)): ?>
+        <div>
+            <small class="text-muted"><?= Html::encode($model->sub) ?></small>
+        </div>
+    <?php endif; ?>
     <div class="row child-forums"><?php
         foreach($model->children()->all() as $child) {
             ?>
@@ -34,9 +39,6 @@ use yii\helpers\Url;
         }
         ?>
     </div>
-    <?php if (!empty($model->sub)): ?>
-        <small class="text-muted"><?= Html::encode($model->sub) ?></small>
-    <?php endif; ?>
 </td>
 <td class="forum-icon text-right"><?= $model->threads ?></td>
 <td class="forum-icon text-right"><?= $model->posts ?></td>
