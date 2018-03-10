@@ -113,7 +113,6 @@ class SignupForm extends Model
             } else {
                 $this->addError('username', $user->getErrors('username')[0]);
             }
-            Yii::$app->CharactersDbHelper->setDefault();
             return $user;
         }
         return null;
