@@ -19,7 +19,7 @@ class m150625_215625_init_permissions_third_part extends Migration
         
         $accessToEditOwnTask = $this->auth->createPermission(\common\models\User::PERM_ACCESS_TO_EDIT_OWN_TASK);
         $rule = new \common\rbac\rule\OwnModelRule();
-        $accessToEditOwnTask->rule = $rule->name;
+        $accessToEditOwnTask->ruleName = $rule->name;
         
         $this->auth->add($accessToBugTracker);
         $this->auth->add($accessToProjects);
