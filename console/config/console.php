@@ -4,9 +4,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'console\controllers',
     'modules' => [
-        'podium' => [
-            'class' => 'common\modules\forum\Podium',
-        ],
+        'podium' => 'common\modules\forum\Podium',
     ],
     'components' => [
         'mailer' => [
@@ -31,7 +29,7 @@ return [
         ],
         'migrate' => [
             'class' => yii\console\controllers\MigrateController::class,
-            'migrationPath' => '@common/migrations/db',
+            'migrationPath' => ['@common/migrations/db', '@common/modules/bugTracker/migrations'],
             'migrationTable' => '{{%system_db_migration}}'
         ],
         'rbac-migrate' => [

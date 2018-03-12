@@ -75,6 +75,14 @@ class User extends ActiveRecord implements IdentityInterface
     const PERM_ACCESS_TO_STORE = 'store_access';
     const PERM_ACCESS_TO_USES = 'users_access';
     
+    const PERM_ACCESS_TO_BUGTRACKER = 'bugtracker_access';
+    const PERM_ACCESS_TO_PROJECTS = 'bugtracker_project_access';
+    const PERM_ACCESS_TO_TASKS = 'bugtracker_tasks_access';
+    const PERM_ACCESS_TO_CREATE_TASK = 'bugtracker_tasks_create_access';
+    const PERM_ACCESS_TO_EDIT_OWN_TASK = 'bugtracker_tasks_edit_own_task';
+    const PERM_ACCESS_TO_CHANGE_TASK = 'bugtracker_tasks_change_access';
+    const PERM_ACCESS_TO_DELETE_TASK = 'bugtracker_tasks_delete_access';
+    
     /**
      * Expansion - WOTLK
      */

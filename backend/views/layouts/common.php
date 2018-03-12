@@ -211,8 +211,30 @@ $bundle = BackendAsset::register($this);
                         ]
                     ],
                     [
-                        'label' => Yii::t('view','Forum'),
+                        'label' => Yii::t('bugTracker', 'Баг-трекер'),
                         'icon' => '<i class="fa fa-tasks"></i>',
+                        'url' => '#',
+                        'options' => ['class' => 'treeview'],
+                        'active' => (\Yii::$app->controller->module->id == 'tracker'),
+                        'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_BUGTRACKER),
+                        'items' => [
+                            [
+                                'label' => Yii::t('bugTracker','Проекты'),
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'active' => (\Yii::$app->controller->id == 'project'),
+                                'url' => ['/tracker/project/index'],
+                            ],
+                            [   
+                                'label' => Yii::t('bugTracker','Задачи'),
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'active' => (\Yii::$app->controller->id == 'task'),
+                                'url' => ['/tracker/task/index'],
+                            ],
+                        ]
+                    ],
+                    [
+                        'label' => Yii::t('view','Forum'),
+                        'icon' => '<i class="fa fa-list"></i>',
                         'url' => '#',
                         'visible' => Yii::$app->user->can(User::PERM_ACCESS_TO_FORUM),
                         'active' => (\Yii::$app->controller->module->id == 'forum'),

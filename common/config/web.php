@@ -7,6 +7,12 @@ $config = [
             'appendTimestamp' => YII_ENV_DEV
         ]
     ],
+    'bootstrap' => ['tracker'],
+    'modules' => [
+        'tracker' => [
+            'class' => 'common\modules\bugTracker\Module',
+        ],
+    ],
     'as locale' => [
         'class' => common\behaviors\LocaleBehavior::class,
         'enablePreferredLanguage' => true
