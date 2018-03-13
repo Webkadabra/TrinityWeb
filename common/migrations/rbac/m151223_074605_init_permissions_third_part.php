@@ -2,7 +2,9 @@
 
 use common\rbac\Migration;
 
-class m150625_215625_init_permissions_third_part extends Migration
+use common\rbac\rule\OwnModelRule;
+
+class m151223_074605_init_permissions_third_part extends Migration
 {
     public function up()
     {
@@ -18,7 +20,7 @@ class m150625_215625_init_permissions_third_part extends Migration
         $accessToDeleteTask = $this->auth->createPermission(\common\models\User::PERM_ACCESS_TO_DELETE_TASK);
         
         $accessToEditOwnTask = $this->auth->createPermission(\common\models\User::PERM_ACCESS_TO_EDIT_OWN_TASK);
-        $rule = new \common\rbac\rule\OwnModelRule();
+        $rule = $this->auth->getRule('ownModelRule');
         $accessToEditOwnTask->ruleName = $rule->name;
         
         $this->auth->add($accessToBugTracker);

@@ -6,8 +6,6 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 
-
-
 /**
  * FileStorageController implements the CRUD actions for FileStorageItem model.
  */
