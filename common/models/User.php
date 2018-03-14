@@ -291,6 +291,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function setPassword($password)
     {
         $this->password_hash = self::generatePassword($this->username, $password);
+        $this->relationGameAccount->sha_pass_hash = $this->password_hash;
+        $this->relationGameAccount->save();
     }
     
     /**

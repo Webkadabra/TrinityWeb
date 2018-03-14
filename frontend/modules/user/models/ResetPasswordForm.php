@@ -69,11 +69,8 @@ class ResetPasswordForm extends Model
         $user = $this->token->user;
         $user->password = $this->password;
         if ($user->save()) {
-            $user->relationGameAccount->sha_pass_hash = $user->password_hash;
-            $user->relationGameAccount->save();
             $this->token->delete();
         };
-
         return true;
     }
 
