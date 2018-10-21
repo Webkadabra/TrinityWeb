@@ -61,11 +61,10 @@ JS
             <div
                 class="progress-bar progress-bar-animated progress-bar-striped"
                 role="progressbar"
-                style="width: <?= Yii::$app->settings->get(Yii::$app->settings::DB_STATUS) == Yii::$app->settings::INSTALLED ? 100 : 0?>%"
-                aria-valuenow="<?= Yii::$app->settings->get(Yii::$app->settings::DB_STATUS) == Yii::$app->settings::INSTALLED ? 100 : 1?>"
+                style="width: 0%"
+                aria-valuenow="1"
                 aria-valuemin="0"
                 aria-valuemax="100">
-                <?= Yii::$app->settings->get(Yii::$app->settings::DB_STATUS) == Yii::$app->settings::INSTALLED ? "100%" : null?>
             </div>
         </div>
         <div id="errorCard" class="card card-default text-white" hidden>
@@ -87,12 +86,12 @@ JS
             <div class="col-auto">
                 <?= Html::submitButton(Yii::t('installer','Start import') . ' <i class="fa fa-upload"></i>', [
                     'class' => 'btn btn-primary', 'id' => 'submitButtonForm',
-                    'hidden' => Yii::$app->settings->get(Yii::$app->settings::DB_STATUS) == Yii::$app->settings::INSTALLED ? 'hidden' : null,
+                    'hidden' => null,
                 ]) ?>
             </div>
             <div class="col-auto">
                 <?= Html::a(Yii::t('installer','Next') . ' <i class="fa fa-upload"></i>', ['auth-database'], [
-                    'hidden' => Yii::$app->settings->get(Yii::$app->settings::DB_STATUS) == Yii::$app->settings::INSTALLED ? null : 'hidden',
+                    'hidden' => 'hidden',
                     'class' => 'btn btn-success',
                     'id' => 'goNext'
                 ]) ?>

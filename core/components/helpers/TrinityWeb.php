@@ -58,6 +58,7 @@ class TrinityWeb extends Component
      */
     public static function isDBImported()
     {
+        Yii::$app->cache->flush();
         if (Yii::$app->db->schema->getTableSchema(WidgetCarouselItem::tableName(), true) !== null) {
             return true;
         }
