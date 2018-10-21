@@ -24,22 +24,8 @@ class Module extends \yii\base\Module implements BootstrapInterface
     public function bootstrap($app)
     {
         if ($app instanceof \yii\web\Application) {
-            $this->setDefaultSettings($app);
             $this->addUrlManagerRules($app);
         }
-    }
-
-    protected function setDefaultSettings($app)
-    {
-        /* @var \BaseApplication $app */
-        if(!$app->settings->get($app->settings::APP_MODULE_LADDER_STATUS))
-            $app->settings->set($app->settings::APP_MODULE_LADDER_STATUS,$app->settings::ENABLED);
-
-        if(!$app->settings->get($app->settings::APP_MODULE_LADDER_CACHE_DURATION))
-            $app->settings->set($app->settings::APP_MODULE_LADDER_CACHE_DURATION,120);
-
-        if(!$app->settings->get($app->settings::APP_MODULE_LADDER_PER_PAGE))
-            $app->settings->set($app->settings::APP_MODULE_LADDER_PER_PAGE,5);
     }
 
     protected function addUrlManagerRules($app)
