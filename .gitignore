@@ -1,0 +1,26 @@
+# Env
+/.env
+
+# Composer
+/vendor
+composer.phar
+composer.lock
+
+# JS
+node_modules
+spa/npm-debug.log
+spa/yarn-error.log
+
+# IDE
+.idea
+nbproject
+.buildpath
+.project
+.settings
+.idea
+
+# windows thumbnail cache
+Thumbs.db
+
+# Mac DS_Store Files
+.DS_Store
