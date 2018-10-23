@@ -80,14 +80,39 @@ class Server extends ActiveRecord
         ];
     }
 
-    public function getExpansion() {
-        //TODO calculate game expansion by build
-        return self::EXPANSION_WRATH_OF_THE_LICK_KING;
+    public function getExpansion()
+    {
+        // Vanilla
+        if($this->realm_build >= 3368 &&  $this->realm_build <= 6005)
+            return self::EXPANSION_CLASSIC;
+        // BC
+        if($this->realm_build >= 6080 &&  $this->realm_build <= 8606)
+            return self::EXPANSION_THE_BURNING_CRUSADE;
+        // WTLK
+        if($this->realm_build >= 8714 &&  $this->realm_build <= 12340)
+            return self::EXPANSION_WRATH_OF_THE_LICK_KING;
+        // CATACLYSM
+        if($this->realm_build >= 13164 &&  $this->realm_build <= 15595)
+            return self::EXPANSION_CATACLYSM;
+        // PANDA
+        if($this->realm_build >= 16016 &&  $this->realm_build <= 18414)
+            return self::EXPANSION_MIST_OF_PANDARIA;
+        // WOD
+        if($this->realm_build >= 19116 &&  $this->realm_build <= 21742)
+            return self::EXPANSION_WARLORD_OF_DRAENOR;
+        // LEGION
+        if($this->realm_build >= 22522 &&  $this->realm_build <= 26972)
+            return self::EXPANSION_LEGION;
+        // BFA
+        if($this->realm_build >= 27355)
+            return self::EXPANSION_BATTLE_FOR_AZEROTH;
+
+        return null;
     }
 
     public function getVersion() {
         //TODO calculate game version by build
-        return '3.3.5a';
+        return '{version}';
     }
 
 }

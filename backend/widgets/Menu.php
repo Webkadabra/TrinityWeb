@@ -60,7 +60,7 @@ class Menu extends \yii\widgets\Menu
                         ['class' => 'pull-right-container']
                     )
                     : '',
-                '{class}' => 'nav-link' . (!$item['active'] ? null : ' active') . ($item['linkOptions']['class'] ? ' ' . $item['linkOptions']['class'] : ''),
+                '{class}' => 'nav-link' . (!$item['active'] ? null : ' active') . (isset($item['linkOptions']) && $item['linkOptions']['class'] ? ' ' . $item['linkOptions']['class'] : ''),
                 '{data-toggle}' => isset($item['items']) ? 'data-toggle="collapse" ':null,
                 '{icon}' => isset($item['icon']) ? $item['icon'] : '',
                 '{url}' => Url::to($item['url']),

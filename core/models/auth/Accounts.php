@@ -99,4 +99,58 @@ class Accounts extends AuthCoreModel
         ];
     }
 
+    /**
+     * @return int|mixed|string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function getTotalCount()
+    {
+        $cache_key = 'backend.accounts.totalCount';
+
+        $cache_time_total = 120 * 5;
+        $cache_time_query = 60 * 5;
+
+        $totalCount = Yii::$app->cache->get($cache_key);
+        if($totalCount === false) {
+            $totalCount = 0;
+            foreach (Yii::$app->DBHelper->getServers() as $server) {
+                self::setDb(self::getDb($server['auth_id']));
+                $count = self::find()->cache($cache_time_query)->count();
+                if($count) $totalCount += $count;
+            }
+            Yii::$app->cache->set($cache_key,$cache_time_total);
+        }
+        return $totalCount;
+    }
+
+    /**
+     * @param $beginOfDay
+     * @param $endOfDay
+     * @return int|mixed|string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function getCountByDates($beginOfDay, $endOfDay)
+    {
+        $cache_key = "backend.accounts.countByDate_{$beginOfDay}__{$endOfDay}";
+
+        $cache_time_total = 120 * 5;
+        $cache_time_query = 60 * 5;
+
+        $totalCount = Yii::$app->cache->get($cache_key);
+        if($totalCount === false) {
+            $totalCount = 0;
+            foreach (Yii::$app->DBHelper->getServers() as $server) {
+                self::setDb(self::getDb($server['auth_id']));
+                $count = self::find()
+                    ->where(['>=', 'joindate', $beginOfDay])
+                    ->andWhere(['<=','joindate',$endOfDay])
+                    ->cache($cache_time_query)
+                    ->count();
+                if($count) $totalCount += $count;
+            }
+            Yii::$app->cache->set($cache_key,$cache_time_total);
+        }
+        return $totalCount;
+    }
+
 }

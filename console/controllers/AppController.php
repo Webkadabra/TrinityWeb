@@ -215,7 +215,6 @@ class AppController extends Controller
                                     'realm_build' => $realm->gamebuild,
                                 ]);
                             }
-                            $serverModel->getVersion();
                             $serverModel->save();
                         }
                     }

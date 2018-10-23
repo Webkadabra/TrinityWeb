@@ -21,7 +21,7 @@ use backend\widgets\realmsChart;
                 <div class="d-flex flex-row align-items-top">
                     <i class="fas fa-ban align-self-center text-facebook icon-md"></i>
                     <div class="ml-3">
-                        <h6 class="text-facebook"><?=Yii::t('backend','{count} account banned', ['count' => $bannedAccounts_today_count])?></h6>
+                        <h6 class="text-facebook"><?=Yii::t('backend','Today {count} account banned', ['count' => $bannedAccounts_today_count])?></h6>
                         <p class="mt-1 mb-0 card-description"><?=Yii::t('backend','Total count: {count}', ['count' => $bannedAccounts_total_count])?></p>
                     </div>
                 </div>

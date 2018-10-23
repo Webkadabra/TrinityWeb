@@ -35,27 +35,20 @@ class DashboardController extends Controller
 
     /**
      * @return mixed
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionIndex()
     {
         $beginOfDay = strtotime("midnight", time());
         $endOfDay   = strtotime("tomorrow", $beginOfDay) - 1;
 
-        // TODO
-        /*$bannedAccounts_total_count = AccountBanned::find()->cache(60*5)->count();
-        $registeredAccounts_total_count = Accounts::find()->cache(60*5)->count();*/
-        $bannedAccounts_total_count = 0;
-        $registeredAccounts_total_count = 0;
+        $bannedAccounts_total_count = AccountBanned::getTotalCount();
+        $registeredAccounts_total_count = Accounts::getTotalCount();
 
-        // TODO
-        /*$bannedAccounts_today_count = AccountBanned::find()->where(['>=', 'bandate', $beginOfDay])->andWhere(['<=','bandate',$endOfDay])->cache(60*5)->count();
-        $registeredAccounts_today_count = Accounts::find()->where(['>=', 'joindate', $beginOfDay])->andWhere(['<=','joindate',$endOfDay])->cache(60*5)->count();*/
-        $bannedAccounts_today_count = 0;
-        $registeredAccounts_today_count = 0;
+        $bannedAccounts_today_count = AccountBanned::getCountByDates($beginOfDay,$endOfDay);
+        $registeredAccounts_today_count = Accounts::getCountByDates($beginOfDay,$endOfDay);
 
-        // TODO
-        //$gms_total_count = AccountAccess::getTotalCount();
-        $gms_total_count = 0;
+        $gms_total_count = AccountAccess::getTotalCount();
 
         return $this->render('index',[
             'bannedAccounts_total_count' => $bannedAccounts_total_count,
