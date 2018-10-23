@@ -182,32 +182,32 @@ class Armory extends Component
      * @return array
      */
     const CLASSES = [
-        1 => 'Воин',
-        2 => 'Паладин',
-        3 => 'Охотник',
-        4 => 'Разбойник',
-        5 => 'Жрец',
-        6 => 'Рыцарь Смерти',
-        7 => 'Шаман',
-        8 => 'Маг',
-        9 => 'Чернокнижник',
-        11 => 'Друид'
+        1 => 'Warrior',
+        2 => 'Paladin',
+        3 => 'Hunter',
+        4 => 'Rogue',
+        5 => 'Priest',
+        6 => 'Death knight',
+        7 => 'Shaman',
+        8 => 'Mage',
+        9 => 'Warlock',
+        11 => 'Druid'
     ];
     /**
      * Массив расс
      * @return array
      */
     const RACES = [
-        1 => 'Человек',
-        2 => 'Орк',
-        3 => 'Дворф',
-        4 => 'Ночной Эльф',
-        5 => 'Нежить',
-        6 => 'Таурен',
-        7 => 'Гном',
-        8 => 'Троль',
-        10 => 'Кровавый Эльф',
-        11 => 'Дреней'
+        1 => 'Human',
+        2 => 'Orc',
+        3 => 'Dwarf',
+        4 => 'Night elf',
+        5 => 'Undead',
+        6 => 'Tauren',
+        7 => 'Gnome',
+        8 => 'Troll',
+        10 => 'Blood elf',
+        11 => 'Draenei'
     ];
     /**
      * HORDE RACES
