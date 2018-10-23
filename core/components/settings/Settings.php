@@ -71,6 +71,8 @@ class Settings extends Component
     const DB_STATUS = 'conf.db.web.status';
     const DB_AUTH_STATUS = 'conf.db.auth.status';
     const DB_CHARS_STATUS = 'conf.db.chars.status';
+    const DB_ARMORY_STATUS = 'conf.db.armory.status';
+    const DB_ARMORY_DATA_STATUS = 'conf.db.armory.data.status';
 
     /**
      * Ladder module
@@ -78,6 +80,13 @@ class Settings extends Component
     const APP_MODULE_LADDER_STATUS = 'conf.module.ladder.status';
     const APP_MODULE_LADDER_PER_PAGE = 'conf.module.ladder.per-page';
     const APP_MODULE_LADDER_CACHE_DURATION = 'conf.module.ladder.cache-duration';
+
+    /**
+     * Armory module
+     */
+    const APP_MODULE_ARMORY_STATUS = 'conf.module.armory.status';
+    const APP_MODULE_ARMORY_PER_PAGE = 'conf.module.armory.per-page';
+    const APP_MODULE_ARMORY_CACHE_DURATION = 'conf.module.armory.cache-duration';
 
 
     /**

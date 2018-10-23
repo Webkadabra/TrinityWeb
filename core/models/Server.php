@@ -7,6 +7,7 @@ use yii\behaviors\SluggableBehavior;
 use yii\db\ActiveRecord;
 
 /**
+ * @property int $id [int(11)]
  * @property integer $auth_id
  * @property integer $realm_id
  * @property string $realm_name

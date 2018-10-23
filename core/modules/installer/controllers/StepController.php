@@ -328,12 +328,6 @@ class StepController extends Controller
                         Yii::$app->settings->set(TrinityWeb::MODULE_ARMORY_STATUS, TrinityWeb::DISABLED);
                         */
                     }
-                    
-                    /*
-                    TODO
-                    Yii::$app->settings->set(TrinityWeb::MODULE_ARMORY_PER_PAGE, TrinityWeb::DEFAULT_PAGE_SIZE);
-                    Yii::$app->settings->set(TrinityWeb::MODULE_ARMORY_CACHE_DURATION, TrinityWeb::DEFAULT_CACHE_120);
-                    */
 
                     TourHelper::setStep('install-armory-database');
                     return $this->redirect(['install-armory-database']);
