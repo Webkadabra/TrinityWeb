@@ -88,7 +88,7 @@ class SignUpForm extends Model
             $user->status = User::STATUS_ACTIVE;
             $user->setPassword($this->password);
             if(!$gameAccount_id) {
-                $user->createAccount($gameAccount_id);
+                $user->createAccount();
             }
             if(!$user->hasErrors()) {
                 if (!$user->save()) {
