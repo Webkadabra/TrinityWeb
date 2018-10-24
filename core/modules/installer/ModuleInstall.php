@@ -31,7 +31,7 @@ class ModuleInstall extends BaseModule implements BootstrapInterface
         parent::init();
         TourHelper::initTour();
 
-        $this->allowedIPs[] = env('ACCESS_INSTALL_FOR_IP');
+        $this->allowedIPs[] = env('ACCESS_INSTALL');
         array_unique($this->allowedIPs);
 
         $this->setAliases(['@installer' => __DIR__]);
