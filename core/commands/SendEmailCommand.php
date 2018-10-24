@@ -2,6 +2,7 @@
 
 namespace core\commands;
 
+use Yii;
 use yii\base\BaseObject;
 use yii\swiftmailer\Message;
 
@@ -43,7 +44,7 @@ class SendEmailCommand extends BaseObject implements SelfHandlingCommand
      */
     public function init()
     {
-        $this->from = $this->from ?: \Yii::$app->settings->get(\Yii::$app->TW::CONF_MAILER_EMAIL_ROBOT);
+        $this->from = $this->from ?: Yii::$app->settings->get(Yii::$app->settings::APP_MAILER_ROBOT);
     }
 
     /**
@@ -53,7 +54,7 @@ class SendEmailCommand extends BaseObject implements SelfHandlingCommand
     public function handle($command)
     {
         if (!$command->body) {
-            $message = \Yii::$app->mailer->compose($command->view, $command->params);
+            $message = Yii::$app->mailer->compose($command->view, $command->params);
         } else {
             $message = new Message();
             if ($command->isHtml()) {
@@ -63,7 +64,7 @@ class SendEmailCommand extends BaseObject implements SelfHandlingCommand
             }
         }
         $message->setFrom($command->from);
-        $message->setTo($command->to ?: \Yii::$app->settings->get(\Yii::$app->TW::CONF_MAILER_EMAIL_ROBOT));
+        $message->setTo($command->to ?: Yii::$app->settings->get(\Yii::$app->settings::APP_MAILER_ADMIN));
         $message->setSubject($command->subject);
         return $message->send();
     }
