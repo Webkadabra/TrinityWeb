@@ -174,6 +174,10 @@ if(file_exists(__DIR__ . '/app/components.php')) {
     $config = \yii\helpers\ArrayHelper::merge($config,require('app/components.php'));
 }
 
+if(file_exists(__DIR__ . '/app/mailer.php')) {
+    $config = \yii\helpers\ArrayHelper::merge($config,require('app/mailer.php'));
+}
+
 if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
