@@ -5,12 +5,12 @@ namespace backend\modules\rbac\models;
 use backend\modules\rbac\components\Configs;
 use backend\modules\rbac\components\Helper;
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 
 /**
  * Description of Assignment
  */
-class Assignment extends Object
+class Assignment extends BaseObject
 {
     /**
      * @var integer User id

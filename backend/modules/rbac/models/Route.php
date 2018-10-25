@@ -13,7 +13,7 @@ use yii\helpers\VarDumper;
 /**
  * Description of Route
  */
-class Route extends \yii\base\Object
+class Route extends \yii\base\BaseObject
 {
     const CACHE_TAG = 'backend\modules\rbac.admin.route';
 

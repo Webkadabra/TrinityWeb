@@ -36,7 +36,7 @@ use yii\rbac\ManagerInterface;
  * ]);
  * ```
  */
-class Configs extends \yii\base\Object
+class Configs extends \yii\base\BaseObject
 {
     const CACHE_TAG = 'backend\modules\rbac.admin';
 
