@@ -17,6 +17,9 @@ class AppController extends Controller
     /** @var array */
     public $writablePaths = [
         '@core/config/app',
+        '@core/config/app/database-auth.php',
+        '@core/config/app/database-characters.php',
+        '@core/config/app/mailer.php',
         '@core/runtime',
         '@frontend/runtime',
         '@frontend/web/assets',

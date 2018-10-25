@@ -6,6 +6,15 @@ use yii\base\Model;
 
 /**
  * DatabaseForm holds all required database settings.
+ *
+ * @property string $_name
+ * @property string $name
+ * @property string $host
+ * @property integer $port
+ * @property string $database
+ * @property string $login
+ * @property string $password
+ * @property string $table_prefix
  */
 class DatabaseForm extends Model
 {

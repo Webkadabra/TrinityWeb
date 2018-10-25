@@ -193,7 +193,8 @@ class StepController extends Controller
                                 'host' => $db['host'],
                                 'port' => $db['port'],
                                 'database' => $db ['database'],
-                                'err' => $err->getMessage()
+                                //TODO - return conn error
+                                'err' => ''
                             ]);
                         }
                     } catch (InvalidConfigException $e) {
@@ -201,6 +202,7 @@ class StepController extends Controller
                     }
                 }
                 if(!$errorMsg) {
+
                     Configuration::setConfig(Yii::getAlias('@core/config/app/database-auth.php'), $config);
 
                     Yii::$app->settings->set(Settings::DB_AUTH_STATUS, Settings::INSTALLED);
@@ -258,7 +260,8 @@ class StepController extends Controller
                                 'host' => $db['host'],
                                 'port' => $db['port'],
                                 'database' => $db ['database'],
-                                'err' => $err->getMessage()
+                                //TODO - return conn error
+                                'err' => ''
                             ]);
                         }
                     } catch (Exception $e) {

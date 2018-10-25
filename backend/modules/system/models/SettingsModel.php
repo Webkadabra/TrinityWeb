@@ -2,8 +2,15 @@
 
 namespace backend\modules\system\models;
 
+use core\modules\installer\helpers\Configuration;
 use Yii;
 use yii\base\Model;
+use yii\db\Connection;
+
+use core\base\models\AuthCoreModel;
+use core\base\models\CharacterCoreModel;
+
+use core\models\Server;
 
 /**
  * Class SettingsModel
@@ -13,17 +20,12 @@ class SettingsModel extends Model
 {
 
     /**
-     * @var
+     * @var string
      */
     public $application_name;
     /**
-     * @var
+     * @var string
      */
-    public $application_tags;
-    /**
-     * @var
-     */
-    public $application_description;
     public $application_announce;
 
     /**
@@ -62,6 +64,16 @@ class SettingsModel extends Model
      * @var
      */
     public $modules;
+
+    /**
+     * @var array auth_dbs
+     */
+    public $auth_dbs = [];
+
+    /**
+     * @var array char_dbs
+     */
+    public $char_dbs = [];
 
     /**
      * SettingsModel constructor.
@@ -135,7 +147,65 @@ class SettingsModel extends Model
             ]*/
         ];
 
+        $this->setSystemDatabaseConnections();
+
         parent::__construct($config);
+    }
+
+    private function setSystemDatabaseConnections()
+    {
+        $servers = Yii::$app->DBHelper->getServers();
+        foreach($servers as $server) {
+            /* @var Server $server */
+            if(!isset($this->auth_dbs[$server['auth_id']])) {
+                $auth_connection = AuthCoreModel::getDb($server['auth_id']);
+                $auth_dsnConfig = $this->parseDSN($auth_connection->dsn);
+                if($auth_dsnConfig) {
+                    $this->auth_dbs[$server['auth_id']] = new AuthDatabases([
+                        'host' => $auth_dsnConfig['host'],
+                        'port' => $auth_dsnConfig['port'],
+                        'database' => $auth_dsnConfig['dbname'],
+                        'login' => $auth_connection->username,
+                        'password' => $auth_connection->password,
+                        'table_prefix' => $auth_connection->tablePrefix
+                    ]);
+                }
+            }
+            $char_connection = CharacterCoreModel::getDb($server['auth_id'],$server['realm_id']);
+            $char_dsnConfig = $this->parseDSN($char_connection->dsn);
+            if($char_dsnConfig) {
+                $this->char_dbs[$server['id']] = new CharDatabases([
+                    'name' => "char_{$server['auth_id']}_{$server['realm_id']}",
+                    'host' => $char_dsnConfig['host'],
+                    'port' => $char_dsnConfig['port'],
+                    'database' => $char_dsnConfig['dbname'],
+                    'login' => $char_connection->username,
+                    'password' => $char_connection->password,
+                    'table_prefix' => $char_connection->tablePrefix
+                ]);
+            }
+        }
+    }
+
+    private function parseDSN($dsn)
+    {
+        $exploded = array_map(
+            function ($_var) {
+                return explode('=', $_var);
+            },
+            explode(';', $dsn)
+        );
+        $parseArray = [];
+        if (count($exploded) > 1) {
+            foreach ($exploded as $index => $element) {
+                if(strpos($element[0],'host') !== false) {
+                    $parseArray['host'] = $element[1];
+                } else {
+                    $parseArray[$element[0]] = $element[1];
+                }
+            }
+        }
+        return $parseArray;
     }
 
     /**
@@ -144,13 +214,13 @@ class SettingsModel extends Model
     public function rules()
     {
         return [
-            [['application_name','application_description', 'application_announce'],'string'],
+            [['application_name', 'application_announce'],'string'],
             [['application_name'],'string', 'max' => 32],
             [['recaptcha_status', 'application_maintenance'],'boolean'],
             [['mailer_robot','mailer_admin'],'string', 'max' => 32],
-            [['application_description', 'application_theme'],'string', 'max' => 255],
+            [['application_theme'],'string', 'max' => 255],
             [['recaptcha_secret','recaptcha_key'],'string', 'max' => 64],
-            [['modules','application_tags'],'safe']
+            [['modules','auth_dbs','char_dbs'],'safe']
         ];
     }
 
@@ -161,8 +231,6 @@ class SettingsModel extends Model
     {
         return [
             'application_name' => Yii::t('backend','Application name'),
-            'application_tags' => Yii::t('backend','Application tags'),
-            'application_description' => Yii::t('backend','Application description'),
             'application_maintenance' => Yii::t('backend','Application Maintenance'),
             'application_announce' => Yii::t('backend','Application Announce')
         ];
@@ -172,7 +240,8 @@ class SettingsModel extends Model
      * @param $postData
      * @return bool
      */
-    public function save($postData) {
+    public function save($postData)
+    {
         if($this->load($postData) && $this->validate()) {
 
             Yii::$app->settings->set(Yii::$app->settings::APP_NAME, $this->application_name);
@@ -219,6 +288,120 @@ class SettingsModel extends Model
             return true;
         }
         return false;
+    }
+
+    public function loadAuthDbs($dbs) {
+        if(!$dbs) return false;
+        $this->auth_dbs = [];
+        foreach($dbs as $index => $db) {
+            $this->auth_dbs[$index] = new AuthDatabases($db);
+        }
+        return true;
+    }
+
+    public function loadCharDbs($dbs) {
+        if(!$dbs) return false;
+        $this->char_dbs = [];
+        foreach($dbs as $db) {
+            $this->char_dbs[] = new CharDatabases($db);
+        }
+        return true;
+    }
+
+    /**
+     * @return array
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function saveAuthConnections()
+    {
+        $errorMsg = [];
+        $config = [];
+        foreach($this->auth_dbs as $index => $db) {
+            $key_name = "auth_$index";
+            $dsn = "mysql:host=" . $db['host'] . ";port=" . $db['port'] . ";dbname=" . $db['database'];
+            Yii::$app->set($key_name, [
+                'class'    => Connection::class,
+                'dsn'      => $dsn,
+                'username' => $db['login'],
+                'password' => $db['password'],
+                'charset'  => 'utf8'
+            ]);
+            try {
+                $err = Yii::$app->TrinityWeb::checkDBConnection($key_name);
+                if ($err === true) {
+                    $config['components'][$key_name]['class'] = Connection::class;
+                    $config['components'][$key_name]['dsn'] = $dsn;
+                    $config['components'][$key_name]['username'] = $db['login'];
+                    $config['components'][$key_name]['password'] = $db['password'];
+                    $config['components'][$key_name]['charset'] = 'utf8';
+                    $config['components'][$key_name]['enableSchemaCache'] = true;
+                } else {
+                    $errorMsg[$key_name] = Yii::t('installer','Connection {host}:{port} to {database} return with error {err}',[
+                        'host' => $db['host'],
+                        'port' => $db['port'],
+                        'database' => $db ['database'],
+                        //TODO - return conn error
+                        'err' => ''
+                    ]);
+                }
+            } catch (\Exception $e) {
+                $errorMsg[$key_name] = $e->getMessage();
+            }
+        }
+
+        if(!$errorMsg && !empty($config)) {
+            Configuration::setConfig(Yii::getAlias('@core/config/app/database-auth.php'), $config);
+        }
+
+        return $errorMsg;
+    }
+
+    /**
+     * @return array
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function saveCharConnections()
+    {
+        $errorMsg = [];
+        $config = [];
+        foreach($this->char_dbs as $index => $db) {
+            $key_name = $db['name'];
+            $dsn = "mysql:host=" . $db['host'] . ";port=" . $db['port'] . ";dbname=" . $db['database'];
+            Yii::$app->set($key_name, [
+                'class'    => Connection::class,
+                'dsn'      => $dsn,
+                'username' => $db['login'],
+                'password' => $db['password'],
+                'charset'  => 'utf8'
+            ]);
+            try {
+                $err = Yii::$app->TrinityWeb::checkDBConnection($key_name);
+                if ($err === true) {
+                    $config['components'][$key_name]['class'] = Connection::class;
+                    $config['components'][$key_name]['dsn'] = $dsn;
+                    $config['components'][$key_name]['username'] = $db['login'];
+                    $config['components'][$key_name]['password'] = $db['password'];
+                    $config['components'][$key_name]['charset'] = 'utf8';
+                    $config['components'][$key_name]['enableSchemaCache'] = true;
+                } else {
+                    $errorMsg[$key_name] = Yii::t('installer','Connection {host}:{port} to {database} return with error {err}',[
+                        'host' => $db['host'],
+                        'port' => $db['port'],
+                        'database' => $db ['database'],
+                        //TODO - return conn error
+                        'err' => ''
+                    ]);
+                }
+            } catch (\Exception $e) {
+                $errorMsg[$key_name] = $e->getMessage();
+            }
+        }
+
+        if(!$errorMsg && !empty($config)) {
+            Configuration::setConfig(Yii::getAlias('@core/config/app/database-characters.php'), $config);
+        }
+
+        return $errorMsg;
     }
 
 }
