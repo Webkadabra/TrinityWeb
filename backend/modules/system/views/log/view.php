@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute' => 'user_id',
             'format' => 'raw',
-            'value' => $model->user->username,
+            'value' => isset($model->user) ? $model->user->username : null,
         ],
         'model',
         'ip',
