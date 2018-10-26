@@ -193,8 +193,7 @@ class StepController extends Controller
                                 'host' => $db['host'],
                                 'port' => $db['port'],
                                 'database' => $db ['database'],
-                                //TODO - return conn error
-                                'err' => ''
+                                'err' => $err instanceof \Exception ? $err->getMessage() : null
                             ]);
                         }
                     } catch (InvalidConfigException $e) {
@@ -260,8 +259,7 @@ class StepController extends Controller
                                 'host' => $db['host'],
                                 'port' => $db['port'],
                                 'database' => $db ['database'],
-                                //TODO - return conn error
-                                'err' => ''
+                                'err' => $err instanceof \Exception ? $err->getMessage() : null
                             ]);
                         }
                     } catch (Exception $e) {

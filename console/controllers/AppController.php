@@ -193,7 +193,7 @@ class AppController extends Controller
         if(!empty($config)) {
             Yii::$app->db->createCommand()->truncateTable(Server::tableName())->execute();
             foreach($config['components'] as $auth_key => $configuration) {
-                if(Yii::$app->TrinityWeb::checkDBConnection($auth_key)) {
+                if(Yii::$app->TrinityWeb::checkDBConnection($auth_key) === true) {
                     $auth_id = str_replace('auth_','',$auth_key);
                     Realmlist::setDb(Yii::$app->get($auth_key));
                     $realms = Realmlist::find()->all();

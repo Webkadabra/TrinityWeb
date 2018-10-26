@@ -43,7 +43,7 @@ class TrinityWeb extends Component
     public static function isAppInstalled()
     {
         if(Yii::$app->has('db')) {
-            if(Yii::$app->TrinityWeb::checkDBConnection()) {
+            if(Yii::$app->TrinityWeb::checkDBConnection() === true) {
                 if (Yii::$app->TrinityWeb::isDBImported()) {
                     if (Yii::$app->settings->get(Settings::APP_STATUS) === Settings::INSTALLED) return true;
                 }
@@ -68,14 +68,16 @@ class TrinityWeb extends Component
     /**
      * Check connection to db
      * @param string $key
-     * @return bool
+     * @return bool|\Exception
      */
     public static function checkDBConnection($key = 'db')
     {
         try {
             Yii::$app->{$key}->open();
             if(Yii::$app->{$key}->isActive) return true;
-        } catch (\Exception $ex) {}
+        } catch (\Exception $ex) {
+            return $ex;
+        }
         return false;
     }
 
@@ -85,7 +87,7 @@ class TrinityWeb extends Component
      */
     public static function isAppMaintenanceMode()
     {
-        if(!self::checkDBConnection()) return true;
+        if(!(self::checkDBConnection() === true)) return true;
         return Yii::$app->settings->get(Settings::APP_MAINTENANCE) == Settings::ENABLED;
     }
 

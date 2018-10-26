@@ -340,8 +340,7 @@ class SettingsModel extends Model
                         'host' => $db['host'],
                         'port' => $db['port'],
                         'database' => $db ['database'],
-                        //TODO - return conn error
-                        'err' => ''
+                        'err' => $err instanceof \Exception ? $err->getMessage() : null
                     ]);
                 }
             } catch (\Exception $e) {
@@ -388,8 +387,7 @@ class SettingsModel extends Model
                         'host' => $db['host'],
                         'port' => $db['port'],
                         'database' => $db ['database'],
-                        //TODO - return conn error
-                        'err' => ''
+                        'err' => $err instanceof \Exception ? $err->getMessage() : null
                     ]);
                 }
             } catch (\Exception $e) {
