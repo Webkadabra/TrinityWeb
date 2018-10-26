@@ -1,11 +1,9 @@
 <?php
 
 use core\widgets\Breadcrumbs;
-use core\widgets\DbCarousel;
 use core\widgets\Alert;
 
 use frontend\widgets\Marquee\MarqueeWidget;
-use frontend\widgets\StatusServers\StatusServersWidget;
 
 /* @var $content string */
 /* @var $this \yii\web\View */

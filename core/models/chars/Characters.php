@@ -90,6 +90,8 @@ use core\base\models\CharacterCoreModel;
  * @property GuildMember $guild
  * @property CharacterInventory $equipment
  * @property ArmoryProfessions $generalProfessions
+ * @property bool $specGroup1 [tinyint(3)]
+ * @property bool $specGroup2 [tinyint(3)]
  *
  */
 class Characters extends CharacterCoreModel
@@ -285,6 +287,10 @@ class Characters extends CharacterCoreModel
 
     public function getArenaRating() {
         return $this->hasMany(ArenaTeamMember::class,['guid' => 'guid'])->with(['team']);
+    }
+
+    public function getGuild() {
+        return $this->hasOne(GuildMember::class,['guid' => 'guid']);
     }
 
 }

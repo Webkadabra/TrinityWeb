@@ -32,12 +32,10 @@ use yii\helpers\Html;
             <tr class="ladder-team-member">
                 <td>
                     <?php
-                    //TODO
-                    //if(Yii::$app->settings->get(Yii::$app->settings::MODULE_ARMORY_STATUS) ===  Yii::$app->TW::ENABLED) {
-                    if(false) {
-                        echo Html::a($item['relationCharacter']['name'],[
+                    if(Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_ARMORY_STATUS) === Yii::$app->settings::ENABLED) {
+                        echo Html::a($item['character']['name'],[
                             '/armory/character/index',
-                            'server' => Yii::$app->DBHelper->getServerNameById(Yii::$app->DBHelper->getServerFromGet()),
+                            'server' => Yii::$app->DBHelper->getServerNameById((Yii::$app->DBHelper->getServerFromGet())->realm_name),
                             'character' => $item['character']['name']
                         ]);
                     } else {
@@ -47,8 +45,8 @@ use yii\helpers\Html;
                 </td>
                 <td class="d-none d-lg-table-cell">
                     <?php
-                    //echo Yii::$app->TrinityWeb->buildTagRaceImage($item['character']['race'],$item['relationCharacter']['gender']);
-                    //echo Yii::$app->TW->buildTagClassImage($item['character']['class']);
+                    echo Yii::$app->armoryHelper::buildTagRaceImage($item['character']['race'],$item['relationCharacter']['gender']);
+                    echo Yii::$app->armoryHelper::buildTagClassImage($item['character']['class']);
                     ?>
                 </td>
                 <td>

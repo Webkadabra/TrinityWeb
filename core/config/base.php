@@ -70,6 +70,10 @@ $config = [
             'class' => \core\components\logs\Log::class
         ],
 
+        'armoryHelper' => [
+            'class' => \core\components\helpers\Armory::class
+        ],
+
         'authManager' => [
             'class' => yii\rbac\DbManager::class,
             'itemTable' => '{{%rbac_auth_item}}',

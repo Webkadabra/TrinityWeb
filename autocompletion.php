@@ -27,6 +27,7 @@ class Yii extends \yii\BaseYii
  * @property core\components\helpers\i18nHelper $i18nHelper Application i18n helper.
  * @property core\components\helpers\TrinityWeb $TrinityWeb TrinityWeb component.
  * @property core\components\helpers\DBHelper $DBHelper DBHelper component.
+ * @property core\components\helpers\Armory $armoryHelper Armory component.
  * @property core\components\logs\Log $LogHelper Application log helper.
  * @property trntv\glide\components\Glide $glide
  * @property trntv\bus\CommandBus $commandBus

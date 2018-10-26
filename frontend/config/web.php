@@ -3,13 +3,22 @@ $config = [
     'homeUrl' => Yii::getAlias('@frontendUrl'),
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'main/index',
-    'bootstrap' => ['translatemanager', 'maintenance', 'profile', 'ladder'],
+    'bootstrap' => [
+        'translatemanager',
+        'maintenance',
+        'profile',
+        'ladder',
+        'armory'
+    ],
     'modules' => [
         'profile' => [
             'class' => \frontend\modules\profile\Module::class
         ],
         'ladder' => [
             'class' => \frontend\modules\ladder\Module::class
+        ],
+        'armory' => [
+            'class' => \frontend\modules\armory\Module::class
         ]
     ],
     'components' => [

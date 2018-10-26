@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\modules\ladder\assets;
+namespace frontend\modules\armory\assets;
 
 use Yii;
 use yii\web\AssetBundle;
@@ -10,21 +10,21 @@ use frontend\assets\DefaultAsset;
 /**
  * LadderAsset module assets
  */
-class LadderAssets extends AssetBundle
+class ArmoryAsset extends AssetBundle
 {
 
     /**
      * @var array
      */
     public $css = [
-        'css/ladder.css',
+        'css/armory.css',
     ];
 
     /**
      * @var array
      */
     public $js = [
-        'js/ladder.js',
+        'js/armory.js',
     ];
 
     /**
@@ -34,7 +34,7 @@ class LadderAssets extends AssetBundle
     public function init()
     {
         $theme = Yii::$app->view->theme->getCurrentTheme();
-        $this->sourcePath = rtrim(Yii::getAlias("@app/themes/$theme/modules/ladder/assets/"), '/\\');
+        $this->sourcePath = rtrim(Yii::getAlias("@app/themes/$theme/modules/armory/assets/"), '/\\');
 
         if ($this->basePath !== null) {
             $this->basePath = rtrim(Yii::getAlias($this->basePath), '/\\');

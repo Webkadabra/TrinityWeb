@@ -14,7 +14,6 @@ class DefaultController extends SystemController
      * @param $action
      * @return bool
      * @throws \yii\base\Exception
-     * @throws \yii\web\BadRequestHttpException
      */
     public function beforeAction($action) {
         if(parent::beforeAction($action)) {
