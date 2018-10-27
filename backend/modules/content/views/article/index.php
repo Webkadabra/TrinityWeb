@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => ['style' => 'width: 15%'],
         ],
         [
-            'attribute' => 'title',
+            'label' => 'title',
             'value' => function ($model) {
                 return Html::a($model->title, ['update', 'id' => $model->id]);
             },
