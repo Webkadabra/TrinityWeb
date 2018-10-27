@@ -7,7 +7,7 @@
 <div class="card widget" id="widget-status_servers">
     <div class="card-header text-center pt-2 pb-1">
         <h5>
-            <?=Yii::t('frontend','Общий онлайн: {count}', [
+            <?=Yii::t('frontend','Total online: {count}', [
                 'count' => $shared_online,
             ])?>
         </h5>
@@ -27,7 +27,7 @@
                             if($status['status'] == Yii::$app->TrinityWeb::ONLINE) {
                                 echo $status['count'];
                             } else {
-                                echo Yii::t('frontend','выключен');
+                                echo Yii::t('frontend','offline');
                             }
                             ?>
                         </div>
