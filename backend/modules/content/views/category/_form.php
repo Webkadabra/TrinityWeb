@@ -24,7 +24,15 @@ use yii\helpers\Html;
 
 <?php echo $form->field($model, 'parent_id')->dropDownList($categories, ['prompt' => '']) ?>
 
-<?php echo $form->field($model, 'status')->checkbox() ?>
+<?php
+$field = $form->field($model, 'status', ['options' => [
+    'class' => 'position-relative'
+]]);
+$field->template = '{input} {label}';
+echo $field->checkbox([], false)->label($model->getAttributeLabel('status'),[
+    'class' => 'checkbox-label'
+])
+?>
 
 <div class="form-group">
     <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
