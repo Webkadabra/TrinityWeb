@@ -155,6 +155,7 @@ class SettingsModel extends Model
     private function setSystemDatabaseConnections()
     {
         $servers = Yii::$app->DBHelper->getServers();
+        $char_key = 0;
         foreach($servers as $server) {
             /* @var Server $server */
             if(!isset($this->auth_dbs[$server['auth_id']])) {
@@ -174,7 +175,7 @@ class SettingsModel extends Model
             $char_connection = CharacterCoreModel::getDb($server['auth_id'],$server['realm_id']);
             $char_dsnConfig = $this->parseDSN($char_connection->dsn);
             if($char_dsnConfig) {
-                $this->char_dbs[$server['id']] = new CharDatabases([
+                $this->char_dbs[$char_key++] = new CharDatabases([
                     'name' => "char_{$server['auth_id']}_{$server['realm_id']}",
                     'host' => $char_dsnConfig['host'],
                     'port' => $char_dsnConfig['port'],

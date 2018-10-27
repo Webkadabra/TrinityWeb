@@ -10,6 +10,7 @@ use core\modules\installer\helpers\DatabaseRender;
 use unclead\multipleinput\TabularInput;
 
 echo TabularInput::widget([
+    'id' => 'char_conf',
     'models' => $model->char_dbs,
     'rendererClass' => DatabaseRender::class,
     'min' => 1,

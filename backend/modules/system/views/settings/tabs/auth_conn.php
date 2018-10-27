@@ -10,6 +10,7 @@ use core\modules\installer\helpers\DatabaseRender;
 use unclead\multipleinput\TabularInput;
 
 echo TabularInput::widget([
+    'id' => 'auth_conf',
     'form' => $form,
     'models' => $model->auth_dbs,
     'rendererClass' => DatabaseRender::class,
