@@ -18,6 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'action' => ['/auth/sign-in'],
                 'options' => ['data-pjax' => true]
             ]); ?>
+                <div class="text-center">
+                    <h4><?=Yii::t('frontend','Sign-in')?></h4>
+                </div>
                 <?php echo $form->field($model, 'identity', [
                     'template' => '<i class="glyphicon glyphicon-user input-icon"></i>{input}{hint}{error}'
                 ])->textInput([

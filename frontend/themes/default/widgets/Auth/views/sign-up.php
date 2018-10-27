@@ -21,7 +21,7 @@ Pjax::begin(['id' => 'auth-signup']);
                 'options' => ['data-pjax' => true]
             ]); ?>
                 <div class="text-center">
-                    <h4><?=Yii::t('frontend','Регистрация')?></h4>
+                    <h4><?=Yii::t('frontend','Sign-up')?></h4>
                 </div>
                 <div class="row no-gutters form-group">
                     <div class="col">
