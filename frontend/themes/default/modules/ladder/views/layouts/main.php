@@ -36,7 +36,6 @@ LadderAssets::register($this);
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <?= MarqueeWidget::widget()?>
             <?= $content?>
         </div>
         <div class="col-4">
