@@ -13,12 +13,16 @@ use core\models\i18n\PageI18n;
 
 use core\models\query\PageQuery;
 
+/** @noinspection PropertiesInspection */
+
 /**
  * This is the model class for table "{{%page}}".
  *
  * @property integer $id
  * @property string $slug
  * @property string $view
+ * @property string $title
+ * @property string $body
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at

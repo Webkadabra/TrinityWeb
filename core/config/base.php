@@ -46,6 +46,10 @@ $config = [
     ],
     'components' => [
 
+        'SeoHelper' => [
+            'class' => \core\components\helpers\SeoHelper::class
+        ],
+
         'settings' => [
             'class' => \core\components\settings\Settings::class
         ],
@@ -159,7 +163,8 @@ $config = [
         ],
 
     ],
-    'params' => [],
+    'params' => [
+    ],
 ];
 
 if(file_exists(__DIR__ . '/app/database-web.php')) {

@@ -5,11 +5,11 @@ use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model core\models\Article */
-$this->title = $model->title;
+$this->title = Yii::$app->i18nHelper::getLangAttributeValue($model,'title');
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerMetaTag([
     'property' => 'og:title',
-    'content' => Html::encode($model->title)
+    'content' => Html::encode($this->title)
 ],'og:title');
 $this->registerMetaTag([
     'property' => 'og:image',
@@ -17,12 +17,17 @@ $this->registerMetaTag([
 ],'og:image');
 $this->registerMetaTag([
     'name' => 'description',
-    'content' => Html::encode(StringHelper::truncate($model->body, 175, '...', null, true))
+    'content' => Html::encode(StringHelper::truncate(
+        Yii::$app->i18nHelper::getLangAttributeValue($model,'body'),
+        152,
+        '...',
+        null,
+        true))
 ],'description');
 ?>
 <div class="content">
     <article class="article-item">
-        <h1><?php echo $model->title ?></h1>
+        <h1><?php echo $this->title ?></h1>
 
         <?php if ($model->thumbnail_path): ?>
             <?php echo Html::img(
@@ -35,7 +40,7 @@ $this->registerMetaTag([
             ) ?>
         <?php endif; ?>
 
-        <?php echo $model->body ?>
+        <?php echo Yii::$app->i18nHelper::getLangAttributeValue($model,'body') ?>
 
         <?php if (!empty($model->articleAttachments)): ?>
             <h3><?php echo Yii::t('frontend', 'Attachments') ?></h3>

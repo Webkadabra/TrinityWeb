@@ -16,18 +16,18 @@ use yii\helpers\Html;
                     ['class' => 'article-thumb w-100']
                 ) ?>
                 <h2 class="article-title">
-                    <?php echo Html::a($model->getLangAttributeValue('title'), ['article/view', 'slug'=>$model->slug]) ?>
+                    <?php echo Html::a(Yii::$app->i18nHelper::getLangAttributeValue($model,'title'), ['article/view', 'slug'=>$model->slug]) ?>
                 </h2>
             <?php endif; ?>
         </div>
         <div class="article-content">
             <?php if (!$model->thumbnail_path): ?>
                 <h2 class="article-title">
-                    <?php echo Html::a($model->getLangAttributeValue('title'), ['article/view', 'slug'=>$model->slug]) ?>
+                    <?php echo Html::a(Yii::$app->i18nHelper::getLangAttributeValue($model,'title'), ['article/view', 'slug'=>$model->slug]) ?>
                 </h2>
             <?php endif; ?>
             <div class="article-announce">
-                <?php echo $model->getLangAttributeValue('announce')?>
+                <?php echo Yii::$app->i18nHelper::getLangAttributeValue($model,'announce')?>
             </div>
             <div class="article-meta">
                 <span class="article-date tltp" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('frontend','Дата публикации')?>">

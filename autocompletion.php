@@ -24,6 +24,7 @@ class Yii extends \yii\BaseYii
  * @property yii\web\UrlManager $urlManagerStorage UrlManager for storage application.
  * @property core\components\settings\Settings $settings Application settings.
  * @property core\components\helpers\PermissionHelper $PermissionHelper Application permission helper.
+ * @property core\components\helpers\SeoHelper $SeoHelper Application seo helper.
  * @property core\components\helpers\i18nHelper $i18nHelper Application i18n helper.
  * @property core\components\helpers\TrinityWeb $TrinityWeb TrinityWeb component.
  * @property core\components\helpers\DBHelper $DBHelper DBHelper component.

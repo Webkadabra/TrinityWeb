@@ -16,12 +16,17 @@ use core\behaviors\PublishBehavior;
 use core\behaviors\MultilingualBehavior;
 use trntv\filekit\behaviors\UploadBehavior;
 
+/** @noinspection PropertiesInspection */
+
 /**
  * This is the model class for table "article".
  *
  * @property integer             $id
  * @property string              $slug
  * @property string              $view
+ * @property string              $title
+ * @property string              $announce
+ * @property string              $body
  * @property string              $thumbnail_base_url
  * @property string              $thumbnail_path
  * @property array               $attachments
@@ -194,25 +199,6 @@ class Article extends ActiveRecord
     public function getArticleAttachments()
     {
         return $this->hasMany(ArticleAttachment::class, ['article_id' => 'id']);
-    }
-
-    public function getLangAttributeValue($attribute,$lang = null) {
-        if($lang) {
-            $lang = str_replace('-','_',strtolower($lang));
-            if(!empty($this->{$attribute."_$lang"})) {
-                return $this->{$attribute."_$lang"};
-            }
-        }
-
-        if(!empty($this->{$attribute})) {
-            return $this->{$attribute};
-        } else {
-            $lang = str_replace('-','_',strtolower(Yii::$app->language));
-            if(!empty($this->{$attribute})) {
-                return $this->{$attribute."_$lang"};
-            }
-            return $this->getLangAttributeValue($attribute,Yii::$app->sourceLanguage);
-        }
     }
 
 }

@@ -11,6 +11,7 @@ use yii\web\GroupUrlRule;
  */
 class Module extends \yii\base\Module implements BootstrapInterface
 {
+
     /**
      * @inheritdoc
      */

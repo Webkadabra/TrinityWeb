@@ -12,6 +12,8 @@ return [
         //Articles
         ['pattern' => 'article/attachment-download', 'route' => 'article/attachment-download'],
         ['pattern' => 'article/<slug>', 'route' => 'article/view'],
+        // Pages
+        ['pattern' => 'page/<slug>', 'route' => 'page/view'],
         // Sitemap
         ['pattern' => 'sitemap.xml', 'route' => 'main/sitemap', 'defaults' => ['format' => Sitemap::FORMAT_XML]],
         ['pattern' => 'sitemap.txt', 'route' => 'main/sitemap', 'defaults' => ['format' => Sitemap::FORMAT_TXT]],

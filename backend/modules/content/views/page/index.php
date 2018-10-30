@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'slug',
         ],
         [
-            'attribute' => 'title',
+            'label' => 'title',
             'value' => function ($model) {
                 return Html::a($model->title, ['update', 'id' => $model->id]);
             },

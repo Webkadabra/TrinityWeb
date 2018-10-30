@@ -19,7 +19,7 @@ $config = [
             'as afterLogin' => core\behaviors\LoginTimestampBehavior::class
         ],
     ],
-    'bootstrap' => ['content','widget','rbac','system'],
+    'bootstrap' => ['content','widget','rbac','system', 'seo'],
     'modules' => [
         'content' => [
             'class' => backend\modules\content\Module::class
@@ -35,6 +35,9 @@ $config = [
         ],
         'rbac' => [
             'class' => backend\modules\rbac\Module::class
+        ],
+        'seo' => [
+            'class' => backend\modules\seo\Module::class
         ]
     ]
 ];

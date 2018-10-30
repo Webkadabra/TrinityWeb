@@ -3,9 +3,10 @@ namespace core\components\helpers;
 
 use Yii;
 use yii\base\Component;
+use yii\base\ErrorException;
 
 use core\modules\i18n\models\Language;
-use yii\base\ErrorException;
+use yii\web\NotFoundHttpException;
 
 class i18nHelper extends Component
 {
@@ -55,6 +56,35 @@ class i18nHelper extends Component
 
     public static function getLocale($language) {
         return Language::findOne(['language_id' => $language]);
+    }
+
+    /**
+     * @param $model
+     * @param $attribute
+     * @param null $lang
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public static function getLangAttributeValue($model, $attribute, $lang = null)
+    {
+        if($lang) {
+            $lang = str_replace('-','_',strtolower($lang));
+            if(!empty($model->{$attribute."_$lang"})) {
+                return $model->{$attribute."_$lang"};
+            } else {
+                throw new NotFoundHttpException('Application cant find translation for this page');
+            }
+        }
+
+        if(!empty($model->{$attribute})) {
+            return $model->{$attribute};
+        } else {
+            $lang = str_replace('-','_',strtolower(Yii::$app->language));
+            if(!empty($model->{$attribute})) {
+                return $model->{$attribute."_$lang"};
+            }
+            return self::getLangAttributeValue($model,$attribute,Yii::$app->sourceLanguage);
+        }
     }
 
 }
