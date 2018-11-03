@@ -84,18 +84,18 @@ class Server extends ActiveRecord
     public function getExpansion()
     {
         // Vanilla
-        if($this->realm_build >= 3368 &&  $this->realm_build <= 6005)
+        if($this->realm_build <= 6005)
             return self::EXPANSION_CLASSIC;
         // BC
-        if($this->realm_build >= 6080 &&  $this->realm_build <= 8606)
+        if($this->realm_build >= 6022 &&  $this->realm_build <= 8606)
             return self::EXPANSION_THE_BURNING_CRUSADE;
-        // WTLK
+        // WOTLK
         if($this->realm_build >= 8714 &&  $this->realm_build <= 12340)
             return self::EXPANSION_WRATH_OF_THE_LICK_KING;
-        // CATACLYSM
+        // CATA
         if($this->realm_build >= 13164 &&  $this->realm_build <= 15595)
             return self::EXPANSION_CATACLYSM;
-        // PANDA
+        // MOP
         if($this->realm_build >= 16016 &&  $this->realm_build <= 18414)
             return self::EXPANSION_MIST_OF_PANDARIA;
         // WOD
@@ -112,8 +112,65 @@ class Server extends ActiveRecord
     }
 
     public function getVersion() {
-        //TODO calculate game version by build
-        return '{version}';
+        
+        switch ($this->realm_build)
+        {
+           // Vanilla
+           case 6005:
+              return '1.12.2';
+           case 5875:
+              return '1.12.1';
+           case 5595:
+              return '1.12.0';
+           // BC
+           case 8606:
+              return '2.4.3';
+           case 8278:
+              return '2.4.2';
+           case 8125:
+              return '2.4.1';
+           case 8089:
+              return '2.4.0';
+           // WOTLK
+           case 12340:
+              return '3.3.5a';
+           case 12213:        
+              return '3.3.5';
+           case 9551:       
+              return '3.0.9';
+           // CATA
+           case 15595:
+              return '4.3.4';
+           case 13623:
+              return '4.0.6a';
+           case 13596:
+              return '4.0.6';
+           // MOP
+           case 18414:
+              return '5.4.8a';
+           case 18291:
+              return '5.4.8';
+           case 16057:
+              return '5.0.5a';
+           case 16048:
+              return '5.0.5';
+           // WOD
+           case 21742:
+              return '6.2.4a';
+           case 19342:
+              return '6.0.3a';
+           // LEGION
+           case 26972:
+               return '7.3.5a';
+           case 24461:
+              return '7.2.5a';
+           // BFA
+           case 28153:
+           case 27980:
+              return '8.0.1';
+           
+        }           
+        return null;
     }
 
 }
