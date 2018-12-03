@@ -8,7 +8,8 @@ $config = [
         'maintenance',
         'profile',
         'ladder',
-        'armory'
+        'armory',
+        'forum',
     ],
     'modules' => [
         'profile' => [
@@ -19,7 +20,16 @@ $config = [
         ],
         'armory' => [
             'class' => \frontend\modules\armory\Module::class
-        ]
+        ],
+        'forum' => [
+            'class' => \core\modules\forum\Podium::class,
+            'userComponent' => 'user',
+            'rbacComponent' => 'authManager',
+            'cacheComponent' => 'cache',
+            'userNameField' => 'username',
+            'layout' => 'main-forum',
+            'layoutPath' => '@frontend/views/layouts'
+        ],
     ],
     'components' => [
         'errorHandler' => [

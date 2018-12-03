@@ -246,6 +246,55 @@ $bundle = BackendAsset::register($this);
                             ]
                         ],
                         [
+                            'label' => Yii::t('backend', 'Forum'),
+                            'options' => ['class' => 'nav-item nav-category'],
+                            'visible' =>
+                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_TO_BACKEND) ?
+                                    true : false,
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Forum'),
+                            'url' => ['/forum/admin/index'],
+                            'options' => ['class' => 'nav-item'],
+                            'icon' => '<i class="fa fa-language"></i>',
+                            'visible' =>
+                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_TO_BACKEND) ?
+                                    true : false,
+                            'active' => (Yii::$app->controller->module->id == 'forum'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Dashboard'),
+                                    'url' => ['/forum/admin/index'],
+                                    'options' => ['class' => 'nav-item'],
+                                    'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Forums'),
+                                    'url' => ['/forum/admin/categories'],
+                                    'options' => ['class' => 'nav-item'],
+                                    'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Icons'),
+                                    'url' => ['/forum/admin/icons'],
+                                    'options' => ['class' => 'nav-item'],
+                                    'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Contents'),
+                                    'url' => ['/forum/admin/contents'],
+                                    'options' => ['class' => 'nav-item'],
+                                    'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Settings'),
+                                    'url' => ['/forum/admin/settings'],
+                                    'options' => ['class' => 'nav-item'],
+                                    'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                ],
+                            ]
+                        ],
+                        [
                             'label' => Yii::t('backend', 'System'),
                             'options' => ['class' => 'nav-item nav-category'],
                             'visible' =>

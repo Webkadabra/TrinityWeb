@@ -88,6 +88,11 @@ class Settings extends Component
     const APP_MODULE_ARMORY_PER_PAGE = 'conf.module.armory.per-page';
     const APP_MODULE_ARMORY_CACHE_DURATION = 'conf.module.armory.cache-duration';
 
+    /**
+     * Forum module
+     */
+    const APP_MODULE_FORUM_STATUS = 'conf.module.forum.status';
+
 
     /**
      * @param array $values

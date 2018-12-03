@@ -111,6 +111,16 @@ class SettingsModel extends Model
                 ],
                 'description' => 'Module "Ladder" will show arena team statistics per realm'
             ],
+            'forum' => [
+                'label' => Yii::t('backend','Forum'),
+                'field_keys' => [
+                    'status' => Yii::$app->settings::APP_MODULE_FORUM_STATUS
+                ],
+                'fields' => [
+                    'status' =>  Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_FORUM_STATUS) == Yii::$app->settings::ENABLED ? 1 : 0,
+                ],
+                'description' => 'Модуль "Форум"'
+            ],
             /*'armory' => [
                 'label' => Yii::t('backend','Armory'),
                 'field_keys' => [
@@ -124,16 +134,6 @@ class SettingsModel extends Model
                     'cache_duration' => Yii::$app->settings->get(Yii::$app->TW::MODULE_ARMORY_CACHE_DURATION)
                 ],
                 'description' => 'Модуль "Армори", который позволяет просматривать персонажа (хар-ки,вещи, последние достижения, таланты, команды арен)'
-            ],
-            'forum' => [
-                'label' => Yii::t('backend','Forum'),
-                'field_keys' => [
-                    'status' => Yii::$app->TW::MODULE_FORUM_STATUS
-                ],
-                'fields' => [
-                    'status' => Yii::$app->settings->get(Yii::$app->TW::MODULE_FORUM_STATUS) == Yii::$app->TW::ENABLED ? 1 : 0
-                ],
-                'description' => 'Модуль "Форум"'
             ],
             'bugtracker' => [
                 'label' => Yii::t('backend','BugTracker'),

@@ -28,4 +28,9 @@ class UserQuery extends ActiveQuery
         $this->andWhere(['status' => User::STATUS_ACTIVE]);
         return $this;
     }
+
+    public function getAdministrators()
+    {
+        return $this->andWhere(['role' => User::ROLE_INT_ADMINISTRATOR]);
+    }
 }

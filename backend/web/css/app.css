@@ -25,3 +25,7 @@ ul.nav > li.nav-item > ul > li.nav-item > a.nav-link.active {
         top: auto;
     }
 }
+.hide {display: none;}
+#widget-tree-forum input[type="checkbox"] {
+    display: inline;
+}

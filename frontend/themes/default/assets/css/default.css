@@ -136,7 +136,7 @@ ul.nav > li > a.active {color: #68C7B8;}
     opacity: 1;
 }
 .collapseData {position: relative;}
-.fade.show:not(.tab-pane) {
+.fade.show:not(.tab-pane):not(.tooltip) {
     background: radial-gradient(ellipse at center,rgba(53,60,64,0.75) 0,#1C1C23 80%);
 }
 .modal-backdrop {

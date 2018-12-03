@@ -19,7 +19,7 @@ $config = [
             'as afterLogin' => core\behaviors\LoginTimestampBehavior::class
         ],
     ],
-    'bootstrap' => ['content','widget','rbac','system', 'seo'],
+    'bootstrap' => ['content','widget','rbac','system', 'seo', 'forum'],
     'modules' => [
         'content' => [
             'class' => backend\modules\content\Module::class
@@ -38,7 +38,16 @@ $config = [
         ],
         'seo' => [
             'class' => backend\modules\seo\Module::class
-        ]
+        ],
+        'forum' => [
+            'class' => \core\modules\forum\Podium::class,
+            'userComponent' => 'user',
+            'rbacComponent' => 'authManager',
+            'cacheComponent' => 'cache',
+            'userNameField' => 'username',
+            'layout' => 'common',
+            'layoutPath' => '@backend/views/layouts'
+        ],
     ]
 ];
 

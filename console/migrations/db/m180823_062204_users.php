@@ -97,7 +97,7 @@ class m180823_062204_users extends Migration
 
         $this->createTable('{{%user_activity}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'user_id' => $this->integer(),
             'username' => $this->string(),
             'user_slug' => $this->string(),
             'user_role' => $this->integer(),

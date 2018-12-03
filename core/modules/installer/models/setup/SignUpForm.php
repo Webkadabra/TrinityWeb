@@ -108,6 +108,7 @@ class SignUpForm extends Model
                 $profile->load([], '');
                 $user->link('userProfile', $profile);
                 $auth = Yii::$app->authManager;
+                $user->role = User::ROLE_INT_ADMINISTRATOR;
                 $user->save();
                 $role = $auth->getRole(User::ROLE_ADMINISTRATOR);
                 $auth->assign($role, $user->getId());

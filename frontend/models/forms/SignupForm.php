@@ -77,7 +77,7 @@ class SignupForm extends Model
             ],
 
             [['password', 'r_password'], 'required'],
-            [['password', 'r_password'], 'string', 'min' => 6],
+            [['password', 'r_password'], 'string', 'min' => 6, 'max' => 14],
             ['r_password', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('frontend', "Passwords don't match") ],
         ];
 
@@ -112,14 +112,12 @@ class SignupForm extends Model
     /**
      * Signs user up.
      *
-     * @param null $role
-     * @param bool $no_check_forum
-     * @param null $game_account
      * @return User|null the saved model or null if saving fails
      * @throws Exception
-     * @throws \Exception
      * @throws \trntv\bus\exceptions\MissingHandlerException
+     * @throws \yii\base\ErrorException
      * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
      */
     public function signup()
     {

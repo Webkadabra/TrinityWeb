@@ -15,6 +15,7 @@
                         <?=$module['label']?>
                     </h5>
                     <div class="position-relative">
+                        <input type="hidden" name="Module[<?=$key?>][hidden]" value="<?=time()?>">
                         <input type="checkbox" id="Module_<?=$key?>_status" name="Module[<?=$key?>][status]" value="<?=$module['fields']['status']?>" <?=($module['fields']['status'] ? 'checked' : '')?>>
                         <label class="checkbox-label" for="Module_<?=$key?>_status">
                             <?=Yii::t('backend','Статус')?>
