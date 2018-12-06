@@ -16,18 +16,17 @@ class AppController extends Controller
 {
     /** @var array */
     public $writablePaths = [
+        '@api/runtime',
+        '@api/web/assets',
+        '@backend/runtime',
+        '@backend/web/assets',
+        '@console/runtime',
         '@core/config/app',
-        '@core/config/app/database-auth.php',
-        '@core/config/app/database-characters.php',
-        '@core/config/app/mailer.php',
         '@core/runtime',
         '@frontend/runtime',
         '@frontend/web/assets',
-        '@backend/runtime',
-        '@backend/web/assets',
         '@storage/cache',
         '@storage/web/source',
-        '@api/runtime',
     ];
 
     /** @var array */
