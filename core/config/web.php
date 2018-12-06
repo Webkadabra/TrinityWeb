@@ -11,11 +11,14 @@ $config = [
         'class' => core\behaviors\LocaleBehavior::class,
         'enablePreferredLanguage' => true
     ],
-    'bootstrap' => ['install'],
+    'bootstrap' => ['install','treemanager'],
     'modules' => [
         'install' => [
             'class' => core\modules\installer\ModuleInstall::class
-        ]
+        ],
+        'treemanager' =>  [
+            'class' => \kartik\tree\Module::class,
+        ],
     ]
 ];
 

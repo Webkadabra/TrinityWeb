@@ -191,22 +191,21 @@ class Podium extends Module implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if ($app instanceof WebApplication) {
-            $this->setDefaultSettings($app);
-            $this->addUrlManagerRules($app);
-            $this->setPodiumLogTarget($app);
-        } elseif ($app instanceof ConsoleApplication) {
-            $this->controllerNamespace = 'core\modules\forum\console';
+        if($app->TrinityWeb::isAppInstalled()) {
+            if ($app instanceof WebApplication) {
+                $this->setDefaultSettings(Yii::$app);
+                $this->addUrlManagerRules($app);
+                $this->setPodiumLogTarget($app);
+            } elseif ($app instanceof ConsoleApplication) {
+                $this->controllerNamespace = 'core\modules\forum\console';
+            }
         }
     }
 
     protected function setDefaultSettings($app)
     {
-        /* @var \BaseApplication $app */
-        if(Yii::$app->TrinityWeb::isAppInstalled()) {
-            if (!$app->settings->get($app->settings::APP_MODULE_FORUM_STATUS))
-                $app->settings->set($app->settings::APP_MODULE_FORUM_STATUS, $app->settings::DISABLED);
-        }
+        if (!$app->settings->get($app->settings::APP_MODULE_FORUM_STATUS))
+            $app->settings->set($app->settings::APP_MODULE_FORUM_STATUS, $app->settings::DISABLED);
     }
 
     /**

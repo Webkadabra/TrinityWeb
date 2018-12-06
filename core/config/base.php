@@ -5,15 +5,12 @@ $config = [
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage' => 'en-US',
     'language' => 'en-US',
-    'bootstrap' => ['translatemanager', 'treemanager'],
+    'bootstrap' => ['translatemanager'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
-        'treemanager' =>  [
-            'class' => \kartik\tree\Module::class,
-        ],
         'translatemanager' => [
             'class' => 'core\modules\i18n\Module',
             'root' => ['@frontend','@backend','@core','@console', '@api'],
