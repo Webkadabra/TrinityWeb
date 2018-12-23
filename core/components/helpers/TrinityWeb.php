@@ -1,17 +1,14 @@
 <?php
 namespace core\components\helpers;
 
+use core\components\settings\Settings;
+use core\models\WidgetCarouselItem;
 use Yii;
 use yii\base\Component;
 use yii\helpers\FileHelper;
 
-use core\components\settings\Settings;
-
-use core\models\WidgetCarouselItem;
-
 class TrinityWeb extends Component
 {
-
     const IMPORTED = 'imported';
     const NOT_IMPORTED = 'not_imported';
 
@@ -49,6 +46,7 @@ class TrinityWeb extends Component
                 }
             }
         }
+
         return false;
     }
 
@@ -58,10 +56,11 @@ class TrinityWeb extends Component
      */
     public static function isDBImported()
     {
-        Yii::$app->cache->flush();
         if (Yii::$app->db->schema->getTableSchema(WidgetCarouselItem::tableName(), true) !== null) {
             return true;
         }
+        Yii::$app->cache->flush();
+
         return false;
     }
 
@@ -78,6 +77,7 @@ class TrinityWeb extends Component
         } catch (\Exception $ex) {
             return $ex;
         }
+
         return false;
     }
 
@@ -88,7 +88,8 @@ class TrinityWeb extends Component
     public static function isAppMaintenanceMode()
     {
         if(!(self::checkDBConnection() === true)) return true;
-        return Yii::$app->settings->get(Settings::APP_MAINTENANCE) == Settings::ENABLED;
+
+        return Yii::$app->settings->get(Settings::APP_MAINTENANCE) === Settings::ENABLED;
     }
 
     /**
@@ -98,17 +99,16 @@ class TrinityWeb extends Component
      */
     public static function executeCommand($command)
     {
-        $output = array();
+        $output = [];
         $return_var = -1;
         $command = 'php ' . Yii::getAlias('@console') . '/yii' . " $command 2>&1";
         $last_line = exec($command, $output, $return_var);
 
         return [
-            'command' => $command,
-            'output' => $output,
+            'command'   => $command,
+            'output'    => $output,
             'last_line' => $last_line
         ];
-
     }
 
     /**
@@ -122,8 +122,10 @@ class TrinityWeb extends Component
         $cache = Yii::$app->cache->get($key);
         if ($cache !== false && isset($cache[$element])) {
             unset($cache[$element]);
+
             return Yii::$app->cache->set($key, $cache);
         }
+
         return true;
     }
 
@@ -137,27 +139,26 @@ class TrinityWeb extends Component
         switch ($type) {
             case 'full':
                 $config = [
-                    'HTML.Allowed' => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,span[style|class],h1,h2,h3,h4,h5,h6,sub,sup,blockquote,pre[class],img[src|alt],iframe[class|frameborder|src],hr',
-                    'CSS.AllowedProperties' => 'color,background-color',
-                    'HTML.SafeIframe' => true,
-                    'URI.SafeIframeRegexp' => '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
+                    'HTML.Allowed'             => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,span[style|class],h1,h2,h3,h4,h5,h6,sub,sup,blockquote,pre[class],img[src|alt],iframe[class|frameborder|src],hr',
+                    'CSS.AllowedProperties'    => 'color,background-color',
+                    'HTML.SafeIframe'          => true,
+                    'URI.SafeIframeRegexp'     => '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
                     'Attr.AllowedFrameTargets' => ['_blank']
                 ];
                 break;
             case 'markdown':
                 $config = [
-                    'HTML.Allowed' => 'p,br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr,h1,h2,h3,h4,h5,h6,span,pre,code,table,tr,td,th,blockquote,img[src|alt]',
+                    'HTML.Allowed'             => 'p,br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr,h1,h2,h3,h4,h5,h6,span,pre,code,table,tr,td,th,blockquote,img[src|alt]',
                     'Attr.AllowedFrameTargets' => ['_blank']
                 ];
             case 'default':
             default:
                 $config = [
-                    'HTML.Allowed' => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr',
+                    'HTML.Allowed'             => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr',
                     'Attr.AllowedFrameTargets' => ['_blank']
                 ];
         }
 
         return $config;
     }
-
 }

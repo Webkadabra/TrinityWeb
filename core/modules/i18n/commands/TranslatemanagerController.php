@@ -2,16 +2,15 @@
 
 namespace core\modules\i18n\commands;
 
-use core\modules\i18n\services\Optimizer;
-use core\modules\i18n\services\Scanner;
-use yii\console\Controller;
-use yii\helpers\Console;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
-
 use core\modules\i18n\models\Language;
 use core\modules\i18n\models\LanguageSource;
 use core\modules\i18n\models\LanguageTranslate;
+use core\modules\i18n\services\Optimizer;
+use core\modules\i18n\services\Scanner;
+use yii\console\Controller;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Console;
+use yii\helpers\Json;
 
 /**
  * Command for scanning and optimizing project translations
@@ -70,8 +69,8 @@ class TranslatemanagerController extends Controller
         $data = Json::decode($importFileContent);
         
         $result = [
-            'languages' => ['new' => 0, 'updated' => 0],
-            'languageSources' => ['new' => 0, 'updated' => 0],
+            'languages'            => ['new' => 0, 'updated' => 0],
+            'languageSources'      => ['new' => 0, 'updated' => 0],
             'languageTranslations' => ['new' => 0, 'updated' => 0],
         ];
 
@@ -128,8 +127,8 @@ class TranslatemanagerController extends Controller
 
             //check if id exist and if category and messages are matching
             if (isset($languageSources[$importedLanguageSource['id']]) &&
-                ($languageSources[$importedLanguageSource['id']]->category == $importedLanguageSource['category']) &&
-                ($languageSources[$importedLanguageSource['id']]->message == $importedLanguageSource['message'])
+                ($languageSources[$importedLanguageSource['id']]->category === $importedLanguageSource['category']) &&
+                ($languageSources[$importedLanguageSource['id']]->message === $importedLanguageSource['message'])
             ) {
                 $languageSource = $languageSources[$importedLanguageSource['id']];
             }
@@ -137,8 +136,8 @@ class TranslatemanagerController extends Controller
             if (is_null($languageSource)) {
                 //no match by id, search by message
                 foreach ($languageSources as $languageSourceSearch) {
-                    if (($languageSourceSearch->category == $importedLanguageSource['category']) &&
-                        ($languageSourceSearch->message == $importedLanguageSource['message'])
+                    if (($languageSourceSearch->category === $importedLanguageSource['category']) &&
+                        ($languageSourceSearch->message === $importedLanguageSource['message'])
                     ) {
                         $languageSource = $languageSourceSearch;
                         break;
@@ -150,7 +149,7 @@ class TranslatemanagerController extends Controller
                 //still no match, create new
                 $languageSource = new LanguageSource([
                     'category' => $importedLanguageSource['category'],
-                    'message' => $importedLanguageSource['message'],
+                    'message'  => $importedLanguageSource['message'],
                 ]);
 
                 if ($languageSource->save()) {

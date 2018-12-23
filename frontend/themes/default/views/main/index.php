@@ -10,10 +10,10 @@ $this->title = Yii::t('frontend', 'Home');
 <div id="articles">
     <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
-        'pager' => [
+        'pager'        => [
             'hideOnSinglePage' => true,
         ],
-        'layout' => "{items}\n{pager}",
+        'layout'   => "{items}\n{pager}",
         'itemView' => 'articles/_item'
-    ])?>
+    ]);?>
 </div>

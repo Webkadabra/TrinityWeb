@@ -19,20 +19,20 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
     <div class="col-sm-4 col-sm-offset-4">
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
             <div class="form-group">
-                <?= $form->field($model, 'username')->textInput(['placeholder' => Yii::t('podium/view', 'Username or E-mail'), 'autofocus' => true])->label(false) ?>
+                <?php echo $form->field($model, 'username')->textInput(['placeholder' => Yii::t('podium/view', 'Username or E-mail'), 'autofocus' => true])->label(false); ?>
             </div>
             <div class="form-group">
-                <?= $form->field($model, 'password')->passwordInput(['placeholder' => Yii::t('podium/view', 'Password')])->label(false) ?>
+                <?php echo $form->field($model, 'password')->passwordInput(['placeholder' => Yii::t('podium/view', 'Password')])->label(false); ?>
             </div>
             <div class="form-group text-center">
-                <?= $form->field($model, 'rememberMe')->checkBox()->label(null, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('podium/view', "Don't use this option on public computers!")]) ?>
+                <?php echo $form->field($model, 'rememberMe')->checkBox()->label(null, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => Yii::t('podium/view', "Don't use this option on public computers!")]); ?>
             </div>
             <div class="form-group">
-                <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Sign in'), ['class' => 'btn btn-block btn-primary', 'name' => 'login-button']) ?>
+                <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Sign in'), ['class' => 'btn btn-block btn-primary', 'name' => 'login-button']); ?>
             </div>
             <div class="form-group">
-                <a href="<?= Url::to(['account/reset']) ?>" class="float-right"><?= Yii::t('podium/view', 'Reset Password') ?></a>
-                <a href="<?= Url::to(['account/reactivate']) ?>" class="float-left"><?= Yii::t('podium/view', 'Resend activation link') ?></a>
+                <a href="<?php echo Url::to(['account/reset']); ?>" class="float-right"><?php echo Yii::t('podium/view', 'Reset Password'); ?></a>
+                <a href="<?php echo Url::to(['account/reactivate']); ?>" class="float-left"><?php echo Yii::t('podium/view', 'Resend activation link'); ?></a>
             </div>
         <?php ActiveForm::end(); ?>
     </div>

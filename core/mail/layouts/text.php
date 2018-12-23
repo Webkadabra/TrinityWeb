@@ -5,5 +5,5 @@
 
 ?>
 <div class="mail-row">
-    <?=$content?>
+    <?php echo $content;?>
 </div>

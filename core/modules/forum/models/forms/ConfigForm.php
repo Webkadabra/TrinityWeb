@@ -28,16 +28,6 @@ class ConfigForm extends Model
     public $readonly = ['version'];
 
     /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        parent::init();
-        $this->config = Podium::getInstance()->podiumConfig;
-        $this->settings = $this->config->all;
-    }
-
-    /**
      * Returns the value of saved setting.
      * @param string $name Name of setting.
      * @return string
@@ -45,6 +35,16 @@ class ConfigForm extends Model
     public function __get($name)
     {
         return isset($this->settings[$name]) ? $this->settings[$name] : '';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+        $this->config = Podium::getInstance()->podiumConfig;
+        $this->settings = $this->config->all;
     }
 
     /**
@@ -58,7 +58,7 @@ class ConfigForm extends Model
         $validator->max = 255;
 
         foreach ($data as $key => $value) {
-            if (!in_array($key, $this->readonly) && array_key_exists($key, $this->settings)) {
+            if (!in_array($key, $this->readonly, true) && array_key_exists($key, $this->settings)) {
                 if (!$validator->validate($value)) {
                     return false;
                 }
@@ -67,6 +67,7 @@ class ConfigForm extends Model
                 }
             }
         }
+
         return true;
     }
 }

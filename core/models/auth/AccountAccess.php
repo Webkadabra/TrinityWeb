@@ -2,9 +2,8 @@
 
 namespace core\models\auth;
 
-use Yii;
-
 use core\base\models\AuthCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "{{%account_access}}".
@@ -17,7 +16,6 @@ use core\base\models\AuthCoreModel;
  */
 class AccountAccess extends AuthCoreModel
 {
-
     const GLOBAL = -1;
 
     /**
@@ -46,7 +44,7 @@ class AccountAccess extends AuthCoreModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('core', 'ID'),
+            'id'      => Yii::t('core', 'ID'),
             'gmlevel' => Yii::t('core', 'Gmlevel'),
             'RealmID' => Yii::t('core', 'Realm ID'),
         ];
@@ -69,7 +67,7 @@ class AccountAccess extends AuthCoreModel
             }
             Yii::$app->cache->set($cache_key,$cache_time_total);
         }
+
         return $totalCount;
     }
-
 }

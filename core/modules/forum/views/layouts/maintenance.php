@@ -5,28 +5,28 @@
  * Yii 2 Forum Module
  */
 
-use yii\helpers\Html;
 use core\modules\forum\assets\PodiumAsset;
+use yii\helpers\Html;
 
 PodiumAsset::register($this);
-$this->beginPage() ?>
+$this->beginPage(); ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?php echo Yii::$app->language; ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
+    <meta charset="<?php echo Yii::$app->charset; ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <?php echo Html::csrfMetaTags(); ?>
+    <title><?php echo Html::encode($this->title); ?></title>
+    <?php $this->head(); ?>
 </head>
 <body>
 
-<?php $this->beginBody() ?>
+<?php $this->beginBody(); ?>
     <div class="container">
-        <?= $content ?>
+        <?php echo $content; ?>
     </div>
-<?php $this->endBody() ?>
+<?php $this->endBody(); ?>
 
 </body>
 </html>
-<?php $this->endPage() ?>
+<?php $this->endPage(); ?>

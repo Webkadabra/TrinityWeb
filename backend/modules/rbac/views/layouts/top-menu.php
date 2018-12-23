@@ -11,10 +11,10 @@ foreach ($menus as $i => $menu) {
 $this->params['nav-items'] = $menus;
 $this->params['top-menu'] = true;
 ?>
-<?php $this->beginContent($controller->module->mainLayout) ?>
+<?php $this->beginContent($controller->module->mainLayout); ?>
 <div class="row">
     <div class="col-sm-12">
-        <?= $content ?>
+        <?php echo $content; ?>
     </div>
 </div>
 <?php $this->endContent(); ?>

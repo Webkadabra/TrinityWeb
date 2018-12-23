@@ -2,11 +2,11 @@
 
 namespace backend\modules\rbac\components;
 
-use yii\web\ForbiddenHttpException;
-use yii\base\Module;
 use Yii;
-use yii\web\User;
+use yii\base\Module;
 use yii\di\Instance;
+use yii\web\ForbiddenHttpException;
+use yii\web\User;
 
 /**
  * Access Control Filter (ACF) is a simple authorization method that is best used by applications that only need some simple access control. 
@@ -28,24 +28,25 @@ use yii\di\Instance;
 class AccessControl extends \yii\base\ActionFilter
 {
     /**
-     * @var User User for check access.
-     */
-    private $_user = 'user';
-    /**
      * @var array List of action that not need to check access.
      */
     public $allowActions = [];
+    /**
+     * @var User User for check access.
+     */
+    private $_user = 'user';
 
     /**
      * Get user
-     * @return User
      * @throws \yii\base\InvalidConfigException
+     * @return User
      */
     public function getUser()
     {
         if (!$this->_user instanceof User) {
             $this->_user = Instance::ensure($this->_user, User::class);
         }
+
         return $this->_user;
     }
 
@@ -136,7 +137,7 @@ class AccessControl extends \yii\base\ActionFilter
             }
         }
 
-        if ($action->controller->hasMethod('allowAction') && in_array($action->id, $action->controller->allowAction())) {
+        if ($action->controller->hasMethod('allowAction') && in_array($action->id, $action->controller->allowAction(), true)) {
             return false;
         }
 

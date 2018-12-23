@@ -28,7 +28,143 @@ class Helper
                 }
             }
         }
+
         return self::$_routes;
+    }
+
+    /**
+     * Get assigned routes of user.
+     * @param integer $userId
+     * @return array
+     */
+    public static function getRoutesByUser($userId)
+    {
+        if (!isset(self::$_userRoutes[$userId])) {
+            $cache = Configs::cache();
+            if ($cache && ($routes = $cache->get([__METHOD__, $userId])) !== false) {
+                self::$_userRoutes[$userId] = $routes;
+            } else {
+                $routes = static::getDefaultRoutes();
+                $manager = Configs::authManager();
+                foreach ($manager->getPermissionsByUser($userId) as $item) {
+                    if ($item->name[0] === '/') {
+                        $routes[$item->name] = true;
+                    }
+                }
+                self::$_userRoutes[$userId] = $routes;
+                if ($cache) {
+                    $cache->set([__METHOD__, $userId], $routes, Configs::cacheDuration(), new TagDependency([
+                        'tags' => Configs::CACHE_TAG,
+                    ]));
+                }
+            }
+        }
+
+        return self::$_userRoutes[$userId];
+    }
+
+    /**
+     * Check access route for user.
+     * @param string|array $route
+     * @param integer|User $user
+     * @param mixed $params
+     * @return boolean
+     */
+    public static function checkRoute($route, $params = [], $user = null)
+    {
+        $config = Configs::instance();
+        $r = static::normalizeRoute($route, $config->advanced);
+        if ($config->onlyRegisteredRoute && !isset(static::getRegisteredRoutes()[$r])) {
+            return true;
+        }
+
+        if ($user === null) {
+            $user = Yii::$app->getUser();
+        }
+        $userId = $user instanceof User ? $user->getId() : $user;
+
+        if ($config->strict) {
+            if ($user->can($r, $params)) {
+                return true;
+            }
+            while (($pos = strrpos($r, '/')) > 0) {
+                $r = substr($r, 0, $pos);
+                if ($user->can($r . '/*', $params)) {
+                    return true;
+                }
+            }
+
+            return $user->can('/*', $params);
+        }  
+            $routes = static::getRoutesByUser($userId);
+            if (isset($routes[$r])) {
+                return true;
+            }
+            while (($pos = strrpos($r, '/')) > 0) {
+                $r = substr($r, 0, $pos);
+                if (isset($routes[$r . '/*'])) {
+                    return true;
+                }
+            }
+
+            return isset($routes['/*']);
+    }
+
+    /**
+     * Filter menu items
+     * @param array $items
+     * @param integer|User $user
+     */
+    public static function filter($items, $user = null)
+    {
+        if ($user === null) {
+            $user = Yii::$app->getUser();
+        }
+
+        return static::filterRecursive($items, $user);
+    }
+
+    /**
+     * Filter action column button. Use with [[yii\grid\GridView]]
+     * ```php
+     * 'columns' => [
+     *     ...
+     *     [
+     *         'class' => 'yii\grid\ActionColumn',
+     *         'template' => Helper::filterActionColumn(['view','update','activate'])
+     *     ]
+     * ],
+     * ```
+     * @param array|string $buttons
+     * @param integer|User $user
+     * @return string
+     */
+    public static function filterActionColumn($buttons = [], $user = null)
+    {
+        if (is_array($buttons)) {
+            $result = [];
+            foreach ($buttons as $button) {
+                if (static::checkRoute($button, [], $user)) {
+                    $result[] = "{{$button}}";
+                }
+            }
+
+            return implode(' ', $result);
+        }
+
+        return preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($user) {
+            return static::checkRoute($matches[1], [], $user) ? "{{$matches[1]}}" : '';
+        }, $buttons);
+    }
+
+    /**
+     * Use to invalidate cache.
+     */
+    public static function invalidate()
+    {
+        if (Configs::cache() !== null) {
+            TagDependency::invalidate(Configs::cache(), Configs::CACHE_TAG);
+        }
     }
 
     /**
@@ -60,82 +196,8 @@ class Helper
                 }
             }
         }
+
         return self::$_defaultRoutes;
-    }
-
-    /**
-     * Get assigned routes of user.
-     * @param integer $userId
-     * @return array
-     */
-    public static function getRoutesByUser($userId)
-    {
-        if (!isset(self::$_userRoutes[$userId])) {
-            $cache = Configs::cache();
-            if ($cache && ($routes = $cache->get([__METHOD__, $userId])) !== false) {
-                self::$_userRoutes[$userId] = $routes;
-            } else {
-                $routes = static::getDefaultRoutes();
-                $manager = Configs::authManager();
-                foreach ($manager->getPermissionsByUser($userId) as $item) {
-                    if ($item->name[0] === '/') {
-                        $routes[$item->name] = true;
-                    }
-                }
-                self::$_userRoutes[$userId] = $routes;
-                if ($cache) {
-                    $cache->set([__METHOD__, $userId], $routes, Configs::cacheDuration(), new TagDependency([
-                        'tags' => Configs::CACHE_TAG,
-                    ]));
-                }
-            }
-        }
-        return self::$_userRoutes[$userId];
-    }
-
-    /**
-     * Check access route for user.
-     * @param string|array $route
-     * @param integer|User $user
-     * @return boolean
-     */
-    public static function checkRoute($route, $params = [], $user = null)
-    {
-        $config = Configs::instance();
-        $r = static::normalizeRoute($route, $config->advanced);
-        if ($config->onlyRegisteredRoute && !isset(static::getRegisteredRoutes()[$r])) {
-            return true;
-        }
-
-        if ($user === null) {
-            $user = Yii::$app->getUser();
-        }
-        $userId = $user instanceof User ? $user->getId() : $user;
-
-        if ($config->strict) {
-            if ($user->can($r, $params)) {
-                return true;
-            }
-            while (($pos = strrpos($r, '/')) > 0) {
-                $r = substr($r, 0, $pos);
-                if ($user->can($r . '/*', $params)) {
-                    return true;
-                }
-            }
-            return $user->can('/*', $params);
-        } else {
-            $routes = static::getRoutesByUser($userId);
-            if (isset($routes[$r])) {
-                return true;
-            }
-            while (($pos = strrpos($r, '/')) > 0) {
-                $r = substr($r, 0, $pos);
-                if (isset($routes[$r . '/*'])) {
-                    return true;
-                }
-            }
-            return isset($routes['/*']);
-        }
     }
 
     /**
@@ -161,20 +223,8 @@ class Helper
         if ($advanced) {
             $normalized = Route::PREFIX_ADVANCED . Yii::$app->id . $normalized;
         }
-        return $normalized;
-    }
 
-    /**
-     * Filter menu items
-     * @param array $items
-     * @param integer|User $user
-     */
-    public static function filter($items, $user = null)
-    {
-        if ($user === null) {
-            $user = Yii::$app->getUser();
-        }
-        return static::filterRecursive($items, $user);
+        return $normalized;
     }
 
     /**
@@ -197,51 +247,11 @@ class Helper
                 }
                 $item['items'] = $subItems;
             }
-            if ($allow && !($url == '#' && empty($item['items']))) {
+            if ($allow && !($url === '#' && empty($item['items']))) {
                 $result[$i] = $item;
             }
         }
+
         return $result;
-    }
-
-    /**
-     * Filter action column button. Use with [[yii\grid\GridView]]
-     * ```php
-     * 'columns' => [
-     *     ...
-     *     [
-     *         'class' => 'yii\grid\ActionColumn',
-     *         'template' => Helper::filterActionColumn(['view','update','activate'])
-     *     ]
-     * ],
-     * ```
-     * @param array|string $buttons
-     * @param integer|User $user
-     * @return string
-     */
-    public static function filterActionColumn($buttons = [], $user = null)
-    {
-        if (is_array($buttons)) {
-            $result = [];
-            foreach ($buttons as $button) {
-                if (static::checkRoute($button, [], $user)) {
-                    $result[] = "{{$button}}";
-                }
-            }
-            return implode(' ', $result);
-        }
-        return preg_replace_callback('/\\{([\w\-\/]+)\\}/', function ($matches) use ($user) {
-            return static::checkRoute($matches[1], [], $user) ? "{{$matches[1]}}" : '';
-        }, $buttons);
-    }
-
-    /**
-     * Use to invalidate cache.
-     */
-    public static function invalidate()
-    {
-        if (Configs::cache() !== null) {
-            TagDependency::invalidate(Configs::cache(), Configs::CACHE_TAG);
-        }
     }
 }

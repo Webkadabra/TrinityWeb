@@ -1,8 +1,7 @@
 <?php
 
-use yii\db\ActiveRecord;
-
 use core\models\User;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%user_ignore}}".
@@ -42,7 +41,7 @@ class UserIgnore extends ActiveRecord {
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('common', 'User'),
+            'user_id'    => Yii::t('common', 'User'),
             'ignored_id' => Yii::t('common', 'Ignored user'),
         ];
     }
@@ -54,5 +53,4 @@ class UserIgnore extends ActiveRecord {
     public function getIgnoredUser() {
         return $this->hasOne(User::class,['id' => 'ignored_id']);
     }
-
 }

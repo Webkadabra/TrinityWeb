@@ -25,6 +25,7 @@ class Category extends CategoryActiveRecord
         }
         $dataProvider = new ActiveDataProvider(['query' => $query]);
         $dataProvider->sort->defaultOrder = ['sort' => SORT_ASC, 'id' => SORT_ASC];
+
         return $dataProvider;
     }
 
@@ -36,6 +37,7 @@ class Category extends CategoryActiveRecord
     {
         $dataProvider = new ActiveDataProvider(['query' => static::find()]);
         $dataProvider->sort->defaultOrder = ['sort' => SORT_ASC, 'id' => SORT_ASC];
+
         return $dataProvider->getModels();
     }
 
@@ -55,6 +57,7 @@ class Category extends CategoryActiveRecord
                             ->where(['!=', 'id', $this->id])
                             ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
                             ->indexBy('id');
+
         return $sorter->run();
     }
 }

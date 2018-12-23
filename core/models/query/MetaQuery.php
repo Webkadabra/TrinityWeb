@@ -10,5 +10,4 @@ use omgdef\multilingual\MultilingualQuery;
  */
 class MetaQuery extends MultilingualQuery
 {
-
 }

@@ -59,7 +59,7 @@ class AuthItem extends Model
             [['ruleName'], 'checkRule'],
             [['name', 'type'], 'required'],
             [['name'], 'checkUnique', 'when' => function () {
-                return $this->isNewRecord || ($this->_item->name != $this->name);
+                return $this->isNewRecord || ($this->_item->name !== $this->name);
             }],
             [['type'], 'integer'],
             [['description', 'data', 'ruleName'], 'default'],
@@ -78,7 +78,7 @@ class AuthItem extends Model
             $message = Yii::t('yii', '{attribute} "{value}" has already been taken.');
             $params = [
                 'attribute' => $this->getAttributeLabel('name'),
-                'value' => $value,
+                'value'     => $value,
             ];
             $this->addError('name', Yii::$app->getI18n()->format($message, $params, Yii::$app->language));
         }
@@ -111,11 +111,11 @@ class AuthItem extends Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('rbac-admin', 'Name'),
-            'type' => Yii::t('rbac-admin', 'Type'),
+            'name'        => Yii::t('rbac-admin', 'Name'),
+            'type'        => Yii::t('rbac-admin', 'Type'),
             'description' => Yii::t('rbac-admin', 'Description'),
-            'ruleName' => Yii::t('rbac-admin', 'Rule Name'),
-            'data' => Yii::t('rbac-admin', 'Data'),
+            'ruleName'    => Yii::t('rbac-admin', 'Rule Name'),
+            'data'        => Yii::t('rbac-admin', 'Data'),
         ];
     }
 
@@ -152,7 +152,7 @@ class AuthItem extends Model
         if ($this->validate()) {
             $manager = Configs::authManager();
             if ($this->_item === null) {
-                if ($this->type == Item::TYPE_ROLE) {
+                if ($this->type === Item::TYPE_ROLE) {
                     $this->_item = $manager->createRole($this->name);
                 } else {
                     $this->_item = $manager->createPermission($this->name);
@@ -172,10 +172,11 @@ class AuthItem extends Model
                 $manager->update($oldName, $this->_item);
             }
             Helper::invalidate();
+
             return true;
-        } else {
-            return false;
         }
+  
+            return false;
     }
 
     /**
@@ -190,7 +191,7 @@ class AuthItem extends Model
         if ($this->_item) {
             foreach ($items as $name) {
                 $child = $manager->getPermission($name);
-                if ($this->type == Item::TYPE_ROLE && $child === null) {
+                if ($this->type === Item::TYPE_ROLE && $child === null) {
                     $child = $manager->getRole($name);
                 }
                 try {
@@ -204,6 +205,7 @@ class AuthItem extends Model
         if ($success > 0) {
             Helper::invalidate();
         }
+
         return $success;
     }
 
@@ -219,7 +221,7 @@ class AuthItem extends Model
         if ($this->_item !== null) {
             foreach ($items as $name) {
                 $child = $manager->getPermission($name);
-                if ($this->type == Item::TYPE_ROLE && $child === null) {
+                if ($this->type === Item::TYPE_ROLE && $child === null) {
                     $child = $manager->getRole($name);
                 }
                 try {
@@ -233,6 +235,7 @@ class AuthItem extends Model
         if ($success > 0) {
             Helper::invalidate();
         }
+
         return $success;
     }
 
@@ -244,24 +247,25 @@ class AuthItem extends Model
     {
         $manager = Configs::authManager();
         $available = [];
-        if ($this->type == Item::TYPE_ROLE) {
+        if ($this->type === Item::TYPE_ROLE) {
             foreach (array_keys($manager->getRoles()) as $name) {
                 $available[$name] = 'role';
             }
         }
         foreach (array_keys($manager->getPermissions()) as $name) {
-            $available[$name] = $name[0] == '/' ? 'route' : 'permission';
+            $available[$name] = $name[0] === '/' ? 'route' : 'permission';
         }
 
         $assigned = [];
         foreach ($manager->getChildren($this->_item->name) as $item) {
-            $assigned[$item->name] = $item->type == 1 ? 'role' : ($item->name[0] == '/' ? 'route' : 'permission');
+            $assigned[$item->name] = $item->type === 1 ? 'role' : ($item->name[0] === '/' ? 'route' : 'permission');
             unset($available[$item->name]);
         }
         unset($available[$this->name]);
+
         return [
             'available' => $available,
-            'assigned' => $assigned,
+            'assigned'  => $assigned,
         ];
     }
 
@@ -283,7 +287,7 @@ class AuthItem extends Model
     {
         $result = [
             Item::TYPE_PERMISSION => 'Permission',
-            Item::TYPE_ROLE => 'Role',
+            Item::TYPE_ROLE       => 'Role',
         ];
         if ($type === null) {
             return $result;

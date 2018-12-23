@@ -27,27 +27,27 @@ $loggedId = User::loggedId();
 $ignored = $friend = false;
 if (!Podium::getInstance()->user->isGuest) {
     $ignored = $model->isIgnoredBy($loggedId);
-    $friend  = $model->isBefriendedBy($loggedId);
+    $friend = $model->isBefriendedBy($loggedId);
 }
 
 ?>
 <ul class="nav mr-auto">
     <li role="presentation" class="nav-item">
-        <a href="<?= Url::to(['members/index']) ?>" class="nav-link">
+        <a href="<?php echo Url::to(['members/index']); ?>" class="nav-link">
             <span class="glyphicon glyphicon-user"></span>
-            <?= Yii::t('podium/view', 'Members List') ?>
+            <?php echo Yii::t('podium/view', 'Members List'); ?>
         </a>
     </li>
     <li role="presentation" class="nav-item">
-        <a href="<?= Url::to(['members/mods']) ?>" class="nav-link">
+        <a href="<?php echo Url::to(['members/mods']); ?>" class="nav-link">
             <span class="glyphicon glyphicon-scissors"></span>
-            <?= Yii::t('podium/view', 'Moderation Team') ?>
+            <?php echo Yii::t('podium/view', 'Moderation Team'); ?>
         </a>
     </li>
     <li role="presentation" class="active nav-item">
         <a href="#" class="nav-link">
             <span class="glyphicon glyphicon-eye-open"></span>
-            <?= Yii::t('podium/view', 'Member View') ?>
+            <?php echo Yii::t('podium/view', 'Member View'); ?>
         </a>
     </li>
 </ul>
@@ -59,89 +59,89 @@ if (!Podium::getInstance()->user->isGuest) {
 <?php if (!Podium::getInstance()->user->isGuest): ?>
                 <div class="float-right">
 <?php if ($model->id !== $loggedId): ?>
-                    <a href="<?= Url::to(['messages/new', 'user' => $model->id]) ?>" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Send Message') ?>"><span class="glyphicon glyphicon-envelope"></span></a>
+                    <a href="<?php echo Url::to(['messages/new', 'user' => $model->id]); ?>" class="btn btn-default btn-lg" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Send Message'); ?>"><span class="glyphicon glyphicon-envelope"></span></a>
 <?php else: ?>
                     <a href="#" class="btn btn-lg disabled text-muted"><span class="glyphicon glyphicon-envelope"></span></a>
 <?php endif; ?>
 <?php if ($model->id !== $loggedId && $model->role !== User::ROLE_ADMINISTRATOR): ?>
 <?php if (!$friend): ?>
-                    <a href="<?= Url::to(['members/friend', 'id' => $model->id]) ?>" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Add as a Friend') ?>"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                    <a href="<?php echo Url::to(['members/friend', 'id' => $model->id]); ?>" class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Add as a Friend'); ?>"><span class="glyphicon glyphicon-plus-sign"></span></a>
 <?php else: ?>
-                    <a href="<?= Url::to(['members/friend', 'id' => $model->id]) ?>" class="btn btn-warning btn-lg" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Remove Friend') ?>"><span class="glyphicon glyphicon-minus-sign"></span></a>
+                    <a href="<?php echo Url::to(['members/friend', 'id' => $model->id]); ?>" class="btn btn-warning btn-lg" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Remove Friend'); ?>"><span class="glyphicon glyphicon-minus-sign"></span></a>
 <?php endif; ?>
 <?php if (!$ignored): ?>
-                    <span data-toggle="modal" data-target="#podiumModalIgnore" data-url="<?= Url::to(['members/ignore', 'id' => $model->id]) ?>"><button class="btn btn-danger btn-lg" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Ignore Member') ?>"><span class="glyphicon glyphicon-ban-circle"></span></button></span>
+                    <span data-toggle="modal" data-target="#podiumModalIgnore" data-url="<?php echo Url::to(['members/ignore', 'id' => $model->id]); ?>"><button class="btn btn-danger btn-lg" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Ignore Member'); ?>"><span class="glyphicon glyphicon-ban-circle"></span></button></span>
 <?php else: ?>
-                    <span data-toggle="modal" data-target="#podiumModalUnIgnore" data-url="<?= Url::to(['members/ignore', 'id' => $model->id]) ?>"><button class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Unignore Member') ?>"><span class="glyphicon glyphicon-ok-circle"></span></button></span>
+                    <span data-toggle="modal" data-target="#podiumModalUnIgnore" data-url="<?php echo Url::to(['members/ignore', 'id' => $model->id]); ?>"><button class="btn btn-success btn-lg" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Unignore Member'); ?>"><span class="glyphicon glyphicon-ok-circle"></span></button></span>
 <?php endif; ?>
 <?php else: ?>
                     <a href="#" class="btn btn-lg disabled text-muted"><span class="glyphicon glyphicon-ban-circle"></span></a>
 <?php endif; ?>
                 </div>
 <?php if ($ignored): ?>
-                <h4 class="text-danger"><?= Yii::t('podium/view', 'You are ignoring this user.') ?></h4>
+                <h4 class="text-danger"><?php echo Yii::t('podium/view', 'You are ignoring this user.'); ?></h4>
 <?php endif; ?>
 <?php if ($friend): ?>
-                <h4 class="text-success"><?= Yii::t('podium/view', 'You are friends with this user.') ?></h4>
+                <h4 class="text-success"><?php echo Yii::t('podium/view', 'You are friends with this user.'); ?></h4>
 <?php endif; ?>
 <?php endif; ?>
                 <h2>
-                    <?= Html::encode($model->podiumName) ?>
-                    <small><?= Helper::roleLabel($model->role) ?></small>
+                    <?php echo Html::encode($model->podiumName); ?>
+                    <small><?php echo Helper::roleLabel($model->role); ?></small>
                 </h2>
 
-                <p><?= Yii::t('podium/view', 'Whereabouts') ?>: <?= !empty($model->userProfile) && !empty($model->userProfile->location) ? Html::encode($model->userProfile->location) : '-' ?></p>
+                <p><?php echo Yii::t('podium/view', 'Whereabouts'); ?>: <?php echo !empty($model->userProfile) && !empty($model->userProfile->location) ? Html::encode($model->userProfile->location) : '-'; ?></p>
 
-                <p><?= Yii::t('podium/view', 'Member since {date}', ['date' => Podium::getInstance()->formatter->asDatetime($model->created_at, 'long')]) ?> (<?= Podium::getInstance()->formatter->asRelativeTime($model->created_at) ?>)</p>
-<?php if ($model->status != User::STATUS_REGISTERED): ?>
+                <p><?php echo Yii::t('podium/view', 'Member since {date}', ['date' => Podium::getInstance()->formatter->asDatetime($model->created_at, 'long')]); ?> (<?php echo Podium::getInstance()->formatter->asRelativeTime($model->created_at); ?>)</p>
+<?php if ($model->status !== User::STATUS_REGISTERED): ?>
                 <p>
-                    <a href="<?= Url::to(['members/threads', 'id' => $model->id, 'slug' => $model->podiumSlug]) ?>" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> <?= Yii::t('podium/view', 'Find all threads started by {name}', ['name' => Html::encode($model->podiumName)]) ?></a>
-                    <a href="<?= Url::to(['members/posts', 'id' => $model->id, 'slug' => $model->podiumSlug]) ?>" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> <?= Yii::t('podium/view', 'Find all posts created by {name}', ['name' => Html::encode($model->podiumName)]) ?></a>
+                    <a href="<?php echo Url::to(['members/threads', 'id' => $model->id, 'slug' => $model->podiumSlug]); ?>" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> <?php echo Yii::t('podium/view', 'Find all threads started by {name}', ['name' => Html::encode($model->podiumName)]); ?></a>
+                    <a href="<?php echo Url::to(['members/posts', 'id' => $model->id, 'slug' => $model->podiumSlug]); ?>" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> <?php echo Yii::t('podium/view', 'Find all posts created by {name}', ['name' => Html::encode($model->podiumName)]); ?></a>
                 </p>
 <?php endif; ?>
             </div>
-<?php if ($model->role == User::ROLE_MODERATOR && !empty($model->mods)): ?>
+<?php if ($model->role === User::ROLE_MODERATOR && !empty($model->mods)): ?>
             <div class="card-body">
-                <?= Yii::t('podium/view', 'Moderator of') ?>
+                <?php echo Yii::t('podium/view', 'Moderator of'); ?>
 <?php foreach ($model->mods as $mod): ?>
-                <a href="<?= Url::to(['forum/forum', 'cid' => $mod->forum->category_id, 'id' => $mod->forum->id, 'slug' => $mod->forum->slug]) ?>" class="btn btn-default btn-xs"><?= Html::encode($mod->forum->name) ?></a>
+                <a href="<?php echo Url::to(['forum/forum', 'cid' => $mod->forum->category_id, 'id' => $mod->forum->id, 'slug' => $mod->forum->slug]); ?>" class="btn btn-default btn-xs"><?php echo Html::encode($mod->forum->name); ?></a>
 <?php endforeach; ?>
             </div>
 <?php endif; ?>
             <div class="card-footer">
                 <ul class="list-inline">
-                    <li class="list-inline-item"><?= Yii::t('podium/view', 'Threads') ?> <span class="badge"><?= $model->threadsCount ?></span></li>
-                    <li class="list-inline-item"><?= Yii::t('podium/view', 'Posts') ?> <span class="badge"><?= $model->postsCount ?></span></li>
+                    <li class="list-inline-item"><?php echo Yii::t('podium/view', 'Threads'); ?> <span class="badge"><?php echo $model->threadsCount; ?></span></li>
+                    <li class="list-inline-item"><?php echo Yii::t('podium/view', 'Posts'); ?> <span class="badge"><?php echo $model->postsCount; ?></span></li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="col-sm-3 d-none">
-        <?= Avatar::widget([
-            'author' => $model,
+        <?php echo Avatar::widget([
+            'author'   => $model,
             'showName' => false
-        ]) ?>
+        ]); ?>
     </div>
 </div>
 <?php if (!Podium::getInstance()->user->isGuest): ?>
 <?php Modal::begin([
-    'id' => 'podiumModalIgnore',
-    'header' => Yii::t('podium/view', 'Ignore user'),
-    'footer' => Yii::t('podium/view', 'Ignore user'),
+    'id'                   => 'podiumModalIgnore',
+    'header'               => Yii::t('podium/view', 'Ignore user'),
+    'footer'               => Yii::t('podium/view', 'Ignore user'),
     'footerConfirmOptions' => ['class' => 'btn btn-danger', 'id' => 'ignoreUrl']
- ]) ?>
-<p><?= Yii::t('podium/view', 'Are you sure you want to ignore this user?') ?></p>
-<p><?= Yii::t('podium/view', 'The user will not be able to send you messages.') ?></p>
-<p><strong><?= Yii::t('podium/view', 'You can always unignore the user if you change your mind later on.') ?></strong></p>
-<?php Modal::end() ?>
+ ]); ?>
+<p><?php echo Yii::t('podium/view', 'Are you sure you want to ignore this user?'); ?></p>
+<p><?php echo Yii::t('podium/view', 'The user will not be able to send you messages.'); ?></p>
+<p><strong><?php echo Yii::t('podium/view', 'You can always unignore the user if you change your mind later on.'); ?></strong></p>
+<?php Modal::end(); ?>
 <?php Modal::begin([
-    'id' => 'podiumModalUnIgnore',
-    'header' => Yii::t('podium/view', 'Unignore user'),
-    'footer' => Yii::t('podium/view', 'Unignore user'),
+    'id'                   => 'podiumModalUnIgnore',
+    'header'               => Yii::t('podium/view', 'Unignore user'),
+    'footer'               => Yii::t('podium/view', 'Unignore user'),
     'footerConfirmOptions' => ['class' => 'btn btn-success', 'id' => 'unignoreUrl']
- ]) ?>
-<p><?= Yii::t('podium/view', 'Are you sure you want to ignore this user?') ?></p>
-<p><?= Yii::t('podium/view', 'The user will not be able to send you messages.') ?></p>
-<p><strong><?= Yii::t('podium/view', 'You can always unignore the user if you change your mind later on.') ?></strong></p>
-<?php Modal::end() ?>
+ ]); ?>
+<p><?php echo Yii::t('podium/view', 'Are you sure you want to ignore this user?'); ?></p>
+<p><?php echo Yii::t('podium/view', 'The user will not be able to send you messages.'); ?></p>
+<p><strong><?php echo Yii::t('podium/view', 'You can always unignore the user if you change your mind later on.'); ?></strong></p>
+<?php Modal::end(); ?>
 <?php endif;

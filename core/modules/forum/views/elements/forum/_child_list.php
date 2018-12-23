@@ -11,7 +11,7 @@ use core\modules\forum\models\Forum;
 use yii\widgets\ListView;
 
 ?>
-<?= ListView::widget([
+<?php echo ListView::widget([
     'dataProvider'     => (new Forum())->search_child($parent_id),
     'itemView'         => '/elements/forum/_forum',
     'summary'          => '',

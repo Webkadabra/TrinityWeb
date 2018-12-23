@@ -47,16 +47,16 @@ class Update extends Maintenance
 
         if ($currentStep >= $maxStep) {
             return [
-                'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Weird... Update should already complete...'),
+                'type'    => $this->type,
+                'result'  => Yii::t('podium/flash', 'Weird... Update should already complete...'),
                 'percent' => 100
             ];
         }
 
         if (!isset($this->versionSteps[$currentStep])) {
             return [
-                'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Update aborted! Can not find the requested update step.'),
+                'type'    => $this->type,
+                'result'  => Yii::t('podium/flash', 'Update aborted! Can not find the requested update step.'),
                 'percent' => 100,
             ];
         }
@@ -65,10 +65,11 @@ class Update extends Maintenance
         $result = call_user_func_array([$this, $this->versionSteps[$currentStep]['call']], $this->versionSteps[$currentStep]['data']);
 
         Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
+
         return [
-            'type' => $this->type,
-            'result' => $result,
-            'table' => $this->rawTable,
+            'type'    => $this->type,
+            'result'  => $result,
+            'table'   => $this->rawTable,
             'percent' => $this->countPercent($currentStep, $maxStep),
         ];
     }
@@ -84,13 +85,27 @@ class Update extends Maintenance
             $currentVersion = Yii::$app->session->get(self::SESSION_VERSION, 0);
             $versionSteps = [];
             foreach ($this->steps as $version => $steps) {
-                if (Helper::compareVersions(explode('.', $currentVersion), explode('.', $version)) == '<') {
+                if (Helper::compareVersions(explode('.', $currentVersion), explode('.', $version)) === '<') {
                     $versionSteps += $steps;
                 }
             }
             $this->_versionSteps = $versionSteps;
         }
+
         return $this->_versionSteps;
+    }
+
+    /**
+     * Update steps.
+     * @since 0.2
+     */
+    public function getSteps()
+    {
+        if ($this->_steps === null) {
+            $this->_steps = require(__DIR__ . '/steps/update.php');
+        }
+
+        return $this->_steps;
     }
 
     /**
@@ -110,6 +125,7 @@ class Update extends Maintenance
         }
         try {
             Podium::getInstance()->podiumConfig->set($name, $value);
+
             return $this->returnSuccess(Yii::t('podium/flash', 'Config setting {name} has been updated to {value}.', [
                 'name'  => $name,
                 'value' => $value,
@@ -119,17 +135,5 @@ class Update extends Maintenance
                 Yii::t('podium/flash', 'Error during configuration updating')
             );
         }
-    }
-
-    /**
-     * Update steps.
-     * @since 0.2
-     */
-    public function getSteps()
-    {
-        if ($this->_steps === null) {
-            $this->_steps = require(__DIR__ . '/steps/update.php');
-        }
-        return $this->_steps;
     }
 }

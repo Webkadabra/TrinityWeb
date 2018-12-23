@@ -24,6 +24,8 @@ class ReactivateForm extends Model
      */
     public $username;
 
+    private $_user = false;
+
     /**
      * @inheritdoc
      */
@@ -31,8 +33,6 @@ class ReactivateForm extends Model
     {
         return [['username', 'required']];
     }
-
-    private $_user = false;
 
     /**
      * Returns user.
@@ -44,6 +44,7 @@ class ReactivateForm extends Model
         if ($this->_user === false) {
             $this->_user = User::findByKeyfield($this->username, $status);
         }
+
         return $this->_user;
     }
 
@@ -72,6 +73,7 @@ class ReactivateForm extends Model
                 true
             ];
         }
+
         return [
             false,
             Yii::t('podium/flash', 'The account activation link has been sent to your e-mail address.'),

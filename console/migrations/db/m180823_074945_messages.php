@@ -18,14 +18,14 @@ class m180823_074945_messages extends Migration
         }
 
         $this->createTable('{{%message}}', [
-            'id' => $this->primaryKey(),
-            'sender_id' => $this->integer()->notNull(),
-            'topic' => $this->string()->notNull(),
-            'content' => $this->text()->notNull(),
+            'id'            => $this->primaryKey(),
+            'sender_id'     => $this->integer()->notNull(),
+            'topic'         => $this->string()->notNull(),
+            'content'       => $this->text()->notNull(),
             'sender_status' => $this->smallInteger()->notNull()->defaultValue(1),
-            'replyto' => $this->integer()->notNull()->defaultValue(0),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer()
+            'replyto'       => $this->integer()->notNull()->defaultValue(0),
+            'created_at'    => $this->integer(),
+            'updated_at'    => $this->integer()
         ], $tableOptions);
 
         $this->createIndex('topic','{{%message}}',['topic']);
@@ -35,12 +35,12 @@ class m180823_074945_messages extends Migration
         $this->addForeignKey('fk_message_to_user', '{{%message}}', 'sender_id', '{{%users}}', 'id', 'NO ACTION', 'cascade');
 
         $this->createTable('{{%message_receiver}}', [
-            'id' => $this->primaryKey(),
-            'message_id' => $this->integer()->notNull(),
-            'receiver_id' => $this->integer()->notNull(),
+            'id'              => $this->primaryKey(),
+            'message_id'      => $this->integer()->notNull(),
+            'receiver_id'     => $this->integer()->notNull(),
             'receiver_status' => $this->smallInteger()->notNull()->defaultValue(1),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer()
+            'created_at'      => $this->integer(),
+            'updated_at'      => $this->integer()
         ], $tableOptions);
 
         $this->createIndex('inbox','{{%message_receiver}}',['receiver_id', 'receiver_status']);

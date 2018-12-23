@@ -100,9 +100,9 @@ class PollActiveRecord extends ActiveRecord
     {
         return [
             'question' => Yii::t('podium/view', 'Question'),
-            'votes' => Yii::t('podium/view', 'Number of votes'),
-            'hidden' => Yii::t('podium/view', 'Hide results before voting'),
-            'end' => Yii::t('podium/view', 'Poll ends at'),
+            'votes'    => Yii::t('podium/view', 'Number of votes'),
+            'hidden'   => Yii::t('podium/view', 'Hide results before voting'),
+            'end'      => Yii::t('podium/view', 'Poll ends at'),
         ];
     }
 

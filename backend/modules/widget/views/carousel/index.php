@@ -20,44 +20,44 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="box box-success collapsed-box">
     <div class="box-header with-border">
-        <h3 class="box-title"><?php echo Yii::t('backend', 'Create {modelClass}', ['modelClass' => 'Widget Carousel']) ?></h3>
+        <h3 class="box-title"><?php echo Yii::t('backend', 'Create {modelClass}', ['modelClass' => 'Widget Carousel']); ?></h3>
     </div>
     <div class="box-body">
         <?php echo $this->render('_form', [
             'model' => $model,
-        ]) ?>
+        ]); ?>
     </div>
 </div>
 
 <?php echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'options' => [
+    'filterModel'  => $searchModel,
+    'options'      => [
         'class' => 'grid-view table-responsive',
     ],
     'tableOptions' => ['class' => 'table table-dark table-hover'],
-    'columns' => [
+    'columns'      => [
         [
             'attribute' => 'id',
-            'options' => ['style' => 'width: 5%'],
+            'options'   => ['style' => 'width: 5%'],
         ],
         [
             'attribute' => 'key',
-            'value' => function ($model) {
+            'value'     => function ($model) {
                 return Html::a($model->key, ['update', 'id' => $model->id]);
             },
             'format' => 'raw',
         ],
         [
-            'class' => EnumColumn::class,
+            'class'     => EnumColumn::class,
             'attribute' => 'status',
-            'options' => ['style' => 'width: 10%'],
-            'enum' => WidgetCarousel::statuses(),
-            'filter' => WidgetCarousel::statuses(),
+            'options'   => ['style' => 'width: 10%'],
+            'enum'      => WidgetCarousel::statuses(),
+            'filter'    => WidgetCarousel::statuses(),
         ],
         [
-            'class' => 'yii\grid\ActionColumn',
-            'options' => ['style' => 'width: 5%'],
+            'class'    => 'yii\grid\ActionColumn',
+            'options'  => ['style' => 'width: 5%'],
             'template' => '{update} {delete}',
         ],
     ],

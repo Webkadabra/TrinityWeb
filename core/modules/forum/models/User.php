@@ -35,6 +35,10 @@ class User extends UserActiveRecord
      */
     public $tos;
 
+    private $_access = [];
+
+    private static $_identity;
+
     /**
      * @inheritdoc
      */
@@ -42,21 +46,22 @@ class User extends UserActiveRecord
     {
         $scenarios = [
             'installation' => [],
-            'token' => [],
-            'ban' => [],
-            'role' => [],
+            'token'        => [],
+            'ban'          => [],
+            'role'         => [],
         ];
+
         return $scenarios;
     }
 
     /**
      * Activates account.
-     * @return bool
      * @throws \yii\db\Exception
+     * @return bool
      */
     public function activate()
     {
-        if ($this->status == self::STATUS_REGISTERED) {
+        if ($this->status === self::STATUS_REGISTERED) {
             $transaction = static::getDb()->beginTransaction();
             try {
                 $this->status = self::STATUS_ACTIVE;
@@ -67,12 +72,14 @@ class User extends UserActiveRecord
                     throw new Exception('User role assigning error!');
                 }
                 $transaction->commit();
+
                 return true;
             } catch (Exception $e) {
                 $transaction->rollBack();
                 Log::error($e->getMefssage(), null, __METHOD__);
             }
         }
+
         return false;
     }
 
@@ -85,6 +92,7 @@ class User extends UserActiveRecord
         $this->email = $this->new_email;
         $this->new_email = null;
         $this->removeEmailToken();
+
         return $this->save();
     }
 
@@ -97,11 +105,12 @@ class User extends UserActiveRecord
         $cache = Podium::getInstance()->podiumCache->getElement('user.newmessages', $this->id);
         if ($cache === false) {
             $cache = (new Query())->from(MessageReceiver::tableName())->where([
-                    'receiver_id' => $this->id,
+                    'receiver_id'     => $this->id,
                     'receiver_status' => Message::STATUS_NEW
                 ])->count();
             Podium::getInstance()->podiumCache->setElement('user.newmessages', $this->id, $cache);
         }
+
         return $cache;
     }
 
@@ -154,6 +163,7 @@ class User extends UserActiveRecord
             $cache = (new Query)->from(Post::tableName())->where(['author_id' => $id])->count();
             Podium::getInstance()->podiumCache->setElement('user.postscount', $id, $cache);
         }
+
         return $cache;
     }
 
@@ -178,6 +188,7 @@ class User extends UserActiveRecord
             $cache = (new Query)->from(Thread::tableName())->where(['author_id' => $id])->count();
             Podium::getInstance()->podiumCache->setElement('user.threadscount', $id, $cache);
         }
+
         return $cache;
     }
 
@@ -188,8 +199,8 @@ class User extends UserActiveRecord
     public static function getRoles()
     {
         return [
-            self::ROLE_USER => Yii::t('podium/view', 'Member'),
-            self::ROLE_MODERATOR => Yii::t('podium/view', 'Moderator'),
+            self::ROLE_USER          => Yii::t('podium/view', 'Member'),
+            self::ROLE_MODERATOR     => Yii::t('podium/view', 'Moderator'),
             self::ROLE_ADMINISTRATOR => Yii::t('podium/view', 'Admin'),
         ];
     }
@@ -201,7 +212,7 @@ class User extends UserActiveRecord
     public static function getModRoles()
     {
         return [
-            self::ROLE_MODERATOR => Yii::t('podium/view', 'Moderator'),
+            self::ROLE_MODERATOR     => Yii::t('podium/view', 'Moderator'),
             self::ROLE_ADMINISTRATOR => Yii::t('podium/view', 'Admin'),
         ];
     }
@@ -213,8 +224,8 @@ class User extends UserActiveRecord
     public static function getStatuses()
     {
         return [
-            self::STATUS_ACTIVE => Yii::t('podium/view', 'Active'),
-            self::STATUS_BANNED => Yii::t('podium/view', 'Banned'),
+            self::STATUS_ACTIVE     => Yii::t('podium/view', 'Active'),
+            self::STATUS_BANNED     => Yii::t('podium/view', 'Banned'),
             self::STATUS_REGISTERED => Yii::t('podium/view', 'Registered'),
         ];
     }
@@ -228,11 +239,12 @@ class User extends UserActiveRecord
         $cache = Podium::getInstance()->podiumCache->getElement('user.subscriptions', $this->id);
         if ($cache === false) {
             $cache = (new Query)->from(Subscription::tableName())->where([
-                    'user_id' => $this->id,
+                    'user_id'   => $this->id,
                     'post_seen' => Subscription::POST_NEW
                 ])->count();
             Podium::getInstance()->podiumCache->setElement('user.subscriptions', $this->id, $cache);
         }
+
         return $cache;
     }
 
@@ -250,6 +262,7 @@ class User extends UserActiveRecord
             ])->exists()) {
             return true;
         }
+
         return false;
     }
 
@@ -267,6 +280,7 @@ class User extends UserActiveRecord
             ])->exists()) {
             return true;
         }
+
         return false;
     }
 
@@ -283,6 +297,7 @@ class User extends UserActiveRecord
             ])->exists()) {
             return true;
         }
+
         return false;
     }
 
@@ -299,6 +314,7 @@ class User extends UserActiveRecord
             ])->exists()) {
             return true;
         }
+
         return false;
     }
 
@@ -316,8 +332,10 @@ class User extends UserActiveRecord
             if (empty($user)) {
                 return null;
             }
+
             return $user->id;
         }
+
         return Podium::getInstance()->user->id;
     }
 
@@ -329,14 +347,15 @@ class User extends UserActiveRecord
     {
         $this->scenario = 'ban';
         $this->status = self::STATUS_BANNED;
+
         return $this->save();
     }
 
     /**
      * Demotes user to given role.
      * @param int $role
-     * @return bool
      * @throws \yii\db\Exception
+     * @return bool
      */
     public function demoteTo($role)
     {
@@ -362,11 +381,13 @@ class User extends UserActiveRecord
 
             $transaction->commit();
             Log::info('User demoted', $this->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -374,8 +395,8 @@ class User extends UserActiveRecord
      * Promotes user to given role.
      * Only moderator supported now.
      * @param int $role
-     * @return bool
      * @throws \yii\db\Exception
+     * @return bool
      */
     public function promoteTo($role)
     {
@@ -397,11 +418,13 @@ class User extends UserActiveRecord
 
             $transaction->commit();
             Log::info('User promoted', $this->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -413,6 +436,7 @@ class User extends UserActiveRecord
     {
         $this->setScenario('ban');
         $this->status = self::STATUS_ACTIVE;
+
         return $this->save();
     }
 
@@ -435,10 +459,9 @@ class User extends UserActiveRecord
         if ($updateActivityName) {
             Activity::updateName($this->id, $this->podiumName, $this->podiumSlug);
         }
+
         return true;
     }
-
-    private $_access = [];
 
     /**
      * Implementation of \yii\web\User::can().
@@ -464,8 +487,10 @@ class User extends UserActiveRecord
             if ($allowCaching && empty($params)) {
                 $user->_access[$permissionName] = $access;
             }
+
             return $access;
         }
+
         return false;
     }
 
@@ -492,6 +517,7 @@ class User extends UserActiveRecord
             }
             Podium::getInstance()->podiumCache->setElement('user.friends', $logged, $cache);
         }
+
         return $cache;
     }
 
@@ -510,20 +536,22 @@ class User extends UserActiveRecord
                 ])->exists()) {
                 Podium::getInstance()->db->createCommand()->delete(Mod::tableName(), [
                     'forum_id' => $forumId,
-                    'user_id' => $this->id
+                    'user_id'  => $this->id
                 ])->execute();
             } else {
                 Podium::getInstance()->db->createCommand()->insert(Mod::tableName(), [
                     'forum_id' => $forumId,
-                    'user_id' => $this->id
+                    'user_id'  => $this->id
                 ])->execute();
             }
             Podium::getInstance()->podiumCache->deleteElement('forum.moderators', $forumId);
             Log::info('Moderator updated', $this->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -531,8 +559,8 @@ class User extends UserActiveRecord
      * Updates moderator assignment for given forums.
      * @param array $newForums new assigned forum IDs
      * @param array $oldForums old assigned forum IDs
-     * @return bool
      * @throws \yii\db\Exception
+     * @return bool
      * @since 0.2
      */
     public function updateModeratorForMany($newForums = [], $oldForums = [])
@@ -561,37 +589,14 @@ class User extends UserActiveRecord
             Podium::getInstance()->podiumCache->delete('forum.moderators');
             Log::info('Moderators updated', null, __METHOD__);
             $transaction->commit();
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
-        return false;
-    }
 
-    /**
-     * Generates username for inherited account.
-     * @throws Exception
-     * @since 0.7
-     */
-    protected function generateUsername()
-    {
-        $userNameField = Podium::getInstance()->userNameField;
-        if ($userNameField !== null) {
-            if (empty(Podium::getInstance()->user->identity->$userNameField)) {
-                throw new InvalidConfigException("Non-existing or empty '$userNameField' field!");
-            }
-            $username = Podium::getInstance()->user->identity->$userNameField;
-        } else {
-            $try = 0;
-            do {
-                $username = 'user_' . time() . mt_rand(1000, 9999);
-                if ($try++ > 10) {
-                    throw new Exception('Failed to generate unique username!');
-                }
-            } while ((new Query)->from(static::tableName())->where(['username' => $username])->exists());
-        }
-        $this->username = $username;
+        return false;
     }
 
     /**
@@ -624,6 +629,7 @@ class User extends UserActiveRecord
             $cache = Json::encode($results);
             Podium::getInstance()->podiumCache->setElement('members.fieldlist', $query, $cache);
         }
+
         return $cache;
     }
 
@@ -650,10 +656,12 @@ class User extends UserActiveRecord
                 }
                 Log::info('User ignored', $this->id, __METHOD__);
             }
+
             return true;
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -681,14 +689,14 @@ class User extends UserActiveRecord
                 Log::info('User befriended', $this->id, __METHOD__);
             }
             Podium::getInstance()->podiumCache->deleteElement('user.friends', $friend);
+
             return true;
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
-
-    private static $_identity;
 
     /**
      * Returns current user based on module configuration.
@@ -699,6 +707,32 @@ class User extends UserActiveRecord
         if(!Yii::$app->user->isGuest) {
             return self::findOne(Yii::$app->user->identity->getId());
         }
+
         return null;
+    }
+
+    /**
+     * Generates username for inherited account.
+     * @throws Exception
+     * @since 0.7
+     */
+    protected function generateUsername()
+    {
+        $userNameField = Podium::getInstance()->userNameField;
+        if ($userNameField !== null) {
+            if (empty(Podium::getInstance()->user->identity->$userNameField)) {
+                throw new InvalidConfigException("Non-existing or empty '$userNameField' field!");
+            }
+            $username = Podium::getInstance()->user->identity->$userNameField;
+        } else {
+            $try = 0;
+            do {
+                $username = 'user_' . time() . mt_rand(1000, 9999);
+                if ($try++ > 10) {
+                    throw new Exception('Failed to generate unique username!');
+                }
+            } while ((new Query)->from(static::tableName())->where(['username' => $username])->exists());
+        }
+        $this->username = $username;
     }
 }

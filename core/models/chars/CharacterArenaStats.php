@@ -2,9 +2,8 @@
 
 namespace core\models\chars;
 
-use Yii;
-
 use core\base\models\CharacterCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "character_arena_stats".
@@ -38,8 +37,8 @@ class CharacterArenaStats extends CharacterCoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => 'Guid',
-            'slot' => 'Slot',
+            'guid'             => 'Guid',
+            'slot'             => 'Slot',
             'matchMakerRating' => Yii::t('common', 'ММР'),
         ];
     }

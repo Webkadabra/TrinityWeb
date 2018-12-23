@@ -2,9 +2,8 @@
 
 namespace core\models\chars;
 
-use Yii;
-
 use core\base\models\CharacterCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "characters".
@@ -96,7 +95,6 @@ use core\base\models\CharacterCoreModel;
  */
 class Characters extends CharacterCoreModel
 {
-
     const UPDATE_TIME = 120;
     
     /**
@@ -127,82 +125,82 @@ class Characters extends CharacterCoreModel
     public function attributeLabels()
     {
         return [
-            'guid' => 'Guid',
-            'account' => 'Account',
-            'name' => 'Name',
-            'race' => 'Race',
-            'class' => 'Class',
-            'gender' => 'Gender',
-            'level' => 'Level',
-            'xp' => 'Xp',
-            'money' => 'Money',
-            'skin' => 'Skin',
-            'face' => 'Face',
-            'hairStyle' => 'Hair Style',
-            'hairColor' => 'Hair Color',
-            'facialStyle' => 'Facial Style',
-            'bankSlots' => 'Bank Slots',
-            'restState' => 'Rest State',
-            'playerFlags' => 'Player Flags',
-            'position_x' => 'Position X',
-            'position_y' => 'Position Y',
-            'position_z' => 'Position Z',
-            'map' => 'Map',
-            'instance_id' => 'Instance ID',
-            'instance_mode_mask' => 'Instance Mode Mask',
-            'orientation' => 'Orientation',
-            'taximask' => 'Taximask',
-            'online' => 'Online',
-            'cinematic' => 'Cinematic',
-            'totaltime' => 'Totaltime',
-            'leveltime' => 'Leveltime',
-            'logout_time' => 'Logout Time',
-            'is_logout_resting' => 'Is Logout Resting',
-            'rest_bonus' => 'Rest Bonus',
-            'resettalents_cost' => 'Resettalents Cost',
-            'resettalents_time' => 'Resettalents Time',
-            'trans_x' => 'Trans X',
-            'trans_y' => 'Trans Y',
-            'trans_z' => 'Trans Z',
-            'trans_o' => 'Trans O',
-            'transguid' => 'Transguid',
-            'extra_flags' => 'Extra Flags',
-            'stable_slots' => 'Stable Slots',
-            'at_login' => 'At Login',
-            'zone' => 'Zone',
-            'death_expire_time' => 'Death Expire Time',
-            'taxi_path' => 'Taxi Path',
-            'arenaPoints' => 'Arena Points',
-            'totalHonorPoints' => 'Total Honor Points',
-            'todayHonorPoints' => 'Today Honor Points',
+            'guid'                 => 'Guid',
+            'account'              => 'Account',
+            'name'                 => 'Name',
+            'race'                 => 'Race',
+            'class'                => 'Class',
+            'gender'               => 'Gender',
+            'level'                => 'Level',
+            'xp'                   => 'Xp',
+            'money'                => 'Money',
+            'skin'                 => 'Skin',
+            'face'                 => 'Face',
+            'hairStyle'            => 'Hair Style',
+            'hairColor'            => 'Hair Color',
+            'facialStyle'          => 'Facial Style',
+            'bankSlots'            => 'Bank Slots',
+            'restState'            => 'Rest State',
+            'playerFlags'          => 'Player Flags',
+            'position_x'           => 'Position X',
+            'position_y'           => 'Position Y',
+            'position_z'           => 'Position Z',
+            'map'                  => 'Map',
+            'instance_id'          => 'Instance ID',
+            'instance_mode_mask'   => 'Instance Mode Mask',
+            'orientation'          => 'Orientation',
+            'taximask'             => 'Taximask',
+            'online'               => 'Online',
+            'cinematic'            => 'Cinematic',
+            'totaltime'            => 'Totaltime',
+            'leveltime'            => 'Leveltime',
+            'logout_time'          => 'Logout Time',
+            'is_logout_resting'    => 'Is Logout Resting',
+            'rest_bonus'           => 'Rest Bonus',
+            'resettalents_cost'    => 'Resettalents Cost',
+            'resettalents_time'    => 'Resettalents Time',
+            'trans_x'              => 'Trans X',
+            'trans_y'              => 'Trans Y',
+            'trans_z'              => 'Trans Z',
+            'trans_o'              => 'Trans O',
+            'transguid'            => 'Transguid',
+            'extra_flags'          => 'Extra Flags',
+            'stable_slots'         => 'Stable Slots',
+            'at_login'             => 'At Login',
+            'zone'                 => 'Zone',
+            'death_expire_time'    => 'Death Expire Time',
+            'taxi_path'            => 'Taxi Path',
+            'arenaPoints'          => 'Arena Points',
+            'totalHonorPoints'     => 'Total Honor Points',
+            'todayHonorPoints'     => 'Today Honor Points',
             'yesterdayHonorPoints' => 'Yesterday Honor Points',
-            'totalKills' => 'Total Kills',
-            'todayKills' => 'Today Kills',
-            'yesterdayKills' => 'Yesterday Kills',
-            'chosenTitle' => 'Chosen Title',
-            'knownCurrencies' => 'Known Currencies',
-            'watchedFaction' => 'Watched Faction',
-            'drunk' => 'Drunk',
-            'health' => 'Health',
-            'power1' => 'Power1',
-            'power2' => 'Power2',
-            'power3' => 'Power3',
-            'power4' => 'Power4',
-            'power5' => 'Power5',
-            'power6' => 'Power6',
-            'power7' => 'Power7',
-            'latency' => 'Latency',
-            'talentGroupsCount' => 'Talent Groups Count',
-            'activeTalentGroup' => 'Active Talent Group',
-            'exploredZones' => 'Explored Zones',
-            'equipmentCache' => 'Equipment Cache',
-            'ammoId' => 'Ammo ID',
-            'knownTitles' => 'Known Titles',
-            'actionBars' => 'Action Bars',
-            'grantableLevels' => 'Grantable Levels',
-            'deleteInfos_Account' => 'Delete Infos  Account',
-            'deleteInfos_Name' => 'Delete Infos  Name',
-            'deleteDate' => 'Delete Date',
+            'totalKills'           => 'Total Kills',
+            'todayKills'           => 'Today Kills',
+            'yesterdayKills'       => 'Yesterday Kills',
+            'chosenTitle'          => 'Chosen Title',
+            'knownCurrencies'      => 'Known Currencies',
+            'watchedFaction'       => 'Watched Faction',
+            'drunk'                => 'Drunk',
+            'health'               => 'Health',
+            'power1'               => 'Power1',
+            'power2'               => 'Power2',
+            'power3'               => 'Power3',
+            'power4'               => 'Power4',
+            'power5'               => 'Power5',
+            'power6'               => 'Power6',
+            'power7'               => 'Power7',
+            'latency'              => 'Latency',
+            'talentGroupsCount'    => 'Talent Groups Count',
+            'activeTalentGroup'    => 'Active Talent Group',
+            'exploredZones'        => 'Explored Zones',
+            'equipmentCache'       => 'Equipment Cache',
+            'ammoId'               => 'Ammo ID',
+            'knownTitles'          => 'Known Titles',
+            'actionBars'           => 'Action Bars',
+            'grantableLevels'      => 'Grantable Levels',
+            'deleteInfos_Account'  => 'Delete Infos  Account',
+            'deleteInfos_Name'     => 'Delete Infos  Name',
+            'deleteDate'           => 'Delete Date',
         ];
     }
     /**
@@ -228,8 +226,10 @@ class Characters extends CharacterCoreModel
             $this->map = $this->home->mapId;
             $this->zone = $this->home->zoneId;
             $this->save();
+
             return true;
         }
+
         return false;
     }
 
@@ -237,8 +237,8 @@ class Characters extends CharacterCoreModel
      * Get online list by server
      * @param $auth_id
      * @param $realm_id
-     * @return array|mixed|\yii\db\ActiveRecord[]
      * @throws \yii\base\InvalidConfigException
+     * @return array|mixed|\yii\db\ActiveRecord[]
      */
     public static function getOnlineByServer($auth_id, $realm_id)
     {
@@ -254,6 +254,7 @@ class Characters extends CharacterCoreModel
                 ->all(Yii::$app->DBHelper::getConnection(null, self::buildComponentName($auth_id,$realm_id)));
             Yii::$app->cache->set($cache_key, $list, $cache_time);
         }
+
         return $list;
     }
 
@@ -292,5 +293,4 @@ class Characters extends CharacterCoreModel
     public function getGuild() {
         return $this->hasOne(GuildMember::class,['guid' => 'guid']);
     }
-
 }

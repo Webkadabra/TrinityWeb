@@ -2,10 +2,10 @@
 
 namespace backend\modules\rbac\components;
 
-use Yii;
-use yii\caching\TagDependency;
 use backend\modules\rbac\models\Menu;
 use backend\modules\rbac\models\Route;
+use Yii;
+use yii\caching\TagDependency;
 
 /**
  * MenuHelper used to generate menu depend of user role.
@@ -74,7 +74,7 @@ class MenuHelper
             $routes = $filter1 = $filter2 = [];
             if ($userId !== null) {
                 foreach ($manager->getPermissionsByUser($userId) as $name => $value) {
-		    if ($name[0] === Route::PREFIX_BASIC || $name[0] == Route::PREFIX_ADVANCED) {
+		    if ($name[0] === Route::PREFIX_BASIC || $name[0] === Route::PREFIX_ADVANCED) {
                         if (substr($name, -2) === '/*') {
                             $name = substr($name, 0, -1);
                         }
@@ -84,7 +84,7 @@ class MenuHelper
             }
             foreach ($manager->defaultRoles as $role) {
                 foreach ($manager->getPermissionsByRole($role) as $name => $value) {
-		    if ($name[0] === Route::PREFIX_BASIC || $name[0] == Route::PREFIX_ADVANCED) {
+		    if ($name[0] === Route::PREFIX_BASIC || $name[0] === Route::PREFIX_ADVANCED) {
                         if (substr($name, -2) === '/*') {
                             $name = substr($name, 0, -1);
                         }
@@ -138,26 +138,6 @@ class MenuHelper
     }
 
     /**
-     * Ensure all item menu has parent.
-     * @param  array $assigned
-     * @param  array $menus
-     * @return array
-     */
-    private static function requiredParent($assigned, &$menus)
-    {
-        $l = count($assigned);
-        for ($i = 0; $i < $l; $i++) {
-            $id = $assigned[$i];
-            $parent_id = $menus[$id]['parent'];
-            if ($parent_id !== null && !in_array($parent_id, $assigned)) {
-                $assigned[$l++] = $parent_id;
-            }
-        }
-
-        return $assigned;
-    }
-
-    /**
      * Parse route
      * @param  string $route
      * @return mixed
@@ -181,6 +161,26 @@ class MenuHelper
     }
 
     /**
+     * Ensure all item menu has parent.
+     * @param  array $assigned
+     * @param  array $menus
+     * @return array
+     */
+    private static function requiredParent($assigned, &$menus)
+    {
+        $l = count($assigned);
+        for ($i = 0; $i < $l; $i++) {
+            $id = $assigned[$i];
+            $parent_id = $menus[$id]['parent'];
+            if ($parent_id !== null && !in_array($parent_id, $assigned, true)) {
+                $assigned[$l++] = $parent_id;
+            }
+        }
+
+        return $assigned;
+    }
+
+    /**
      * Normalize menu
      * @param  array $assigned
      * @param  array $menus
@@ -194,16 +194,16 @@ class MenuHelper
         $order = [];
         foreach ($assigned as $id) {
             $menu = $menus[$id];
-            if ($menu['parent'] == $parent) {
+            if ($menu['parent'] === $parent) {
                 $menu['children'] = static::normalizeMenu($assigned, $menus, $callback, $id);
                 if ($callback !== null) {
                     $item = call_user_func($callback, $menu);
                 } else {
                     $item = [
                         'label' => $menu['name'],
-                        'url' => static::parseRoute($menu['route']),
+                        'url'   => static::parseRoute($menu['route']),
                     ];
-                    if ($menu['children'] != []) {
+                    if ($menu['children'] !== []) {
                         $item['items'] = $menu['children'];
                     }
                 }
@@ -211,7 +211,7 @@ class MenuHelper
                 $order[] = $menu['order'];
             }
         }
-        if ($result != []) {
+        if ($result !== []) {
             array_multisort($order, $result);
         }
 

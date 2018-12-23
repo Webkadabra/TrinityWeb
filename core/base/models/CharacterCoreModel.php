@@ -7,7 +7,6 @@ use yii\db\ActiveRecord;
 
 class CharacterCoreModel extends ActiveRecord
 {
-
     const COMPONENT_PREFIX = 'char_';
 
     private static $_db;
@@ -16,14 +15,14 @@ class CharacterCoreModel extends ActiveRecord
      * Get connection to DB by authID and realmID or GET request DATA
      * @param null $auth_id
      * @param null $realm_id
-     * @return yii\db\Connection
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\web\NotFoundHttpException
+     * @return yii\db\Connection
      * @todo Problem with equal named realms in table *servers*
      */
     public static function getDb($auth_id = null, $realm_id = null) {
-        if($auth_id == null || $realm_id == null) {
+        if($auth_id === null || $realm_id === null) {
             if (isset(self::$_db)) {
                 return self::$_db;
             }
@@ -46,8 +45,8 @@ class CharacterCoreModel extends ActiveRecord
 
             $auth_id = $server->auth_id;
             $realm_id = $server->realm_id;
-
         }
+
         return Yii::$app->DBHelper->getConnection(
             null,
             self::buildComponentName($auth_id,$realm_id)
@@ -61,5 +60,4 @@ class CharacterCoreModel extends ActiveRecord
     public static function setDb($db) {
         self::$_db = $db;
     }
-
 }

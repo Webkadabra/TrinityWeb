@@ -2,13 +2,11 @@
 
 namespace core\components\maintenance;
 
+use core\components\maintenance\assets\MaintenanceAsset;
+use core\components\maintenance\controllers\MaintenanceController;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\Component;
-
-use core\components\maintenance\assets\MaintenanceAsset;
-
-use core\components\maintenance\controllers\MaintenanceController;
 
 /**
  * Class Maintenance
@@ -63,19 +61,19 @@ class Maintenance extends Component implements BootstrapInterface
             $this->maintenanceText = $this->maintenanceText ?: Yii::t('common', 'Down to maintenance.');
             if ($this->catchAllRoute === null) {
                 $app->controllerMap['maintenance'] = [
-                    'class' => MaintenanceController::class,
-                    'statusCode' => $this->statusCode,
-                    'retryAfter' => $this->retryAfter,
+                    'class'             => MaintenanceController::class,
+                    'statusCode'        => $this->statusCode,
+                    'retryAfter'        => $this->retryAfter,
                     'maintenanceLayout' => $this->maintenanceLayout,
-                    'maintenanceView' => $this->maintenanceView,
-                    'maintenanceText' => $this->maintenanceText
+                    'maintenanceView'   => $this->maintenanceView,
+                    'maintenanceText'   => $this->maintenanceText
                 ];
                 $app->catchAll = ['maintenance/index'];
                 Yii::$app->view->registerAssetBundle(MaintenanceAsset::class);
             } else {
                 $app->catchAll = [
                     $this->catchAllRoute,
-                    'retryAfter' => $this->retryAfter,
+                    'retryAfter'      => $this->retryAfter,
                     'maintenanceText' => $this->maintenanceText
                 ];
             }

@@ -9,22 +9,22 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile('@web/css/components/timeline.css');
 $date = null;
 $icons = [
-    'user'=>'<i class="fa fa-user bg-blue"></i>'
+    'user'=> '<i class="fa fa-user bg-blue"></i>'
 ];
 ?>
-<?php \yii\widgets\Pjax::begin() ?>
+<?php \yii\widgets\Pjax::begin(); ?>
 <div class="row">
     <div class="col-md-12">
         <?php if ($dataProvider->count > 0): ?>
             <ul class="timeline">
                 <?php foreach($dataProvider->getModels() as $model): ?>
-                    <?php if(!isset($date) || $date != Yii::$app->formatter->asDate($model->created_at, 'd')): ?>
+                    <?php if(!isset($date) || $date !== Yii::$app->formatter->asDate($model->created_at, 'd')): ?>
                         <li class="time-label">
                             <span>
-                                <?php echo Yii::$app->formatter->asDate($model->created_at, 'd') ?>
+                                <?php echo Yii::$app->formatter->asDate($model->created_at, 'd'); ?>
                             </span>
                         </li>
-                        <?php $date = Yii::$app->formatter->asDate($model->created_at) ?>
+                        <?php $date = Yii::$app->formatter->asDate($model->created_at); ?>
                     <?php endif; ?>
                     <li>
                         <?php
@@ -42,15 +42,15 @@ $icons = [
                 </li>
             </ul>
         <?php else: ?>
-            <?php echo Yii::t('backend', 'No events found') ?>
+            <?php echo Yii::t('backend', 'No events found'); ?>
         <?php endif; ?>
     </div>
     <div class="col-md-12 text-center">
         <?php echo \yii\widgets\LinkPager::widget([
-            'pagination'=>$dataProvider->pagination,
-            'options' => ['class' => 'pagination']
-        ]) ?>
+            'pagination'=> $dataProvider->pagination,
+            'options'   => ['class' => 'pagination']
+        ]); ?>
     </div>
 </div>
-<?php \yii\widgets\Pjax::end() ?>
+<?php \yii\widgets\Pjax::end(); ?>
 

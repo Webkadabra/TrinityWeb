@@ -20,51 +20,52 @@ $this->registerJs("$('#podiumModalDelete').on('show.bs.modal', function(e) { var
 ?>
 <div class="row">
     <div class="col-md-3 col-sm-4">
-        <?= $this->render('/elements/profile/_navbar', ['active' => 'messages']) ?>
+        <?php echo $this->render('/elements/profile/_navbar', ['active' => 'messages']); ?>
     </div>
     <div class="col-md-9 col-sm-8">
-        <?= $this->render('/elements/messages/_navbar', ['active' => 'sent']) ?>
+        <?php echo $this->render('/elements/messages/_navbar', ['active' => 'sent']); ?>
         <br>
-<?= GridView::widget([
+<?php echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'columns' => [
+    'filterModel'  => $searchModel,
+    'columns'      => [
         [
             'attribute' => 'receiverName',
-            'label' => Yii::t('podium/view', 'To'),
-            'format' => 'raw',
-            'value' => function ($model) {
+            'label'     => Yii::t('podium/view', 'To'),
+            'format'    => 'raw',
+            'value'     => function ($model) {
                 $list = [];
                 foreach ($model->messageReceivers as $mr) {
                     $list[] = $mr->receiver->podiumTag;
                 }
+
                 return implode('', $list);
             }
         ],
         [
             'attribute' => 'topic',
-            'label' => Yii::t('podium/view', 'Topic'),
-            'format' => 'raw',
-            'value' => function ($model) {
+            'label'     => Yii::t('podium/view', 'Topic'),
+            'format'    => 'raw',
+            'value'     => function ($model) {
                 return Html::a(Html::encode($model->topic), ['messages/view-sent', 'id' => $model->id], ['data-pjax' => '0']);
             }
         ],
         [
             'attribute' => 'created_at',
-            'label' => Yii::t('podium/view', 'Sent'),
-            'format' => 'raw',
-            'value' => function ($model) {
+            'label'     => Yii::t('podium/view', 'Sent'),
+            'format'    => 'raw',
+            'value'     => function ($model) {
                 return Html::tag('span', Podium::getInstance()->formatter->asRelativeTime($model->created_at), [
-                    'data-toggle' => 'tooltip',
+                    'data-toggle'    => 'tooltip',
                     'data-placement' => 'top',
-                    'title' => Podium::getInstance()->formatter->asDatetime($model->created_at, 'long')
+                    'title'          => Podium::getInstance()->formatter->asDatetime($model->created_at, 'long')
                 ]);
             }
         ],
         [
-            'class' => ActionColumn::class,
+            'class'    => ActionColumn::class,
             'template' => '{view-sent} {delete-sent}',
-            'buttons' => [
+            'buttons'  => [
                 'view-sent' => function ($url) {
                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ActionColumn::buttonOptions([
                         'title' => Yii::t('podium/view', 'View Message')
@@ -83,11 +84,11 @@ $this->registerJs("$('#podiumModalDelete').on('show.bs.modal', function(e) { var
     </div>
 </div><br>
 <?php Modal::begin([
-    'id' => 'podiumModalDelete',
-    'header' => Yii::t('podium/view', 'Delete Message'),
-    'footer' => Yii::t('podium/view', 'Delete Message'),
+    'id'                   => 'podiumModalDelete',
+    'header'               => Yii::t('podium/view', 'Delete Message'),
+    'footer'               => Yii::t('podium/view', 'Delete Message'),
     'footerConfirmOptions' => ['class' => 'btn btn-danger', 'id' => 'deleteUrl'],
-    'size' => Modal::SIZE_SMALL
- ]) ?>
-<?= Yii::t('podium/view', 'Are you sure you want to delete this message?') ?>
+    'size'                 => Modal::SIZE_SMALL
+ ]); ?>
+<?php echo Yii::t('podium/view', 'Are you sure you want to delete this message?'); ?>
 <?php Modal::end();

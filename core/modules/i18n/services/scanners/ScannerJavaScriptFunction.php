@@ -2,8 +2,8 @@
 
 namespace core\modules\i18n\services\scanners;
 
-use yii\helpers\Console;
 use core\modules\i18n\services\Scanner;
+use yii\helpers\Console;
 
 /**
  * Class for processing JavaScript files.
@@ -42,8 +42,8 @@ class ScannerJavaScriptFunction extends ScannerFile
             if ($this->containsTranslator($this->module->jsTranslators, $file)) {
                 $this->extractMessages($file, [
                     'translator' => (array) $this->module->jsTranslators,
-                    'begin' => '(',
-                    'end' => ')',
+                    'begin'      => '(',
+                    'end'        => ')',
                 ]);
             }
         }
@@ -71,7 +71,7 @@ class ScannerJavaScriptFunction extends ScannerFile
             return [
                 [
                     'category' => Scanner::CATEGORY_JAVASCRIPT,
-                    'message' => $message,
+                    'message'  => $message,
                 ],
             ];
         }

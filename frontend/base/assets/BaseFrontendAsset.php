@@ -2,12 +2,11 @@
 
 namespace frontend\base\assets;
 
+use core\assets\TrinityWebAssets;
 use Yii;
 use yii\bootstrap\BootstrapAsset;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
-
-use core\assets\TrinityWebAssets;
 
 /**
  * BaseFrontendAsset application asset
@@ -39,5 +38,4 @@ class BaseFrontendAsset extends AssetBundle
             $this->baseUrl = rtrim(Yii::getAlias($this->baseUrl), '/');
         }
     }
-
 }

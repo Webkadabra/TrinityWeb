@@ -18,18 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'exportLanguages')->listBox(ArrayHelper::map(Language::find()->all(), 'language_id', 'name_ascii'), [
+    <?php echo $form->field($model, 'exportLanguages')->listBox(ArrayHelper::map(Language::find()->all(), 'language_id', 'name_ascii'), [
         'multiple' => true,
-        'size' => 20,
-    ]) ?>
+        'size'     => 20,
+    ]); ?>
 
-    <?= $form->field($model, 'format')->radioList([
+    <?php echo $form->field($model, 'format')->radioList([
         Response::FORMAT_JSON => Response::FORMAT_JSON,
-        Response::FORMAT_XML => Response::FORMAT_XML,
-    ]) ?>
+        Response::FORMAT_XML  => Response::FORMAT_XML,
+    ]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('language', 'Export'), ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::submitButton(Yii::t('language', 'Export'), ['class' => 'btn btn-primary']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

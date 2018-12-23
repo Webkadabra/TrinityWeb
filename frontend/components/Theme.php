@@ -3,14 +3,16 @@
 namespace frontend\components;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\base\Theme as BaseTheme;
+use yii\helpers\ArrayHelper;
 
 class Theme extends BaseTheme {
-
+    /**
+     * Theme constructor.
+     * @param array $config
+     */
     public function __construct($config = [])
     {
-
         if(Yii::$app->TrinityWeb::isAppInstalled()) {
             $currentTheme = Yii::$app->settings->get(Yii::$app->settings::APP_THEME, Yii::$app->settings::DEFAULT_THEME, false);
         } else {
@@ -18,8 +20,8 @@ class Theme extends BaseTheme {
         }
         $baseConfiguration = [
             'basePath' => "@app/themes/$currentTheme",
-            'baseUrl' => '@web',
-            'pathMap' => [
+            'baseUrl'  => '@web',
+            'pathMap'  => [
                 '@app/views' => [
                     "@app/themes/$currentTheme/views"
                 ],
@@ -32,7 +34,7 @@ class Theme extends BaseTheme {
             ]
         ];
 
-        if($currentTheme != Yii::$app->settings::DEFAULT_THEME) {
+        if($currentTheme !== Yii::$app->settings::DEFAULT_THEME) {
             array_unshift($baseConfiguration['pathMap']['@app/views'], "@app/themes/$currentTheme/views");
             array_unshift($baseConfiguration['pathMap']['@app/modules'], "@app/themes/$currentTheme/modules");
             array_unshift($baseConfiguration['pathMap']['@app/widgets'], "@app/themes/$currentTheme/widgets");
@@ -45,15 +47,13 @@ class Theme extends BaseTheme {
         }
 
         $this->init();
-
     }
 
     public static function getCurrentTheme() {
         if(Yii::$app->TrinityWeb::isAppInstalled()) {
             return Yii::$app->settings->get(Yii::$app->settings::APP_THEME, Yii::$app->settings::DEFAULT_THEME, false);
-        } else {
-            return Yii::$app->settings::DEFAULT_THEME;
         }
+  
+            return Yii::$app->settings::DEFAULT_THEME;
     }
-
 }

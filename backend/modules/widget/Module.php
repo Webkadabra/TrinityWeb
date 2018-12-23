@@ -2,9 +2,9 @@
 
 namespace backend\modules\widget;
 
+use yii\base\BootstrapInterface;
 use yii\web\Application;
 use yii\web\GroupUrlRule;
-use yii\base\BootstrapInterface;
 
 /**
  * widget module definition class
@@ -37,8 +37,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
     {
         $app->urlManager->addRules([new GroupUrlRule([
             'prefix' => $this->id,
-            'rules' => require __DIR__ . '/url-rules.php',
+            'rules'  => require __DIR__ . '/url-rules.php',
         ])], true);
     }
-
 }

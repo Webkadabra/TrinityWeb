@@ -4,9 +4,9 @@
  *
  * @since 1.0
  */
+use core\modules\i18n\models\Language;
 use core\widgets\GridView;
 use yii\helpers\Html;
-use core\modules\i18n\models\Language;
 use yii\widgets\Pjax;
 
 /* @var $this \yii\web\View */
@@ -25,36 +25,36 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'filterModel'  => $searchModel,
         'tableOptions' => ['class' => 'table table-dark table-hover'],
-        'columns' => [
+        'columns'      => [
             ['class' => 'yii\grid\SerialColumn'],
             'language_id',
             'name_ascii',
             [
-                'format' => 'raw',
-                'filter' => Language::getStatusNames(),
-                'attribute' => 'status',
+                'format'             => 'raw',
+                'filter'             => Language::getStatusNames(),
+                'attribute'          => 'status',
                 'filterInputOptions' => ['class' => 'form-control', 'id' => 'status'],
-                'label' => Yii::t('language', 'Status'),
-                'content' => function ($language) {
+                'label'              => Yii::t('language', 'Status'),
+                'content'            => function ($language) {
                     return Html::activeDropDownList($language, 'status', Language::getStatusNames(), ['class' => 'status', 'id' => $language->language_id, 'data-url' => Yii::$app->urlManager->createUrl('/translatemanager/language/change-status')]);
                 },
             ],
             [
-                'format' => 'raw',
+                'format'    => 'raw',
                 'attribute' => Yii::t('language', 'Statistic'),
-                'content' => function ($language) {
+                'content'   => function ($language) {
                     return '<span class="statistic"><span style="width:' . $language->gridStatistic . '%"></span><i>' . $language->gridStatistic . '%</i></span>';
                 },
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
+                'class'    => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {translate} {delete}',
-                'buttons' => [
+                'buttons'  => [
                     'translate' => function ($url, $model, $key) {
                         return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', ['language/translate', 'language_id' => $model->language_id], [
-                            'title' => Yii::t('language', 'Translate'),
+                            'title'     => Yii::t('language', 'Translate'),
                             'data-pjax' => '0',
                         ]);
                     },

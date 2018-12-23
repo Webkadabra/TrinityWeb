@@ -4,7 +4,7 @@ use core\modules\forum\models\Thread;
 use yii\widgets\ListView;
 
 ?>
-<?= ListView::widget([
+<?php echo ListView::widget([
     'dataProvider'     => (new Thread())->searchByUser($id),
     'itemView'         => '/elements/forum/_thread',
     'summary'          => '',

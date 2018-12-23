@@ -39,7 +39,6 @@ class Alert extends \yii\bootstrap\Widget
      */
     public $closeButton = [];
 
-
     public function init()
     {
         parent::init();
@@ -56,9 +55,9 @@ class Alert extends \yii\bootstrap\Widget
                     $this->options['id'] = $this->getId() . '-' . $type . '-' . $i;
 
                     echo \yii\bootstrap\Alert::widget([
-                        'body' => $message,
+                        'body'        => $message,
                         'closeButton' => $this->closeButton,
-                        'options' => $this->options,
+                        'options'     => $this->options,
                     ]);
                 }
 

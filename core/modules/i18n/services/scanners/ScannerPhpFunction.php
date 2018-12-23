@@ -42,8 +42,8 @@ class ScannerPhpFunction extends ScannerFile
             if ($this->containsTranslator($this->module->phpTranslators, $file)) {
                 $this->extractMessages($file, [
                     'translator' => (array) $this->module->phpTranslators,
-                    'begin' => '(',
-                    'end' => ')',
+                    'begin'      => '(',
+                    'end'        => ')',
                 ]);
             }
         }
@@ -69,7 +69,7 @@ class ScannerPhpFunction extends ScannerFile
             return [
                 [
                     'category' => $category,
-                    'message' => $message,
+                    'message'  => $message,
                 ],
             ];
         }
@@ -90,7 +90,7 @@ class ScannerPhpFunction extends ScannerFile
         $buffer = array_slice($buffer, 2);
         $message = stripcslashes($buffer[0][1]);
         $messages[] = mb_substr($message, 1, mb_strlen($message) - 2);
-        if (isset($buffer[1], $buffer[2][0]) && $buffer[1] === '.' && $buffer[2][0] == T_CONSTANT_ENCAPSED_STRING) {
+        if (isset($buffer[1], $buffer[2][0]) && $buffer[1] === '.' && $buffer[2][0] === T_CONSTANT_ENCAPSED_STRING) {
             $messages = array_merge_recursive($messages, $this->concatMessage($buffer));
         }
 

@@ -23,15 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-default">
             <?php $form = ActiveForm::begin(['id' => 'edit-poll-form']); ?>
                 <div class="panel-body">
-                    <?= Poll::update($form, $model) ?>
+                    <?php echo Poll::update($form, $model); ?>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-8">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Poll'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Poll'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
                         </div>
                         <div class="col-sm-4">
-                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span> ' . Yii::t('podium/view', 'Cancel'), ['forum/thread', 'cid' => $model->thread->forum->category->id, 'fid' => $model->thread->forum->id, 'id' => $model->thread->id, 'slug' => $model->thread->slug], ['class' => 'btn btn-block btn-default', 'name' => 'cancel-button']) ?>
+                            <?php echo Html::a('<span class="glyphicon glyphicon-remove"></span> ' . Yii::t('podium/view', 'Cancel'), ['forum/thread', 'cid' => $model->thread->forum->category->id, 'fid' => $model->thread->forum->id, 'id' => $model->thread->id, 'slug' => $model->thread->slug], ['class' => 'btn btn-block btn-default', 'name' => 'cancel-button']); ?>
                         </div>
                     </div>
                 </div>

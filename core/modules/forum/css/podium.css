@@ -33,3 +33,27 @@ body { padding-top:20px; padding-bottom:20px }
 @-moz-document url-prefix() { fieldset { display: table-cell }}
 .dropdown-menu {color: inherit;}
 .input-group-text {background-color: #252525;border: 1px solid #191919;}
+#forum-content .card {
+    border: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+#forum-content .card-body {background-color: inherit;}
+#forum-content .card-header {
+    padding: 10px 7px 10px 10px;
+    position: relative;
+}
+#forum-content .table tbody + tbody {
+    border-top: 1px solid #32383e;
+}
+#forum-content .card-header:after {
+    content: ' ';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #F77F04;
+}
+#forum-content .card-header .card-title {font-size: 16px;}

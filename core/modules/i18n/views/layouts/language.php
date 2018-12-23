@@ -4,11 +4,11 @@
  *
  * @since 1.0
  */
-use yii\helpers\Html;
+use core\modules\i18n\bundles\TranslateManagerAsset;
+use core\widgets\Breadcrumbs;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
-use core\widgets\Breadcrumbs;
-use core\modules\i18n\bundles\TranslateManagerAsset;
+use yii\helpers\Html;
 
 /*
  * @var \yii\web\View $this
@@ -16,24 +16,24 @@ use core\modules\i18n\bundles\TranslateManagerAsset;
  */
 TranslateManagerAsset::register($this);
 ?>
-<?php $this->beginPage() ?>
+<?php $this->beginPage(); ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?php echo Yii::$app->language; ?>">
     <head>
-        <meta charset="<?= Yii::$app->charset ?>"/>
+        <meta charset="<?php echo Yii::$app->charset; ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
-        <?php $this->head() ?>
+        <?php echo Html::csrfMetaTags(); ?>
+        <title><?php echo Html::encode($this->title); ?></title>
+        <?php $this->head(); ?>
     </head>
     <body>
-        <?php $this->beginBody() ?>
+        <?php $this->beginBody(); ?>
         <div class="wrap">
             <?php
             NavBar::begin([
                 'brandLabel' => 'Lajax TranslateManager',
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
+                'brandUrl'   => Yii::$app->homeUrl,
+                'options'    => [
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
@@ -52,33 +52,33 @@ TranslateManagerAsset::register($this);
             ];
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => $menuItems,
+                'items'   => $menuItems,
             ]);
             NavBar::end();
             ?>
 
             <div class="container">
-                <?=
+                <?php echo
                 Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
+                ]);
                 ?>
                 <?php
                 foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
                     echo '<div class="alert alert-' . $key . '">' . $message . '</div>';
                 } ?>
-                <?= Html::tag('h1', Html::encode($this->title)) ?>
-                <?= $content ?>
+                <?php echo Html::tag('h1', Html::encode($this->title)); ?>
+                <?php echo $content; ?>
             </div>
         </div>
 
         <footer class="footer">
             <div class="container">
-                <p class="pull-left">&copy; Lajax TranslateManager <?= date('Y') ?></p>
-                <p class="pull-right"><?= Yii::powered() ?></p>
+                <p class="pull-left">&copy; Lajax TranslateManager <?php echo date('Y'); ?></p>
+                <p class="pull-right"><?php echo Yii::powered(); ?></p>
             </div>
         </footer>
-        <?php $this->endBody() ?>
+        <?php $this->endBody(); ?>
     </body>
 </html>
-<?php $this->endPage() ?>
+<?php $this->endPage(); ?>

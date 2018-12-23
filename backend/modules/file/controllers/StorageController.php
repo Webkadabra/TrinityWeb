@@ -2,6 +2,10 @@
 
 namespace backend\modules\file\controllers;
 
+use backend\modules\file\models\search\FileStorageItemSearch;
+use core\models\FileStorageItem;
+use trntv\filekit\actions\DeleteAction;
+use trntv\filekit\actions\UploadAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -9,24 +13,16 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-use trntv\filekit\actions\DeleteAction;
-use trntv\filekit\actions\UploadAction;
-
-use core\models\FileStorageItem;
-
-use backend\modules\file\models\search\FileStorageItemSearch;
-
 class StorageController extends Controller
 {
-
     /** @inheritdoc */
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete'        => ['post'],
                     'upload-delete' => ['delete'],
                 ],
             ],
@@ -34,7 +30,7 @@ class StorageController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_STORAGE]
                     ]
                 ]
@@ -47,18 +43,18 @@ class StorageController extends Controller
     {
         return [
             'upload' => [
-                'class' => UploadAction::class,
+                'class'       => UploadAction::class,
                 'deleteRoute' => 'upload-delete',
             ],
             'upload-delete' => [
                 'class' => DeleteAction::class,
             ],
             'upload-imperavi' => [
-                'class' => UploadAction::class,
-                'fileparam' => 'file',
+                'class'            => UploadAction::class,
+                'fileparam'        => 'file',
                 'responseUrlParam' => 'filelink',
-                'multiple' => false,
-                'disableCsrf' => true,
+                'multiple'         => false,
+                'disableCsrf'      => true,
             ],
         ];
     }
@@ -81,18 +77,18 @@ class StorageController extends Controller
         $totalSize = FileStorageItem::find()->sum('size') ?: 0;
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
-            'components' => $components,
-            'totalSize' => $totalSize,
+            'components'   => $components,
+            'totalSize'    => $totalSize,
         ]);
     }
 
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
+     * @return mixed
      */
     public function actionView($id)
     {
@@ -104,11 +100,11 @@ class StorageController extends Controller
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \Exception
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
+     * @return mixed
      */
     public function actionDelete($id)
     {
@@ -120,15 +116,14 @@ class StorageController extends Controller
     /**
      * @param integer $id
      *
-     * @return FileStorageItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return FileStorageItem the loaded model
      */
     protected function findModel($id)
     {
         if (($model = FileStorageItem::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

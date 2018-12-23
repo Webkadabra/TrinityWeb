@@ -105,11 +105,24 @@ class Configs extends \yii\base\BaseObject
      */
     private static $_instance;
     private static $_classes = [
-        'db' => 'yii\db\Connection',
-        'userDb' => 'yii\db\Connection',
-        'cache' => 'yii\caching\Cache',
+        'db'          => 'yii\db\Connection',
+        'userDb'      => 'yii\db\Connection',
+        'cache'       => 'yii\caching\Cache',
         'authManager' => 'yii\rbac\ManagerInterface',
     ];
+
+    public static function __callStatic($name, $arguments)
+    {
+        $instance = static::instance();
+        if ($instance->hasProperty($name)) {
+            return $instance->$name;
+        }  
+            if (count($arguments)) {
+                $instance->options[$name] = reset($arguments);
+            } else {
+                return array_key_exists($name, $instance->options) ? $instance->options[$name] : null;
+            }
+    }
 
     /**
      * @inheritdoc
@@ -128,8 +141,8 @@ class Configs extends \yii\base\BaseObject
 
     /**
      * Create instance of self
-     * @return static
      * @throws \yii\base\InvalidConfigException
+     * @return static
      */
     public static function instance()
     {
@@ -145,23 +158,9 @@ class Configs extends \yii\base\BaseObject
         return self::$_instance;
     }
 
-    public static function __callStatic($name, $arguments)
-    {
-        $instance = static::instance();
-        if ($instance->hasProperty($name)) {
-            return $instance->$name;
-        } else {
-            if (count($arguments)) {
-                $instance->options[$name] = reset($arguments);
-            } else {
-                return array_key_exists($name, $instance->options) ? $instance->options[$name] : null;
-            }
-        }
-    }
-
     /**
-     * @return Connection
      * @throws \yii\base\InvalidConfigException
+     * @return Connection
      */
     public static function db()
     {
@@ -169,8 +168,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return Connection
      * @throws \yii\base\InvalidConfigException
+     * @return Connection
      */
     public static function userDb()
     {
@@ -178,8 +177,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return Cache
      * @throws \yii\base\InvalidConfigException
+     * @return Cache
      */
     public static function cache()
     {
@@ -187,8 +186,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return ManagerInterface
      * @throws \yii\base\InvalidConfigException
+     * @return ManagerInterface
      */
     public static function authManager()
     {
@@ -196,8 +195,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return integer
      * @throws \yii\base\InvalidConfigException
+     * @return integer
      */
     public static function cacheDuration()
     {
@@ -205,8 +204,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return string
      * @throws \yii\base\InvalidConfigException
+     * @return string
      */
     public static function menuTable()
     {
@@ -214,8 +213,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return string
      * @throws \yii\base\InvalidConfigException
+     * @return string
      */
     public static function userTable()
     {
@@ -223,8 +222,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return string
      * @throws \yii\base\InvalidConfigException
+     * @return string
      */
     public static function defaultUserStatus()
     {
@@ -232,8 +231,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return boolean
      * @throws \yii\base\InvalidConfigException
+     * @return boolean
      */
     public static function onlyRegisteredRoute()
     {
@@ -241,8 +240,8 @@ class Configs extends \yii\base\BaseObject
     }
 
     /**
-     * @return boolean
      * @throws \yii\base\InvalidConfigException
+     * @return boolean
      */
     public static function strict()
     {

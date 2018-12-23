@@ -45,9 +45,9 @@ class GuildMember extends CharacterCoreModel
     {
         return [
             'guildid' => 'Guildid',
-            'guid' => 'Guid',
-            'rank' => 'Rank',
-            'pnote' => 'Pnote',
+            'guid'    => 'Guid',
+            'rank'    => 'Rank',
+            'pnote'   => 'Pnote',
             'offnote' => 'Offnote',
         ];
     }
@@ -58,5 +58,4 @@ class GuildMember extends CharacterCoreModel
     public function getGuild() {
         return $this->hasOne(Guild::class,['guildid' => 'guildid']);
     }
-
 }

@@ -12,10 +12,10 @@ $this->params['breadcrumbs'][] = Yii::t('common', 'Редактирование'
 ?>
 <div class="icons-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?php echo Html::encode($this->title); ?></h1>
 
-    <?= $this->render('icon_form', [
+    <?php echo $this->render('icon_form', [
         'model' => $model,
-    ]) ?>
+    ]); ?>
 
 </div>

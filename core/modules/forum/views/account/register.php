@@ -20,27 +20,27 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
 <div class="row">
     <div class="col-sm-4">
         <?php $form = ActiveForm::begin(['id' => 'register-form']); ?>
-            <?= $form->field($model, 'username')->textInput([
-                'placeholder' => Yii::t('podium/view', 'Username'),
-                'autofocus' => true,
+            <?php echo $form->field($model, 'username')->textInput([
+                'placeholder'    => Yii::t('podium/view', 'Username'),
+                'autofocus'      => true,
                 'data-container' => 'body',
                 'data-toggle'    => 'popover',
                 'data-placement' => 'right',
                 'data-content'   => Yii::t('podium/view', 'Username must start with a letter, contain only letters, digits and underscores, and be at least 3 characters long.'),
                 'data-trigger'   => 'focus'
-            ])->label(false) ?>
-            <?= $form->field($model, 'email')->textInput(['placeholder' => Yii::t('podium/view', 'E-mail')])->label(false) ?>
-            <?= $form->field($model, 'password')->passwordInput([
+            ])->label(false); ?>
+            <?php echo $form->field($model, 'email')->textInput(['placeholder' => Yii::t('podium/view', 'E-mail')])->label(false); ?>
+            <?php echo $form->field($model, 'password')->passwordInput([
                 'placeholder'    => Yii::t('podium/view', 'Password'),
                 'data-container' => 'body',
                 'data-toggle'    => 'popover',
                 'data-placement' => 'right',
                 'data-content'   => Yii::t('podium/view', 'Password must contain uppercase and lowercase letter, digit, and be at least 6 characters long.'),
                 'data-trigger'   => 'focus'
-            ])->label(false) ?>
-            <?= $form->field($model, 'passwordRepeat')->passwordInput(['placeholder' => Yii::t('podium/view', 'Repeat password')])->label(false) ?>
-            <?= $form->field($model, 'tos')->checkBox()->label('<small>' . Yii::t('podium/view', 'I have read and agree to the Terms and Conditions') . ' <span class="glyphicon glyphicon-circle-arrow-right"></span></small>') ?>
-            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Register new account'), ['class' => 'btn btn-block btn-primary', 'name' => 'register-button']) ?>
+            ])->label(false); ?>
+            <?php echo $form->field($model, 'passwordRepeat')->passwordInput(['placeholder' => Yii::t('podium/view', 'Repeat password')])->label(false); ?>
+            <?php echo $form->field($model, 'tos')->checkBox()->label('<small>' . Yii::t('podium/view', 'I have read and agree to the Terms and Conditions') . ' <span class="glyphicon glyphicon-circle-arrow-right"></span></small>'); ?>
+            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Register new account'), ['class' => 'btn btn-block btn-primary', 'name' => 'register-button']); ?>
         <?php ActiveForm::end(); ?>
         <br>
     </div>
@@ -48,11 +48,11 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <?= Yii::t('podium/view', 'Forum Terms and Conditions') ?>
+                    <?php echo Yii::t('podium/view', 'Forum Terms and Conditions'); ?>
                 </h4>
             </div>
             <div class="panel-body">
-                <?= $terms ? $terms->content : Yii::t('podium/view', 'TO BE ANNOUNCED') ?>
+                <?php echo $terms ? $terms->content : Yii::t('podium/view', 'TO BE ANNOUNCED'); ?>
             </div>
         </div>
     </div>

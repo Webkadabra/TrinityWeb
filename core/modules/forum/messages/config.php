@@ -2,9 +2,9 @@
 
 return [
     'sourcePath' => __DIR__ . DIRECTORY_SEPARATOR . '..',
-    'languages' => ['en-US', 'ja', 'pl', 'ru', 'es'],
-    'sort' => true,
-    'except' => [
+    'languages'  => ['en-US', 'ja', 'pl', 'ru', 'es'],
+    'sort'       => true,
+    'except'     => [
         '.svn',
         '.git',
         '.gitignore',

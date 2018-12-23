@@ -1,8 +1,7 @@
 <?php
 
-use core\widgets\Breadcrumbs;
 use core\widgets\Alert;
-
+use core\widgets\Breadcrumbs;
 use frontend\modules\armory\assets\ArmoryAsset;
 
 /* @var $content string */
@@ -19,14 +18,14 @@ ArmoryAsset::register($this);
     </div>
     <div class="row mih-100">
         <div class="col-12">
-            <?= Alert::widget() ?>
+            <?php echo Alert::widget(); ?>
         </div>
         <div class="col-12 h-100">
-            <?= Breadcrumbs::widget([
+            <?php echo Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= $content?>
+            ]); ?>
+            <?php echo $content;?>
         </div>
     </div>
 </div>
-<?php $this->endContent() ?>
+<?php $this->endContent(); ?>

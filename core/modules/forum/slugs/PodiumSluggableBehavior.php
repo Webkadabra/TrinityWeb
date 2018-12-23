@@ -41,7 +41,6 @@ use yii\behaviors\SluggableBehavior;
 
 class PodiumSluggableBehavior extends SluggableBehavior
 {
-
     const CATEGORY = "category";
     const FORUM = "forum";
     const THREAD = "thread";
@@ -51,5 +50,4 @@ class PodiumSluggableBehavior extends SluggableBehavior
      * @var string Use PodiumSluggableBehavior::CATEGORY,...
      */
     public $type;
-
 }

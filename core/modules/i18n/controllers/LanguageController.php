@@ -2,11 +2,11 @@
 
 namespace core\modules\i18n\controllers;
 
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use core\modules\i18n\models\Language;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
-use core\modules\i18n\models\Language;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Controller for managing multilinguality.
@@ -35,12 +35,12 @@ class LanguageController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['list', 'change-status', 'optimizer', 'scan', 'translate', 'save', 'dialog', 'message', 'view', 'create', 'update', 'delete', 'delete-source', 'import', 'export'],
+                'only'  => ['list', 'change-status', 'optimizer', 'scan', 'translate', 'save', 'dialog', 'message', 'view', 'create', 'update', 'delete', 'delete-source', 'import', 'export'],
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'   => true,
                         'actions' => ['list', 'change-status', 'optimizer', 'scan', 'translate', 'save', 'dialog', 'message', 'view', 'create', 'update', 'delete', 'delete-source', 'import', 'export'],
-                        'roles' => $this->module->roles,
+                        'roles'   => $this->module->roles,
                     ],
                 ],
             ],
@@ -110,17 +110,16 @@ class LanguageController extends Controller
      *
      * @param string $id
      *
+     * @throws NotFoundHttpException if the model cannot be found
      * @return Language the loaded model
      *
-     * @throws NotFoundHttpException if the model cannot be found
      */
     public function findModel($id)
     {
         if (($model = Language::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
     /**
@@ -137,13 +136,13 @@ class LanguageController extends Controller
             foreach ($messages as $message => $boolean) {
                 $data[] = [
                     'category' => $category,
-                    'message' => $message,
+                    'message'  => $message,
                 ];
             }
         }
 
         return new ArrayDataProvider([
-            'allModels' => $data,
+            'allModels'  => $data,
             'pagination' => false,
         ]);
     }

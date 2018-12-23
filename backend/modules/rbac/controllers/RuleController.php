@@ -2,21 +2,20 @@
 
 namespace backend\modules\rbac\controllers;
 
-use Yii;
-use backend\modules\rbac\models\BizRule;
-use yii\web\Controller;
-use backend\modules\rbac\models\searchs\BizRule as BizRuleSearch;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
-use backend\modules\rbac\components\Helper;
 use backend\modules\rbac\components\Configs;
+use backend\modules\rbac\components\Helper;
+use backend\modules\rbac\models\BizRule;
+use backend\modules\rbac\models\searchs\BizRule as BizRuleSearch;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * Description of RuleController
  */
 class RuleController extends Controller
 {
-
     /**
      * @inheritdoc
      */
@@ -24,7 +23,7 @@ class RuleController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -33,7 +32,7 @@ class RuleController extends Controller
                 'class' => \yii\filters\AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_RULE
                         ]
@@ -54,7 +53,7 @@ class RuleController extends Controller
 
         return $this->render('index', [
                 'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
+                'searchModel'  => $searchModel,
         ]);
     }
 
@@ -82,9 +81,9 @@ class RuleController extends Controller
             Helper::invalidate();
 
             return $this->redirect(['view', 'id' => $model->name]);
-        } else {
-            return $this->render('create', ['model' => $model,]);
         }
+  
+            return $this->render('create', ['model' => $model,]);
     }
 
     /**
@@ -124,16 +123,15 @@ class RuleController extends Controller
      * Finds the AuthItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param  string        $id
-     * @return AuthItem      the loaded model
      * @throws HttpException if the model cannot be found
+     * @return AuthItem      the loaded model
      */
     protected function findModel($id)
     {
         $item = Configs::authManager()->getRule($id);
         if ($item) {
             return new BizRule($item);
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

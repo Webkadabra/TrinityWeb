@@ -40,7 +40,7 @@ class MessageSearch extends Message
                     ->where(['is not', 'm2.replyto', null]);
         $query = static::find()->where(['and',
             [
-                'sender_id' => User::loggedId(),
+                'sender_id'     => User::loggedId(),
                 'sender_status' => Message::getSentStatuses()
             ],
             ['not in', Message::tableName() . '.id', $subquery]
@@ -48,7 +48,7 @@ class MessageSearch extends Message
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => [
+            'sort'  => [
                 'attributes' => ['id', 'topic', 'created_at'],
             ],
         ]);
@@ -60,6 +60,7 @@ class MessageSearch extends Message
             $dataProvider->query->joinWith(['messageReceivers' => function ($q) {
                 $q->joinWith(['receiver']);
             }]);
+
             return $dataProvider;
         }
 
@@ -99,6 +100,7 @@ class MessageSearch extends Message
                 }]);
             }]);
         }
+
         return $dataProvider;
     }
 }

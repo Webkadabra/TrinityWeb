@@ -2,9 +2,8 @@
 
 namespace core\models\auth;
 
-use Yii;
-
 use core\base\models\AuthCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "account_banned".
@@ -46,18 +45,18 @@ class AccountBanned extends AuthCoreModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('core', 'ID'),
-            'bandate' => Yii::t('core', 'Bandate'),
+            'id'        => Yii::t('core', 'ID'),
+            'bandate'   => Yii::t('core', 'Bandate'),
             'unbandate' => Yii::t('core', 'Unbandate'),
-            'bannedby' => Yii::t('core', 'Bannedby'),
+            'bannedby'  => Yii::t('core', 'Bannedby'),
             'banreason' => Yii::t('core', 'Banreason'),
-            'active' => Yii::t('core', 'Active'),
+            'active'    => Yii::t('core', 'Active'),
         ];
     }
 
     /**
-     * @return int|mixed|string
      * @throws \yii\base\InvalidConfigException
+     * @return int|mixed|string
      */
     public static function getTotalCount()
     {
@@ -76,14 +75,15 @@ class AccountBanned extends AuthCoreModel
             }
             Yii::$app->cache->set($cache_key,$cache_time_total);
         }
+
         return $totalCount;
     }
 
     /**
      * @param $beginOfDay
      * @param $endOfDay
-     * @return int|mixed|string
      * @throws \yii\base\InvalidConfigException
+     * @return int|mixed|string
      */
     public static function getCountByDates($beginOfDay, $endOfDay)
     {
@@ -106,7 +106,7 @@ class AccountBanned extends AuthCoreModel
             }
             Yii::$app->cache->set($cache_key,$cache_time_total);
         }
+
         return $totalCount;
     }
-
 }

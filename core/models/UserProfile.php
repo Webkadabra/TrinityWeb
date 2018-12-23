@@ -2,13 +2,11 @@
 
 namespace core\models;
 
+use core\modules\i18n\models\Language;
+use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
-use trntv\filekit\behaviors\UploadBehavior;
-
-use core\modules\i18n\models\Language;
 
 /**
  * This is the model class for table "{{%user_profile}}".
@@ -56,9 +54,9 @@ class UserProfile extends ActiveRecord
         return [
             TimestampBehavior::class,
             'picture' => [
-                'class' => UploadBehavior::class,
-                'attribute' => 'picture',
-                'pathAttribute' => 'avatar_path',
+                'class'            => UploadBehavior::class,
+                'attribute'        => 'picture',
+                'pathAttribute'    => 'avatar_path',
                 'baseUrlAttribute' => 'avatar_base_url'
             ]
         ];
@@ -91,13 +89,13 @@ class UserProfile extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('common', 'User ID'),
-            'locale' => Yii::t('common', 'Locale'),
-            'location' => Yii::t('common', 'Location'),
-            'timezone' => Yii::t('common', 'Timezone'),
+            'user_id'   => Yii::t('common', 'User ID'),
+            'locale'    => Yii::t('common', 'Locale'),
+            'location'  => Yii::t('common', 'Location'),
+            'timezone'  => Yii::t('common', 'Timezone'),
             'signature' => Yii::t('common', 'Signature'),
-            'picture' => Yii::t('common', 'Avatar'),
-            'gender' => Yii::t('common', 'Gender'),
+            'picture'   => Yii::t('common', 'Avatar'),
+            'gender'    => Yii::t('common', 'Gender'),
         ];
     }
 

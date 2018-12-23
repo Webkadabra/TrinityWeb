@@ -2,11 +2,11 @@
 
 namespace core\modules\i18n\services\scanners;
 
+use core\modules\i18n\services\Scanner;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\helpers\Console;
 use yii\helpers\FileHelper;
-use yii\base\InvalidConfigException;
-use core\modules\i18n\services\Scanner;
 
 /**
  * Class for processing PHP and JavaScript files.
@@ -106,7 +106,7 @@ abstract class ScannerFile extends \yii\console\controllers\MessageController
 
     protected function initFiles()
     {
-        if (!empty(self::$files[static::EXTENSION]) || !in_array(static::EXTENSION, $this->module->patterns)) {
+        if (!empty(self::$files[static::EXTENSION]) || !in_array(static::EXTENSION, $this->module->patterns, true)) {
             return;
         }
 
@@ -118,7 +118,7 @@ abstract class ScannerFile extends \yii\console\controllers\MessageController
 
             $files = FileHelper::findFiles($root, [
                 'except' => $this->module->ignoredItems,
-                'only' => [static::EXTENSION],
+                'only'   => [static::EXTENSION],
             ]);
             self::$files[static::EXTENSION] = array_merge(self::$files[static::EXTENSION], $files);
         }
@@ -204,7 +204,7 @@ abstract class ScannerFile extends \yii\console\controllers\MessageController
                         $this->scanner->addLanguageItems($languageItems);
                     }
 
-                    if (count($buffer) > 4 && $buffer[3] == ',') {
+                    if (count($buffer) > 4 && $buffer[3] === ',') {
                         array_splice($buffer, 0, 4);
                         $buffer[] = $options['end']; //append an end marker stripped by the current check
                         $this->checkTokens($options, $translatorTokens, $buffer);
@@ -214,7 +214,7 @@ abstract class ScannerFile extends \yii\console\controllers\MessageController
                     $matchedTokensCount = 0;
                     $buffer = [];
                 } elseif ($token !== $options['begin'] && isset($token[0]) && !in_array($token[0],
-                        [T_WHITESPACE, T_COMMENT])
+                        [T_WHITESPACE, T_COMMENT], true)
                 ) {
                     // ignore comments, whitespaces and beginning of function call
                     $buffer[] = $token;
@@ -232,6 +232,18 @@ abstract class ScannerFile extends \yii\console\controllers\MessageController
      * @return array|null
      */
     abstract protected function getLanguageItem($buffer);
+
+    /**
+     * Determines whether the category received as a parameter can be processed.
+     *
+     * @param string $category
+     *
+     * @return bool
+     */
+    protected function isValidCategory($category)
+    {
+        return !in_array($category, $this->module->ignoredCategories, true);
+    }
 
     /**
      * Returns the root directories to scan.
@@ -258,17 +270,5 @@ abstract class ScannerFile extends \yii\console\controllers\MessageController
         }
 
         return $directories;
-    }
-
-    /**
-     * Determines whether the category received as a parameter can be processed.
-     *
-     * @param string $category
-     *
-     * @return bool
-     */
-    protected function isValidCategory($category)
-    {
-        return !in_array($category, $this->module->ignoredCategories);
     }
 }

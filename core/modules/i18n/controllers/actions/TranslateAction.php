@@ -2,10 +2,10 @@
 
 namespace core\modules\i18n\controllers\actions;
 
-use Yii;
 use core\modules\i18n\bundles\TranslateAsset;
 use core\modules\i18n\bundles\TranslatePluginAsset;
 use core\modules\i18n\models\searches\LanguageSourceSearch;
+use Yii;
 
 /**
  * This class facilitates the listing of language elements to be translated.
@@ -39,10 +39,10 @@ class TranslateAction extends \yii\base\Action
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->controller->render('translate', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
+            'dataProvider'       => $dataProvider,
+            'searchModel'        => $searchModel,
             'searchEmptyCommand' => $this->controller->module->searchEmptyCommand,
-            'language_id' => Yii::$app->request->get('language_id', ''),
+            'language_id'        => Yii::$app->request->get('language_id', ''),
         ]);
     }
 }

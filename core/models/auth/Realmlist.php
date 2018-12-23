@@ -2,9 +2,8 @@
 
 namespace core\models\auth;
 
-use Yii;
-
 use core\base\models\AuthCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "{{%realmlist}}".
@@ -52,19 +51,18 @@ class Realmlist extends AuthCoreModel
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'address' => 'Address',
-            'localAddress' => 'Local Address',
-            'localSubnetMask' => 'Local Subnet Mask',
-            'port' => 'Port',
-            'icon' => 'Icon',
-            'flag' => 'Flag',
-            'timezone' => 'Timezone',
+            'id'                   => 'ID',
+            'name'                 => 'Name',
+            'address'              => 'Address',
+            'localAddress'         => 'Local Address',
+            'localSubnetMask'      => 'Local Subnet Mask',
+            'port'                 => 'Port',
+            'icon'                 => 'Icon',
+            'flag'                 => 'Flag',
+            'timezone'             => 'Timezone',
             'allowedSecurityLevel' => 'Allowed Security Level',
-            'population' => 'Population',
-            'gamebuild' => 'Gamebuild',
+            'population'           => 'Population',
+            'gamebuild'            => 'Gamebuild',
         ];
     }
-    
 }

@@ -2,14 +2,14 @@
 
 namespace backend\modules\rbac\components;
 
-use Yii;
 use backend\modules\rbac\models\AuthItem;
 use backend\modules\rbac\models\searchs\AuthItem as AuthItemSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use Yii;
 use yii\base\NotSupportedException;
 use yii\filters\VerbFilter;
 use yii\rbac\Item;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * AuthItemController implements the CRUD actions for AuthItem model.
@@ -19,7 +19,6 @@ use yii\rbac\Item;
  */
 class ItemController extends Controller
 {
-
     /**
      * @inheritdoc
      */
@@ -27,7 +26,7 @@ class ItemController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                     'assign' => ['post'],
@@ -38,7 +37,7 @@ class ItemController extends Controller
                 'class' => \yii\filters\AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_PERMISSION,
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ROLE
@@ -60,7 +59,7 @@ class ItemController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
         ]);
     }
 
@@ -87,9 +86,9 @@ class ItemController extends Controller
         $model->type = $this->type;
         if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->name]);
-        } else {
-            return $this->render('create', ['model' => $model]);
         }
+  
+            return $this->render('create', ['model' => $model]);
     }
 
     /**
@@ -176,15 +175,14 @@ class ItemController extends Controller
      */
     public function getType()
     {
-        
     }
 
     /**
      * Finds the AuthItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return AuthItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return AuthItem the loaded model
      */
     protected function findModel($id)
     {
@@ -192,8 +190,7 @@ class ItemController extends Controller
         $item = $this->type === Item::TYPE_ROLE ? $auth->getRole($id) : $auth->getPermission($id);
         if ($item) {
             return new AuthItem($item);
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

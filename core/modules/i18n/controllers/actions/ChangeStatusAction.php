@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\controllers\actions;
 
+use core\modules\i18n\models\Language;
 use Yii;
 use yii\web\Response;
-use core\modules\i18n\models\Language;
 
 /**
  * Class that modifies the state of a language.

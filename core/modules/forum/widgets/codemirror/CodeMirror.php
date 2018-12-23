@@ -28,11 +28,13 @@ class CodeMirror extends InputWidget
             if (empty($this->model->{$this->attribute})) {
                 $this->model->{$this->attribute} = "\n\n\n\n\n\n\n\n";
             }
+
             return Html::activeTextarea($this->model, $this->attribute, ['id' => 'codemirror']);
         }
         if (empty($this->value)) {
             $this->value = "\n\n\n\n\n\n\n\n";
         }
+
         return Html::textarea($this->name, $this->value, ['id' => 'codemirror']);
     }
 

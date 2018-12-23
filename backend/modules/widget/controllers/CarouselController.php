@@ -2,17 +2,15 @@
 
 namespace backend\modules\widget\controllers;
 
+use backend\modules\widget\models\search\CarouselItemSearch;
+use backend\modules\widget\models\search\CarouselSearch;
+use core\models\WidgetCarousel;
+use core\traits\FormAjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
-use core\models\WidgetCarousel;
-use core\traits\FormAjaxValidationTrait;
-
-use backend\modules\widget\models\search\CarouselItemSearch;
-use backend\modules\widget\models\search\CarouselSearch;
 
 class CarouselController extends Controller
 {
@@ -23,7 +21,7 @@ class CarouselController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -32,7 +30,7 @@ class CarouselController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_CAROUSELS,
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_REMOVE_CAROUSEL,
@@ -45,8 +43,8 @@ class CarouselController extends Controller
     }
 
     /**
-     * @return mixed
      * @throws \yii\base\ExitException
+     * @return mixed
      */
     public function actionIndex()
     {
@@ -56,24 +54,23 @@ class CarouselController extends Controller
 
         if ($widgetCarousel->load(Yii::$app->request->post()) && $widgetCarousel->save()) {
             return $this->redirect(['update', 'id' => $widgetCarousel->id]);
-        } else {
+        }  
             $searchModel = new CarouselSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
-                'searchModel' => $searchModel,
+                'searchModel'  => $searchModel,
                 'dataProvider' => $dataProvider,
-                'model' => $widgetCarousel,
+                'model'        => $widgetCarousel,
             ]);
-        }
     }
 
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \yii\base\ExitException
+     * @return mixed
      */
     public function actionUpdate($id)
     {
@@ -87,22 +84,22 @@ class CarouselController extends Controller
 
         if ($widgetCarousel->load(Yii::$app->request->post()) && $widgetCarousel->save()) {
             return $this->redirect(['index']);
-        } else {
+        }
+  
             return $this->render('update', [
-                'model' => $widgetCarousel,
+                'model'                 => $widgetCarousel,
                 'carouselItemsProvider' => $carouselItemsProvider,
             ]);
-        }
     }
 
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \Exception
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
+     * @return mixed
      */
     public function actionDelete($id)
     {
@@ -114,15 +111,14 @@ class CarouselController extends Controller
     /**
      * @param integer $id
      *
-     * @return WidgetCarousel the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return WidgetCarousel the loaded model
      */
     protected function findWidget($id)
     {
         if (($model = WidgetCarousel::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

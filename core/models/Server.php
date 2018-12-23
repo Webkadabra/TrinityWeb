@@ -21,7 +21,6 @@ use yii\db\ActiveRecord;
  */
 class Server extends ActiveRecord
 {
-
     const EXPANSION_CLASSIC = 0;
     const EXPANSION_THE_BURNING_CRUSADE = 1;
     const EXPANSION_WRATH_OF_THE_LICK_KING = 2;
@@ -43,10 +42,10 @@ class Server extends ActiveRecord
     {
         return [
             [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'realm_name',
+                'class'         => SluggableBehavior::class,
+                'attribute'     => 'realm_name',
                 'slugAttribute' => 'realm_slug',
-                'immutable' => true,
+                'immutable'     => true,
             ],
         ];
     }
@@ -69,14 +68,14 @@ class Server extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'auth_id' => Yii::t('common', 'Auth ID'),
-            'realm_id' => Yii::t('common', 'Realm ID'),
-            'realm_name' => Yii::t('common', 'Realm name'),
-            'realm_slug' => Yii::t('common', 'Realm slug'),
-            'realm_address' => Yii::t('common', 'Realm address'),
-            'realm_port' => Yii::t('common', 'Realm port'),
-            'realm_build' => Yii::t('common', 'Realm build'),
-            'realm_version' => Yii::t('common', 'Realm version'),
+            'auth_id'            => Yii::t('common', 'Auth ID'),
+            'realm_id'           => Yii::t('common', 'Realm ID'),
+            'realm_name'         => Yii::t('common', 'Realm name'),
+            'realm_slug'         => Yii::t('common', 'Realm slug'),
+            'realm_address'      => Yii::t('common', 'Realm address'),
+            'realm_port'         => Yii::t('common', 'Realm port'),
+            'realm_build'        => Yii::t('common', 'Realm build'),
+            'realm_version'      => Yii::t('common', 'Realm version'),
             'realm_localAddress' => Yii::t('common', 'Realm local address'),
         ];
     }
@@ -87,22 +86,22 @@ class Server extends ActiveRecord
         if($this->realm_build <= 6005)
             return self::EXPANSION_CLASSIC;
         // BC
-        if($this->realm_build >= 6022 &&  $this->realm_build <= 8606)
+        if($this->realm_build >= 6022 && $this->realm_build <= 8606)
             return self::EXPANSION_THE_BURNING_CRUSADE;
         // WOTLK
-        if($this->realm_build >= 8714 &&  $this->realm_build <= 12340)
+        if($this->realm_build >= 8714 && $this->realm_build <= 12340)
             return self::EXPANSION_WRATH_OF_THE_LICK_KING;
         // CATA
-        if($this->realm_build >= 13164 &&  $this->realm_build <= 15595)
+        if($this->realm_build >= 13164 && $this->realm_build <= 15595)
             return self::EXPANSION_CATACLYSM;
         // MOP
-        if($this->realm_build >= 16016 &&  $this->realm_build <= 18414)
+        if($this->realm_build >= 16016 && $this->realm_build <= 18414)
             return self::EXPANSION_MIST_OF_PANDARIA;
         // WOD
-        if($this->realm_build >= 19116 &&  $this->realm_build <= 21742)
+        if($this->realm_build >= 19116 && $this->realm_build <= 21742)
             return self::EXPANSION_WARLORD_OF_DRAENOR;
         // LEGION
-        if($this->realm_build >= 22522 &&  $this->realm_build <= 26972)
+        if($this->realm_build >= 22522 && $this->realm_build <= 26972)
             return self::EXPANSION_LEGION;
         // BFA
         if($this->realm_build >= 27355)
@@ -112,7 +111,6 @@ class Server extends ActiveRecord
     }
 
     public function getVersion() {
-        
         switch ($this->realm_build)
         {
            // Vanilla
@@ -168,9 +166,8 @@ class Server extends ActiveRecord
            case 28153:
            case 27980:
               return '8.0.1';
+        }
            
-        }           
         return null;
     }
-
 }

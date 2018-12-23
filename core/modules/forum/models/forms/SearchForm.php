@@ -128,6 +128,78 @@ class SearchForm extends Model
     }
 
     /**
+     * Advanced posts search.
+     * @return ActiveDataProvider
+     * @since 0.6
+     */
+    public function searchPosts()
+    {
+        $query = Vocabulary::find()->select('post_id, thread_id')->joinWith(['posts.author', 'posts.thread'])->andWhere(['is not', 'post_id', null]);
+        if (Podium::getInstance()->user->isGuest) {
+            $query->joinWith(['posts.forum' => function ($q) {
+                $q->andWhere([Forum::tableName() . '.visible' => 1])->joinWith(['category' => function ($q) {
+                    $q->andWhere([Category::tableName() . '.visible' => 1]);
+                }]);
+            }]);
+        }
+        if (!empty($this->query)) {
+            $words = explode(' ', preg_replace('/\s+/', ' ', $this->query));
+            $countWords = 0;
+            foreach ($words as $word) {
+                $query->orWhere(['like', 'word', $word]);
+                $countWords++;
+            }
+            $query->groupBy('post_id');
+            if ($this->match === 'all' && $countWords > 1) {
+                $query->select(['post_id', 'thread_id', 'COUNT(post_id) AS c'])->having(['>', 'c', $countWords - 1]);
+            }
+        }
+        $this->prepareQuery($query);
+        $sort = [
+            'defaultOrder' => ['post_id' => SORT_DESC],
+            'attributes'   => [
+                'post_id' => [
+                    'asc'     => ['post_id' => SORT_ASC],
+                    'desc'    => ['post_id' => SORT_DESC],
+                    'default' => SORT_DESC,
+                ],
+            ]
+        ];
+
+        return new ActiveDataProvider([
+            'query' => $query,
+            'sort'  => $sort,
+        ]);
+    }
+
+    /**
+     * Advanced search.
+     * @return ActiveDataProvider
+     */
+    public function searchAdvanced()
+    {
+        if (!$this->nextPage) {
+            Yii::$app->session->set('forum-search', [
+                'query'         => $this->query,
+                'match'         => $this->match,
+                'author'        => $this->author,
+                'dateFrom'      => $this->dateFrom,
+                'dateFromStamp' => $this->dateFromStamp,
+                'dateTo'        => $this->dateTo,
+                'dateToStamp'   => $this->dateToStamp,
+                'forums'        => $this->forums,
+                'type'          => $this->type,
+                'display'       => $this->display
+            ]);
+        }
+        if ($this->type === 'topics') {
+            return $this->searchTopics();
+        }
+
+        return $this->searchPosts();
+    }
+
+    /**
      * Prepares query conditions.
      * @param ActiveQuery $query
      * @param bool $topics
@@ -189,7 +261,7 @@ class SearchForm extends Model
         if (!empty($this->query)) {
             $words = explode(' ', preg_replace('/\s+/', ' ', $this->query));
             foreach ($words as $word) {
-                if ($this->match == 'all') {
+                if ($this->match === 'all') {
                     $query->andWhere(['like', Thread::tableName() . '.name', $word]);
                 } else {
                     $query->orWhere(['like', Thread::tableName() . '.name', $word]);
@@ -199,87 +271,18 @@ class SearchForm extends Model
         $this->prepareQuery($query, true);
         $sort = [
             'defaultOrder' => [Thread::tableName() . '.id' => SORT_DESC],
-            'attributes' => [
+            'attributes'   => [
                 Thread::tableName() . '.id' => [
-                    'asc' => [Thread::tableName() . '.id' => SORT_ASC],
-                    'desc' => [Thread::tableName() . '.id' => SORT_DESC],
+                    'asc'     => [Thread::tableName() . '.id' => SORT_ASC],
+                    'desc'    => [Thread::tableName() . '.id' => SORT_DESC],
                     'default' => SORT_DESC,
                 ],
             ]
         ];
+
         return new ActiveDataProvider([
             'query' => $query,
-            'sort' => $sort,
+            'sort'  => $sort,
         ]);
-    }
-
-    /**
-     * Advanced posts search.
-     * @return ActiveDataProvider
-     * @since 0.6
-     */
-    public function searchPosts()
-    {
-        $query = Vocabulary::find()->select('post_id, thread_id')->joinWith(['posts.author', 'posts.thread'])->andWhere(['is not', 'post_id', null]);
-        if (Podium::getInstance()->user->isGuest) {
-            $query->joinWith(['posts.forum' => function ($q) {
-                $q->andWhere([Forum::tableName() . '.visible' => 1])->joinWith(['category' => function ($q) {
-                    $q->andWhere([Category::tableName() . '.visible' => 1]);
-                }]);
-            }]);
-        }
-        if (!empty($this->query)) {
-            $words = explode(' ', preg_replace('/\s+/', ' ', $this->query));
-            $countWords = 0;
-            foreach ($words as $word) {
-                $query->orWhere(['like', 'word', $word]);
-                $countWords++;
-            }
-            $query->groupBy('post_id');
-            if ($this->match == 'all' && $countWords > 1) {
-                $query->select(['post_id', 'thread_id', 'COUNT(post_id) AS c'])->having(['>', 'c', $countWords - 1]);
-            }
-        }
-        $this->prepareQuery($query);
-        $sort = [
-            'defaultOrder' => ['post_id' => SORT_DESC],
-            'attributes' => [
-                'post_id' => [
-                    'asc' => ['post_id' => SORT_ASC],
-                    'desc' => ['post_id' => SORT_DESC],
-                    'default' => SORT_DESC,
-                ],
-            ]
-        ];
-        return new ActiveDataProvider([
-            'query' => $query,
-            'sort' => $sort,
-        ]);
-    }
-
-    /**
-     * Advanced search.
-     * @return ActiveDataProvider
-     */
-    public function searchAdvanced()
-    {
-        if (!$this->nextPage) {
-            Yii::$app->session->set('forum-search', [
-                'query' => $this->query,
-                'match' => $this->match,
-                'author' => $this->author,
-                'dateFrom' => $this->dateFrom,
-                'dateFromStamp' => $this->dateFromStamp,
-                'dateTo' => $this->dateTo,
-                'dateToStamp' => $this->dateToStamp,
-                'forums' => $this->forums,
-                'type' => $this->type,
-                'display' => $this->display
-            ]);
-        }
-        if ($this->type == 'topics') {
-            return $this->searchTopics();
-        }
-        return $this->searchPosts();
     }
 }

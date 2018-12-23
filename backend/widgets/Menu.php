@@ -12,7 +12,6 @@ use yii\helpers\Url;
  */
 class Menu extends \yii\widgets\Menu
 {
-
     public $submenuTemplate = "\n<ul id=\"{id}\" class=\"sidenav-second-level {collapsed}\">\n{items}\n</ul>\n";
 
     /**
@@ -52,6 +51,7 @@ class Menu extends \yii\widgets\Menu
 
         if (isset($item['url'])) {
             $template = ArrayHelper::getValue($item, 'template', $this->linkTemplate);
+
             return strtr($template, [
                 '{badge}' => isset($item['badge'])
                     ? Html::tag(
@@ -60,26 +60,25 @@ class Menu extends \yii\widgets\Menu
                         ['class' => 'pull-right-container']
                     )
                     : '',
-                '{class}' => 'nav-link' . (!$item['active'] ? null : ' active') . (isset($item['linkOptions']) && $item['linkOptions']['class'] ? ' ' . $item['linkOptions']['class'] : ''),
-                '{data-toggle}' => isset($item['items']) ? 'data-toggle="collapse" ':null,
-                '{icon}' => isset($item['icon']) ? $item['icon'] : '',
-                '{url}' => Url::to($item['url']),
-                '{role}' => isset($item['items']) && $item['items'] ? ' role="button"' : null,
+                '{class}'         => 'nav-link' . (!$item['active'] ? null : ' active') . (isset($item['linkOptions']) && $item['linkOptions']['class'] ? ' ' . $item['linkOptions']['class'] : ''),
+                '{data-toggle}'   => isset($item['items']) ? 'data-toggle="collapse" ':null,
+                '{icon}'          => isset($item['icon']) ? $item['icon'] : '',
+                '{url}'           => Url::to($item['url']),
+                '{role}'          => isset($item['items']) && $item['items'] ? ' role="button"' : null,
                 '{aria-expanded}' => isset($item['items']) && $item['items'] ? $item['active'] ? ' aria-expanded="true"' : ' aria-expanded="false"' : null,
                 '{aria-controls}' => isset($item['items']) && $item['items'] ? " aria-controls=\"".str_replace('#','',Url::to($item['url']))."\"" : null,
-                '{label}' => $item['label'],
+                '{label}'         => $item['label'],
             ]);
-        } else {
+        }  
             $template = ArrayHelper::getValue($item, 'template', $this->labelTemplate);
 
             return strtr($template, [
                 '{badge}' => isset($item['badge'])
                     ? Html::tag('small', $item['badge'], $item['badgeOptions'])
                     : '',
-                '{icon}' => isset($item['icon']) ? $item['icon'] : '',
+                '{icon}'  => isset($item['icon']) ? $item['icon'] : '',
                 '{label}' => $item['label'],
             ]);
-        }
     }
 
     /**
@@ -104,9 +103,7 @@ class Menu extends \yii\widgets\Menu
             }
             Html::addCssClass($options, $class);
 
-
             if (!empty($item['items'])) {
-
                 $parent_id = isset($this->options['id']) ? $this->options['id'] : substr(md5(mt_rand()), 0, 7);
                 $sub_id = substr(md5(mt_rand()), 0, 7);
 
@@ -115,8 +112,8 @@ class Menu extends \yii\widgets\Menu
 
                 $submenuTemplate = ArrayHelper::getValue($item, 'submenuTemplate', $this->submenuTemplate);
                 $menu .= strtr($submenuTemplate, [
-                    '{items}' => $this->renderItems($item['items']),
-                    '{id}' => $sub_id,
+                    '{items}'     => $this->renderItems($item['items']),
+                    '{id}'        => $sub_id,
                     '{collapsed}' => $item['active'] ? 'collapse show' : 'collapse',
                 ]);
             } else {
@@ -127,5 +124,4 @@ class Menu extends \yii\widgets\Menu
 
         return implode("\n", $lines);
     }
-
 }

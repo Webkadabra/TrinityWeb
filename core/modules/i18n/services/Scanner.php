@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\services;
 
+use core\modules\i18n\models\LanguageSource;
 use Yii;
 use yii\helpers\Console;
-use core\modules\i18n\models\LanguageSource;
 
 /**
  * Scanner class for scanning project, detecting new language elements
@@ -122,35 +122,6 @@ class Scanner
     }
 
     /**
-     * Initialising $_languageItems and $_removableLanguageSourceIds arrays.
-     */
-    private function _initLanguageArrays()
-    {
-        $this->_scanningProject();
-
-        $languageSources = LanguageSource::find()->all();
-
-        foreach ($languageSources as $languageSource) {
-            if (isset($this->_languageElements[$languageSource->category][$languageSource->message])) {
-                unset($this->_languageElements[$languageSource->category][$languageSource->message]);
-            } else {
-                $this->_removableLanguageSourceIds[$languageSource->id] = $languageSource->id;
-            }
-        }
-    }
-
-    /**
-     * Scan project for new language elements.
-     */
-    private function _scanningProject()
-    {
-        foreach ($this->scanners as $scanner) {
-            $object = new $scanner($this);
-            $object->run('');
-        }
-    }
-
-    /**
      * Adding language elements to the array.
      *
      * @param string $category
@@ -207,6 +178,35 @@ class Scanner
             }
 
             Console::stdout($string . "\n");
+        }
+    }
+
+    /**
+     * Initialising $_languageItems and $_removableLanguageSourceIds arrays.
+     */
+    private function _initLanguageArrays()
+    {
+        $this->_scanningProject();
+
+        $languageSources = LanguageSource::find()->all();
+
+        foreach ($languageSources as $languageSource) {
+            if (isset($this->_languageElements[$languageSource->category][$languageSource->message])) {
+                unset($this->_languageElements[$languageSource->category][$languageSource->message]);
+            } else {
+                $this->_removableLanguageSourceIds[$languageSource->id] = $languageSource->id;
+            }
+        }
+    }
+
+    /**
+     * Scan project for new language elements.
+     */
+    private function _scanningProject()
+    {
+        foreach ($this->scanners as $scanner) {
+            $object = new $scanner($this);
+            $object->run('');
         }
     }
 }

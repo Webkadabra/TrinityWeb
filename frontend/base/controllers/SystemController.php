@@ -7,7 +7,6 @@ use yii\web\Controller;
 
 class SystemController extends Controller
 {
-
     public function init()
     {
         if(!Yii::$app->TrinityWeb::isAppInstalled()) {

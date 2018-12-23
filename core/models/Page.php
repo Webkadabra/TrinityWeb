@@ -2,16 +2,13 @@
 
 namespace core\models;
 
+use core\behaviors\MultilingualBehavior;
+use core\models\i18n\PageI18n;
+use core\models\query\PageQuery;
 use Yii;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
-use core\behaviors\MultilingualBehavior;
-
-use core\models\i18n\PageI18n;
-
-use core\models\query\PageQuery;
 
 /** @noinspection PropertiesInspection */
 
@@ -54,7 +51,7 @@ class Page extends ActiveRecord
     public static function statuses()
     {
         return [
-            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
+            self::STATUS_DRAFT     => Yii::t('common', 'Draft'),
             self::STATUS_PUBLISHED => Yii::t('common', 'Published'),
         ];
     }
@@ -67,22 +64,22 @@ class Page extends ActiveRecord
         return [
             TimestampBehavior::class,
             'ml' => [
-                'class' => MultilingualBehavior::class,
-                'languages' => Yii::$app->i18nHelper::getLocales(true),
-                'langClassName' => PageI18n::class,
+                'class'           => MultilingualBehavior::class,
+                'languages'       => Yii::$app->i18nHelper::getLocales(true),
+                'langClassName'   => PageI18n::class,
                 'defaultLanguage' => Yii::$app->language,
-                'langForeignKey' => 'page_id',
-                'tableName' => PageI18n::tableName(),
-                'abridge' => false,
-                'attributes' => [
+                'langForeignKey'  => 'page_id',
+                'tableName'       => PageI18n::tableName(),
+                'abridge'         => false,
+                'attributes'      => [
                     'title', 'body',
                 ]
             ],
             'slug' => [
-                'class' => SluggableBehavior::class,
-                'attribute' => "title",
+                'class'        => SluggableBehavior::class,
+                'attribute'    => "title",
                 'ensureUnique' => true,
-                'immutable' => true
+                'immutable'    => true
             ]
         ];
     }
@@ -107,10 +104,10 @@ class Page extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'slug' => Yii::t('common', 'Slug'),
-            'view' => Yii::t('common', 'Page View'),
-            'status' => Yii::t('common', 'Active'),
+            'id'         => Yii::t('common', 'ID'),
+            'slug'       => Yii::t('common', 'Slug'),
+            'view'       => Yii::t('common', 'Page View'),
+            'status'     => Yii::t('common', 'Active'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
         ];

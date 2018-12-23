@@ -14428,23 +14428,17 @@ pre {
       background-color: #f5f7fa;
       border-color: #f5f7fa;
       box-shadow: 0 0 0 0.2rem rgba(245, 247, 250, 0.5); }
-  .btn.btn-outline-secondary {
-    color: rgba(0, 0, 0, 0.5); }
   .btn.btn-inverse-secondary {
     background-color: rgba(170, 178, 189, 0.5);
-    color: rgba(0, 0, 0, 0.5); }
-    .btn.btn-inverse-secondary:hover {
-      color: rgba(0, 0, 0, 0.5); }
+    }
   .btn.btn-inverse-light {
     background-color: #ffffff;
-    color: rgba(0, 0, 0, 0.5);
     border-color: #d9d9d9; }
     .btn.btn-inverse-light:hover {
-      color: rgba(0, 0, 0, 0.5);
       border-color: #d9d9d9; }
 
 .btn-group {
-  border: 1px solid #f2f2f2;
+  border: 1px solid #323644;
   border-radius: 0.25rem; }
   .btn-group .btn {
     border-top: none;

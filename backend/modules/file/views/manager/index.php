@@ -14,11 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-xs-12">
         <?php echo alexantr\elfinder\ElFinder::widget([
             'connectorRoute' => ['connector'],
-            'settings' => [
+            'settings'       => [
                 'height' => '500px',
-                'width' => '100%'
+                'width'  => '100%'
             ],
             'buttonNoConflict' => true,
-        ]) ?>
+        ]); ?>
     </div>
 </div>

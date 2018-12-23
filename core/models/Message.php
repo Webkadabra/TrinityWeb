@@ -2,14 +2,12 @@
 
 namespace core\models;
 
+use core\components\logs\Log;
 use Exception;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 use yii\helpers\HtmlPurifier;
-
-use core\components\logs\Log;
-
 
 /**
  * Message model
@@ -29,12 +27,11 @@ use core\components\logs\Log;
  */
 class Message extends ActiveRecord
 {
-
     /**
      * Statuses.
      */
-    const STATUS_NEW     = 1;
-    const STATUS_READ    = 10;
+    const STATUS_NEW = 1;
+    const STATUS_READ = 10;
     const STATUS_DELETED = 20;
 
     /**
@@ -42,7 +39,7 @@ class Message extends ActiveRecord
      */
     const MAX_RECEIVERS = 10;
     const SPAM_MESSAGES = 10;
-    const SPAM_WAIT     = 1;
+    const SPAM_WAIT = 1;
 
     /**
      * @var int[] Receivers' IDs.
@@ -184,18 +181,19 @@ class Message extends ActiveRecord
     {
         if ($this->messageReceivers) {
             foreach ($this->messageReceivers as $receiver) {
-                if ($receiver->receiver_id == $userId) {
+                if ($receiver->receiver_id === $userId) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     /**
      * Sends message.
-     * @return bool
      * @throws \yii\db\Exception
+     * @return bool
      */
     public function send()
     {
@@ -211,7 +209,7 @@ class Message extends ActiveRecord
             $count = count($this->receiversId);
             foreach ($this->receiversId as $receiver) {
                 if (!(new ActiveQuery())->select('id')->from(User::tableName())->where(['id' => $receiver, 'status' => User::STATUS_ACTIVE])->exists()) {
-                    if ($count == 1) {
+                    if ($count === 1) {
                         throw new Exception('No active receivers to send message to!');
                     }
                     continue;
@@ -234,11 +232,13 @@ class Message extends ActiveRecord
             } else {
                 Yii::$app->session->set($sessionKey, time());
             }
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), $this->id, __METHOD__);
         }
+
         return false;
     }
 
@@ -266,21 +266,22 @@ class Message extends ActiveRecord
                 return true;
             }
         }
+
         return false;
     }
 
     /**
      * Removes message.
-     * @return bool
      * @throws \Throwable
      * @throws \yii\db\Exception
+     * @return bool
      */
     public function remove()
     {
         $transaction = static::getDb()->beginTransaction();
         try {
             $clearCache = false;
-            if ($this->sender_status == self::STATUS_NEW) {
+            if ($this->sender_status === self::STATUS_NEW) {
                 $clearCache = true;
             }
             $this->scenario = 'remove';
@@ -292,11 +293,12 @@ class Message extends ActiveRecord
                     Yii::$app->TW::deleteCacheElement('user.newmessages', $this->sender_id);
                 }
                 $transaction->commit();
+
                 return true;
             }
             $allDeleted = true;
             foreach ($this->messageReceivers as $mr) {
-                if ($mr->receiver_status != MessageReceiver::STATUS_DELETED) {
+                if ($mr->receiver_status !== MessageReceiver::STATUS_DELETED) {
                     $allDeleted = false;
                     break;
                 }
@@ -314,6 +316,7 @@ class Message extends ActiveRecord
                     Yii::$app->TW::deleteCacheElement('user.newmessages', $this->sender_id);
                 }
                 $transaction->commit();
+
                 return true;
             }
             $this->sender_status = self::STATUS_DELETED;
@@ -324,11 +327,13 @@ class Message extends ActiveRecord
                 Yii::$app->TW::deleteCacheElement('user.newmessages', $this->sender_id);
             }
             $transaction->commit();
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), $this->id, __METHOD__);
         }
+
         return false;
     }
 
@@ -337,7 +342,7 @@ class Message extends ActiveRecord
      */
     public function markRead()
     {
-        if ($this->sender_status == self::STATUS_NEW) {
+        if ($this->sender_status === self::STATUS_NEW) {
             $this->sender_status = self::STATUS_READ;
             if ($this->save()) {
                 Yii::$app->TW::deleteCacheElement('user.newmessages', $this->sender_id);

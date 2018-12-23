@@ -2,18 +2,17 @@
 
 namespace frontend\controllers;
 
+use core\models\Page;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
-use core\models\Page;
 
 class PageController extends Controller
 {
     /**
      * @param $slug
-     * @return string
      * @throws NotFoundHttpException
+     * @return string
      */
     public function actionView($slug)
     {
@@ -24,6 +23,7 @@ class PageController extends Controller
         }
 
         $viewFile = $model->view ?: 'view';
+
         return $this->render($viewFile, ['model' => $model]);
     }
 }

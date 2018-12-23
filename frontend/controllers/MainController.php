@@ -2,23 +2,18 @@
 
 namespace frontend\controllers;
 
+use core\sitemap\UrlsIterator;
+use frontend\base\controllers\SystemController;
+use frontend\models\search\ArticleSearch;
+use Sitemaped\Element\Urlset\Urlset;
+use Sitemaped\Sitemap;
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\ErrorAction;
 use yii\web\Response;
 
-use Sitemaped\Element\Urlset\Urlset;
-use Sitemaped\Sitemap;
-
-use core\sitemap\UrlsIterator;
-
-use frontend\base\controllers\SystemController;
-
-use frontend\models\search\ArticleSearch;
-
 class MainController extends SystemController
 {
-
     /**
      * @inheritdoc
      */
@@ -29,7 +24,7 @@ class MainController extends SystemController
                 'class' => ErrorAction::class
             ],
             'set-locale' => [
-                'class' => \core\actions\SetLocaleAction::class,
+                'class'   => \core\actions\SetLocaleAction::class,
                 'locales' => Yii::$app->i18nHelper::getLocales()
             ]
         ];
@@ -45,6 +40,7 @@ class MainController extends SystemController
         $dataProvider->sort = [
             'defaultOrder' => ['created_at' => SORT_DESC]
         ];
+
         return $this->render('index', [
             'dataProvider' => $dataProvider
         ]);
@@ -53,8 +49,8 @@ class MainController extends SystemController
     /**
      * @param string $format
      * @param bool $gzip
-     * @return string
      * @throws BadRequestHttpException
+     * @return string
      */
     public function actionSitemap($format = Sitemap::FORMAT_XML, $gzip = false)
     {
@@ -83,5 +79,4 @@ class MainController extends SystemController
 
         return $content;
     }
-
 }

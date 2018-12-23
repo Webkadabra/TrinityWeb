@@ -92,8 +92,8 @@ class DateTimeWidget extends InputWidget
         // Init default clientOptions
         $this->clientOptions = ArrayHelper::merge([
             'useCurrent' => true,
-            'locale' => $this->locale ?: substr(Yii::$app->language, 0, 2),
-            'format' => $this->momentDatetimeFormat,
+            'locale'     => $this->locale ?: substr(Yii::$app->language, 0, 2),
+            'format'     => $this->momentDatetimeFormat,
         ], $this->clientOptions);
 
         // Init default options
@@ -114,21 +114,6 @@ class DateTimeWidget extends InputWidget
         $this->registerJs();
     }
 
-    protected function registerJs()
-    {
-        DateTimeAsset::register($this->getView());
-        $clientOptions = Json::encode($this->clientOptions);
-        $this->getView()->registerJs("$('#{$this->containerOptions['id']}').datetimepicker({$clientOptions})");
-
-        if (!empty($this->clientEvents)) {
-            $js = [];
-            foreach ($this->clientEvents as $event => $handler) {
-                $js[] = "jQuery('#{$this->containerOptions['id']}').on('$event', $handler);";
-            }
-            $this->getView()->registerJs(implode("\n", $js));
-        }
-    }
-
     /**
      * @return string
      */
@@ -147,7 +132,23 @@ class DateTimeWidget extends InputWidget
         }
 
         $content[] = Html::endTag('div');
+
         return implode("\n", $content);
+    }
+
+    protected function registerJs()
+    {
+        DateTimeAsset::register($this->getView());
+        $clientOptions = Json::encode($this->clientOptions);
+        $this->getView()->registerJs("$('#{$this->containerOptions['id']}').datetimepicker({$clientOptions})");
+
+        if (!empty($this->clientEvents)) {
+            $js = [];
+            foreach ($this->clientEvents as $event => $handler) {
+                $js[] = "jQuery('#{$this->containerOptions['id']}').on('$event', $handler);";
+            }
+            $this->getView()->registerJs(implode("\n", $js));
+        }
     }
 
     /**
@@ -160,6 +161,7 @@ class DateTimeWidget extends InputWidget
         } else {
             $content = Html::textInput($this->name, $this->value, $this->options);
         }
+
         return $content;
     }
 

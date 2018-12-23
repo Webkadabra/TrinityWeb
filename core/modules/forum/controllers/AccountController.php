@@ -27,14 +27,14 @@ class AccountController extends BaseController
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class'        => AccessControl::class,
                 'denyCallback' => function ($rule, $action) {
                     return $this->module->goPodium();
                 },
                 'rules' => [
                     ['class' => 'core\modules\forum\filters\InstallRule'],
                     [
-                        'allow' => true,
+                        'allow'   => true,
                         'actions' => ['new-email']
                     ],
                     [
@@ -53,7 +53,7 @@ class AccountController extends BaseController
     {
         return [
             'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
+                'class'     => 'yii\captcha\CaptchaAction',
                 'testLimit' => 1
             ],
         ];
@@ -73,6 +73,7 @@ class AccountController extends BaseController
         if ($this->accessType === 0) {
             return $this->module->goPodium();
         }
+
         return true;
     }
 
@@ -84,6 +85,7 @@ class AccountController extends BaseController
     {
         if ($this->module->userComponent !== true) {
             $this->info(Yii::t('podium/flash', 'Please use application Login form to sign in.'));
+
             return $this->module->goPodium();
         }
 
@@ -104,20 +106,24 @@ class AccountController extends BaseController
     {
         if ($this->module->userComponent !== true) {
             $this->info(Yii::t('podium/flash', 'Please contact the administrator to change your account password.'));
+
             return $this->module->goPodium();
         }
 
         $model = User::findByPasswordResetToken($token);
         if (!$model) {
             $this->error(Yii::t('podium/flash', 'The provided password reset token is invalid or expired.'));
+
             return $this->module->goPodium();
         }
         $model->scenario = 'passwordChange';
         if ($model->load(Yii::$app->request->post()) && $model->changePassword()) {
             Log::info('Password changed', $model->id, __METHOD__);
             $this->success(Yii::t('podium/flash', 'Your account password has been changed.'));
+
             return $this->module->goPodium();
         }
+
         return $this->render('password', ['model' => $model]);
     }
 
@@ -129,11 +135,13 @@ class AccountController extends BaseController
     {
         if ($this->module->userComponent !== true) {
             $this->info(Yii::t('podium/flash', "Please use application's Register form to sign up."));
+
             return $this->module->goPodium();
         }
 
-        if ($this->module->podiumConfig->get('registration_off') == '1') {
+        if ($this->module->podiumConfig->get('registration_off') === '1') {
             $this->info(Yii::t('podium/flash', 'User registration is currently not allowed.'));
+
             return $this->module->goPodium();
         }
 
@@ -141,21 +149,24 @@ class AccountController extends BaseController
         $model->scenario = 'register';
         if ($model->load(Yii::$app->request->post())) {
             $result = $model->register();
-            if ($result == User::RESP_OK) {
+            if ($result === User::RESP_OK) {
                 Log::info('Activation link queued', !empty($model->id) ? $model->id : '', __METHOD__);
                 $this->success(Yii::t('podium/flash', 'Your account has been created but it is not active yet. Click the activation link that will be sent to your e-mail address in few minutes.'));
+
                 return $this->module->goPodium();
             }
-            if ($result == User::RESP_EMAIL_SEND_ERR) {
+            if ($result === User::RESP_EMAIL_SEND_ERR) {
                 Log::warning('Error while queuing activation link', !empty($model->id) ? $model->id : '', __METHOD__);
                 $this->warning(Yii::t('podium/flash', 'Your account has been created but it is not active yet. Unfortunately there was some error while sending you the activation link. Contact administrator about this or try to {resend the link}.', [
                     'resend the link' => Html::a(Yii::t('podium/flash', 'resend the link'), ['account/reactivate'])
                 ]));
+
                 return $this->module->goPodium();
             }
-            if ($result == User::RESP_NO_EMAIL_ERR) {
+            if ($result === User::RESP_NO_EMAIL_ERR) {
                 Log::error('Error while queuing activation link - no email set', !empty($model->id) ? $model->id : '', __METHOD__);
                 $this->error(Yii::t('podium/flash', 'Sorry! There is no e-mail address saved with your account. Contact administrator about activating.'));
+
                 return $this->module->goPodium();
             }
         }
@@ -172,6 +183,7 @@ class AccountController extends BaseController
      * @param string $componentInfo
      * @param ReactivateForm|ResetForm $model
      * @param array $log
+     * @param mixed $view
      * @return string|Response
      * @since 0.6
      */
@@ -179,6 +191,7 @@ class AccountController extends BaseController
     {
         if ($this->module->userComponent !== true) {
             $this->info($componentInfo);
+
             return $this->module->goPodium();
         }
 
@@ -199,6 +212,7 @@ class AccountController extends BaseController
                 return $this->module->goPodium();
             }
         }
+
         return $this->render($view, ['model' => $model]);
     }
 }

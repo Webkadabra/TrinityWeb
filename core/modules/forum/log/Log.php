@@ -21,6 +21,7 @@ class Log
         if (Yii::$app instanceof Application && !Podium::getInstance()->user->isGuest) {
             return User::loggedId();
         }
+
         return null;
     }
 

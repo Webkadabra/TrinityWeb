@@ -19,6 +19,7 @@ class Log
         if (Yii::$app instanceof Application) {
             return Yii::$app->user->getId();
         }
+
         return null;
     }
 

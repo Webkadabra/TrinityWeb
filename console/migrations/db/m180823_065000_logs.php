@@ -17,15 +17,15 @@ class m180823_065000_logs extends Migration {
         }
 
         $this->createTable('{{%logs}}', [
-            'id' => $this->primaryKey(),
-            'level' => $this->integer(),
+            'id'       => $this->primaryKey(),
+            'level'    => $this->integer(),
             'category' => $this->string(),
             'log_time' => $this->double(),
-            'prefix' => $this->string(),
-            'ip' => $this->string(20),
-            'message' => $this->text(),
-            'model' => $this->integer(),
-            'user_id' => $this->integer(),
+            'prefix'   => $this->string(),
+            'ip'       => $this->string(20),
+            'message'  => $this->text(),
+            'model'    => $this->integer(),
+            'user_id'  => $this->integer(),
         ], $tableOptions);
 
         $this->createIndex('idx_level','{{%logs}}','level');

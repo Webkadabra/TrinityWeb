@@ -33,6 +33,8 @@ class ThreadVerifier extends Component
      */
     public $threadSlug;
 
+    private $_query;
+
     /**
      * Validates parameters.
      * @return bool
@@ -45,10 +47,9 @@ class ThreadVerifier extends Component
                 && !empty($this->threadSlug)) {
             return true;
         }
+
         return false;
     }
-
-    private $_query;
 
     /**
      * Returns verified thread.
@@ -60,14 +61,15 @@ class ThreadVerifier extends Component
             return null;
         }
         $this->_query = Thread::find()->where([
-                            Thread::tableName() . '.id' => $this->threadId,
-                            Thread::tableName() . '.slug' => $this->threadSlug,
-                            Thread::tableName() . '.forum_id' => $this->forumId,
+                            Thread::tableName() . '.id'          => $this->threadId,
+                            Thread::tableName() . '.slug'        => $this->threadSlug,
+                            Thread::tableName() . '.forum_id'    => $this->forumId,
                             Thread::tableName() . '.category_id' => $this->categoryId,
                         ]);
         if (Podium::getInstance()->user->isGuest) {
             return $this->getThreadForGuests();
         }
+
         return $this->getThreadForMembers();
     }
 
@@ -81,7 +83,7 @@ class ThreadVerifier extends Component
                 'forum' => function ($query) {
                     $query->andWhere([
                             Forum::tableName() . '.visible' => 1
-                        ])->joinWith(['category' => function ($query) {
+                        ])->joinWith(['category'            => function ($query) {
                             $query->andWhere([Category::tableName() . '.visible' => 1]);
                         }]);
                 }

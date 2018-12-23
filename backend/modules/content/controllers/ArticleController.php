@@ -2,17 +2,15 @@
 
 namespace backend\modules\content\controllers;
 
+use backend\modules\content\models\search\ArticleSearch;
+use core\models\Article;
+use core\models\ArticleCategory;
+use core\traits\FormAjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
-use core\models\Article;
-use core\models\ArticleCategory;
-use core\traits\FormAjaxValidationTrait;
-
-use backend\modules\content\models\search\ArticleSearch;
 
 class ArticleController extends Controller
 {
@@ -23,7 +21,7 @@ class ArticleController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -32,23 +30,23 @@ class ArticleController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index'],
-                        'allow' => true,
+                        'actions'     => ['index'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_ARTICLES]
                     ],
                     [
-                        'actions' => ['update'],
-                        'allow' => true,
+                        'actions'     => ['update'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_UPDATE_ARTICLE]
                     ],
                     [
-                        'actions' => ['create'],
-                        'allow' => true,
+                        'actions'     => ['create'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CREATE_ARTICLE]
                     ],
                     [
-                        'actions' => ['delete'],
-                        'allow' => true,
+                        'actions'     => ['delete'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_REMOVE_ARTICLE]
                     ]
                 ]
@@ -68,14 +66,14 @@ class ArticleController extends Controller
         ];
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * @return mixed
      * @throws \yii\base\ExitException
+     * @return mixed
      */
     public function actionCreate()
     {
@@ -88,7 +86,7 @@ class ArticleController extends Controller
         }
 
         return $this->render('create', [
-            'model' => $article,
+            'model'      => $article,
             'categories' => ArticleCategory::find()->active()->all(),
         ]);
     }
@@ -96,9 +94,9 @@ class ArticleController extends Controller
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \yii\base\ExitException
+     * @return mixed
      */
     public function actionUpdate($id)
     {
@@ -112,7 +110,7 @@ class ArticleController extends Controller
             }
         } else {
             return $this->render('update', [
-                'model' => $article,
+                'model'      => $article,
                 'categories' => ArticleCategory::find()->active()->all(),
             ]);
         }
@@ -121,10 +119,10 @@ class ArticleController extends Controller
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
+     * @return mixed
      */
     public function actionDelete($id)
     {
@@ -136,16 +134,14 @@ class ArticleController extends Controller
     /**
      * @param integer $id
      *
-     * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return Article the loaded model
      */
     protected function findModel($id)
     {
         if (($model = Article::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
-
 }

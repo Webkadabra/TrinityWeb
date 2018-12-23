@@ -31,5 +31,4 @@ class AutocompleteAsset extends AssetBundle
     public $depends = [
         'yii\web\JqueryAsset',
     ];
-
 }

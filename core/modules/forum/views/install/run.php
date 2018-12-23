@@ -10,7 +10,7 @@ use yii\helpers\Url;
 $this->title = Yii::t('podium/view', 'New Installation');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Podium Installation'), 'url' => ['install/run']];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['no-search']     = true;
+$this->params['no-search'] = true;
 
 $url = Url::to(['install/import']);
 $this->registerJs(<<<JS
@@ -70,18 +70,18 @@ JS
 <div class="row" id="startInstallation">
     <div class="text-center col-sm-12">
         <div class="alert alert-warning">
-            <span class="glyphicon glyphicon-exclamation-sign"></span> <?= Yii::t('podium/view', 'Seriously - back up your existing database first!') ?><br>
-            <?= Yii::t('podium/view', 'Podium does its best to make sure your data is not corrupted but make a database copy just in case.') ?><br>
-            <?= Yii::t('podium/view', 'You have been warned!') ?>*
+            <span class="glyphicon glyphicon-exclamation-sign"></span> <?php echo Yii::t('podium/view', 'Seriously - back up your existing database first!'); ?><br>
+            <?php echo Yii::t('podium/view', 'Podium does its best to make sure your data is not corrupted but make a database copy just in case.'); ?><br>
+            <?php echo Yii::t('podium/view', 'You have been warned!'); ?>*
         </div>
         <div class="form-group">
-            <button id="installPodium" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-import"></span> <?= Yii::t('podium/view', 'Start Podium Installation') ?></button>
+            <button id="installPodium" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-import"></span> <?php echo Yii::t('podium/view', 'Start Podium Installation'); ?></button>
         </div>
         <div class="form-group">
-            <?= Yii::t('podium/view', 'Version to install') ?> <kbd><?= $version ?></kbd>
+            <?php echo Yii::t('podium/view', 'Version to install'); ?> <kbd><?php echo $version; ?></kbd>
         </div>
         <div class="form-group text-muted">
-            <small>* <?= Yii::t('podium/view', 'Podium cannot be held liable for any database damages that may result directly or indirectly from the installing process. Back up your data first!') ?></small>
+            <small>* <?php echo Yii::t('podium/view', 'Podium cannot be held liable for any database damages that may result directly or indirectly from the installing process. Back up your data first!'); ?></small>
         </div>
     </div>
 </div>
@@ -92,16 +92,16 @@ JS
         </div>
     </div>
     <div class="col-sm-8 col-sm-offset-2 d-none" id="installationError">
-        <div class="alert alert-danger" role="alert"><?= Yii::t('podium/view', 'There was a major error during installation! Check your runtime log for details.') ?></div>
+        <div class="alert alert-danger" role="alert"><?php echo Yii::t('podium/view', 'There was a major error during installation! Check your runtime log for details.'); ?></div>
     </div>
     <div class="row d-none" id="installationFinished">
         <div class="text-center col-sm-12">
-            <a href="<?= Url::to(['forum/index']) ?>" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-ok-sign"></span> <?= Yii::t('podium/view', 'Installation finished') ?></a>
+            <a href="<?php echo Url::to(['forum/index']); ?>" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-ok-sign"></span> <?php echo Yii::t('podium/view', 'Installation finished'); ?></a>
         </div>
     </div>
     <div class="row d-none" id="installationFinishedError">
         <div class="text-center col-sm-12">
-            <button class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-alert"></span> <?= Yii::t('podium/view', 'Errors during installation') ?></button>
+            <button class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-alert"></span> <?php echo Yii::t('podium/view', 'Errors during installation'); ?></button>
         </div>
     </div><br>
     <div class="col-sm-8 col-sm-offset-2" id="installationProgress">

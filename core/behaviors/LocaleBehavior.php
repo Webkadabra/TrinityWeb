@@ -57,6 +57,7 @@ class LocaleBehavior extends Behavior
                 $locale = Yii::$app->request->getPreferredLanguage($this->getAvailableLocales());
             }
         }
+
         return $locale;
     }
 
@@ -70,6 +71,7 @@ class LocaleBehavior extends Behavior
         foreach($langs as $lang) {
             $data[$lang['language_id']] = $lang['language_id'];
         }
+
         return $data;
     }
 }

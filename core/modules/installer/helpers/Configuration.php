@@ -10,6 +10,7 @@ class Configuration
      * Sets params into the file
      *
      * @param array $config
+     * @param mixed $file
      */
     public static function setConfig($file, $config = [])
     {
@@ -31,10 +32,12 @@ class Configuration
     {
         try {
             Yii::$app->{$db_component}->isActive;
+
             return true;
         } catch (Exception $e) {
             return $e->getMessage();
         }
+
         return false;
     }
 
@@ -44,12 +47,12 @@ class Configuration
         $config = [];
         $dsn = "mysql:host=" . $model['host'] . ";port=" . $model['port'] . ";dbname=" . $model['database'];
         Yii::$app->set($component_key, [
-            'class'    => Connection::class,
-            'dsn'      => $dsn,
-            'username' => $model['login'],
-            'password' => $model['password'],
+            'class'       => Connection::class,
+            'dsn'         => $dsn,
+            'username'    => $model['login'],
+            'password'    => $model['password'],
             'tablePrefix' => $model['table_prefix'],
-            'charset'  => 'utf8'
+            'charset'     => 'utf8'
         ]);
         try {
             Yii::$app->{$component_key}->open();
@@ -67,6 +70,7 @@ class Configuration
         } catch (Exception $e) {
             $errorMsg = $e->getMessage();
         }
+
         return ['config' => $config, 'error' => $errorMsg];
     }
 
@@ -115,5 +119,4 @@ class Configuration
 ];';
         file_put_contents(Yii::getAlias('@core/config/app/components.php'), $components_config);
     }
-
 }

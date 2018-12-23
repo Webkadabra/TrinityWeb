@@ -13,6 +13,6 @@ class StellarAsset extends AssetBundle
         'css/stellar.css',
     ];
     public $js = [
-        'js/off-canvas.js'
+        'js/off-canvas.js',
     ];
 }

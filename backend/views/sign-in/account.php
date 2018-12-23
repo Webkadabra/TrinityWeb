@@ -1,13 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use kartik\select2\Select2;
-use yii\web\View;
-
 use core\models\auth\Accounts;
-
+use kartik\select2\Select2;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 use yii\web\JsExpression;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model core\models\UserProfile */
@@ -19,27 +17,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="user-profile-form">
 
-    <?php $form = ActiveForm::begin() ?>
+    <?php $form = ActiveForm::begin(); ?>
 
     <div class="row">
         <div class="col-12 col-md-4">
-            <?php echo $form->field($model, 'email') ?>
+            <?php echo $form->field($model, 'email'); ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12 col-md-2">
-            <?php echo $form->field($model, 'password')->passwordInput() ?>
+            <?php echo $form->field($model, 'password')->passwordInput(); ?>
         </div>
         <div class="col-12 col-md-2">
-            <?php echo $form->field($model, 'password_confirm')->passwordInput() ?>
+            <?php echo $form->field($model, 'password_confirm')->passwordInput(); ?>
         </div>
     </div>
 
     <div class="form-group">
-        <?php echo Html::submitButton(Yii::t('backend', 'Update'), ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::submitButton(Yii::t('backend', 'Update'), ['class' => 'btn btn-primary']); ?>
     </div>
 
-    <?php ActiveForm::end() ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

@@ -2,10 +2,10 @@
 
 namespace core\modules\i18n\controllers\actions;
 
-use yii\data\ArrayDataProvider;
-use core\modules\i18n\services\Scanner;
-use core\modules\i18n\models\LanguageSource;
 use core\modules\i18n\bundles\ScanPluginAsset;
+use core\modules\i18n\models\LanguageSource;
+use core\modules\i18n\services\Scanner;
+use yii\data\ArrayDataProvider;
 
 /**
  * Class for detecting language elements.
@@ -65,15 +65,15 @@ class ScanAction extends \yii\base\Action
             }
 
             $data[] = [
-                'id' => $languageSource->id,
-                'category' => $languageSource->category,
-                'message' => $languageSource->message,
+                'id'        => $languageSource->id,
+                'category'  => $languageSource->category,
+                'message'   => $languageSource->message,
                 'languages' => implode(', ', $languages),
             ];
         }
 
         return new ArrayDataProvider([
-            'allModels' => $data,
+            'allModels'  => $data,
             'pagination' => false,
         ]);
     }

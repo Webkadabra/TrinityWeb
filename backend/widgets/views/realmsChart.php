@@ -43,7 +43,7 @@ $this->registerJs($js);
  * @see https://api.highcharts.com/highstock/
  */
 echo Highstock::widget([
-    'id' => "realm_$id",
+    'id'      => "realm_$id",
     'scripts' => [
         'themes/dark-unica',
     ],
@@ -52,19 +52,19 @@ echo Highstock::widget([
     ],
     'options' => [
         'chart' => [
-            'renderTo' => "realm_$id",
+            'renderTo'        => "realm_$id",
             'backgroundColor' => null,
         ],
         'rangeSelector' => [
             'selected' => 1,
-            'buttons' => [
+            'buttons'  => [
                 [
                     'type' => 'all',
                     'text' => Yii::t('charts','Весь период')
                 ]
             ],
             'buttonTheme' => [
-                'width' => 100,
+                'width'  => 100,
                 'height' => 18
             ]
         ],
@@ -73,7 +73,7 @@ echo Highstock::widget([
             'title' => ['text' => Yii::t('charts','Max players')]
         ],
         'tooltip' => [
-            'pointFormat' => '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b>',
+            'pointFormat'   => '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b>',
             'valueDecimals' => 0
         ],
         'series' => new JsExpression('data.values')

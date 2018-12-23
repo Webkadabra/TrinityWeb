@@ -1,11 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use backend\modules\rbac\components\RouteRule;
 use backend\modules\rbac\AutocompleteAsset;
-use yii\helpers\Json;
 use backend\modules\rbac\components\Configs;
+use backend\modules\rbac\components\RouteRule;
+use yii\helpers\Html;
+use yii\helpers\Json;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\rbac\models\AuthItem */
@@ -31,21 +31,21 @@ $this->registerJs($js);
     <?php $form = ActiveForm::begin(['id' => 'item-form']); ?>
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
+            <?php echo $form->field($model, 'name')->textInput(['maxlength' => 64]); ?>
 
-            <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
+            <?php echo $form->field($model, 'description')->textarea(['rows' => 2]); ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'ruleName')->textInput(['id' => 'rule_name']) ?>
+            <?php echo $form->field($model, 'ruleName')->textInput(['id' => 'rule_name']); ?>
 
-            <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
+            <?php echo $form->field($model, 'data')->textarea(['rows' => 6]); ?>
         </div>
     </div>
     <div class="form-group">
         <?php
         echo Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), [
             'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
-            'name' => 'submit-button'])
+            'name'  => 'submit-button']);
         ?>
     </div>
 

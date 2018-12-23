@@ -2,10 +2,9 @@
 
 namespace frontend\models\search;
 
+use core\models\Article;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use core\models\Article;
 
 /**
  * ArticleSearch represents the model behind the search form about `core\models\Article`.
@@ -48,8 +47,8 @@ class ArticleSearch extends Article
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'slug' => $this->slug,
+            'id'          => $this->id,
+            'slug'        => $this->slug,
             'category_id' => $this->category_id,
         ]);
 

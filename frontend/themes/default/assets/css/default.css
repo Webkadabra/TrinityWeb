@@ -1,4 +1,4 @@
-html,body {background-color: #1f1e1e;}
+html,body {background-color: #23262d;}
 #wrap {margin: 0px;padding: 0px;height:initial;min-height: 100%;}
 .fix-header {margin-top: 71px;}
 .btn.btn-link:hover,.btn.btn-link:active,.btn.btn-link:focus,
@@ -8,13 +8,13 @@ ul.nav > li > a.active {color: #68C7B8;}
 
 /*---HEADER---*/
 #header-nav {
-    border-bottom: 1px solid #373737;
+    border-bottom: 1px solid #2b303c;
     -webkit-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
     -moz-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
     box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
 }
 .dropdown-menu, #header-nav {
-    background-color: #222;
+    background-color: #23262D;
 }
 #header-nav .navbar-brand {font-size: 1.8rem;}
 #header-nav ul.nav > li {
@@ -51,26 +51,26 @@ ul.nav > li > a.active {color: #68C7B8;}
 
 /*---CONTENT---*/
 .tw-left-side {
-    background: #222;
-    border-right: 1px solid #373737;
-    border-left: 1px solid #373737;
-    -webkit-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.35);
-    box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.35);
     z-index: 1;
+}
+.tw-left-side, .tw-right-side {
+    padding-top: 15px;
+}
+#layout-widgets {
+    position: sticky;
+    top: 81px;
 }
 /*---CONTENT---*/
 
 
 /*---MARQUEE---*/
 #default-tw-announce {
-    background: #252525;
-    -webkit-box-shadow: inset 0px 0px 13px 6px rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: inset 0px 0px 13px 6px rgba(0, 0, 0, 0.35);
-    box-shadow: inset 0px 0px 13px 6px rgba(0, 0, 0, 0.35);
-    border-bottom: 1px solid #373737;
+    background: #1f2229;
     padding: 5px;
-    margin: 0px -15px;
+    margin: 0 -15px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 #default-tw-announce #announce-icon {
     padding: 0px 3px;
@@ -94,11 +94,7 @@ ul.nav > li > a.active {color: #68C7B8;}
     color: #999;
     display: block;
     text-decoration: none;
-    background: #252525;
-    -webkit-box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.35);
-    -moz-box-shadow: inset 0px 0px 5px 1px rgba(0,0,0,0.35);
-    box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
-    border: 1px solid #373737;
+    background: #2a2d34;
     -webkit-transition: background .5s;
     -moz-transition: background .5s;
     -o-transition: background .5s;
@@ -112,6 +108,10 @@ ul.nav > li > a.active {color: #68C7B8;}
 }
 #articles .article-item .article-content {
     padding: 10px 10px;
+}
+#articles .article-item .article-meta {
+    margin-top: 15px;
+    font-size: 13px;
 }
 /*---ARTICLES---*/
 
@@ -147,12 +147,10 @@ ul.nav > li > a.active {color: #68C7B8;}
 }
 .modal-header, .login-box .header, .modal-content {border: 0px;background: inherit;}
 .modal-body, .login-box-body {
-    border-style: solid;
-    border-width: 1px;
-    border-color: #191919;
+    border: 1px solid #191919;
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.21), inset 0 0 0 1px rgba(255, 255, 255, .07);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.21), inset 0 0 0 1px rgba(255, 255, 255, .07);
-    background: #2b2b2b;
+    background: #23262d;
     padding: 18px 17px 10px 17px;
     font-size: 14px;
 }
@@ -195,7 +193,7 @@ ul.nav > li > a.active {color: #68C7B8;}
     margin: 0.35rem;
     color: #999;
     text-decoration: none;
-    background: #252525;
+    background: rgba(37,40,47,0.74);
     border-top: 1px solid #373737;
     border-left: 1px solid #373737;
     border-right: 1px solid #1A1A1A;
@@ -208,7 +206,7 @@ ul.nav > li > a.active {color: #68C7B8;}
 }
 #widget-status_servers .server:hover {
     color: #36BBA6;
-    background: rgba(255,255,255,0.08);
+    background: #23262d;
     text-decoration: none;
 }
 #widget-status_servers .server-bar {
@@ -242,14 +240,14 @@ ul.nav > li > a.active {color: #68C7B8;}
 
 /*---FOOTER---*/
 #footer {
-    background: #222;
-    border-top: 1px solid #373737;
-    -webkit-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
-    box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
+    background: #23262D;
     z-index: 1;
     margin-top: 3px;
     height: 40px;
+    border-top: 1px solid #2b303c;
+    -webkit-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.35);
 }
 /*---FOOTER---*/
 

@@ -32,5 +32,4 @@ class DateTimeAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         MomentAsset::class
     ];
-
 }

@@ -13,7 +13,7 @@ foreach ($menus as $i => $menu) {
 }
 $this->params['nav-items'] = $menus;
 ?>
-<?php $this->beginContent($controller->module->mainLayout) ?>
+<?php $this->beginContent($controller->module->mainLayout); ?>
 <div class="row">
     <div class="col-sm-3">
         <div id="manager-menu" class="list-group">
@@ -30,7 +30,7 @@ $this->params['nav-items'] = $menus;
         </div>
     </div>
     <div class="col-sm-9">
-        <?= $content ?>
+        <?php echo $content; ?>
     </div>
 </div>
 <?php

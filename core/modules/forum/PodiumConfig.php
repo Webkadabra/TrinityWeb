@@ -37,6 +37,8 @@ class PodiumConfig extends Component
     const SECONDS_EMAIL_TOKEN_EXPIRE = 86400;
     const SECONDS_PASSWORD_RESET_TOKEN_EXPIRE = 86400;
 
+    private $_config;
+
     /**
      * Returns configuration table name.
      * @return string
@@ -57,18 +59,18 @@ class PodiumConfig extends Component
     public function getDefaults()
     {
         return [
-            'forum.allow_polls' => self::FLAG_ALLOW_POLLS,
-            'forum.from_name' => self::DEFAULT_FROM_NAME,
-            'forum.hot_minimum' => self::HOT_MINIMUM,
+            'forum.allow_polls'      => self::FLAG_ALLOW_POLLS,
+            'forum.from_name'        => self::DEFAULT_FROM_NAME,
+            'forum.hot_minimum'      => self::HOT_MINIMUM,
             'forum.maintenance_mode' => self::MAINTENANCE_MODE,
-            'forum.max_attempts' => self::MAX_SEND_ATTEMPTS,
-            'forum.members_visible' => self::FLAG_MEMBERS_VISIBLE,
-            'forum.merge_posts' => self::FLAG_MERGE_POSTS,
+            'forum.max_attempts'     => self::MAX_SEND_ATTEMPTS,
+            'forum.members_visible'  => self::FLAG_MEMBERS_VISIBLE,
+            'forum.merge_posts'      => self::FLAG_MERGE_POSTS,
             'forum.meta_description' => self::META_DESCRIPTION,
-            'forum.meta_keywords' => self::META_KEYWORDS,
-            'forum.name' => self::PODIUM_NAME,
-            'forum.use_wysiwyg' => self::FLAG_USE_WYSIWYG,
-            'forum.version' => Podium::getInstance()->version,
+            'forum.meta_keywords'    => self::META_KEYWORDS,
+            'forum.name'             => self::PODIUM_NAME,
+            'forum.use_wysiwyg'      => self::FLAG_USE_WYSIWYG,
+            'forum.version'          => Podium::getInstance()->version,
         ];
     }
 
@@ -81,8 +83,6 @@ class PodiumConfig extends Component
     {
         return Podium::getInstance()->podiumCache;
     }
-
-    private $_config;
 
     /**
      * Returns configuration values.
@@ -100,13 +100,14 @@ class PodiumConfig extends Component
             Log::warning($exc->getMessage(), null, __METHOD__);
             $this->_config = $this->stored;
         }
+
         return $this->_config;
     }
 
     /**
      * Returns cached configuration values.
-     * @return array
      * @throws Exception
+     * @return array
      * @since 0.6
      */
     public function getCached()
@@ -116,6 +117,7 @@ class PodiumConfig extends Component
             $cache = $this->notCached;
             $this->cache->set('config', $cache);
         }
+
         return $cache;
     }
 
@@ -151,6 +153,7 @@ class PodiumConfig extends Component
                 Log::error($e->getMessage(), null, __METHOD__);
             }
         }
+
         return $stored;
     }
 
@@ -162,6 +165,7 @@ class PodiumConfig extends Component
     public function get($name)
     {
         $config = $this->all;
+
         return isset($config[$name]) ? $config[$name] : null;
     }
 
@@ -194,11 +198,13 @@ class PodiumConfig extends Component
                 }
                 $this->cache->set('config', $this->notCached);
                 $this->_config = null;
+
                 return true;
             }
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 

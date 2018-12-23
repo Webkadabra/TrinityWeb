@@ -2,15 +2,13 @@
 
 namespace backend\controllers;
 
+use backend\models\search\UserSearch;
+use core\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
-use core\models\User;
-
-use backend\models\search\UserSearch;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -21,7 +19,7 @@ class UserController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -30,18 +28,18 @@ class UserController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index'],
-                        'allow' => true,
+                        'actions'     => ['index'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_USERS]
                     ],
                     [
-                        'actions' => ['view'],
-                        'allow' => true,
+                        'actions'     => ['view'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_VIEW_USER]
                     ],
                     [
-                        'actions' => ['delete'],
-                        'allow' => true,
+                        'actions'     => ['delete'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_REMOVE_USER]
                     ]
                 ]
@@ -59,7 +57,7 @@ class UserController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -67,8 +65,8 @@ class UserController extends Controller
     /**
      * Displays a single User model.
      * @param integer $id
-     * @return mixed
      * @throws NotFoundHttpException
+     * @return mixed
      */
     public function actionView($id)
     {
@@ -81,11 +79,11 @@ class UserController extends Controller
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \Exception
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
+     * @return mixed
      */
     public function actionDelete($id)
     {
@@ -99,15 +97,14 @@ class UserController extends Controller
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return User the loaded model
      */
     protected function findModel($id)
     {
         if (($model = User::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

@@ -23,7 +23,7 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
 ?>
 <div class="row">
     <div class="col-md-3 col-sm-4">
-        <?= $this->render('/elements/profile/_navbar', ['active' => 'forum']) ?>
+        <?php echo $this->render('/elements/profile/_navbar', ['active' => 'forum']); ?>
     </div>
     <div class="col-md-6 col-sm-8">
         <div class="panel panel-default">
@@ -31,7 +31,7 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'timezone')->widget(Select2::class, [
+                            <?php echo $form->field($model, 'timezone')->widget(Select2::class, [
                                 'data'          => Helper::timeZones(),
                                 'theme'         => Select2::THEME_KRAJEE,
                                 'showToggleAll' => false,
@@ -43,25 +43,25 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'anonymous')->checkbox(['uncheck' => 0])->label(Yii::t('podium/view', 'Hide username while forum viewing')) ?>
+                            <?php echo $form->field($model, 'anonymous')->checkbox(['uncheck' => 0])->label(Yii::t('podium/view', 'Hide username while forum viewing')); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'location')->textInput(['autocomplete' => 'off'])->label(Yii::t('podium/view', 'Whereabouts')) ?>
+                            <?php echo $form->field($model, 'location')->textInput(['autocomplete' => 'off'])->label(Yii::t('podium/view', 'Whereabouts')); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form
+                            <?php echo $form
                                 ->field($model, 'signature')
                                 ->label(Yii::t('podium/view', 'Signature under each post'))
-                                ->widget(EditorBasic::class) ?>
+                                ->widget(EditorBasic::class); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form
+                            <?php echo $form
                                 ->field($model, 'gravatar')
                                 ->checkbox(['disabled' => empty($user->email)])
                                 ->label('<strong>' . Yii::t('podium/view', 'Use Gravatar image as avatar') . '</strong>')
@@ -70,22 +70,22 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
                                         ? Html::tag('span', Yii::t('podium/view', 'You need email address set to use Gravatar.'), ['class' => 'text-danger float-right'])
                                         : ''
                                     ) . Html::a(Yii::t('podium/view', 'What is Gravatar?'), 'http://gravatar.com', ['target' => 'gravatar'])
-                                ) ?>
+                                ); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'image')->label(Yii::t('podium/view', 'Or upload your own avatar'))->widget(FileInput::class, [
+                            <?php echo $form->field($model, 'image')->label(Yii::t('podium/view', 'Or upload your own avatar'))->widget(FileInput::class, [
                                 'options'       => ['accept' => 'image/*'],
                                 'pluginOptions' => ['allowedFileExtensions' => ['jpg', 'jpeg', 'gif', 'png']]
-                            ])->hint(Yii::t('podium/view', 'Square avatars look best.') . '<br>' . Yii::t('podium/view', 'Maximum size is {size}, {width}x{height} pixels; png, jpg and gif images only.', ['size' => ceil(Meta::MAX_SIZE / 1024) . 'kB', 'width' => Meta::MAX_WIDTH, 'height' => Meta::MAX_HEIGHT])) ?>
+                            ])->hint(Yii::t('podium/view', 'Square avatars look best.') . '<br>' . Yii::t('podium/view', 'Maximum size is {size}, {width}x{height} pixels; png, jpg and gif images only.', ['size' => ceil(Meta::MAX_SIZE / 1024) . 'kB', 'width' => Meta::MAX_WIDTH, 'height' => Meta::MAX_HEIGHT])); ?>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save changes'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save changes'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
                         </div>
                     </div>
                 </div>
@@ -93,9 +93,9 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
         </div>
     </div>
     <div class="col-md-3 d-sm-none d-none">
-        <?= Avatar::widget([
-            'author' => $user,
+        <?php echo Avatar::widget([
+            'author'   => $user,
             'showName' => false
-        ]) ?>
+        ]); ?>
     </div>
 </div><br>

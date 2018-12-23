@@ -51,6 +51,16 @@ class Module extends \yii\base\Module implements BootstrapInterface
      * Its used when `layout` set to 'left-menu', 'right-menu' or 'top-menu'.
      */
     public $mainLayout = '@backend\modules\rbac/admin/views/layouts/main.php';
+
+    /**
+     * @var string Default url for breadcrumb
+     */
+    public $defaultUrl;
+
+    /**
+     * @var string Default url label for breadcrumb
+     */
+    public $defaultUrlLabel;
     /**
      * @var array
      * @see [[menus]]
@@ -62,27 +72,17 @@ class Module extends \yii\base\Module implements BootstrapInterface
      */
     private $_coreItems = [
         'assignment' => 'Assignments',
-        'role' => 'Roles',
+        'role'       => 'Roles',
         'permission' => 'Permissions',
-        'route' => 'Routes',
-        'rule' => 'Rules',
-        'menu' => 'Menus',
+        'route'      => 'Routes',
+        'rule'       => 'Rules',
+        'menu'       => 'Menus',
     ];
     /**
      * @var array
      * @see [[items]]
      */
     private $_normalizeMenus;
-
-    /**
-     * @var string Default url for breadcrumb
-     */
-    public $defaultUrl;
-
-    /**
-     * @var string Default url label for breadcrumb
-     */
-    public $defaultUrlLabel;
 
     /**
      * @inheritdoc
@@ -116,9 +116,9 @@ class Module extends \yii\base\Module implements BootstrapInterface
 
             $config = components\Configs::instance();
             $conditions = [
-                'user' => $config->db && $config->db->schema->getTableSchema($config->userTable),
+                'user'       => $config->db && $config->db->schema->getTableSchema($config->userTable),
                 'assignment' => ($userClass = Yii::$app->getUser()->identityClass) && is_subclass_of($userClass, 'yii\db\BaseActiveRecord'),
-                'menu' => $config->db && $config->db->schema->getTableSchema($config->menuTable),
+                'menu'       => $config->db && $config->db->schema->getTableSchema($config->menuTable),
             ];
             foreach ($this->_coreItems as $id => $lable) {
                 if (!isset($conditions[$id]) || $conditions[$id]) {
@@ -145,6 +145,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
                 }
             }
         }
+
         return $this->_normalizeMenus;
     }
 
@@ -169,10 +170,12 @@ class Module extends \yii\base\Module implements BootstrapInterface
 
             $view->params['breadcrumbs'][] = [
                 'label' => ($this->defaultUrlLabel ?: Yii::t('rbac-admin', 'RBAC')),
-                'url' => ['/' . ($this->defaultUrl ?: $this->uniqueId)],
+                'url'   => ['/' . ($this->defaultUrl ?: $this->uniqueId)],
             ];
+
             return true;
         }
+
         return false;
     }
 
@@ -187,8 +190,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
     {
         $app->urlManager->addRules([new GroupUrlRule([
             'prefix' => $this->id,
-            'rules' => require __DIR__ . '/url-rules.php',
+            'rules'  => require __DIR__ . '/url-rules.php',
         ])], true);
     }
-
 }

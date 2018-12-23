@@ -31,6 +31,15 @@ class Module extends \yii\base\Module implements BootstrapInterface
         }
     }
 
+    public function beforeAction($action) {
+        Yii::$app->view->params['breadcrumbs'][] = ['label' => Yii::t('ladder','Ladder'),'url' => ['/ladder/default/index']];
+        if(Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_STATUS) !== Yii::$app->settings::ENABLED) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        return parent::beforeAction($action);
+    }
+
     protected function setDefaultSettings($app)
     {
         /* @var \BaseApplication $app */
@@ -46,19 +55,11 @@ class Module extends \yii\base\Module implements BootstrapInterface
         }
     }
 
-    public function beforeAction($action) {
-        Yii::$app->view->params['breadcrumbs'][] = ['label' => Yii::t('ladder','Ladder'),'url' => ['/ladder/default/index']];
-        if(Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_STATUS) !== Yii::$app->settings::ENABLED) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
-        }
-        return parent::beforeAction($action);
-    }
-
     protected function addUrlManagerRules($app)
     {
         $app->urlManager->addRules([new GroupUrlRule([
             'prefix' => $this->id,
-            'rules' => require __DIR__ . '/url-rules.php',
+            'rules'  => require __DIR__ . '/url-rules.php',
         ])]);
     }
 }

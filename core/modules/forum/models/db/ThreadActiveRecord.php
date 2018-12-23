@@ -98,9 +98,9 @@ class ThreadActiveRecord extends ActiveRecord
         return [
             TimestampBehavior::class,
             [
-                'class' => Podium::getInstance()->slugGenerator,
+                'class'     => Podium::getInstance()->slugGenerator,
                 'attribute' => 'name',
-                'type' => PodiumSluggableBehavior::THREAD
+                'type'      => PodiumSluggableBehavior::THREAD
             ],
         ];
     }
@@ -115,9 +115,10 @@ class ThreadActiveRecord extends ActiveRecord
             ['post', 'required', 'on' => ['new']],
             ['post', 'string', 'min' => 10, 'on' => ['new']],
             ['post', 'filter', 'filter' => function ($value) {
-                if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
+                if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
                     return HtmlPurifier::process(trim($value), Helper::podiumPurifierConfig('markdown'));
                 }
+
                 return HtmlPurifier::process(trim($value), Helper::podiumPurifierConfig('full'));
             }, 'on' => ['new']],
             ['pinned', 'boolean'],
@@ -167,9 +168,9 @@ class ThreadActiveRecord extends ActiveRecord
     {
         return [
             'pollAuestion' => Yii::t('podium/view', 'Question'),
-            'pollVotes' => Yii::t('podium/view', 'Number of votes'),
-            'pollHidden' => Yii::t('podium/view', 'Hide results before voting'),
-            'pollEnd' => Yii::t('podium/view', 'Poll ends at'),
+            'pollVotes'    => Yii::t('podium/view', 'Number of votes'),
+            'pollHidden'   => Yii::t('podium/view', 'Hide results before voting'),
+            'pollEnd'      => Yii::t('podium/view', 'Poll ends at'),
         ];
     }
 

@@ -21,15 +21,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <strong><?= Yii::t('podium/view', 'Select posts to delete') ?></strong>:
+                <strong><?php echo Yii::t('podium/view', 'Select posts to delete'); ?></strong>:
             </div>
         </div>
     </div>
 </div><br>
 
-<?= Html::beginForm(); ?>
+<?php echo Html::beginForm(); ?>
 <?php Pjax::begin(); ?>
-<?= ListView::widget([
+<?php echo ListView::widget([
     'dataProvider'     => $dataProvider,
     'itemView'         => '/elements/forum/_post_select',
     'summary'          => '',
@@ -45,11 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Delete Posts'), ['class' => 'btn btn-block btn-danger', 'name' => 'save-button']) ?>
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Delete Posts'), ['class' => 'btn btn-block btn-danger', 'name' => 'save-button']); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div><br>
-<?= Html::endForm();
+<?php echo Html::endForm();

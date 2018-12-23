@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if (!empty($preview)): ?>
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1">
-        <?= Alert::widget([
+        <?php echo Alert::widget([
             'body' => '<strong><small>'
                         . Yii::t('podium/view', 'Post Preview')
                         . '</small></strong>:<hr>'
@@ -40,23 +40,23 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if ($isFirstPost): ?>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'topic')->textInput(['autofocus' => true])->label(Yii::t('podium/view', 'Topic')) ?>
+                            <?php echo $form->field($model, 'topic')->textInput(['autofocus' => true])->label(Yii::t('podium/view', 'Topic')); ?>
                         </div>
                     </div>
 <?php endif; ?>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'content')->label(false)->widget(EditorFull::class) ?>
+                            <?php echo $form->field($model, 'content')->label(false)->widget(EditorFull::class); ?>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-8">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Post'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Post'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
                         </div>
                         <div class="col-sm-4">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']) ?>
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']); ?>
                         </div>
                     </div>
                 </div>

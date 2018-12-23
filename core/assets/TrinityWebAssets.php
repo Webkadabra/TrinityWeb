@@ -2,8 +2,8 @@
 
 namespace core\assets;
 
-use yii\web\AssetBundle;
 use yii\bootstrap\BootstrapAsset;
+use yii\web\AssetBundle;
 
 class TrinityWebAssets extends AssetBundle
 {

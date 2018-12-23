@@ -33,6 +33,7 @@ class DbManager extends \yii\rbac\DbManager
         if (!isset($this->_assignments[$userId])) {
             $this->_assignments[$userId] = parent::getAssignments($userId);
         }
+
         return $this->_assignments[$userId];
     }
 
@@ -44,6 +45,7 @@ class DbManager extends \yii\rbac\DbManager
         if ($this->_childrenList === null) {
             $this->_childrenList = parent::getChildrenList();
         }
+
         return $this->_childrenList;
     }
 }

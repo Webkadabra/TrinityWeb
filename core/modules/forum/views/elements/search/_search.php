@@ -14,51 +14,51 @@ use yii\helpers\Html;
     <div class="row">
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-2">
-                <?= $form->field($model, 'query')->textInput(['class' => 'form-control input-lg', 'autofocus' => true])->label(Yii::t('podium/view', 'Find words')) ?>
+                <?php echo $form->field($model, 'query')->textInput(['class' => 'form-control input-lg', 'autofocus' => true])->label(Yii::t('podium/view', 'Find words')); ?>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             <div class="col-sm-4 col-sm-offset-2">
-                <?= $form->field($model, 'match', ['inline' => true])->radioList(['all' => Yii::t('podium/view', 'all words'), 'any' => Yii::t('podium/view', 'any word')], ['unselect' => 'all'])->label(Yii::t('podium/view', 'Match')) ?>
+                <?php echo $form->field($model, 'match', ['inline' => true])->radioList(['all' => Yii::t('podium/view', 'all words'), 'any' => Yii::t('podium/view', 'any word')], ['unselect' => 'all'])->label(Yii::t('podium/view', 'Match')); ?>
             </div>
             <div class="col-sm-4">
-                <?= $form->field($model, 'author')->textInput()->label(Yii::t('podium/view', 'Author')) ?>
+                <?php echo $form->field($model, 'author')->textInput()->label(Yii::t('podium/view', 'Author')); ?>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             <div class="col-sm-4 col-sm-offset-2">
-                <?= $form->field($model, 'dateFrom')->widget(DatePicker::class, ['removeButton' => false, 'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-mm-dd']])->label(Yii::t('podium/view', 'Date from')) ?>
+                <?php echo $form->field($model, 'dateFrom')->widget(DatePicker::class, ['removeButton' => false, 'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-mm-dd']])->label(Yii::t('podium/view', 'Date from')); ?>
             </div>
             <div class="col-sm-4">
-                <?= $form->field($model, 'dateTo')->widget(DatePicker::class, ['removeButton' => false, 'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-mm-dd']])->label(Yii::t('podium/view', 'Date to')) ?>
+                <?php echo $form->field($model, 'dateTo')->widget(DatePicker::class, ['removeButton' => false, 'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-mm-dd']])->label(Yii::t('podium/view', 'Date to')); ?>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-2">
-                <?= $form->field($model, 'forums')->dropDownList($list, ['multiple' => true, 'encode' => false])->label(Yii::t('podium/view', 'Search in Forums')) ?>
+                <?php echo $form->field($model, 'forums')->dropDownList($list, ['multiple' => true, 'encode' => false])->label(Yii::t('podium/view', 'Search in Forums')); ?>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="form-group">
             <div class="col-sm-4 col-sm-offset-2">
-                <?= $form->field($model, 'type', ['inline' => true])->radioList(['posts' => Yii::t('podium/view', 'posts contents'), 'topics' => Yii::t('podium/view', 'threads titles')], ['unselect' => 'posts'])->label(Yii::t('podium/view', 'Search in')) ?>
+                <?php echo $form->field($model, 'type', ['inline' => true])->radioList(['posts' => Yii::t('podium/view', 'posts contents'), 'topics' => Yii::t('podium/view', 'threads titles')], ['unselect' => 'posts'])->label(Yii::t('podium/view', 'Search in')); ?>
             </div>
             <div class="col-sm-4">
-                <?= $form->field($model, 'display', ['inline' => true])->radioList(['posts' => Yii::t('podium/view', 'as posts'), 'topics' => Yii::t('podium/view', 'as threads')], ['unselect' => 'topics'])->label(Yii::t('podium/view', 'Display as')) ?>
+                <?php echo $form->field($model, 'display', ['inline' => true])->radioList(['posts' => Yii::t('podium/view', 'as posts'), 'topics' => Yii::t('podium/view', 'as threads')], ['unselect' => 'topics'])->label(Yii::t('podium/view', 'Display as')); ?>
             </div>
         </div>
     </div>
 <div class="row">
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-2">
-                <?= Html::submitButton('<span class="glyphicon glyphicon-search"></span> ' . Yii::t('podium/view', 'Search'), ['class' => 'btn btn-block btn-lg btn-primary', 'name' => 'search-button']) ?>
+                <?php echo Html::submitButton('<span class="glyphicon glyphicon-search"></span> ' . Yii::t('podium/view', 'Search'), ['class' => 'btn btn-block btn-lg btn-primary', 'name' => 'search-button']); ?>
             </div>
         </div>
     </div>

@@ -2,20 +2,17 @@
 
 namespace frontend\models\forms;
 
+use core\models\User;
+use core\validators\ReCaptchaValidator;
 use Yii;
 use yii\base\Exception;
 use yii\base\Model;
-
-use core\validators\ReCaptchaValidator;
-
-use core\models\User;
 
 /**
  * Signup form
  */
 class SignupForm extends Model
 {
-
     const CAPTCHA = 'CAPTCHA';
     const NON_CAPTCHA = 'NON_CAPTCHA';
 
@@ -51,6 +48,7 @@ class SignupForm extends Model
             'r_password',
             'email'
         ];
+
         return $scenarios;
     }
 
@@ -64,7 +62,7 @@ class SignupForm extends Model
             ['username', 'required'],
             ['username', 'unique',
                 'targetClass' => '\core\models\User',
-                'message' => Yii::t('frontend', 'This username has already been taken.')
+                'message'     => Yii::t('frontend', 'This username has already been taken.')
             ],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
@@ -73,7 +71,7 @@ class SignupForm extends Model
             ['email', 'email'],
             ['email', 'unique',
                 'targetClass' => '\core\models\User',
-                'message' => Yii::t('frontend', 'This email address has already been taken.')
+                'message'     => Yii::t('frontend', 'This email address has already been taken.')
             ],
 
             [['password', 'r_password'], 'required'],
@@ -81,14 +79,14 @@ class SignupForm extends Model
             ['r_password', 'compare', 'compareAttribute' => 'password', 'message' => Yii::t('frontend', "Passwords don't match") ],
         ];
 
-        if(Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_STATUS) == Yii::$app->settings::ENABLED) {
+        if(Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_STATUS) === Yii::$app->settings::ENABLED) {
             $rules[] = [
                 ['reCaptcha'],
                 ReCaptchaValidator::class,
-                'on' => self::CAPTCHA,
-                'except' => self::NON_CAPTCHA,
-                'skipOnEmpty' => false,
-                'secret' => Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_SECRET),
+                'on'               => self::CAPTCHA,
+                'except'           => self::NON_CAPTCHA,
+                'skipOnEmpty'      => false,
+                'secret'           => Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_SECRET),
                 'uncheckedMessage' => Yii::t('frontend','Please confirm that you are not a bot.')
             ];
         }
@@ -102,9 +100,9 @@ class SignupForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('frontend', 'Username'),
-            'email' => Yii::t('frontend', 'E-mail'),
-            'password' => Yii::t('frontend', 'Password'),
+            'username'   => Yii::t('frontend', 'Username'),
+            'email'      => Yii::t('frontend', 'E-mail'),
+            'password'   => Yii::t('frontend', 'Password'),
             'r_password' => Yii::t('frontend', 'Repeat password'),
         ];
     }
@@ -112,12 +110,12 @@ class SignupForm extends Model
     /**
      * Signs user up.
      *
-     * @return User|null the saved model or null if saving fails
      * @throws Exception
      * @throws \trntv\bus\exceptions\MissingHandlerException
      * @throws \yii\base\ErrorException
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
+     * @return User|null the saved model or null if saving fails
      */
     public function signup()
     {
@@ -136,8 +134,10 @@ class SignupForm extends Model
             } else {
                 $this->addError('username', $user->getErrors('username')[0]);
             }
+
             return $user;
         }
+
         return null;
     }
 }

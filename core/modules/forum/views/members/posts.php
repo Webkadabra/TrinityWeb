@@ -17,10 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <ul class="nav mr-auto">
-    <li role="presentation" class="list-inline-item"><a href="<?= Url::to(['members/index']) ?>" class="nav-link"><span class="glyphicon glyphicon-user"></span> <?= Yii::t('podium/view', 'Members List') ?></a></li>
-    <li role="presentation" class="list-inline-item"><a href="<?= Url::to(['members/mods']) ?>" class="nav-link"><span class="glyphicon glyphicon-scissors"></span> <?= Yii::t('podium/view', 'Moderation Team') ?></a></li>
-    <li role="presentation" class="list-inline-item"><a href="<?= Url::to(['members/view', 'id' => $user->id, 'slug' => $user->podiumSlug]) ?>" class="nav-link"><span class="glyphicon glyphicon-eye-open"></span> <?= Yii::t('podium/view', 'Member View') ?></a></li>
-    <li role="presentation" class="active list-inline-item"><a href="#" class="nav-link"><span class="glyphicon glyphicon-comment"></span> <?= Yii::t('podium/view', 'Posts created by {name}', ['name' => $user->podiumName]) ?></a></li>
+    <li role="presentation" class="list-inline-item"><a href="<?php echo Url::to(['members/index']); ?>" class="nav-link"><span class="glyphicon glyphicon-user"></span> <?php echo Yii::t('podium/view', 'Members List'); ?></a></li>
+    <li role="presentation" class="list-inline-item"><a href="<?php echo Url::to(['members/mods']); ?>" class="nav-link"><span class="glyphicon glyphicon-scissors"></span> <?php echo Yii::t('podium/view', 'Moderation Team'); ?></a></li>
+    <li role="presentation" class="list-inline-item"><a href="<?php echo Url::to(['members/view', 'id' => $user->id, 'slug' => $user->podiumSlug]); ?>" class="nav-link"><span class="glyphicon glyphicon-eye-open"></span> <?php echo Yii::t('podium/view', 'Member View'); ?></a></li>
+    <li role="presentation" class="active list-inline-item"><a href="#" class="nav-link"><span class="glyphicon glyphicon-comment"></span> <?php echo Yii::t('podium/view', 'Posts created by {name}', ['name' => $user->podiumName]); ?></a></li>
 </ul>
 <br>
 <?php Pjax::begin();

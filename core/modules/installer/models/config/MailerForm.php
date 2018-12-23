@@ -35,13 +35,13 @@ class MailerForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('installer','Administrator Email'),
-            'robot_email' => Yii::t('installer','Robot Email'),
-            'smtp_host' => Yii::t('installer','SMTP host'),
-            'smtp_port' => Yii::t('installer','SMTP port'),
+            'email'         => Yii::t('installer','Administrator Email'),
+            'robot_email'   => Yii::t('installer','Robot Email'),
+            'smtp_host'     => Yii::t('installer','SMTP host'),
+            'smtp_port'     => Yii::t('installer','SMTP port'),
             'smtp_username' => Yii::t('installer','SMTP username'),
             'smtp_password' => Yii::t('installer','SMTP password'),
-            'smtp_encrypt' => Yii::t('installer','SMTP encrypt'),
+            'smtp_encrypt'  => Yii::t('installer','SMTP encrypt'),
         ];
     }
 }

@@ -20,11 +20,11 @@ $this->title = $name;
                         'Error {code}',
                         [
                             'code' => property_exists($exception, 'statusCode') ? $exception->statusCode : 500
-                        ])
+                        ]);
                     ?>
                 </h3>
                 <p>
-                    <?php echo nl2br(Html::encode($message)) ?>
+                    <?php echo nl2br(Html::encode($message)); ?>
                 </p>
             </div>
         </div>

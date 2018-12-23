@@ -10,7 +10,7 @@ use core\modules\forum\Podium;
 ?>
 <footer class="footer">
     <div class="container">
-        <p class="flaot-left">&copy; <?= Podium::getInstance()->podiumConfig->get('name') ?> <?= date('Y') ?></p>
-        <p class="float-right"><?= Yii::powered() ?></p>
+        <p class="flaot-left">&copy; <?php echo Podium::getInstance()->podiumConfig->get('name'); ?> <?php echo date('Y'); ?></p>
+        <p class="float-right"><?php echo Yii::powered(); ?></p>
     </div>
 </footer>

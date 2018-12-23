@@ -2,12 +2,10 @@
 
 namespace core\sitemap;
 
-use yii\helpers\Url as YiiUrl;
-
-use Sitemaped\Element\Urlset\Url;
-
 use core\models\Article;
 use core\models\Page;
+use Sitemaped\Element\Urlset\Url;
+use yii\helpers\Url as YiiUrl;
 
 class UrlsIterator extends \AppendIterator
 {

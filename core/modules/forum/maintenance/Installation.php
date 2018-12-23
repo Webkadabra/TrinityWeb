@@ -29,6 +29,115 @@ class Installation extends Maintenance
     private $_steps;
 
     /**
+     * Proceeds next installation step.
+     * @return array
+     * @since 0.2
+     */
+    public function nextStep()
+    {
+        $currentStep = Yii::$app->session->get(self::SESSION_KEY, 0);
+        if ($currentStep === 0) {
+            Yii::$app->session->set(self::SESSION_STEPS, count($this->steps));
+        }
+        $maxStep = Yii::$app->session->get(self::SESSION_STEPS, 0);
+
+        $this->type = self::TYPE_ERROR;
+        $this->table = '...';
+
+        if ($currentStep >= $maxStep) {
+            return [
+                'drop'    => false,
+                'type'    => $this->type,
+                'result'  => Yii::t('podium/flash', 'Weird... Installation should already complete...'),
+                'percent' => 100
+            ];
+        }
+        if (!isset($this->steps[$currentStep])) {
+            return [
+                'drop'    => false,
+                'type'    => $this->type,
+                'result'  => Yii::t('podium/flash', 'Installation aborted! Can not find the requested installation step.'),
+                'percent' => 100,
+            ];
+        }
+
+        $this->table = $this->steps[$currentStep]['table'];
+        $result = call_user_func_array([$this, $this->steps[$currentStep]['call']], $this->steps[$currentStep]['data']);
+
+        Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
+
+        return [
+            'drop'    => false,
+            'type'    => $this->type,
+            'result'  => $result,
+            'table'   => $this->rawTable,
+            'percent' => $this->countPercent($currentStep, $maxStep),
+        ];
+    }
+
+    /**
+     * Proceeds next drop step.
+     * @return array
+     * @since 0.2
+     */
+    public function nextDrop()
+    {
+        $drops = $this->countDrops();
+        if (count($drops)) {
+            $currentStep = Yii::$app->session->get(self::SESSION_KEY, 0);
+            $maxStep = Yii::$app->session->get(self::SESSION_STEPS, 0);
+            if ($currentStep < $maxStep) {
+                $this->type = self::TYPE_ERROR;
+                $this->table = '...';
+
+                if (!isset($drops[$currentStep])) {
+                    return [
+                        'drop'    => false,
+                        'type'    => $this->type,
+                        'result'  => Yii::t('podium/flash', 'Installation aborted! Can not find the requested drop step.'),
+                        'percent' => 100,
+                    ];
+                }
+
+                $this->table = $drops[$currentStep]['table'];
+
+                $result = $this->dropTable();
+                if ($result === true) {
+                    Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
+
+                    return $this->nextDrop();
+                }
+
+                Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
+
+                return [
+                    'drop'    => true,
+                    'type'    => $this->type,
+                    'result'  => $result,
+                    'table'   => $this->rawTable,
+                    'percent' => $this->countPercent($currentStep, $maxStep),
+                ];
+            }
+        }
+        Yii::$app->session->set(self::SESSION_KEY, 0);
+
+        return $this->nextStep();
+    }
+
+    /**
+     * Installation steps.
+     * @since 0.2
+     */
+    public function getSteps()
+    {
+        if ($this->_steps === null) {
+            $this->_steps = require(__DIR__ . '/steps/install.php');
+        }
+
+        return $this->_steps;
+    }
+
+    /**
      * Adds config default settings.
      * @return string result message.
      */
@@ -37,11 +146,10 @@ class Installation extends Maintenance
         try {
             $this->db->createCommand()->batchInsert(
                     PodiumConfig::tableName(),
-                    ['name', 'value'],
+                    ['key', 'value'],
                     [
                         ['allow_polls', PodiumConfig::FLAG_ALLOW_POLLS],
                         ['email_token_expire', PodiumConfig::SECONDS_EMAIL_TOKEN_EXPIRE],
-                        ['from_email', PodiumConfig::DEFAULT_FROM_EMAIL],
                         ['from_name', PodiumConfig::DEFAULT_FROM_NAME],
                         ['hot_minimum', PodiumConfig::HOT_MINIMUM],
                         ['maintenance_mode', PodiumConfig::MAINTENANCE_MODE],
@@ -52,11 +160,11 @@ class Installation extends Maintenance
                         ['meta_keywords', PodiumConfig::META_KEYWORDS],
                         ['name', PodiumConfig::PODIUM_NAME],
                         ['password_reset_token_expire', PodiumConfig::SECONDS_PASSWORD_RESET_TOKEN_EXPIRE],
-                        ['registration_off', PodiumConfig::REGISTRATION_OFF],
                         ['use_wysiwyg', PodiumConfig::FLAG_USE_WYSIWYG],
                         ['version', Podium::getInstance()->version],
                     ]
                 )->execute();
+
             return $this->returnSuccess(Yii::t('podium/flash', 'Default Config settings have been added.'));
         } catch (Exception $e) {
             return $this->returnError($e->getMessage(), __METHOD__,
@@ -109,6 +217,7 @@ class Installation extends Maintenance
                         ],
                     ]
                 )->execute();
+
             return $this->returnSuccess(Yii::t('podium/flash', 'Default Content has been added.'));
         } catch (Exception $e) {
             return $this->returnError($e->getMessage(), __METHOD__,
@@ -125,105 +234,13 @@ class Installation extends Maintenance
     {
         try {
             (new Rbac())->add($this->authManager);
+
             return $this->returnSuccess(Yii::t('podium/flash', 'Access roles have been created.'));
         } catch (Exception $e) {
             return $this->returnError($e->getMessage(), __METHOD__,
                 Yii::t('podium/flash', 'Error during access roles creating')
             );
         }
-    }
-
-    /**
-     * Proceeds next installation step.
-     * @return array
-     * @since 0.2
-     */
-    public function nextStep()
-    {
-        $currentStep = Yii::$app->session->get(self::SESSION_KEY, 0);
-        if ($currentStep === 0) {
-            Yii::$app->session->set(self::SESSION_STEPS, count($this->steps));
-        }
-        $maxStep = Yii::$app->session->get(self::SESSION_STEPS, 0);
-
-        $this->type = self::TYPE_ERROR;
-        $this->table = '...';
-
-        if ($currentStep >= $maxStep) {
-            return [
-                'drop' => false,
-                'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Weird... Installation should already complete...'),
-                'percent' => 100
-            ];
-        }
-        if (!isset($this->steps[$currentStep])) {
-            return [
-                'drop' => false,
-                'type' => $this->type,
-                'result' => Yii::t('podium/flash', 'Installation aborted! Can not find the requested installation step.'),
-                'percent' => 100,
-            ];
-        }
-
-        $this->table = $this->steps[$currentStep]['table'];
-        $result = call_user_func_array([$this, $this->steps[$currentStep]['call']], $this->steps[$currentStep]['data']);
-
-        Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
-
-        return [
-            'drop' => false,
-            'type' => $this->type,
-            'result' => $result,
-            'table' => $this->rawTable,
-            'percent' => $this->countPercent($currentStep, $maxStep),
-        ];
-    }
-
-    /**
-     * Proceeds next drop step.
-     * @return array
-     * @since 0.2
-     */
-    public function nextDrop()
-    {
-        $drops = $this->countDrops();
-        if (count($drops)) {
-            $currentStep = Yii::$app->session->get(self::SESSION_KEY, 0);
-            $maxStep = Yii::$app->session->get(self::SESSION_STEPS, 0);
-            if ($currentStep < $maxStep) {
-                $this->type = self::TYPE_ERROR;
-                $this->table = '...';
-
-                if (!isset($drops[$currentStep])) {
-                    return [
-                        'drop' => false,
-                        'type' => $this->type,
-                        'result' => Yii::t('podium/flash', 'Installation aborted! Can not find the requested drop step.'),
-                        'percent' => 100,
-                    ];
-                }
-
-                $this->table = $drops[$currentStep]['table'];
-
-                $result = $this->dropTable();
-                if ($result === true) {
-                    Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
-                    return $this->nextDrop();
-                }
-
-                Yii::$app->session->set(self::SESSION_KEY, ++$currentStep);
-                return [
-                    'drop' => true,
-                    'type' => $this->type,
-                    'result' => $result,
-                    'table' => $this->rawTable,
-                    'percent' => $this->countPercent($currentStep, $maxStep),
-                ];
-            }
-        }
-        Yii::$app->session->set(self::SESSION_KEY, 0);
-        return $this->nextStep();
     }
 
     /**
@@ -242,18 +259,7 @@ class Installation extends Maintenance
         if (Yii::$app->session->get(self::SESSION_KEY, 0) === 0) {
             Yii::$app->session->set(self::SESSION_STEPS, count($drops));
         }
-        return $drops;
-    }
 
-    /**
-     * Installation steps.
-     * @since 0.2
-     */
-    public function getSteps()
-    {
-        if ($this->_steps === null) {
-            $this->_steps = require(__DIR__ . '/steps/install.php');
-        }
-        return $this->_steps;
+        return $drops;
     }
 }

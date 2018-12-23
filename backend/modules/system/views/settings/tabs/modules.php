@@ -12,13 +12,13 @@
             <div class="card mt-3">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <?=$module['label']?>
+                        <?php echo $module['label'];?>
                     </h5>
                     <div class="position-relative">
-                        <input type="hidden" name="Module[<?=$key?>][hidden]" value="<?=time()?>">
-                        <input type="checkbox" id="Module_<?=$key?>_status" name="Module[<?=$key?>][status]" value="<?=$module['fields']['status']?>" <?=($module['fields']['status'] ? 'checked' : '')?>>
-                        <label class="checkbox-label" for="Module_<?=$key?>_status">
-                            <?=Yii::t('backend','Статус')?>
+                        <input type="hidden" name="Module[<?php echo $key;?>][hidden]" value="<?php echo time();?>">
+                        <input type="checkbox" id="Module_<?php echo $key;?>_status" name="Module[<?php echo $key;?>][status]" value="<?php echo $module['fields']['status'];?>" <?php echo ($module['fields']['status'] ? 'checked' : '');?>>
+                        <label class="checkbox-label" for="Module_<?php echo $key;?>_status">
+                            <?php echo Yii::t('backend','Статус');?>
                         </label>
                     </div>
                     <?php
@@ -30,11 +30,11 @@
                                 ?>
                                 <div class="col-6">
                                     <label class="form-check-label">
-                                        <?=Yii::t('backend','per-page')?>
+                                        <?php echo Yii::t('backend','per-page');?>
                                     </label>
                                     <div class="form-group">
                                         <i class="fas fa-copy input-icon"></i>
-                                        <input type="text" value="<?=$module['fields']['per-page']?>" class="form-control parent-input-icon" name="Module[<?=$key?>][per-page]">
+                                        <input type="text" value="<?php echo $module['fields']['per-page'];?>" class="form-control parent-input-icon" name="Module[<?php echo $key;?>][per-page]">
                                     </div>
                                 </div>
                                 <?php
@@ -45,11 +45,11 @@
                                 ?>
                                 <div class="col-6">
                                     <label class="form-check-label">
-                                        <?=Yii::t('backend','Cache duration')?>
+                                        <?php echo Yii::t('backend','Cache duration');?>
                                     </label>
                                     <div class="form-group">
                                         <i class="fas fa-clock input-icon"></i>
-                                        <input type="text" value="<?=$module['fields']['cache_duration']?>" class="form-control parent-input-icon" name="Module[<?=$key?>][cache_duration]">
+                                        <input type="text" value="<?php echo $module['fields']['cache_duration'];?>" class="form-control parent-input-icon" name="Module[<?php echo $key;?>][cache_duration]">
                                     </div>
                                 </div>
                                 <?php
@@ -60,7 +60,7 @@
                     }
                     ?>
                     <p class="card-text">
-                        <?=Yii::t('backend',$module['description'])?>
+                        <?php echo Yii::t('backend',$module['description']);?>
                     </p>
                 </div>
             </div>

@@ -2,10 +2,10 @@
 
 namespace core\modules\i18n\services\scanners;
 
-use Yii;
-use yii\helpers\Console;
-use yii\base\InvalidConfigException;
 use core\modules\i18n\services\Scanner;
+use Yii;
+use yii\base\InvalidConfigException;
+use yii\helpers\Console;
 
 /**
  * Detecting existing language elements in database.
@@ -112,7 +112,7 @@ class ScannerDatabase
      */
     private function _getCategory($tables)
     {
-        if (isset($tables['category']) && $tables['category'] == 'database-table-name') {
+        if (isset($tables['category']) && $tables['category'] === 'database-table-name') {
             $category = $this->_normalizeTablename($tables['table']);
         } else {
             $category = Scanner::CATEGORY_DATABASE;

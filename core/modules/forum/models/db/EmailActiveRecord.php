@@ -24,8 +24,8 @@ class EmailActiveRecord extends ActiveRecord
      * Statuses.
      */
     const STATUS_PENDING = 0;
-    const STATUS_SENT    = 1;
-    const STATUS_GAVEUP  = 9;
+    const STATUS_SENT = 1;
+    const STATUS_GAVEUP = 9;
 
     /**
      * @inheritdoc

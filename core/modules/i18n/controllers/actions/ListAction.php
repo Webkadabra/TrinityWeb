@@ -2,10 +2,10 @@
 
 namespace core\modules\i18n\controllers\actions;
 
-use Yii;
-use core\modules\i18n\models\searches\LanguageSearch;
 use core\modules\i18n\bundles\LanguageAsset;
 use core\modules\i18n\bundles\LanguagePluginAsset;
+use core\modules\i18n\models\searches\LanguageSearch;
+use Yii;
 
 /**
  * Class that creates a list of languages.
@@ -39,7 +39,7 @@ class ListAction extends \yii\base\Action
 
         return $this->controller->render('list', [
             'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
         ]);
     }
 }

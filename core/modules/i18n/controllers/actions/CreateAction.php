@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\controllers\actions;
 
+use core\modules\i18n\models\Language;
 use Yii;
 use yii\widgets\ActiveForm;
-use core\modules\i18n\models\Language;
 
 /**
  * Creates a new Language model.
@@ -31,10 +31,10 @@ class CreateAction extends \yii\base\Action
             return ActiveForm::validate($model);
         } elseif ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->controller->redirect(['view', 'id' => $model->language_id]);
-        } else {
+        }
+  
             return $this->controller->render('create', [
                 'model' => $model,
             ]);
-        }
     }
 }

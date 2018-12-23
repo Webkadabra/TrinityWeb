@@ -156,13 +156,11 @@ class Podium extends Module implements BootstrapInterface
 
     public $layout = 'main';
 
-    /**
-     * @inheritdoc
-     */
-    protected function defaultVersion()
-    {
-        return '0.7';
-    }
+    private $_cache;
+
+    private $_config;
+
+    private $_component;
 
     /**
      * Initializes the module for Web application.
@@ -191,6 +189,7 @@ class Podium extends Module implements BootstrapInterface
      */
     public function bootstrap($app)
     {
+        /* @var \BaseApplication $app */
         if($app->TrinityWeb::isAppInstalled()) {
             if ($app instanceof WebApplication) {
                 $this->setDefaultSettings(Yii::$app);
@@ -200,12 +199,6 @@ class Podium extends Module implements BootstrapInterface
                 $this->controllerNamespace = 'core\modules\forum\console';
             }
         }
-    }
-
-    protected function setDefaultSettings($app)
-    {
-        if (!$app->settings->get($app->settings::APP_MODULE_FORUM_STATUS))
-            $app->settings->set($app->settings::APP_MODULE_FORUM_STATUS, $app->settings::DISABLED);
     }
 
     /**
@@ -220,6 +213,7 @@ class Podium extends Module implements BootstrapInterface
         if (Yii::$app instanceof WebApplication && !in_array($action->id, ['import', 'run', 'update', 'level-up'], true)) {
             Activity::add();
         }
+
         return parent::afterAction($action, $result);
     }
 
@@ -228,37 +222,9 @@ class Podium extends Module implements BootstrapInterface
         if(Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_FORUM_STATUS) !== Yii::$app->settings::ENABLED) {
             return Yii::$app->response->redirect(Yii::$app->homeUrl);
         }
+
         return parent::beforeAction($action);
     }
-
-    /**
-     * Adds UrlManager rules.
-     * @param Application $app the application currently running
-     * @since 0.2
-     */
-    protected function addUrlManagerRules($app)
-    {
-        $app->urlManager->addRules([new GroupUrlRule([
-                'prefix' => $this->id,
-                'rules' => require __DIR__ . '/url-rules.php',
-            ])], true);
-    }
-
-    /**
-     * Sets Podium log target.
-     * @param Application $app the application currently running
-     * @since 0.2
-     */
-    protected function setPodiumLogTarget($app)
-    {
-        $dbTarget = new DbTarget;
-        $dbTarget->logTable = '{{%log}}';
-        $dbTarget->categories = ['core\modules\forum\*'];
-        $dbTarget->logVars = [];
-        $app->log->targets['podium'] = $dbTarget;
-    }
-
-    private $_cache;
 
     /**
      * Returns Podium cache instance.
@@ -270,10 +236,9 @@ class Podium extends Module implements BootstrapInterface
         if ($this->_cache === null) {
             $this->_cache = new PodiumCache;
         }
+
         return $this->_cache;
     }
-
-    private $_config;
 
     /**
      * Returns Podium configuration instance.
@@ -285,6 +250,7 @@ class Podium extends Module implements BootstrapInterface
         if ($this->_config === null) {
             $this->_config = new PodiumConfig;
         }
+
         return $this->_config;
     }
 
@@ -327,6 +293,7 @@ class Podium extends Module implements BootstrapInterface
         if ($this->userComponent !== true) {
             return null;
         }
+
         return [$this->prepareRoute('account/login')];
     }
 
@@ -340,10 +307,9 @@ class Podium extends Module implements BootstrapInterface
         if ($this->userComponent !== true) {
             return null;
         }
+
         return [$this->prepareRoute('account/register')];
     }
-
-    private $_component;
 
     /**
      * Returns Podium component service.
@@ -355,13 +321,14 @@ class Podium extends Module implements BootstrapInterface
         if ($this->_component === null) {
             $this->_component = new PodiumComponent($this);
         }
+
         return $this->_component;
     }
 
     /**
      * Returns instance of RBAC component.
-     * @return DbManager
      * @throws InvalidConfigException
+     * @return DbManager
      * @since 0.5
      */
     public function getRbac()
@@ -371,8 +338,8 @@ class Podium extends Module implements BootstrapInterface
 
     /**
      * Returns instance of formatter component.
-     * @return Formatter
      * @throws InvalidConfigException
+     * @return Formatter
      * @since 0.5
      */
     public function getFormatter()
@@ -382,8 +349,8 @@ class Podium extends Module implements BootstrapInterface
 
     /**
      * Returns instance of user component.
-     * @return User
      * @throws InvalidConfigException
+     * @return User
      * @since 0.5
      */
     public function getUser()
@@ -393,8 +360,8 @@ class Podium extends Module implements BootstrapInterface
 
     /**
      * Returns instance of db component.
-     * @return Connection
      * @throws InvalidConfigException
+     * @return Connection
      * @since 0.5
      */
     public function getDb()
@@ -404,12 +371,53 @@ class Podium extends Module implements BootstrapInterface
 
     /**
      * Returns instance of cache component.
-     * @return Cache
      * @throws InvalidConfigException
+     * @return Cache
      * @since 0.5
      */
     public function getCache()
     {
         return $this->podiumComponent->getComponent('cache');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function defaultVersion()
+    {
+        return '0.7';
+    }
+
+    protected function setDefaultSettings($app)
+    {
+        if (!$app->settings->get($app->settings::APP_MODULE_FORUM_STATUS))
+            $app->settings->set($app->settings::APP_MODULE_FORUM_STATUS, $app->settings::DISABLED);
+    }
+
+    /**
+     * Adds UrlManager rules.
+     * @param Application $app the application currently running
+     * @since 0.2
+     */
+    protected function addUrlManagerRules($app)
+    {
+        $app->urlManager->addRules([new GroupUrlRule([
+                'prefix' => $this->id,
+                'rules'  => require __DIR__ . '/url-rules.php',
+            ])], true);
+    }
+
+    /**
+     * Sets Podium log target.
+     * @param Application $app the application currently running
+     * @since 0.2
+     */
+    protected function setPodiumLogTarget($app)
+    {
+        $dbTarget = new DbTarget;
+        $dbTarget->logTable = '{{%log}}';
+        $dbTarget->categories = ['core\modules\forum\*'];
+        $dbTarget->logVars = [];
+        $app->log->targets['podium'] = $dbTarget;
     }
 }

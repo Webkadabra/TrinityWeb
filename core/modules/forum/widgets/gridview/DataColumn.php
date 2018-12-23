@@ -23,6 +23,7 @@ class DataColumn extends YiiDataColumn
         if (!empty($this->attribute)) {
             return parent::getHeaderCellLabel() . Helper::sortOrder($this->attribute);
         }
+
         return parent::getHeaderCellLabel();
     }
 }

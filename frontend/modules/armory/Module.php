@@ -31,6 +31,15 @@ class Module extends \yii\base\Module implements BootstrapInterface
         }
     }
 
+    public function beforeAction($action) {
+        Yii::$app->view->params['breadcrumbs'][] = ['label' => Yii::t('armory','Armory'),'url' => ['/armory/main/index']];
+        if(Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_ARMORY_STATUS) !== Yii::$app->settings::ENABLED) {
+            return Yii::$app->response->redirect(Yii::$app->homeUrl);
+        }
+
+        return parent::beforeAction($action);
+    }
+
     protected function setDefaultSettings($app)
     {
         /* @var \BaseApplication $app */
@@ -39,9 +48,9 @@ class Module extends \yii\base\Module implements BootstrapInterface
                 !$app->settings->get($app->settings::APP_MODULE_ARMORY_STATUS)
                     ||
                 !(
-                    $app->settings->get($app->settings::DB_ARMORY_STATUS) != $app->settings::INSTALLED
+                    $app->settings->get($app->settings::DB_ARMORY_STATUS) !== $app->settings::INSTALLED
                         &&
-                    $app->settings->get($app->settings::DB_ARMORY_DATA_STATUS) != $app->settings::INSTALLED
+                    $app->settings->get($app->settings::DB_ARMORY_DATA_STATUS) !== $app->settings::INSTALLED
                 )
             ) {
                 $app->settings->set($app->settings::APP_MODULE_ARMORY_STATUS, $app->settings::DISABLED);
@@ -52,23 +61,14 @@ class Module extends \yii\base\Module implements BootstrapInterface
 
             if (!$app->settings->get($app->settings::APP_MODULE_ARMORY_PER_PAGE))
                 $app->settings->set($app->settings::APP_MODULE_ARMORY_PER_PAGE, 20);
-
         }
-    }
-
-    public function beforeAction($action) {
-        Yii::$app->view->params['breadcrumbs'][] = ['label' => Yii::t('armory','Armory'),'url' => ['/armory/main/index']];
-        if(Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_ARMORY_STATUS) !== Yii::$app->settings::ENABLED) {
-            return Yii::$app->response->redirect(Yii::$app->homeUrl);
-        }
-        return parent::beforeAction($action);
     }
 
     protected function addUrlManagerRules($app)
     {
         $app->urlManager->addRules([new GroupUrlRule([
             'prefix' => $this->id,
-            'rules' => require __DIR__ . '/url-rules.php',
+            'rules'  => require __DIR__ . '/url-rules.php',
         ])]);
     }
 }

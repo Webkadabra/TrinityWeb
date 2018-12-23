@@ -2,20 +2,18 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\web\NotFoundHttpException;
-
 use core\models\Article;
 use core\models\ArticleAttachment;
-
 use frontend\base\controllers\SystemController;
+use Yii;
+use yii\web\NotFoundHttpException;
 
 class ArticleController extends SystemController
 {
     /**
      * @param $slug
-     * @return string
      * @throws NotFoundHttpException
+     * @return string
      */
     public function actionView($slug)
     {
@@ -25,16 +23,17 @@ class ArticleController extends SystemController
         }
 
         $viewFile = $model->view ?: 'view';
+
         return $this->render($viewFile, ['model' => $model]);
     }
 
     /**
      * @param $id
-     * @return \yii\console\Response|\yii\web\Response
      * @throws NotFoundHttpException
      * @throws \League\Flysystem\FileNotFoundException
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\web\RangeNotSatisfiableHttpException
+     * @return \yii\console\Response|\yii\web\Response
      */
     public function actionAttachmentDownload($id)
     {

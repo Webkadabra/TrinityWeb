@@ -24,7 +24,6 @@ class Modal extends YiiModal
      */
     public $footerConfirmUrl = '#';
 
-
     /**
      * Initializes the widget.
      */

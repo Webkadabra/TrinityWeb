@@ -1,9 +1,9 @@
 <?php
 
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Progress;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\bootstrap\Progress;
 
 $url = Url::to([Yii::$app->request->url]);
 $this->registerJs(<<<JS
@@ -53,7 +53,7 @@ JS
 <div class="card card-default">
     <div class="card-header">
         <h2 class="text-center">
-            <?=Yii::t('installer','Install Database')?>
+            <?php echo Yii::t('installer','Install Database');?>
         </h2>
     </div>
     <div class="card-body">
@@ -78,23 +78,23 @@ JS
     <div class="card-footer">
         <?php
         $form = ActiveForm::begin([
-            'id' => 'submit-import-step',
+            'id'                 => 'submit-import-step',
             'enableClientScript' => true,
         ]);
         ?>
         <div class="row no-gutters justify-content-between">
             <div class="col-auto">
-                <?= Html::submitButton(Yii::t('installer','Start import') . ' <i class="fa fa-upload"></i>', [
-                    'class' => 'btn btn-primary', 'id' => 'submitButtonForm',
+                <?php echo Html::submitButton(Yii::t('installer','Start import') . ' <i class="fa fa-upload"></i>', [
+                    'class'  => 'btn btn-primary', 'id' => 'submitButtonForm',
                     'hidden' => null,
-                ]) ?>
+                ]); ?>
             </div>
             <div class="col-auto">
-                <?= Html::a(Yii::t('installer','Next') . ' <i class="fa fa-upload"></i>', ['auth-database'], [
+                <?php echo Html::a(Yii::t('installer','Next') . ' <i class="fa fa-upload"></i>', ['auth-database'], [
                     'hidden' => 'hidden',
-                    'class' => 'btn btn-success',
-                    'id' => 'goNext'
-                ]) ?>
+                    'class'  => 'btn btn-success',
+                    'id'     => 'goNext'
+                ]); ?>
             </div>
         </div>
         <?php

@@ -2,21 +2,17 @@
 
 namespace frontend\models\forms;
 
+use cheatsheet\Time;
+use core\models\User;
+use core\validators\ReCaptchaValidator;
 use Yii;
 use yii\base\Model;
-
-use cheatsheet\Time;
-
-use core\validators\ReCaptchaValidator;
-
-use core\models\User;
 
 /**
  * Login form
  */
 class LoginForm extends Model
 {
-
     const CAPTCHA = 'captcha';
     const NON_CAPTCHA = 'non_captcha';
 
@@ -42,6 +38,7 @@ class LoginForm extends Model
             'password',
             'rememberMe'
         ];
+
         return $scenarios;
     }
 
@@ -56,14 +53,14 @@ class LoginForm extends Model
             ['password', 'validatePassword'],
         ];
 
-        if(Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_STATUS) == Yii::$app->settings::ENABLED) {
+        if(Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_STATUS) === Yii::$app->settings::ENABLED) {
             $rules[] = [
                 ['reCaptcha'],
                 ReCaptchaValidator::class,
-                'on' => self::CAPTCHA,
-                'except' => self::NON_CAPTCHA,
-                'skipOnEmpty' => false,
-                'secret' => Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_SECRET),
+                'on'               => self::CAPTCHA,
+                'except'           => self::NON_CAPTCHA,
+                'skipOnEmpty'      => false,
+                'secret'           => Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_SECRET),
                 'uncheckedMessage' => Yii::t('frontend','Please confirm that you are not a bot.')
             ];
         }
@@ -74,12 +71,11 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'identity' => Yii::t('frontend', 'Username or email'),
-            'password' => Yii::t('frontend', 'Password'),
+            'identity'   => Yii::t('frontend', 'Username or email'),
+            'password'   => Yii::t('frontend', 'Password'),
             'rememberMe' => Yii::t('frontend', 'Remember Me')
         ];
     }
-
 
     /**
      * Validates the password.
@@ -115,17 +111,19 @@ class LoginForm extends Model
     /**
      * Logs in a user using the provided username and password.
      *
-     * @return boolean whether the user is logged in successfully
      * @throws \yii\base\Exception
+     * @return boolean whether the user is logged in successfully
      */
     public function login()
     {
         if ($this->validate()) {
             if (Yii::$app->user->login($this->getUser(), $this->rememberMe ? Time::SECONDS_IN_A_MONTH : 0)) {
                 Yii::$app->DBHelper->setDefault();
+
                 return true;
             }
         }
+
         return false;
     }
 }

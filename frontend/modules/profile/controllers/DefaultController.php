@@ -2,17 +2,14 @@
 
 namespace frontend\modules\profile\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-
+use core\base\models\MultiModel;
+use frontend\modules\profile\models\AccountForm;
 use Intervention\Image\ImageManagerStatic;
 use trntv\filekit\actions\DeleteAction;
 use trntv\filekit\actions\UploadAction;
-
-use core\base\models\MultiModel;
-
-use frontend\modules\profile\models\AccountForm;
+use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 
 class DefaultController extends Controller
 {
@@ -23,8 +20,8 @@ class DefaultController extends Controller
     {
         return [
             'avatar-upload' => [
-                'class' => UploadAction::class,
-                'deleteRoute' => 'avatar-delete',
+                'class'        => UploadAction::class,
+                'deleteRoute'  => 'avatar-delete',
                 'on afterSave' => function ($event) {
                     /* @var $file \League\Flysystem\File */
                     $file = $event->file;
@@ -57,9 +54,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * @return string|\yii\web\Response
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
+     * @return string|\yii\web\Response
      */
     public function actionIndex()
     {
@@ -78,10 +75,12 @@ class DefaultController extends Controller
             Yii::$app->session->setFlash('forceUpdateLocale');
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class' => 'alert-success'],
-                'body' => Yii::t('frontend', 'Your account has been successfully saved', [], $locale)
+                'body'    => Yii::t('frontend', 'Your account has been successfully saved', [], $locale)
             ]);
+
             return $this->refresh();
         }
+
         return $this->render('index', ['model' => $model]);
     }
 }

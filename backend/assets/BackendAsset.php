@@ -2,13 +2,12 @@
 
 namespace backend\assets;
 
-use yii\bootstrap4\BootstrapPluginAsset;
+use core\assets\GlyphIcons;
+use core\assets\Html5shiv;
+use core\assets\TrinityWebAssets;
+use yii\bootstrap\BootstrapPluginAsset;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
-
-use core\assets\Html5shiv;
-use core\assets\GlyphIcons;
-use core\assets\TrinityWebAssets;
 
 class BackendAsset extends AssetBundle
 {
@@ -19,7 +18,7 @@ class BackendAsset extends AssetBundle
         'css/app.css',
     ];
     public $js = [
-        'js/app.js'
+        'js/app.js',
     ];
 
     public $depends = [
@@ -28,6 +27,6 @@ class BackendAsset extends AssetBundle
         Html5shiv::class,
         GlyphIcons::class,
         StellarAsset::class,
-        TrinityWebAssets::class
+        TrinityWebAssets::class,
     ];
 }

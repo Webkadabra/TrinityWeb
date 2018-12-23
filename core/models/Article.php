@@ -2,19 +2,16 @@
 
 namespace core\models;
 
+use core\behaviors\MultilingualBehavior;
+use core\behaviors\PublishBehavior;
+use core\models\i18n\ArticleI18n;
+use core\models\query\ArticleQuery;
+use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
-use core\models\i18n\ArticleI18n;
-
-use core\models\query\ArticleQuery;
-
-use core\behaviors\PublishBehavior;
-use core\behaviors\MultilingualBehavior;
-use trntv\filekit\behaviors\UploadBehavior;
 
 /** @noinspection PropertiesInspection */
 
@@ -45,9 +42,8 @@ use trntv\filekit\behaviors\UploadBehavior;
  */
 class Article extends ActiveRecord
 {
-
     const STATUS_PUBLISHED = 1;
-    const STATUS_DRAFT     = 0;
+    const STATUS_DRAFT = 0;
 
     /**
      * @var array
@@ -81,7 +77,7 @@ class Article extends ActiveRecord
     public static function statuses()
     {
         return [
-            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
+            self::STATUS_DRAFT     => Yii::t('common', 'Draft'),
             self::STATUS_PUBLISHED => Yii::t('common', 'Published'),
         ];
     }
@@ -93,14 +89,14 @@ class Article extends ActiveRecord
     {
         return [
             'ml' => [
-                'class' => MultilingualBehavior::class,
-                'languages' => Yii::$app->i18nHelper::getLocales(true),
-                'langClassName' => ArticleI18n::class,
+                'class'           => MultilingualBehavior::class,
+                'languages'       => Yii::$app->i18nHelper::getLocales(true),
+                'langClassName'   => ArticleI18n::class,
                 'defaultLanguage' => Yii::$app->language,
-                'langForeignKey' => 'article_id',
-                'tableName' => ArticleI18n::tableName(),
-                'abridge' => false,
-                'attributes' => [
+                'langForeignKey'  => 'article_id',
+                'tableName'       => ArticleI18n::tableName(),
+                'abridge'         => false,
+                'attributes'      => [
                     'title', 'announce', 'body',
                 ]
             ],
@@ -108,26 +104,26 @@ class Article extends ActiveRecord
             PublishBehavior::class,
             BlameableBehavior::class,
             [
-                'class' => SluggableBehavior::class,
+                'class'     => SluggableBehavior::class,
                 'attribute' => 'title',
                 'immutable' => true,
             ],
             [
-                'class' => UploadBehavior::class,
-                'attribute' => 'attachments',
-                'multiple' => true,
-                'uploadRelation' => 'articleAttachments',
-                'pathAttribute' => 'path',
+                'class'            => UploadBehavior::class,
+                'attribute'        => 'attachments',
+                'multiple'         => true,
+                'uploadRelation'   => 'articleAttachments',
+                'pathAttribute'    => 'path',
                 'baseUrlAttribute' => 'base_url',
-                'orderAttribute' => 'order',
-                'typeAttribute' => 'type',
-                'sizeAttribute' => 'size',
-                'nameAttribute' => 'name',
+                'orderAttribute'   => 'order',
+                'typeAttribute'    => 'type',
+                'sizeAttribute'    => 'size',
+                'nameAttribute'    => 'name',
             ],
             [
-                'class' => UploadBehavior::class,
-                'attribute' => 'thumbnail',
-                'pathAttribute' => 'thumbnail_path',
+                'class'            => UploadBehavior::class,
+                'attribute'        => 'thumbnail',
+                'pathAttribute'    => 'thumbnail_path',
                 'baseUrlAttribute' => 'thumbnail_base_url',
             ]
         ];
@@ -155,16 +151,16 @@ class Article extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'slug' => Yii::t('common', 'Slug'),
-            'view' => Yii::t('common', 'Article View'),
-            'thumbnail' => Yii::t('common', 'Thumbnail'),
-            'category_id' => Yii::t('common', 'Category'),
-            'status' => Yii::t('common', 'Published'),
-            'created_by' => Yii::t('common', 'Author'),
-            'updated_by' => Yii::t('common', 'Updater'),
-            'created_at' => Yii::t('common', 'Created At'),
-            'updated_at' => Yii::t('common', 'Updated At'),
+            'id'           => Yii::t('common', 'ID'),
+            'slug'         => Yii::t('common', 'Slug'),
+            'view'         => Yii::t('common', 'Article View'),
+            'thumbnail'    => Yii::t('common', 'Thumbnail'),
+            'category_id'  => Yii::t('common', 'Category'),
+            'status'       => Yii::t('common', 'Published'),
+            'created_by'   => Yii::t('common', 'Author'),
+            'updated_by'   => Yii::t('common', 'Updater'),
+            'created_at'   => Yii::t('common', 'Created At'),
+            'updated_at'   => Yii::t('common', 'Updated At'),
             'published_at' => Yii::t('common', 'Published At'),
         ];
     }
@@ -200,5 +196,4 @@ class Article extends ActiveRecord
     {
         return $this->hasMany(ArticleAttachment::class, ['article_id' => 'id']);
     }
-
 }

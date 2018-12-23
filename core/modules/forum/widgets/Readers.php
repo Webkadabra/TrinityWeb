@@ -52,7 +52,7 @@ class Readers extends Widget
             $this->_guest = false;
             $me = User::findMe();
             $conditions[] = ['!=', 'user_id', $me->id];
-            if (!empty($me->meta) && $me->userProfile->anonymous == 0) {
+            if (!empty($me->meta) && $me->userProfile->anonymous === 0) {
                 $out .= $me->podiumTag . ' ';
             } else {
                 $this->_anon = true;
@@ -145,7 +145,7 @@ class Readers extends Widget
                 Yii::t('podium/view', '{n, plural, =1{# anonymous user} other{# anonymous users}}', [
                     'n' => $anonymous
                 ]),
-                ['class' => 'btn btn-xs btn-default disabled']
+                ['class' => 'btn btn-xs d-none d-sm-inline-block btn-default disabled']
             ) . ' ';
         }
         $guests = $this->getGuestUsers($url);

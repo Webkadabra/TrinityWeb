@@ -24,11 +24,21 @@ class Assignment extends BaseObject
     /**
      * @inheritdoc
      */
-    public function __construct($id, $user = null, $config = array())
+    public function __construct($id, $user = null, $config = [])
     {
         $this->id = $id;
         $this->user = $user;
         parent::__construct($config);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function __get($name)
+    {
+        if ($this->user) {
+            return $this->user->$name;
+        }
     }
 
     /**
@@ -51,6 +61,7 @@ class Assignment extends BaseObject
             }
         }
         Helper::invalidate();
+
         return $success;
     }
 
@@ -74,6 +85,7 @@ class Assignment extends BaseObject
             }
         }
         Helper::invalidate();
+
         return $success;
     }
 
@@ -90,7 +102,7 @@ class Assignment extends BaseObject
         }
 
         foreach (array_keys($manager->getPermissions()) as $name) {
-            if ($name[0] != '/') {
+            if ($name[0] !== '/') {
                 $available[$name] = 'permission';
             }
         }
@@ -103,17 +115,7 @@ class Assignment extends BaseObject
 
         return [
             'available' => $available,
-            'assigned' => $assigned,
+            'assigned'  => $assigned,
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function __get($name)
-    {
-        if ($this->user) {
-            return $this->user->$name;
-        }
     }
 }

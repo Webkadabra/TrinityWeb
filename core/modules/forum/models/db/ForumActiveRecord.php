@@ -52,9 +52,9 @@ class ForumActiveRecord extends \kartik\tree\models\Tree
             [
                 TimestampBehavior::class,
                 [
-                    'class' => Podium::getInstance()->slugGenerator,
+                    'class'     => Podium::getInstance()->slugGenerator,
                     'attribute' => 'name',
-                    'type' => PodiumSluggableBehavior::FORUM
+                    'type'      => PodiumSluggableBehavior::FORUM
                 ]
             ]
         );
@@ -115,6 +115,7 @@ class ForumActiveRecord extends \kartik\tree\models\Tree
         foreach($childs as $child) {
             $forum_ids[] = $child->id;
         }
+
         return Post::find()->where(['forum_id' => $forum_ids])->orderBy(['id' => SORT_DESC])->one();
     }
 }

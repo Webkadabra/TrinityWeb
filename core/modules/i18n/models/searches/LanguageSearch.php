@@ -8,9 +8,9 @@
 
 namespace core\modules\i18n\models\searches;
 
+use core\modules\i18n\models\Language;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use core\modules\i18n\models\Language;
 
 /**
  * LanguageSearch represents the model behind the search form about `core\models\Language`.

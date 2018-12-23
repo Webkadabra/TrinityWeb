@@ -6,9 +6,9 @@
 
 use yii\helpers\Html;
 
-\yii\bootstrap\BootstrapAsset::register($this)
+\yii\bootstrap\BootstrapAsset::register($this);
 ?>
-<?php $this->beginPage() ?>
+<?php $this->beginPage(); ?>
     <!DOCTYPE html>
     <html lang="<?php echo \Yii::$app->language; ?>">
     <head>
@@ -17,11 +17,11 @@ use yii\helpers\Html;
         <?php $this->head(); ?>
     </head>
     <body class="maintenance-body">
-    <?php $this->beginBody() ?>
+    <?php $this->beginBody(); ?>
     <div class="container">
         <?php echo $content; ?>
     </div>
-    <?php $this->endBody() ?>
+    <?php $this->endBody(); ?>
     </body>
     </html>
-<?php $this->endPage() ?>
+<?php $this->endPage(); ?>

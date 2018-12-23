@@ -23,8 +23,8 @@ class MessageReceiverActiveRecord extends ActiveRecord
     /**
      * Statuses.
      */
-    const STATUS_NEW     = 1;
-    const STATUS_READ    = 10;
+    const STATUS_NEW = 1;
+    const STATUS_READ = 10;
     const STATUS_DELETED = 20;
 
     /**

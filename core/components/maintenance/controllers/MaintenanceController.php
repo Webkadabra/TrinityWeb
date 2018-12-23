@@ -43,7 +43,7 @@ class MaintenanceController extends Controller
 
         return $this->render($this->maintenanceView, [
             'maintenanceText' => $this->maintenanceText,
-            'retryAfter' => $this->retryAfter
+            'retryAfter'      => $this->retryAfter
         ]);
     }
 }

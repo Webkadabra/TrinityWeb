@@ -31,12 +31,12 @@ class Vocabulary extends VocabularyActiveRecord
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => [
+            'sort'  => [
                 'defaultOrder' => ['thread_id' => SORT_DESC],
-                'attributes' => [
+                'attributes'   => [
                     'thread_id' => [
-                        'asc' => ['thread_id' => SORT_ASC],
-                        'desc' => ['thread_id' => SORT_DESC],
+                        'asc'     => ['thread_id' => SORT_ASC],
+                        'desc'    => ['thread_id' => SORT_DESC],
                         'default' => SORT_DESC,
                     ],
                 ]

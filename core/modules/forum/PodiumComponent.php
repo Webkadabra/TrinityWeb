@@ -56,8 +56,8 @@ class PodiumComponent extends Component
     /**
      * Returns instance of component of given name.
      * @param string $name
-     * @return object component of the specified ID
      * @throws InvalidConfigException
+     * @return object component of the specified ID
      */
     public function getComponent($name)
     {
@@ -65,6 +65,7 @@ class PodiumComponent extends Component
         if (is_string($this->module->$configurationName)) {
             return Yii::$app->get($this->module->$configurationName);
         }
+
         return $this->module->get('podium_' . $name);
     }
 
@@ -83,13 +84,13 @@ class PodiumComponent extends Component
         $this->module->set('podium_rbac', is_array($this->module->rbacComponent)
                 ? $this->module->rbacComponent
                 : [
-                    'class' => 'yii\rbac\DbManager',
-                    'db' => $this->module->db,
-                    'itemTable' => '{{%podium_auth_item}}',
-                    'itemChildTable' => '{{%podium_auth_item_child}}',
+                    'class'           => 'yii\rbac\DbManager',
+                    'db'              => $this->module->db,
+                    'itemTable'       => '{{%podium_auth_item}}',
+                    'itemChildTable'  => '{{%podium_auth_item_child}}',
                     'assignmentTable' => '{{%podium_auth_assignment}}',
-                    'ruleTable' => '{{%podium_auth_rule}}',
-                    'cache' => $this->module->cache
+                    'ruleTable'       => '{{%podium_auth_rule}}',
+                    'cache'           => $this->module->cache
                 ]);
     }
 
@@ -108,7 +109,7 @@ class PodiumComponent extends Component
         $this->module->set('podium_formatter', is_array($this->module->formatterComponent)
                 ? $this->module->formatterComponent
                 : [
-                    'class' => 'yii\i18n\Formatter',
+                    'class'    => 'yii\i18n\Formatter',
                     'timeZone' => 'UTC',
                 ]);
     }
@@ -128,14 +129,14 @@ class PodiumComponent extends Component
         $this->module->set('podium_user', is_array($this->module->userComponent)
                 ? $this->module->userComponent
                 : [
-                    'class' => 'core\modules\forum\web\User',
-                    'identityClass' => 'core\modules\forum\models\User',
+                    'class'           => 'core\modules\forum\web\User',
+                    'identityClass'   => 'core\modules\forum\models\User',
                     'enableAutoLogin' => true,
-                    'loginUrl' => $this->module->loginUrl,
-                    'identityCookie' => [
-                        'name' => 'podium',
+                    'loginUrl'        => $this->module->loginUrl,
+                    'identityCookie'  => [
+                        'name'     => 'podium',
                         'httpOnly' => true,
-                        'secure' => $this->module->secureIdentityCookie,
+                        'secure'   => $this->module->secureIdentityCookie,
                     ],
                     'idParam' => '__id_podium',
                 ]);
@@ -147,9 +148,9 @@ class PodiumComponent extends Component
     public function registerTranslations()
     {
         Yii::$app->i18n->translations['podium/*'] = [
-            'class' => 'yii\i18n\PhpMessageSource',
+            'class'          => 'yii\i18n\PhpMessageSource',
             'sourceLanguage' => 'en-US',
-            'basePath' => '@forum/messages',
+            'basePath'       => '@forum/messages',
         ];
     }
 

@@ -8,11 +8,11 @@
 
 namespace core\modules\i18n\models\searches;
 
+use core\modules\i18n\models\LanguageSource;
+use core\modules\i18n\models\LanguageTranslate;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use core\modules\i18n\models\LanguageSource;
-use core\modules\i18n\models\LanguageTranslate;
 
 /**
  * LanguageSourceSearch represents the model behind the search form about `core\models\LanguageSource`.
@@ -77,8 +77,8 @@ class LanguageSourceSearch extends LanguageSource
                 'category',
                 'message',
                 'translation' => [
-                    'asc' => ['lt.translation' => SORT_ASC],
-                    'desc' => ['lt.translation' => SORT_DESC],
+                    'asc'   => ['lt.translation' => SORT_ASC],
+                    'desc'  => ['lt.translation' => SORT_DESC],
                     'label' => Yii::t('language', 'Translation'),
                 ],
             ],
@@ -96,7 +96,7 @@ class LanguageSourceSearch extends LanguageSource
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'       => $this->id,
             'category' => $this->category,
         ]);
 
@@ -108,7 +108,7 @@ class LanguageSourceSearch extends LanguageSource
 
         $query->joinWith(['languageTranslate' => function ($query) use ($translateLanguage) {
             $query->from(['lt' => LanguageTranslate::tableName()])->onCondition(['lt.language' => $translateLanguage]);
-            if (!empty($this->searchEmptyCommand) && $this->translation == $this->searchEmptyCommand) {
+            if (!empty($this->searchEmptyCommand) && $this->translation === $this->searchEmptyCommand) {
                 $query->andWhere(['or', ['lt.translation' => null], ['lt.translation' => '']]);
             } else {
                 $query->andFilterWhere($this->createLikeExpression('lt.translation', $this->translation));

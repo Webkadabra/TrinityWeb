@@ -2,39 +2,16 @@
 
 namespace core\components\settings;
 
+use core\models\Settings as BaseSettings;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
-
-use core\models\Settings as BaseSettings;
 
 /**
  * Class Settings
  */
 class Settings extends Component
 {
-
-    /**
-     * @var string
-     */
-    public $cachePrefix = '_settings';
-
-    /**
-     * @var int
-     */
-    public $cachingDuration = 60;
-
-    /**
-     * @var string
-     */
-    public $modelClass = BaseSettings::class;
-
-    /**
-     * @var array Runtime values cache
-     */
-    private $values = [];
-
-
     /**
      * BASE VALUES
      */
@@ -93,6 +70,25 @@ class Settings extends Component
      */
     const APP_MODULE_FORUM_STATUS = 'conf.module.forum.status';
 
+    /**
+     * @var string
+     */
+    public $cachePrefix = '_settings';
+
+    /**
+     * @var int
+     */
+    public $cachingDuration = 60;
+
+    /**
+     * @var string
+     */
+    public $modelClass = BaseSettings::class;
+
+    /**
+     * @var array Runtime values cache
+     */
+    private $values = [];
 
     /**
      * @param array $values
@@ -120,32 +116,11 @@ class Settings extends Component
         if ($model->save(false)) {
             $this->values[$key] = $value;
             Yii::$app->cache->set($this->getCacheKey($key), $value, $this->cachingDuration);
+
             return true;
         };
+
         return false;
-    }
-
-    /**
-     * @param $key
-     * @return mixed
-     */
-    protected function getModel($key)
-    {
-        $query = call_user_func($this->modelClass . '::find');
-        return $query->where(['key' => $key])->one();
-    }
-
-    /**
-     * @param $key
-     * @return array
-     */
-    protected function getCacheKey($key)
-    {
-        return [
-            __CLASS__,
-            $this->cachePrefix,
-            $key
-        ];
     }
 
     /**
@@ -158,6 +133,7 @@ class Settings extends Component
         foreach ($keys as $key) {
             $values[$key] = $this->get($key);
         }
+
         return $values;
     }
 
@@ -190,6 +166,7 @@ class Settings extends Component
             $model = $this->getModel($key);
             $value = $model ? $model->value : $default;
         }
+
         return $value;
     }
 
@@ -204,6 +181,7 @@ class Settings extends Component
                 return false;
             }
         }
+
         return true;
     }
 
@@ -234,6 +212,31 @@ class Settings extends Component
     public function remove($key)
     {
         unset($this->values[$key]);
+
         return call_user_func($this->modelClass . '::deleteAll', ['key' => $key]);
+    }
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    protected function getModel($key)
+    {
+        $query = call_user_func($this->modelClass . '::find');
+
+        return $query->where(['key' => $key])->one();
+    }
+
+    /**
+     * @param $key
+     * @return array
+     */
+    protected function getCacheKey($key)
+    {
+        return [
+            __CLASS__,
+            $this->cachePrefix,
+            $key
+        ];
     }
 }

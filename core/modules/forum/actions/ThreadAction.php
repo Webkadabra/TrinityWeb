@@ -54,11 +54,12 @@ class ThreadAction extends Action
         if ($this->_thread === null) {
             $this->_thread = (new ThreadVerifier([
                     'categoryId' => $cid,
-                    'forumId' => $fid,
-                    'threadId' => $id,
+                    'forumId'    => $fid,
+                    'threadId'   => $id,
                     'threadSlug' => $slug
                 ]))->verify();
         }
+
         return $this->_thread;
     }
 
@@ -75,11 +76,13 @@ class ThreadAction extends Action
         $thread = $this->getThread($cid, $fid, $id, $slug);
         if (empty($thread)) {
             $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));
+
             return $this->controller->redirect(['forum/index']);
         }
 
         if (!User::can($this->permission, ['item' => $thread])) {
             $this->controller->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+
             return $this->controller->redirect(['forum/index']);
         }
 
@@ -88,11 +91,12 @@ class ThreadAction extends Action
         } else {
             $this->controller->error(Yii::t('podium/flash', 'Sorry! There was an error while updating the thread.'));
         }
+
         return $this->controller->redirect([
             'forum/thread',
-            'cid' => $thread->forum->category->id,
-            'fid' => $thread->forum->id,
-            'id' => $thread->id,
+            'cid'  => $thread->forum->category->id,
+            'fid'  => $thread->forum->id,
+            'id'   => $thread->id,
             'slug' => $thread->slug
         ]);
     }

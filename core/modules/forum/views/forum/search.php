@@ -11,17 +11,17 @@ if (!isset($author)) {
     $author = '';
 }
 if (!isset($model)) {
-    $type    = 'posts';
+    $type = 'posts';
     $display = 'topics';
 }
 else {
-    $type    = $model->type;
+    $type = $model->type;
     $display = $model->display;
 }
 ?>
 <?php if (!empty($dataProvider)): ?>
 <?php
-$typeName = $type == 'topics' ? Yii::t('podium/view', 'threads') : Yii::t('podium/view', 'posts');
+$typeName = $type === 'topics' ? Yii::t('podium/view', 'threads') : Yii::t('podium/view', 'posts');
 if (!empty($query) && !empty($author)) {
     $this->title = Yii::t('podium/view', 'Search for {type} with "{query}" by "{author}"', ['query' => Html::encode($query), 'author' => Html::encode($author), 'type' => $typeName]);
 }
@@ -43,11 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php switch ($display): ?>
 <?php case 'posts': ?>
         <div class="panel-group" role="tablist">
-            <?= $this->render('/elements/search/_forum_search_posts', ['dataProvider' => $dataProvider, 'query' => $query, 'author' => $author, 'type' => $type]) ?>
+            <?php echo $this->render('/elements/search/_forum_search_posts', ['dataProvider' => $dataProvider, 'query' => $query, 'author' => $author, 'type' => $type]); ?>
         </div>
 <?php break; default: ?>
         <div class="panel-group" role="tablist">
-            <?= $this->render('/elements/search/_forum_search_topics', ['dataProvider' => $dataProvider, 'query' => $query, 'author' => $author, 'type' => $type]) ?>
+            <?php echo $this->render('/elements/search/_forum_search_topics', ['dataProvider' => $dataProvider, 'query' => $query, 'author' => $author, 'type' => $type]); ?>
         </div>
 <?php endswitch; ?>
     </div>
@@ -59,6 +59,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Main Forum')
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-<?= $this->render('/elements/search/_search', ['model' => $model, 'list' => $list]) ?>
+<?php echo $this->render('/elements/search/_search', ['model' => $model, 'list' => $list]); ?>
 </div>
 <?php endif;

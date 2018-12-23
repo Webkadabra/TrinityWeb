@@ -1,14 +1,12 @@
 <?php
 
-use core\rbac\Migration;
-
 use core\models\User;
+use core\rbac\Migration;
 
 class m180905_114601_trinity_web extends Migration
 {
     public function up()
     {
-
         //i18n START
         $access_global_i18n = $this->auth->createPermission(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n);
         $this->auth->add($access_global_i18n);
@@ -195,7 +193,6 @@ class m180905_114601_trinity_web extends Migration
         $this->auth->add($access_backend_to_logs);
         //--LOGS END
 
-
         //CAROUSEL
         $access_backend_to_carousel = $this->auth->createPermission(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CAROUSEL);
         $this->auth->add($access_backend_to_carousel);
@@ -257,7 +254,6 @@ class m180905_114601_trinity_web extends Migration
         $this->auth->addChild($role_administrator, $access_backend_to_timeline);
         $this->auth->addChild($role_administrator, $access_global_i18n);
         $this->auth->addChild($role_administrator, $access_backend_to_dashboard);
-
 
         $access_to_backend = $this->auth->createPermission(Yii::$app->PermissionHelper::ACCESS_TO_BACKEND);
         $this->auth->add($access_to_backend);

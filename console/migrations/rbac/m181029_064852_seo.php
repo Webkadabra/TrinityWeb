@@ -1,8 +1,7 @@
 <?php
 
-use core\rbac\Migration;
-
 use core\models\User;
+use core\rbac\Migration;
 
 class m181029_064852_seo extends Migration
 {

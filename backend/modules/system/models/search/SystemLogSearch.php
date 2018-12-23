@@ -36,6 +36,7 @@ class SystemLogSearch extends SystemLog
     /**
      * Creates data provider instance with search query applied
      *
+     * @param mixed $params
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -51,8 +52,8 @@ class SystemLogSearch extends SystemLog
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'level' => $this->level,
+            'id'      => $this->id,
+            'level'   => $this->level,
             'message' => $this->message,
         ]);
 

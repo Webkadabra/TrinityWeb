@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\helpers;
 
-use Yii;
-use core\modules\i18n\services\Scanner;
 use core\modules\i18n\bundles\TranslationPluginAsset;
+use core\modules\i18n\services\Scanner;
+use Yii;
 
 /**
  * Language helper.
@@ -48,14 +48,14 @@ class Language
         if (self::isEnabledTranslate()) {
             return strtr(self::$_template, [
                 '{language_id}' => $language ? $language : Yii::$app->language,
-                '{category}' => $category,
-                '{message}' => Yii::t($category, $message, $params, $language),
-                '{params}' => \yii\helpers\Html::encode(\yii\helpers\Json::encode($params)),
-                '{hash}' => md5($message),
+                '{category}'    => $category,
+                '{message}'     => Yii::t($category, $message, $params, $language),
+                '{params}'      => \yii\helpers\Html::encode(\yii\helpers\Json::encode($params)),
+                '{hash}'        => md5($message),
             ]);
-        } else {
-            return Yii::t($category, $message, $params, $language);
         }
+  
+            return Yii::t($category, $message, $params, $language);
     }
 
     /**

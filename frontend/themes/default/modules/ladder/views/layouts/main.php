@@ -1,11 +1,9 @@
 <?php
 
+use core\widgets\Alert;
 use core\widgets\Breadcrumbs;
 use core\widgets\DbCarousel;
-use core\widgets\Alert;
-
 use frontend\modules\ladder\assets\LadderAssets;
-
 use frontend\widgets\Marquee\MarqueeWidget;
 use frontend\widgets\StatusServers\StatusServersWidget;
 
@@ -18,31 +16,24 @@ $this->beginContent('@frontend/views/layouts/base.php');
 LadderAssets::register($this);
 
 ?>
-<div id="carousel-container" class="fix-header">
-    <?php echo DbCarousel::widget([
-        'key'=>'index',
-        'assetManager' => Yii::$app->getAssetManager(),
-        'options' => [
-            'class' => 'slide carousel-with-indicator',
-        ]
-    ]) ?>
-</div>
 <div class="container mih-100">
+    <div class="fix-header">
+    </div>
     <div class="row mih-100">
         <div class="col-12">
-            <?= Alert::widget() ?>
+            <?php echo Alert::widget(); ?>
         </div>
         <div class="col-8 tw-left-side">
-            <?= Breadcrumbs::widget([
+            <?php echo Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= $content?>
+            ]);?>
+            <?php echo $content;?>
         </div>
-        <div class="col-4">
+        <div class="col-4 tw-right-side">
             <div id="layout-widgets" class="mt-3">
-                <?php echo StatusServersWidget::widget() ?>
+                <?php echo StatusServersWidget::widget(); ?>
             </div>
         </div>
     </div>
 </div>
-<?php $this->endContent() ?>
+<?php $this->endContent(); ?>

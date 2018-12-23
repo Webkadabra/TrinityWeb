@@ -2,15 +2,16 @@
 
 namespace backend\modules\system\models;
 
-use core\modules\installer\helpers\Configuration;
-use Yii;
-use yii\base\Model;
-use yii\db\Connection;
-
 use core\base\models\AuthCoreModel;
 use core\base\models\CharacterCoreModel;
-
 use core\models\Server;
+use core\modules\installer\helpers\Configuration;
+use Yii;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
+use yii\base\Model;
+use yii\db\Connection;
+use yii\web\NotFoundHttpException;
 
 /**
  * Class SettingsModel
@@ -18,7 +19,6 @@ use core\models\Server;
  */
 class SettingsModel extends Model
 {
-
     /**
      * @var string
      */
@@ -81,14 +81,13 @@ class SettingsModel extends Model
      */
     public function __construct(array $config = [])
     {
-
         $this->application_name = Yii::$app->settings->get(Yii::$app->settings::APP_NAME);
         $this->application_announce = Yii::$app->settings->get(Yii::$app->settings::APP_ANNOUNCE);
 
-        $this->application_maintenance = Yii::$app->settings->get(Yii::$app->settings::APP_MAINTENANCE) == Yii::$app->settings::ENABLED ? 1 : 0;
+        $this->application_maintenance = Yii::$app->settings->get(Yii::$app->settings::APP_MAINTENANCE) === Yii::$app->settings::ENABLED ? 1 : 0;
         $this->application_theme = Yii::$app->settings->get(Yii::$app->settings::APP_THEME);
 
-        $this->recaptcha_status = Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_STATUS) == Yii::$app->settings::ENABLED ? 1 : 0;
+        $this->recaptcha_status = Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_STATUS) === Yii::$app->settings::ENABLED ? 1 : 0;
         $this->recaptcha_key = Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_KEY);
         $this->recaptcha_secret = Yii::$app->settings->get(Yii::$app->settings::APP_CAPTCHA_SECRET);
 
@@ -98,26 +97,26 @@ class SettingsModel extends Model
         $this->modules = [];
         $this->modules = [
             'ladder' => [
-                'label' => Yii::t('backend','Ladder'),
+                'label'      => Yii::t('backend','Ladder'),
                 'field_keys' => [
-                    'status' => Yii::$app->settings::APP_MODULE_LADDER_STATUS,
-                    'per-page' => Yii::$app->settings::APP_MODULE_LADDER_PER_PAGE,
+                    'status'         => Yii::$app->settings::APP_MODULE_LADDER_STATUS,
+                    'per-page'       => Yii::$app->settings::APP_MODULE_LADDER_PER_PAGE,
                     'cache_duration' => Yii::$app->settings::APP_MODULE_LADDER_CACHE_DURATION,
                 ],
                 'fields' => [
-                    'status' => Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_STATUS) == Yii::$app->settings::ENABLED ? 1 : 0,
-                    'per-page' => Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_PER_PAGE),
+                    'status'         => Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_STATUS) === Yii::$app->settings::ENABLED ? 1 : 0,
+                    'per-page'       => Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_PER_PAGE),
                     'cache_duration' => Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_CACHE_DURATION)
                 ],
                 'description' => 'Module "Ladder" will show arena team statistics per realm'
             ],
             'forum' => [
-                'label' => Yii::t('backend','Forum'),
+                'label'      => Yii::t('backend','Forum'),
                 'field_keys' => [
                     'status' => Yii::$app->settings::APP_MODULE_FORUM_STATUS
                 ],
                 'fields' => [
-                    'status' =>  Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_FORUM_STATUS) == Yii::$app->settings::ENABLED ? 1 : 0,
+                    'status' => Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_FORUM_STATUS) === Yii::$app->settings::ENABLED ? 1 : 0,
                 ],
                 'description' => 'Модуль "Форум"'
             ],
@@ -152,63 +151,6 @@ class SettingsModel extends Model
         parent::__construct($config);
     }
 
-    private function setSystemDatabaseConnections()
-    {
-        $servers = Yii::$app->DBHelper->getServers();
-        $char_key = 0;
-        foreach($servers as $server) {
-            /* @var Server $server */
-            if(!isset($this->auth_dbs[$server['auth_id']])) {
-                $auth_connection = AuthCoreModel::getDb($server['auth_id']);
-                $auth_dsnConfig = $this->parseDSN($auth_connection->dsn);
-                if($auth_dsnConfig) {
-                    $this->auth_dbs[$server['auth_id']] = new AuthDatabases([
-                        'host' => $auth_dsnConfig['host'],
-                        'port' => $auth_dsnConfig['port'],
-                        'database' => $auth_dsnConfig['dbname'],
-                        'login' => $auth_connection->username,
-                        'password' => $auth_connection->password,
-                        'table_prefix' => $auth_connection->tablePrefix
-                    ]);
-                }
-            }
-            $char_connection = CharacterCoreModel::getDb($server['auth_id'],$server['realm_id']);
-            $char_dsnConfig = $this->parseDSN($char_connection->dsn);
-            if($char_dsnConfig) {
-                $this->char_dbs[$char_key++] = new CharDatabases([
-                    'name' => "char_{$server['auth_id']}_{$server['realm_id']}",
-                    'host' => $char_dsnConfig['host'],
-                    'port' => $char_dsnConfig['port'],
-                    'database' => $char_dsnConfig['dbname'],
-                    'login' => $char_connection->username,
-                    'password' => $char_connection->password,
-                    'table_prefix' => $char_connection->tablePrefix
-                ]);
-            }
-        }
-    }
-
-    private function parseDSN($dsn)
-    {
-        $exploded = array_map(
-            function ($_var) {
-                return explode('=', $_var);
-            },
-            explode(';', $dsn)
-        );
-        $parseArray = [];
-        if (count($exploded) > 1) {
-            foreach ($exploded as $index => $element) {
-                if(strpos($element[0],'host') !== false) {
-                    $parseArray['host'] = $element[1];
-                } else {
-                    $parseArray[$element[0]] = $element[1];
-                }
-            }
-        }
-        return $parseArray;
-    }
-
     /**
      * @inheritdoc
      */
@@ -231,9 +173,9 @@ class SettingsModel extends Model
     public function attributeLabels()
     {
         return [
-            'application_name' => Yii::t('backend','Application name'),
+            'application_name'        => Yii::t('backend','Application name'),
             'application_maintenance' => Yii::t('backend','Application Maintenance'),
-            'application_announce' => Yii::t('backend','Application Announce')
+            'application_announce'    => Yii::t('backend','Application Announce')
         ];
     }
 
@@ -244,7 +186,6 @@ class SettingsModel extends Model
     public function save($postData)
     {
         if($this->load($postData) && $this->validate()) {
-
             Yii::$app->settings->set(Yii::$app->settings::APP_NAME, $this->application_name);
             Yii::$app->settings->set(Yii::$app->settings::APP_ANNOUNCE, $this->application_announce);
 
@@ -286,8 +227,10 @@ class SettingsModel extends Model
                     }
                 }
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -297,6 +240,7 @@ class SettingsModel extends Model
         foreach($dbs as $index => $db) {
             $this->auth_dbs[$index] = new AuthDatabases($db);
         }
+
         return true;
     }
 
@@ -306,12 +250,13 @@ class SettingsModel extends Model
         foreach($dbs as $db) {
             $this->char_dbs[] = new CharDatabases($db);
         }
+
         return true;
     }
 
     /**
-     * @return array
      * @throws \yii\base\InvalidConfigException
+     * @return array
      */
     public function saveAuthConnections()
     {
@@ -338,10 +283,10 @@ class SettingsModel extends Model
                     $config['components'][$key_name]['enableSchemaCache'] = true;
                 } else {
                     $errorMsg[$key_name] = Yii::t('installer','Connection {host}:{port} to {database} return with error {err}',[
-                        'host' => $db['host'],
-                        'port' => $db['port'],
+                        'host'     => $db['host'],
+                        'port'     => $db['port'],
                         'database' => $db ['database'],
-                        'err' => $err instanceof \Exception ? $err->getMessage() : null
+                        'err'      => $err instanceof \Exception ? $err->getMessage() : null
                     ]);
                 }
             } catch (\Exception $e) {
@@ -357,8 +302,8 @@ class SettingsModel extends Model
     }
 
     /**
-     * @return array
      * @throws \yii\base\InvalidConfigException
+     * @return array
      */
     public function saveCharConnections()
     {
@@ -385,10 +330,10 @@ class SettingsModel extends Model
                     $config['components'][$key_name]['enableSchemaCache'] = true;
                 } else {
                     $errorMsg[$key_name] = Yii::t('installer','Connection {host}:{port} to {database} return with error {err}',[
-                        'host' => $db['host'],
-                        'port' => $db['port'],
+                        'host'     => $db['host'],
+                        'port'     => $db['port'],
                         'database' => $db ['database'],
-                        'err' => $err instanceof \Exception ? $err->getMessage() : null
+                        'err'      => $err instanceof \Exception ? $err->getMessage() : null
                     ]);
                 }
             } catch (\Exception $e) {
@@ -403,4 +348,67 @@ class SettingsModel extends Model
         return $errorMsg;
     }
 
+    private function setSystemDatabaseConnections()
+    {
+        $servers = Yii::$app->DBHelper->getServers();
+        $char_key = 0;
+        foreach($servers as $server) {
+            /* @var Server $server */
+            if(!isset($this->auth_dbs[$server['auth_id']])) {
+                $auth_connection = AuthCoreModel::getDb($server['auth_id']);
+                $auth_dsnConfig = $this->parseDSN($auth_connection->dsn);
+                if($auth_dsnConfig) {
+                    $this->auth_dbs[$server['auth_id']] = new AuthDatabases([
+                        'host'         => $auth_dsnConfig['host'],
+                        'port'         => $auth_dsnConfig['port'],
+                        'database'     => $auth_dsnConfig['dbname'],
+                        'login'        => $auth_connection->username,
+                        'password'     => $auth_connection->password,
+                        'table_prefix' => $auth_connection->tablePrefix
+                    ]);
+                }
+            }
+            try {
+                $char_connection = CharacterCoreModel::getDb($server['auth_id'], $server['realm_id']);
+
+                $char_dsnConfig = $this->parseDSN($char_connection->dsn);
+                if($char_dsnConfig) {
+                    $this->char_dbs[$char_key++] = new CharDatabases([
+                        'name'         => "char_{$server['auth_id']}_{$server['realm_id']}",
+                        'host'         => $char_dsnConfig['host'],
+                        'port'         => $char_dsnConfig['port'],
+                        'database'     => $char_dsnConfig['dbname'],
+                        'login'        => $char_connection->username,
+                        'password'     => $char_connection->password,
+                        'table_prefix' => $char_connection->tablePrefix
+                    ]);
+                }
+            } catch (InvalidConfigException $e) {
+            } catch (NotFoundHttpException $e) {
+            } catch (Exception $e) {
+            }
+        }
+    }
+
+    private function parseDSN($dsn)
+    {
+        $exploded = array_map(
+            function ($_var) {
+                return explode('=', $_var);
+            },
+            explode(';', $dsn)
+        );
+        $parseArray = [];
+        if (count($exploded) > 1) {
+            foreach ($exploded as $index => $element) {
+                if(strpos($element[0],'host') !== false) {
+                    $parseArray['host'] = $element[1];
+                } else {
+                    $parseArray[$element[0]] = $element[1];
+                }
+            }
+        }
+
+        return $parseArray;
+    }
 }

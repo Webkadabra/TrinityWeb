@@ -36,7 +36,7 @@ class Poll extends PollActiveRecord
     public function getUserVoted($userId)
     {
         return (new Query())->from('{{%poll_vote}}')->where([
-            'poll_id' => $this->id,
+            'poll_id'   => $this->id,
             'caster_id' => $userId
         ])->count('id') ? true : false;
     }
@@ -66,12 +66,14 @@ class Poll extends PollActiveRecord
                     throw new Exception('Votes adding error!');
                 }
                 $transaction->commit();
+
                 return true;
             } catch (Exception $e) {
                 $transaction->rollBack();
                 Log::error($e->getMessage(), $this->id, __METHOD__);
             }
         }
+
         return false;
     }
 
@@ -83,10 +85,11 @@ class Poll extends PollActiveRecord
     public function hasAnswer($answerId)
     {
         foreach ($this->answers as $answer) {
-            if ($answer->id == $answerId) {
+            if ($answer->id === $answerId) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -97,6 +100,7 @@ class Poll extends PollActiveRecord
     public function getCurrentVotes()
     {
         $this->refresh();
+
         return ArrayHelper::map($this->answers, 'id', 'votes');
     }
 
@@ -110,6 +114,7 @@ class Poll extends PollActiveRecord
         foreach ($this->answers as $answer) {
             $votes += $answer->votes;
         }
+
         return $votes;
     }
 
@@ -132,11 +137,13 @@ class Poll extends PollActiveRecord
             }
             $transaction->commit();
             Log::info('Poll deleted', !empty($this->id) ? $this->id : '', __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -154,7 +161,7 @@ class Poll extends PollActiveRecord
 
             foreach ($this->editAnswers as $answer) {
                 foreach ($this->answers as $oldAnswer) {
-                    if ($answer == $oldAnswer->answer) {
+                    if ($answer === $oldAnswer->answer) {
                         continue(2);
                     }
                 }
@@ -167,7 +174,7 @@ class Poll extends PollActiveRecord
             }
             foreach ($this->answers as $oldAnswer) {
                 foreach ($this->editAnswers as $answer) {
-                    if ($answer == $oldAnswer->answer) {
+                    if ($answer === $oldAnswer->answer) {
                         continue(2);
                     }
                 }
@@ -178,11 +185,13 @@ class Poll extends PollActiveRecord
 
             $transaction->commit();
             Log::info('Poll updated', $this->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 }

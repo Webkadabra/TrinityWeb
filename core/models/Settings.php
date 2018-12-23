@@ -51,8 +51,8 @@ class Settings extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'key' => Yii::t('common', 'Key'),
-            'value' => Yii::t('common', 'Value'),
+            'key'     => Yii::t('common', 'Key'),
+            'value'   => Yii::t('common', 'Value'),
             'comment' => Yii::t('common', 'Comment'),
         ];
     }

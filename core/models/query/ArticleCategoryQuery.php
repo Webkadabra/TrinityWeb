@@ -2,9 +2,8 @@
 
 namespace core\models\query;
 
-use yii\db\ActiveQuery;
-
 use core\models\ArticleCategory;
+use yii\db\ActiveQuery;
 
 class ArticleCategoryQuery extends ActiveQuery
 {

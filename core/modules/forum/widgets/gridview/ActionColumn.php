@@ -28,9 +28,9 @@ class ActionColumn extends YiiActionColumn
      * @var array html options to be applied to the [[initDefaultButtons()|default buttons]].
      */
     public $buttonOptions = [
-        'class' => 'btn btn-default btn-xs',
-        'data-pjax' => '0',
-        'data-toggle' => 'tooltip',
+        'class'          => 'btn btn-default btn-xs',
+        'data-pjax'      => '0',
+        'data-toggle'    => 'tooltip',
         'data-placement' => 'top',
     ];
 
@@ -53,9 +53,9 @@ class ActionColumn extends YiiActionColumn
     {
         return array_merge(
             [
-                'class' => 'btn btn-default btn-xs',
-                'data-pjax' => '0',
-                'data-toggle' => 'tooltip',
+                'class'          => 'btn btn-default btn-xs',
+                'data-pjax'      => '0',
+                'data-toggle'    => 'tooltip',
                 'data-placement' => 'top',
             ],
             $options

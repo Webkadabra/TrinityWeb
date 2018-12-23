@@ -2,8 +2,8 @@
 
 namespace core\modules\forum\controllers;
 
-use core\modules\forum\helpers\Helper;
 use core\modules\forum\db\Query;
+use core\modules\forum\helpers\Helper;
 use core\modules\forum\maintenance\Installation;
 use core\modules\forum\maintenance\Update;
 use core\modules\forum\Podium;
@@ -21,11 +21,6 @@ class InstallController extends Controller
     use FlashTrait;
 
     /**
-     * @var string Layout name
-     */
-    public $layout = 'installation';
-
-    /**
      * @inheritdoc
      */
     public function beforeAction($action)
@@ -34,8 +29,10 @@ class InstallController extends Controller
             if (!empty(Yii::$app->log->targets['podium'])) {
                 Yii::$app->log->targets['podium']->enabled = false;
             }
+
             return $this->checkAccess();
         }
+
         return false;
     }
 
@@ -58,6 +55,7 @@ class InstallController extends Controller
         }
         echo Yii::t('podium/view', 'Access to Podium installation is denied due to IP address restriction.');
         Yii::warning('Access to Podium installation is denied due to IP address restriction. The requested IP is ' . $ip, __METHOD__);
+
         return false;
     }
 
@@ -91,6 +89,7 @@ class InstallController extends Controller
     public function actionRun()
     {
         Yii::$app->session->set(Installation::SESSION_KEY, 0);
+
         return $this->render('run', ['version' => $this->module->version]);
     }
 
@@ -105,6 +104,7 @@ class InstallController extends Controller
         if (Yii::$app->request->isPost) {
             $result = (new Update())->nextStep();
         }
+
         return Json::encode($result);
     }
 
@@ -127,9 +127,9 @@ class InstallController extends Controller
         } else {
             $dbVersion = $dbQuery['value'];
             $result = Helper::compareVersions(explode('.', $mdVersion), explode('.', $dbVersion));
-            if ($result == '=') {
+            if ($result === '=') {
                 $info = Yii::t('podium/flash', 'Module and database versions are the same!');
-            } elseif ($result == '<') {
+            } elseif ($result === '<') {
                 $error = Yii::t('podium/flash', 'Module version appears to be older than database! Please verify your database.');
             }
         }
@@ -138,9 +138,9 @@ class InstallController extends Controller
 
         return $this->render('level-up', [
             'currentVersion' => $mdVersion,
-            'dbVersion' => $dbVersion,
-            'error' => $error,
-            'info' => $info
+            'dbVersion'      => $dbVersion,
+            'error'          => $error,
+            'info'           => $info
         ]);
     }
 }

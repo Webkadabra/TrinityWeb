@@ -2,9 +2,8 @@
 
 namespace core\models\chars;
 
-use Yii;
-
 use core\base\models\CharacterCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "arena_team".
@@ -54,21 +53,21 @@ class ArenaTeam extends CharacterCoreModel
     public function attributeLabels()
     {
         return [
-            'arenaTeamId' => 'Arena Team ID',
-            'name' => Yii::t('common', 'Название'),
-            'captainGuid' => 'Captain Guid',
-            'type' => Yii::t('common', 'Тип'),
-            'rating' => Yii::t('common', 'Рейтинг'),
-            'seasonGames' => Yii::t('common', 'Игр в сезоне'),
-            'seasonWins' => Yii::t('common', 'Побед в сезоне'),
-            'weekGames' => Yii::t('common', 'Недельных игр'),
-            'weekWins' => Yii::t('common', 'Недельных побед'),
-            'rank' => Yii::t('common', 'Ранг'),
+            'arenaTeamId'     => 'Arena Team ID',
+            'name'            => Yii::t('common', 'Название'),
+            'captainGuid'     => 'Captain Guid',
+            'type'            => Yii::t('common', 'Тип'),
+            'rating'          => Yii::t('common', 'Рейтинг'),
+            'seasonGames'     => Yii::t('common', 'Игр в сезоне'),
+            'seasonWins'      => Yii::t('common', 'Побед в сезоне'),
+            'weekGames'       => Yii::t('common', 'Недельных игр'),
+            'weekWins'        => Yii::t('common', 'Недельных побед'),
+            'rank'            => Yii::t('common', 'Ранг'),
             'backgroundColor' => 'Background Color',
-            'emblemStyle' => 'Emblem Style',
-            'emblemColor' => 'Emblem Color',
-            'borderStyle' => 'Border Style',
-            'borderColor' => 'Border Color',
+            'emblemStyle'     => 'Emblem Style',
+            'emblemColor'     => 'Emblem Color',
+            'borderStyle'     => 'Border Style',
+            'borderColor'     => 'Border Color',
         ];
     }
     /**

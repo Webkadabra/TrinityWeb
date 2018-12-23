@@ -24,10 +24,10 @@ class Forum extends ForumActiveRecord
             $mods = [];
             $modteam = User::find()->select(['id', 'role'])->where([
                     'status' => User::STATUS_ACTIVE,
-                    'role' => [User::ROLE_ADMINISTRATOR, User::ROLE_MODERATOR]
+                    'role'   => [User::ROLE_ADMINISTRATOR, User::ROLE_MODERATOR]
                 ]);
             foreach ($modteam->each() as $user) {
-                if ($user->role == User::ROLE_ADMINISTRATOR) {
+                if ($user->role === User::ROLE_ADMINISTRATOR) {
                     $mods[] = $user->id;
                     continue;
                 }
@@ -39,6 +39,7 @@ class Forum extends ForumActiveRecord
             }
             Podium::getInstance()->podiumCache->setElement('forum.moderators', $this->id, $mods);
         }
+
         return $mods;
     }
 
@@ -49,15 +50,18 @@ class Forum extends ForumActiveRecord
      */
     public function isMod($userId = null)
     {
-        if (in_array($userId ?: User::loggedId(), $this->getMods())) {
+        if (in_array($userId ?: User::loggedId(), $this->getMods(), true)) {
             return true;
         }
+
         return false;
     }
 
     /**
      * Searches forums.
      * @param int|null $categoryId
+     * @param mixed $onlyVisible
+     * @param mixed $onlyRoots
      * @return ActiveDataProvider
      */
     public function search($categoryId = null, $onlyVisible = false, $onlyRoots = true)
@@ -80,6 +84,7 @@ class Forum extends ForumActiveRecord
         }
         $dataProvider = new ActiveDataProvider(['query' => $query]);
         $dataProvider->sort->defaultOrder = ['lft' => SORT_ASC];
+
         return $dataProvider;
     }
 
@@ -97,13 +102,14 @@ class Forum extends ForumActiveRecord
         if (!is_numeric($categoryId) || $categoryId < 1 || !is_numeric($id) || $id < 1 || empty($slug)) {
             return null;
         }
+
         return static::find()->joinWith(['category' => function ($query) use ($guest) {
                 if ($guest) {
                     $query->andWhere([Category::tableName() . '.visible' => 1]);
                 }
             }])->where([
-                static::tableName() . '.id' => $id,
-                static::tableName() . '.slug' => $slug,
+                static::tableName() . '.id'          => $id,
+                static::tableName() . '.slug'        => $slug,
                 static::tableName() . '.category_id' => $categoryId,
             ])->limit(1)->one();
     }
@@ -127,12 +133,14 @@ class Forum extends ForumActiveRecord
                             ])
                             ->orderBy(['sort' => SORT_ASC, 'id' => SORT_ASC])
                             ->indexBy('id');
+
         return $sorter->run();
     }
 
     /**
      * Searches forums.
      * @param int|null $parent_id
+     * @param mixed $onlyVisible
      * @return ActiveDataProvider
      */
     public function search_child($parent_id = null, $onlyVisible = false)
@@ -147,6 +155,7 @@ class Forum extends ForumActiveRecord
 
         $dataProvider = new ActiveDataProvider(['query' => $query]);
         $dataProvider->sort->defaultOrder = ['lft' => SORT_ASC];
+
         return $dataProvider;
     }
 }

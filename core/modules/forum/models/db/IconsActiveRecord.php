@@ -2,9 +2,9 @@
 
 namespace core\modules\forum\models\db;
 
-use Yii;
 use core\modules\forum\db\ActiveRecord;
 use trntv\filekit\behaviors\UploadBehavior;
+use Yii;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -19,7 +19,6 @@ use yii\data\ActiveDataProvider;
  */
 class IconsActiveRecord extends ActiveRecord
 {
-    
     const TYPE_FONT = 1;
     const TYPE_IMAGE = 2;
     
@@ -35,9 +34,9 @@ class IconsActiveRecord extends ActiveRecord
     {
         return [
             'picture' => [
-                'class' => UploadBehavior::class,
-                'attribute' => 'picture',
-                'pathAttribute' => 'icon_path',
+                'class'            => UploadBehavior::class,
+                'attribute'        => 'picture',
+                'pathAttribute'    => 'icon_path',
                 'baseUrlAttribute' => 'icon_base_url'
             ]
         ];
@@ -46,7 +45,7 @@ class IconsActiveRecord extends ActiveRecord
     public function beforeSave($insert) {
         $old_value = null;
         $new_value = null;
-        if($this->icon_type == IconsActiveRecord::TYPE_FONT) {
+        if($this->icon_type === IconsActiveRecord::TYPE_FONT) {
             $old_value = '<i class="' . $this->getOldAttribute('icon_string') . '"></i>';
             $new_value = '<i class="' . $this->icon_string . '"></i>';
         } else {
@@ -54,7 +53,7 @@ class IconsActiveRecord extends ActiveRecord
             $new_value = '<img style="max-width: 32px;" src="' . $this->icon_base_url . '/' . $this->icon_path . '"/>';
         }
         
-        if($old_value && $new_value && ($old_value != $new_value)) {
+        if($old_value && $new_value && ($old_value !== $new_value)) {
             ForumActiveRecord::updateAll(['icon' => $new_value], ['icon' => $old_value]);
         }
         
@@ -88,8 +87,8 @@ class IconsActiveRecord extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'icon' => Yii::t('common', 'Иконка'),
-            'icon_type' => Yii::t('common', 'Тип иконки'),
+            'icon'        => Yii::t('common', 'Иконка'),
+            'icon_type'   => Yii::t('common', 'Тип иконки'),
             'icon_string' => Yii::t('common', 'Значение иконки'),
         ];
     }
@@ -115,12 +114,13 @@ class IconsActiveRecord extends ActiveRecord
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'        => $this->id,
             'icon_type' => $this->icon_type,
         ]);
 
         $query->andFilterWhere(['like', 'icon', $this->icon]);
         $query->andFilterWhere(['like', 'icon_string', $this->icon_string]);
+
         return $dataProvider;
     }
     
@@ -132,13 +132,13 @@ class IconsActiveRecord extends ActiveRecord
         $icons = IconsActiveRecord::find()->all();
         $data = [];
         foreach($icons as $icon) {
-            if($icon->icon_type == IconsActiveRecord::TYPE_FONT) {
+            if($icon->icon_type === IconsActiveRecord::TYPE_FONT) {
                 $data['<i class="' . $icon->icon_string . '"></i>'] = '<i class="' . $icon->icon_string . '"></i>';
             } else {
                 $data['<img style="max-width: 32px;" src="' . $icon->icon_base_url . '/' . $icon->icon_path . '"/>'] = '<img style="max-width: 32px;" src="' . $icon->icon_base_url . '/' . $icon->icon_path . '"/>';
             }
         }
+
         return $data;
     }
-    
 }

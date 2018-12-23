@@ -1,9 +1,8 @@
 <?php
 
+use core\models\User;
 use core\rbac\Migration;
 use core\rbac\rule\OwnModelRule;
-
-use core\models\User;
 
 class m180905_114314_edit_own_model extends Migration
 {

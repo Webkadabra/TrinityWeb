@@ -18,20 +18,20 @@ class m180823_070129_pages extends Migration
         }
 
         $this->createTable('{{%page}}', [
-            'id' => $this->primaryKey(),
-            'slug' => $this->string(2048)->notNull(),
-            'view' => $this->string(),
-            'status' => $this->smallInteger()->notNull(),
+            'id'         => $this->primaryKey(),
+            'slug'       => $this->string(2048)->notNull(),
+            'view'       => $this->string(),
+            'status'     => $this->smallInteger()->notNull(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ], $tableOptions);
 
         $this->createTable('{{%page_i18n}}', [
-            'id' => $this->primaryKey(),
-            'page_id' => $this->integer()->notNull(),
-            'language' => $this->integer()->notNull(),
-            'title' => $this->string(512)->notNull(),
-            'body' => $this->text()->notNull(),
+            'id'         => $this->primaryKey(),
+            'page_id'    => $this->integer()->notNull(),
+            'language'   => $this->integer()->notNull(),
+            'title'      => $this->string(512)->notNull(),
+            'body'       => $this->text()->notNull(),
             'updated_at' => $this->integer(),
             'created_at' => $this->integer()
         ], $tableOptions);
@@ -40,7 +40,6 @@ class m180823_070129_pages extends Migration
 
         $this->addForeignKey('fk_page_i18n_to_page', '{{%page_i18n}}', 'page_id', '{{%page}}', 'id', 'cascade', 'cascade');
         $this->addForeignKey('fk_page_i18n_to_language', '{{%page_i18n}}', 'language', '{{%language}}', 'ident', 'cascade', 'cascade');
-
     }
 
     /**
@@ -48,7 +47,6 @@ class m180823_070129_pages extends Migration
      */
     public function safeDown()
     {
-
         $this->dropForeignKey('fk_page_i18n_to_page','{{%page_i18n}}');
         $this->dropForeignKey('fk_page_i18n_to_language','{{%page_i18n}}');
 

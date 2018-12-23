@@ -6,15 +6,12 @@ use Yii;
 use yii\base\Component;
 use yii\db\MigrationInterface;
 
-
 class Migration extends Component implements MigrationInterface
 {
-
     /**
      * @var string|\yii\rbac\BaseManager
      */
     public $auth = 'authManager';
-
 
     /**
      * @throws \yii\base\InvalidConfigException

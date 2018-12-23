@@ -1,8 +1,8 @@
-<table class="table table-hover mb-0">
+<table class="table table-dark table-hover">
     <thead>
-        <?= $this->render('/elements/forum/_forum_header') ?>
+        <?php echo $this->render('/elements/forum/_forum_header'); ?>
     </thead>
     <tbody>
-        <?= $this->render('/elements/forum/_forum_list', ['category' => $category]) ?>
+        <?php echo $this->render('/elements/forum/_forum_list', ['category' => $category]); ?>
     </tbody>
 </table>

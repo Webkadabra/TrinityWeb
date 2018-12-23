@@ -2,6 +2,9 @@
 
 namespace core\models;
 
+use core\commands\AddToTimelineCommand;
+use core\models\auth\Accounts;
+use core\models\query\UserQuery;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -11,12 +14,6 @@ use yii\db\Exception;
 use yii\db\Transaction;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
-
-use core\models\auth\Accounts;
-
-use core\models\query\UserQuery;
-
-use core\commands\AddToTimelineCommand;
 
 /**
  * User model
@@ -138,14 +135,14 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             TimestampBehavior::class,
             'auth_key' => [
-                'class' => AttributeBehavior::class,
+                'class'      => AttributeBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => 'auth_key'
                 ],
                 'value' => Yii::$app->getSecurity()->generateRandomString()
             ],
             'access_token' => [
-                'class' => AttributeBehavior::class,
+                'class'      => AttributeBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => 'access_token'
                 ],
@@ -154,7 +151,7 @@ class User extends ActiveRecord implements IdentityInterface
                 }
             ],
             [
-            'class' => SluggableBehavior::class,
+            'class'         => SluggableBehavior::class,
                 'attribute' => 'username',
                 'immutable' => true,
             ],
@@ -199,8 +196,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             self::STATUS_NOT_ACTIVE => Yii::t('common', 'Not Active'),
-            self::STATUS_ACTIVE => Yii::t('common', 'Active'),
-            self::STATUS_DELETED => Yii::t('common', 'Deleted')
+            self::STATUS_ACTIVE     => Yii::t('common', 'Active'),
+            self::STATUS_DELETED    => Yii::t('common', 'Deleted')
         ];
     }
 
@@ -210,13 +207,13 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('common', 'Username'),
-            'email' => Yii::t('common', 'E-mail'),
-            'status' => Yii::t('common', 'Status'),
+            'username'     => Yii::t('common', 'Username'),
+            'email'        => Yii::t('common', 'E-mail'),
+            'status'       => Yii::t('common', 'Status'),
             'access_token' => Yii::t('common', 'API access token'),
-            'created_at' => Yii::t('common', 'Created at'),
-            'updated_at' => Yii::t('common', 'Updated at'),
-            'logged_at' => Yii::t('common', 'Last login'),
+            'created_at'   => Yii::t('common', 'Created at'),
+            'updated_at'   => Yii::t('common', 'Updated at'),
+            'logged_at'    => Yii::t('common', 'Last login'),
         ];
     }
 
@@ -253,7 +250,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
         $hash_password = self::generatePassword($this->username,$password);
-        return $this->password_hash == $hash_password ? true : false;
+
+        return $this->password_hash === $hash_password ? true : false;
     }
 
     public function generatePassword($username, $password) {
@@ -282,11 +280,11 @@ class User extends ActiveRecord implements IdentityInterface
         $this->refresh();
         Yii::$app->commandBus->handle(new AddToTimelineCommand([
             'category' => 'user',
-            'event' => 'signup',
-            'data' => [
+            'event'    => 'signup',
+            'data'     => [
                 'public_identity' => $this->getPublicIdentity(),
-                'user_id' => $this->getId(),
-                'created_at' => $this->created_at
+                'user_id'         => $this->getId(),
+                'created_at'      => $this->created_at
             ]
         ]));
         $profile = new UserProfile();
@@ -310,17 +308,17 @@ class User extends ActiveRecord implements IdentityInterface
         $transactions = [];
         $resultSaved = [];
         foreach($servers as $server) {
-            if(!in_array($server->auth_id,$executed)) {
+            if(!in_array($server->auth_id,$executed, true)) {
                 $executed[] = $server->auth_id;
                 $dbConnection = Accounts::getDb($server->auth_id);
                 $transactions[] = $dbConnection->beginTransaction();
                 try {
                     Accounts::setDb($dbConnection);
                     $account = new Accounts([
-                        'username' => $this->username,
+                        'username'      => $this->username,
                         'sha_pass_hash' => $this->password_hash,
-                        'email' => $this->email,
-                        'expansion' => $server->getExpansion()
+                        'email'         => $this->email,
+                        'expansion'     => $server->getExpansion()
                     ]);
                     $saved = $account->save();
                     $resultSaved[$server->auth_id] = $saved;
@@ -363,7 +361,7 @@ class User extends ActiveRecord implements IdentityInterface
         $transactions = [];
         $resultSaved = [];
         foreach($servers as $server) {
-            if(!in_array($server->auth_id,$executed)) {
+            if(!in_array($server->auth_id,$executed, true)) {
                 $executed[] = $server->auth_id;
                 $dbConnection = Accounts::getDb($server->auth_id);
                 $transactions[] = $dbConnection->beginTransaction();
@@ -392,8 +390,9 @@ class User extends ActiveRecord implements IdentityInterface
                 $transaction->commit();
                 $this->save();
             }
+
             return true;
-        } else {
+        }  
             foreach($transactions as $transaction) {
                 /* @var Transaction $transaction */
                 $transaction->rollBack();
@@ -402,8 +401,8 @@ class User extends ActiveRecord implements IdentityInterface
                 'password',
                 Yii::t('frontend','Errors during update password')
             );
+
             return false;
-        }
     }
 
     /**
@@ -414,6 +413,7 @@ class User extends ActiveRecord implements IdentityInterface
         if ($this->username) {
             return $this->username;
         }
+
         return $this->email;
     }
 
@@ -424,5 +424,4 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->getPrimaryKey();
     }
-
 }

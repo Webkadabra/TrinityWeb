@@ -24,7 +24,6 @@ class Poll extends Widget
      */
     public $display = false;
 
-
     /**
      * Rendering the poll.
      * @return string
@@ -38,10 +37,11 @@ class Poll extends Widget
         if ($hidden && !empty($this->model->end_at) && $this->model->end_at < time()) {
             $hidden = 0;
         }
+
         return $this->render('view', [
-            'model' => $this->model,
-            'hidden' => $hidden,
-            'voted' => $this->display ? true : $this->model->getUserVoted(User::loggedId()),
+            'model'   => $this->model,
+            'hidden'  => $hidden,
+            'voted'   => $this->display ? true : $this->model->getUserVoted(User::loggedId()),
             'display' => $this->display
         ]);
     }
@@ -78,6 +78,7 @@ class Poll extends Widget
         if (!$model->pollAdded) {
             return null;
         }
+
         return (new static)->render('preview', ['model' => $model]);
     }
 }

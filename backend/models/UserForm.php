@@ -2,12 +2,11 @@
 
 namespace backend\models;
 
+use core\models\User;
 use Yii;
 use yii\base\Exception;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
-
-use core\models\User;
 
 /**
  * Create user form
@@ -72,6 +71,7 @@ class UserForm extends Model
         if (!$this->model) {
             $this->model = new User();
         }
+
         return $this->model;
     }
 
@@ -89,6 +89,7 @@ class UserForm extends Model
             Yii::$app->authManager->getRolesByUser($model->getId()),
             'name'
         );
+
         return $this->model;
     }
 
@@ -99,17 +100,17 @@ class UserForm extends Model
     {
         return [
             'username' => Yii::t('common', 'Username'),
-            'email' => Yii::t('common', 'Email'),
-            'status' => Yii::t('common', 'Status'),
+            'email'    => Yii::t('common', 'Email'),
+            'status'   => Yii::t('common', 'Status'),
             'password' => Yii::t('common', 'Password'),
-            'roles' => Yii::t('common', 'Roles')
+            'roles'    => Yii::t('common', 'Roles')
         ];
     }
 
     /**
      * Signs user up.
-     * @return User|null the saved model or null if saving fails
      * @throws \Exception
+     * @return User|null the saved model or null if saving fails
      */
     public function save()
     {
@@ -139,6 +140,7 @@ class UserForm extends Model
 
             return !$model->hasErrors();
         }
+
         return null;
     }
 }

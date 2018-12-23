@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 <div class="card card-default">
     <div class="card-header">
         <h2 class="text-center">
-            <?=Yii::t('installer','Congratulations! TrinityWeb installing complete!')?>
+            <?php echo Yii::t('installer','Congratulations! TrinityWeb installing complete!');?>
         </h2>
     </div>
     <div class="card-body">
@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
                     'class' => 'd-inline-block'
                 ]]);
                 ?>
-                <?= \yii\helpers\Html::submitButton(Yii::t('installer','Go to website') . ' <i class="fa fa-arrow-circle-right"></i>', ['class' => 'btn btn-primary']) ?>
+                <?php echo \yii\helpers\Html::submitButton(Yii::t('installer','Go to website') . ' <i class="fa fa-arrow-circle-right"></i>', ['class' => 'btn btn-primary']); ?>
                 <?php
                 $form::end();
                 ?>

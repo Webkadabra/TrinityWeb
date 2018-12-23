@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use api\modules\v1\resources\Article;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
@@ -15,13 +16,22 @@ use yii\rest\Serializer;
 use yii\rest\ViewAction;
 use yii\web\HttpException;
 
-use api\modules\v1\resources\Article;
-
 /**
- * Class ArticleController
+ * Class ArticleController.
  */
 class ArticleController extends ActiveController
 {
+    /**
+     * @var string
+     */
+    public $modelClass = Article::class;
+    /**
+     * @var array
+     */
+    public $serializer = [
+        'class'              => Serializer::class,
+        'collectionEnvelope' => 'items',
+    ];
 
     /**
      * @return array
@@ -31,49 +41,37 @@ class ArticleController extends ActiveController
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
+            'class'       => CompositeAuth::class,
             'authMethods' => [
                 HttpBasicAuth::class,
                 HttpBearerAuth::class,
                 HttpHeaderAuth::class,
-                QueryParamAuth::class
-            ]
+                QueryParamAuth::class,
+            ],
         ];
 
         return $behaviors;
     }
 
     /**
-     * @var string
-     */
-    public $modelClass = Article::class;
-    /**
-     * @var array
-     */
-    public $serializer = [
-        'class' => Serializer::class,
-        'collectionEnvelope' => 'items'
-    ];
-
-    /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function actions()
     {
         return [
             'index' => [
-                'class' => IndexAction::class,
-                'modelClass' => $this->modelClass,
-                'prepareDataProvider' => [$this, 'prepareDataProvider']
+                'class'               => IndexAction::class,
+                'modelClass'          => $this->modelClass,
+                'prepareDataProvider' => [$this, 'prepareDataProvider'],
             ],
             'view' => [
-                'class' => ViewAction::class,
+                'class'      => ViewAction::class,
                 'modelClass' => $this->modelClass,
-                'findModel' => [$this, 'findModel']
+                'findModel'  => [$this, 'findModel'],
             ],
             'options' => [
-                'class' => OptionsAction::class
-            ]
+                'class' => OptionsAction::class,
+            ],
         ];
     }
 
@@ -82,25 +80,28 @@ class ArticleController extends ActiveController
      */
     public function prepareDataProvider()
     {
-        return new ActiveDataProvider(array(
-            'query' => Article::find()->published()
-        ));
+        return new ActiveDataProvider([
+            'query' => Article::find()->published(),
+        ]);
     }
 
     /**
      * @param $id
-     * @return array|null|\yii\db\ActiveRecord
+     *
      * @throws HttpException
+     *
+     * @return array|null|\yii\db\ActiveRecord
      */
     public function findModel($id)
     {
         $model = Article::find()
             ->published()
-            ->andWhere(['id' => (int)$id])
+            ->andWhere(['id' => (int) $id])
             ->one();
         if (!$model) {
             throw new HttpException(404);
         }
+
         return $model;
     }
 }

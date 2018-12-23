@@ -1,6 +1,14 @@
-<tr>
-    <th class="col-sm-5"><small><?= Yii::t('podium/view', 'Forum') ?></small></th>
-    <th class="col-sm-1 text-right"><small><?= Yii::t('podium/view', 'Threads') ?></small></th>
-    <th class="col-sm-1 text-right"><small><?= Yii::t('podium/view', 'Posts') ?></small></th>
-    <th class="col-sm-5"><small><?= Yii::t('podium/view', 'Latest Post') ?></small></th>
+<tr class="d-flex">
+    <td class="col-6">
+        <small><?php echo Yii::t('podium/view', 'Forum'); ?></small>
+    </td>
+    <td class="col-1 text-right">
+        <small><?php echo Yii::t('podium/view', 'Threads'); ?></small>
+    </td>
+    <td class="col-2 text-right">
+        <small><?php echo Yii::t('podium/view', 'Posts'); ?></small>
+    </td>
+    <td class="col-3">
+        <small><?php echo Yii::t('podium/view', 'Latest Post'); ?></small>
+    </td>
 </tr>

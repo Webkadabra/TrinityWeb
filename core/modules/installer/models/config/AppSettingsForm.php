@@ -13,7 +13,6 @@ use yii\base\Model;
  */
 class AppSettingsForm extends Model
 {
-
     public $app_name = 'TrinityWeb';
 
     public $app_announce = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry';
@@ -30,7 +29,7 @@ class AppSettingsForm extends Model
 	public function attributeLabels()
 	{
             return [
-                'app_name'   => \Yii::t('installer','Application name'),
+                'app_name'       => \Yii::t('installer','Application name'),
                 'app_announce'   => \Yii::t('installer','Application announce'),
             ];
 	}

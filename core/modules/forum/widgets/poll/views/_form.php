@@ -23,22 +23,22 @@ JS
 
 $fieldLayoutLong = [
     'labelOptions' => ['class' => 'control-label col-sm-3'],
-    'template' => "{label}\n<div class=\"col-sm-9\">{input}\n{hint}\n{error}</div>"
+    'template'     => "{label}\n<div class=\"col-sm-9\">{input}\n{hint}\n{error}</div>"
 ];
 $fieldLayoutShort = [
     'labelOptions' => ['class' => 'control-label col-sm-3'],
-    'template' => "{label}\n<div class=\"col-sm-3\">{input}\n{hint}\n{error}</div>"
+    'template'     => "{label}\n<div class=\"col-sm-3\">{input}\n{hint}\n{error}</div>"
 ];
 
 ?>
 <div class="row">
     <div class="col">
-        <?= $form->field($model, $pollQuestion, $fieldLayoutLong); ?>
+        <?php echo $form->field($model, $pollQuestion, $fieldLayoutLong); ?>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <?= $form->field($model, $pollVotes, $fieldLayoutShort); ?>
+        <?php echo $form->field($model, $pollVotes, $fieldLayoutShort); ?>
     </div>
 </div>
 <div class="row no-gutters">
@@ -50,21 +50,21 @@ $fieldLayoutShort = [
         $field->template = '{input} {label}';
         echo $field->checkbox([], false)->label($pollHidden,[
             'class' => 'checkbox-label'
-        ])
+        ]);
         ?>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <?= $form->field($model, $pollEnd, $fieldLayoutShort)->widget(DatePicker::class, [
+        <?php echo $form->field($model, $pollEnd, $fieldLayoutShort)->widget(DatePicker::class, [
             'removeButton' => false, 'pluginOptions' => ['autoclose' => true, 'format' => 'yyyy-mm-dd']
         ]); ?>
     </div>
 </div>
 <?php foreach ($options as $index => $option): ?>
-<div class="row <?= $index > 2 ? 'podium-poll-opt-' . $index : '' ?> <?= $option['value'] === null && $index > 2 ? 'd-none' : '' ?>">
+<div class="row <?php echo $index > 2 ? 'podium-poll-opt-' . $index : ''; ?> <?php echo $option['value'] === null && $index > 2 ? 'd-none' : ''; ?>">
     <div class="col">
-        <?= $form->field($model, $pollAnswers .'[]', $fieldLayoutLong)
+        <?php echo $form->field($model, $pollAnswers .'[]', $fieldLayoutLong)
                 ->label(Yii::t('podium/view', 'Option #{n}', ['n' => $index]), ['for' => $option['id']])
                 ->textInput($option); ?>
     </div>
@@ -72,6 +72,6 @@ $fieldLayoutShort = [
 <?php endforeach; ?>
 <div class="row podium-poll-plus">
     <div class="col-sm-offset-3 col-sm-9">
-        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> <?= Yii::t('podium/view', 'One more'); ?></button>
+        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('podium/view', 'One more'); ?></button>
     </div>
 </div>

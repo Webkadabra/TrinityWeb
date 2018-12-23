@@ -39,7 +39,7 @@ class Sorter extends Component
             $next = 0;
             $newSort = -1;
             foreach ($this->query->each() as $id => $model) {
-                if ($next == $this->order) {
+                if ($next === $this->order) {
                     $newSort = $next++;
                 }
                 Podium::getInstance()->db->createCommand()->update(
@@ -47,7 +47,7 @@ class Sorter extends Component
                     )->execute();
                 $next++;
             }
-            if ($newSort == -1) {
+            if ($newSort === -1) {
                 $newSort = $next;
             }
             $this->target->sort = $newSort;
@@ -55,10 +55,12 @@ class Sorter extends Component
                 throw new Exception('Order saving error');
             }
             Log::info('Orded updated', $this->target->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 }

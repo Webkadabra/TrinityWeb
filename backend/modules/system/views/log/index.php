@@ -18,53 +18,53 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <p>
-    <?php echo Html::a(Yii::t('backend', 'Clear'), false, ['class' => 'btn btn-danger', 'data-method' => 'delete']) ?>
+    <?php echo Html::a(Yii::t('backend', 'Clear'), false, ['class' => 'btn btn-danger', 'data-method' => 'delete']); ?>
 </p>
 
 <?php echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'options' => [
+    'filterModel'  => $searchModel,
+    'options'      => [
         'class' => 'grid-view table-responsive',
     ],
     'tableOptions' => ['class' => 'table table-dark table-hover'],
-    'columns' => [
+    'columns'      => [
         ['class' => 'yii\grid\SerialColumn'],
         [
             'attribute' => 'level',
-            'value' => function ($model) {
+            'value'     => function ($model) {
                 return \yii\log\Logger::getLevelName($model->level);
             },
             'filter' => [
-                \yii\log\Logger::LEVEL_ERROR => 'error',
-                \yii\log\Logger::LEVEL_WARNING => 'warning',
-                \yii\log\Logger::LEVEL_INFO => 'info',
-                \yii\log\Logger::LEVEL_TRACE => 'trace',
+                \yii\log\Logger::LEVEL_ERROR         => 'error',
+                \yii\log\Logger::LEVEL_WARNING       => 'warning',
+                \yii\log\Logger::LEVEL_INFO          => 'info',
+                \yii\log\Logger::LEVEL_TRACE         => 'trace',
                 \yii\log\Logger::LEVEL_PROFILE_BEGIN => 'profile begin',
-                \yii\log\Logger::LEVEL_PROFILE_END => 'profile end',
+                \yii\log\Logger::LEVEL_PROFILE_END   => 'profile end',
             ],
         ],
         'category',
         'prefix',
         [
             'attribute' => 'log_time',
-            'format' => 'datetime',
-            'value' => function ($model) {
+            'format'    => 'datetime',
+            'value'     => function ($model) {
                 return (int)$model->log_time;
             },
             'filter' => DateTimeWidget::widget([
-                'model' => $searchModel,
-                'attribute' => 'log_time',
-                'phpDatetimeFormat' => 'dd.MM.yyyy',
+                'model'                => $searchModel,
+                'attribute'            => 'log_time',
+                'phpDatetimeFormat'    => 'dd.MM.yyyy',
                 'momentDatetimeFormat' => 'DD.MM.YYYY',
-                'clientEvents' => [
+                'clientEvents'         => [
                     'dp.change' => new JsExpression('(e) => $(e.target).find("input").trigger("change.yiiGridView")'),
                 ],
             ]),
         ],
 
         [
-            'class' => 'yii\grid\ActionColumn',
+            'class'    => 'yii\grid\ActionColumn',
             'template' => '{view} {delete}',
         ],
     ],

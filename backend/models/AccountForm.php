@@ -28,8 +28,8 @@ class AccountForm extends Model
             ['email', 'email'],
             ['email', 'unique',
                 'targetClass' => '\core\models\User',
-                'message' => Yii::t('backend', 'This email has already been taken.'),
-                'filter' => function ($query) {
+                'message'     => Yii::t('backend', 'This email has already been taken.'),
+                'filter'      => function ($query) {
                     $query->andWhere(['not', ['id' => Yii::$app->user->getId()]]);
                 }
             ],
@@ -44,8 +44,8 @@ class AccountForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('backend', 'Email'),
-            'password' => Yii::t('backend', 'Password'),
+            'email'            => Yii::t('backend', 'Email'),
+            'password'         => Yii::t('backend', 'Password'),
             'password_confirm' => Yii::t('backend', 'Password Confirm')
         ];
     }

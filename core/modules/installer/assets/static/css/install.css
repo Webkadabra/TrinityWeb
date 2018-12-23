@@ -1,6 +1,6 @@
 #wrap {margin: 0px;padding: 0px;height:100%;}
 #sidebar {
-    background: #222;
+    background: #23262D;
     transition: all 0.3s;
     border-right: 1px solid #373737;
     -webkit-box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, 0.35);
@@ -17,9 +17,9 @@
     color: #999;
     display: block;
     text-decoration: none;
-    background: #252525;
-    border-top: 1px solid #373737;
-    border-bottom: 1px solid #1A1A1A;
+    background: #23262D;
+    border-top: 1px solid #333848;
+    border-bottom: 1px solid #16181f;
     -webkit-transition: background .5s;
     -moz-transition: background .5s;
     -o-transition: background .5s;
@@ -91,7 +91,7 @@
     margin: 5px auto;
 }
 #content {
-    background: #1f1e1e;
+    background: #1d1f25;
     padding: 15px 30px;
 }
 @media (max-width: 576px) {

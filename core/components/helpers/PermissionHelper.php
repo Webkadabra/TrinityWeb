@@ -100,7 +100,6 @@ class PermissionHelper extends Component
             //Logs
                 const ACCESS_BACKEND_TO_LOGS = 'access_backend_to_logs';
 
-
         //MODULE OF SEO
                 const ACCESS_BACKEND_TO_SEO = 'access_backend_to_seo';
 

@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $post->thread->name, 'url' => ['for
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<?= $this->render('/elements/forum/_post', ['model' => $post, 'category' => $post->forum->category->id, 'slug' => $post->thread->slug]) ?>
+<?php echo $this->render('/elements/forum/_post', ['model' => $post, 'category' => $post->forum->category->id, 'slug' => $post->thread->slug]); ?>
 <br>
 <div class="row">
     <div class="col-sm-10 col-sm-offset-2">
@@ -26,18 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'content')
+                            <?php echo $form->field($model, 'content')
                                 ->label(Yii::t('podium/view', 'Complaint'))
-                                ->widget(EditorBasic::class) ?>
+                                ->widget(EditorBasic::class); ?>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Report post'), [
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Report post'), [
                                 'class' => 'btn btn-block btn-danger', 'name' => 'save-button'
-                            ]) ?>
+                            ]); ?>
                         </div>
                     </div>
                 </div>

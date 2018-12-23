@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-12">
             <dl>
                 <dt>
-                    <?php echo Yii::t('backend', 'Used size') ?>:
+                    <?php echo Yii::t('backend', 'Used size'); ?>:
                 </dt>
                 <dd>
                     <?php echo Yii::$app->formatter->asSize($totalSize); ?>
@@ -36,10 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xs-12">
                 <dl>
                     <dt>
-                        <?php echo Yii::t('backend', 'Count') ?>:
+                        <?php echo Yii::t('backend', 'Count'); ?>:
                     </dt>
                     <dd>
-                        <?php echo $dataProvider->totalCount ?>
+                        <?php echo $dataProvider->totalCount; ?>
                     </dd>
                 </dl>
             </div>
@@ -49,17 +49,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'options' => [
+    'filterModel'  => $searchModel,
+    'options'      => [
         'class' => 'grid-view table-responsive',
     ],
     'tableOptions' => ['class' => 'table table-dark table-hover'],
-    'columns' => [
+    'columns'      => [
         ['class' => 'yii\grid\SerialColumn'],
 
         [
             'attribute' => 'component',
-            'filter' => $components,
+            'filter'    => $components,
         ],
         'path',
         'type',
@@ -68,20 +68,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'upload_ip',
         [
             'attribute' => 'created_at',
-            'format' => 'datetime',
-            'filter' => DateTimeWidget::widget([
-                'model' => $searchModel,
-                'attribute' => 'created_at',
-                'phpDatetimeFormat' => 'dd.MM.yyyy',
+            'format'    => 'datetime',
+            'filter'    => DateTimeWidget::widget([
+                'model'                => $searchModel,
+                'attribute'            => 'created_at',
+                'phpDatetimeFormat'    => 'dd.MM.yyyy',
                 'momentDatetimeFormat' => 'DD.MM.YYYY',
-                'clientEvents' => [
+                'clientEvents'         => [
                     'dp.change' => new JsExpression('(e) => $(e.target).find("input").trigger("change.yiiGridView")'),
                 ],
             ]),
         ],
 
         [
-            'class' => 'yii\grid\ActionColumn',
+            'class'    => 'yii\grid\ActionColumn',
             'template' => '{view} {delete}',
         ],
     ],

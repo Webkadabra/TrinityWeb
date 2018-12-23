@@ -16,33 +16,33 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <p>
-    <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], ['class' => 'btn btn-danger', 'data' => ['method' => 'post']]) ?>
+    <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], ['class' => 'btn btn-danger', 'data' => ['method' => 'post']]); ?>
 </p>
 
 <?php echo DetailView::widget([
-    'model' => $model,
-    'options' => ['class' => 'table table-dark table-hover table-responsive'],
+    'model'      => $model,
+    'options'    => ['class' => 'table table-dark table-hover table-responsive'],
     'attributes' => [
         'id',
         'level',
         'category',
         [
             'attribute' => 'user_id',
-            'format' => 'raw',
-            'value' => isset($model->user) ? $model->user->username : null,
+            'format'    => 'raw',
+            'value'     => isset($model->user) ? $model->user->username : null,
         ],
         'model',
         'ip',
         [
             'attribute' => 'log_time',
-            'format' => 'datetime',
-            'value' => (int)$model->log_time,
+            'format'    => 'datetime',
+            'value'     => (int)$model->log_time,
         ],
         'prefix:ntext',
         [
             'attribute' => 'message',
-            'format' => 'raw',
-            'value' => Html::tag('pre', $model->message, ['style' => 'white-space: pre-wrap']),
+            'format'    => 'raw',
+            'value'     => Html::tag('pre', $model->message, ['style' => 'white-space: pre-wrap']),
         ],
     ],
-]) ?>
+]); ?>

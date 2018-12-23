@@ -23,48 +23,48 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
     <div class="panel-body">
         <?php echo $this->render('_form', [
             'model' => $model,
-        ]) ?>
+        ]); ?>
     </div>
 </div>
 
 <p>
     <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
         'modelClass' => 'Widget Carousel Item',
-    ]), ['carousel-item/create', 'carousel_id' => $model->id], ['class' => 'btn btn-success']) ?>
+    ]), ['carousel-item/create', 'carousel_id' => $model->id], ['class' => 'btn btn-success']); ?>
 </p>
 
 <?php echo GridView::widget([
     'dataProvider' => $carouselItemsProvider,
-    'options' => [
+    'options'      => [
         'class' => 'grid-view table-responsive',
     ],
     'tableOptions' => ['class' => 'table table-dark table-hover'],
-    'columns' => [
+    'columns'      => [
         [
             'attribute' => 'order',
-            'options' => ['style' => 'width: 5%'],
+            'options'   => ['style' => 'width: 5%'],
         ],
         'path',
         'url:url',
         [
             'attribute' => 'caption',
-            'options' => ['style' => 'width: 20%'],
-            'format' => 'html',
+            'options'   => ['style' => 'width: 20%'],
+            'format'    => 'html',
         ],
         [
-            'class' => EnumColumn::class,
+            'class'     => EnumColumn::class,
             'attribute' => 'status',
-            'options' => ['style' => 'width: 10%'],
-            'enum' => [
+            'options'   => ['style' => 'width: 10%'],
+            'enum'      => [
                 Yii::t('backend', 'Disabled'),
                 Yii::t('backend', 'Enabled'),
             ],
         ],
         [
-            'class' => 'yii\grid\ActionColumn',
-            'options' => ['style' => 'width: 5%'],
+            'class'      => 'yii\grid\ActionColumn',
+            'options'    => ['style' => 'width: 5%'],
             'controller' => '/widget/carousel-item',
-            'template' => '{update} {delete}',
+            'template'   => '{update} {delete}',
         ],
     ],
 ]); ?>

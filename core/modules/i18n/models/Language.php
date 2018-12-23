@@ -48,8 +48,8 @@ class Language extends \yii\db\ActiveRecord
      */
     private static $_CONDITIONS = [
         self::STATUS_INACTIVE => 'Inactive',
-        self::STATUS_ACTIVE => 'Active',
-        self::STATUS_BETA => 'Beta',
+        self::STATUS_ACTIVE   => 'Active',
+        self::STATUS_BETA     => 'Beta',
     ];
 
     /**
@@ -94,11 +94,11 @@ class Language extends \yii\db\ActiveRecord
     {
         return [
             'language_id' => Yii::t('model', 'Language ID'),
-            'language' => Yii::t('model', 'Language'),
-            'country' => Yii::t('model', 'Country'),
-            'name' => Yii::t('model', 'Name'),
-            'name_ascii' => Yii::t('model', 'Name Ascii'),
-            'status' => Yii::t('model', 'Status'),
+            'language'    => Yii::t('model', 'Language'),
+            'country'     => Yii::t('model', 'Country'),
+            'name'        => Yii::t('model', 'Name'),
+            'name_ascii'  => Yii::t('model', 'Name Ascii'),
+            'status'      => Yii::t('model', 'Status'),
         ];
     }
 
@@ -131,9 +131,9 @@ class Language extends \yii\db\ActiveRecord
     {
         if ($active) {
             return self::find()->where(['status' => static::STATUS_ACTIVE])->asArray($asArray)->all();
-        } else {
-            return self::find()->asArray($asArray)->all();
         }
+  
+            return self::find()->asArray($asArray)->all();
     }
 
     /**
@@ -166,7 +166,7 @@ class Language extends \yii\db\ActiveRecord
         static $statistics;
         if (!$statistics) {
             $count = LanguageSource::find()->count();
-            if ($count == 0) {
+            if ($count === 0) {
                 return 0;
             }
 

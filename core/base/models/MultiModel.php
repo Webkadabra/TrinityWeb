@@ -82,14 +82,15 @@ class MultiModel extends Model
                 return false;
             }
         }
+
         return true;
     }
 
     /**
      * @param bool $runValidation
-     * @return bool
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
+     * @return bool
      */
     public function save($runValidation = true)
     {
@@ -102,10 +103,12 @@ class MultiModel extends Model
             $success = $model->save(false);
             if (!$success) {
                 $transaction->rollBack();
+
                 return false;
             }
         }
         $transaction->commit();
+
         return $success;
     }
 
@@ -126,12 +129,13 @@ class MultiModel extends Model
             }
         }
         $this->trigger(Model::EVENT_AFTER_VALIDATE);
+
         return $success;
     }
 
     /**
-     * @return \yii\db\Connection
      * @throws \yii\base\InvalidConfigException
+     * @return \yii\db\Connection
      */
     public function getDb()
     {

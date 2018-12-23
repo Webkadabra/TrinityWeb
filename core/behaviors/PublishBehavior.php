@@ -22,7 +22,6 @@ class PublishBehavior extends AttributeBehavior
      */
     public $value;
 
-
     /**
      * {@inheritdoc}
      */
@@ -36,17 +35,6 @@ class PublishBehavior extends AttributeBehavior
                 BaseActiveRecord::EVENT_BEFORE_UPDATE => [$this->publishedAttribute],
             ];
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * In case, when the [[value]] is `null`, the result of the PHP function [time()](http://php.net/manual/en/function.time.php)
-     * will be used as value.
-     */
-    protected function getValue($event)
-    {
-        return strtotime($this->owner->{$this->publishedAttribute});
     }
 
     /**
@@ -66,5 +54,16 @@ class PublishBehavior extends AttributeBehavior
             throw new InvalidCallException('Updating the timestamp is not possible on a new record.');
         }
         $owner->updateAttributes(array_fill_keys((array) $attribute, $this->getValue(null)));
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * In case, when the [[value]] is `null`, the result of the PHP function [time()](http://php.net/manual/en/function.time.php)
+     * will be used as value.
+     */
+    protected function getValue($event)
+    {
+        return strtotime($this->owner->{$this->publishedAttribute});
     }
 }

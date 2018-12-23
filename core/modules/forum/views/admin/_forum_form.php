@@ -1,2 +1,2 @@
-<?=$form->field($node, 'category_id')->hiddenInput()->label(false)?>
-<?=$form->field($node, 'sub')?>
+<?php echo $form->field($node, 'category_id')->hiddenInput()->label(false);?>
+<?php echo $form->field($node, 'sub');?>

@@ -34,28 +34,28 @@ ul.nav > li > a {color: rgba(255, 255, 255, 0.5)}
 input.parent-input-icon {padding-left: 35px;}
 .mih-100 {min-height: 100%;}
 .miw-100 {min-width: 100%;}
-.card, .card-header, .card-body {border: 0px;background-color: #2b2b2b;}
+.card, .card-header, .card-body {border: 0;background-color: #23262D;}
 .card {
     -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.35);
     -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.35);
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
-    border: 1px solid #373737;
+    border: 1px solid #323644;
 }
 .card .card-header, .card .card-body {padding: 15px 10px;}
-.card .card-header, .card .card-footer {background-color: #252525;}
+.card .card-header, .card .card-footer {background-color: #1d1f25;}
 .card-header {
-    border-bottom: 1px solid #373737;
+    border-bottom: 1px solid #323644;
 }
 .card-footer {
-    border-top: 1px solid #373737;
+    border-top: 1px solid #323644;
 }
 .btn.btn-link:hover, .btn.btn-link:active, .btn.btn-link:focus, a:hover, a:focus, ul.nav > li > a.active, a:active {color: #68C7B8;}
-.input-icon {position: absolute; top: 5px; left: 3px; padding: 7px; background-color: #252525; color: #00695f;}
+.input-icon {position: absolute; top: 7px; left: 3px; padding: 7px; background-color: #1d1f25; color: #00695f;}
 .vert-split:before, .vert-split:after {content: ' ';display: inline-block;position: absolute;height: 100%;}
 .vert-split:before {width: 1px;left: 50%;background: rgba(255,255,255,0.08);right: 50%;}
 .vert-split:after {left: 47%;right: 53%;border-left: 1px solid rgba(0,0,0,0.45);}
-.form-control {display: block; width: 100%; padding: 7px 10px; border: 1px solid #191919; border-radius: 0px;color: #989898;}
-.form-control, .form-control:focus, .form-control:hover, .form-control:active {background-color: #252525;}
+.form-control {display: block; width: 100%; padding: 7px 10px; border: 1px solid #323644; border-radius: 0px;color: #989898;}
+.form-control, .form-control:focus, .form-control:hover, .form-control:active, .form-control[readonly] {background-color: #1d1f25;}
 .form-control:focus, .form-control:active {outline: 0;color: #d8d4d4 !important;caret-color: #d8d4d4 !important;-webkit-box-shadow: none;box-shadow: none;-webkit-box-shadow: 0px 0px 2px rgba(0, 218, 158, 0.49);box-shadow: 0px 0px 2px rgba(0, 218, 158, 0.49);}
 .form-group {position: relative;}
 .form-group .help-block {display: none;}
@@ -64,10 +64,10 @@ input.parent-input-icon {padding-left: 35px;}
 input:-webkit-autofill, input:active:-webkit-autofill, input:hover:-webkit-autofill, input:focus:-webkit-autofill,
 textarea:-webkit-autofill, textarea:active:-webkit-autofill, textarea:hover:-webkit-autofill, textarea:focus:-webkit-autofill,
 select:-webkit-autofill, select:hover:-webkit-autofill, select:active:-webkit-autofill, select:focus:-webkit-autofill {
-    background-color: #252525 !important;
+    background-color: #1d1f25 !important;
     -webkit-text-fill-color: #d8d4d4 !important;
     -webkit-text-stroke-color: #d8d4d4 !important;
-    -webkit-box-shadow: inset 0 0 0px 9999px #252525 !important;
+    -webkit-box-shadow: inset 0 0 0px 9999px #1d1f25 !important;
 }
 input[type="checkbox"] {display: none;}
 input[type="checkbox"] + label.checkbox-label {padding-left: 25px;}
@@ -101,7 +101,15 @@ input[type="checkbox"]:checked + label.checkbox-label:before {width: 10px;top: -
 .dropdown-menu > a:hover,
 .dropdown-menu > a:focus {background-color: rgba(52,55,60,0.79);}
 .dropdown-menu .divider {background-color: #9d9d9d;}
-.btn {padding: 5px 20px;border-radius: 0px;border: 1px solid #373737;text-shadow: 1px 1px 1px rgba(0,0,0,0.43);}
+.list-group-item {
+    background-color: #23262d;
+    border: 1px solid #2b303c;
+    margin: 7px 0;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
+}
+.btn {padding: 5px 20px;border-radius: 0px;border: 1px solid #323644;text-shadow: 1px 1px 1px rgba(0,0,0,0.43);}
 .btn.btn-default,.btn.btn-default:hover,.btn.btn-default:focus,.btn.btn-default:active,
 .btn.btn-primary,.btn.btn-primary:hover,.btn.btn-primary:focus,.btn.btn-primary:active,
 .btn.btn-primary:not(:disabled):not(.disabled):active, .btn.btn-primary:not(:disabled):not(.disabled).active, .show > .btn.btn-primary.dropdown-toggle,
@@ -110,7 +118,7 @@ input[type="checkbox"]:checked + label.checkbox-label:before {width: 10px;top: -
 .btn.btn-info,.btn.btn-info:hover,.btn.btn-info:focus,.btn.btn-info:active,
 .btn.btn-info:not(:disabled):not(.disabled):active, .btn.btn-info:not(:disabled):not(.disabled).active, .show > .btn.btn-info.dropdown-toggle,
 .btn.btn-link,.btn.btn-link:hover,.btn.btn-link:focus,.btn.btn-link:active,
-.btn.btn-success,.btn.btn-success:hover,.btn.btn-success:focus,.btn.btn-success:active {background-color: rgb(35, 35, 35);box-shadow: none !important; color: inherit;}
+.btn.btn-success,.btn.btn-success:hover,.btn.btn-success:focus,.btn.btn-success:active {background-color: #1d1f25;box-shadow: none !important; color: inherit;}
 .btn.btn-default:hover,.btn.btn-default:focus,.btn.btn-default:active,
 .btn.btn-primary:hover,.btn.btn-primary:focus,.btn.btn-primary:active,
 .btn.btn-primary:not(:disabled):not(.disabled):active, .btn.btn-primary:not(:disabled):not(.disabled).active, .show > .btn.btn-primary.dropdown-toggle,

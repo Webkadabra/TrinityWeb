@@ -2,9 +2,9 @@
 
 namespace backend\modules\rbac\models;
 
+use backend\modules\rbac\components\Configs;
 use Yii;
 use yii\rbac\Rule;
-use backend\modules\rbac\components\Configs;
 
 /**
  * BizRule
@@ -71,6 +71,7 @@ class BizRule extends \yii\base\Model
         if (!class_exists($this->className)) {
             $message = Yii::t('rbac-admin', "Unknown class '{class}'", ['class' => $this->className]);
             $this->addError('className', $message);
+
             return;
         }
         if (!is_subclass_of($this->className, Rule::class)) {
@@ -86,7 +87,7 @@ class BizRule extends \yii\base\Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('rbac-admin', 'Name'),
+            'name'      => Yii::t('rbac-admin', 'Name'),
             'className' => Yii::t('rbac-admin', 'Class Name'),
         ];
     }
@@ -140,9 +141,9 @@ class BizRule extends \yii\base\Model
             }
 
             return true;
-        } else {
-            return false;
         }
+  
+            return false;
     }
 
     /**

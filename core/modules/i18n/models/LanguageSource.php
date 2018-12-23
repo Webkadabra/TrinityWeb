@@ -63,9 +63,9 @@ class LanguageSource extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('model', 'ID'),
+            'id'       => Yii::t('model', 'ID'),
             'category' => Yii::t('model', 'Category'),
-            'message' => Yii::t('model', 'Message'),
+            'message'  => Yii::t('model', 'Message'),
         ];
     }
 
@@ -114,9 +114,9 @@ class LanguageSource extends \yii\db\ActiveRecord
     {
         if ($this->languageTranslate0 && $this->languageTranslate0->translation) {
             return $this->languageTranslate0->translation;
-        } else {
-            return $this->message;
         }
+  
+            return $this->message;
     }
 
     /**

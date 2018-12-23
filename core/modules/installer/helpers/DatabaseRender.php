@@ -3,15 +3,14 @@
 namespace core\modules\installer\helpers;
 
 use unclead\multipleinput\renderers\ListRenderer;
-use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * Class DatabaseRender
  */
 class DatabaseRender extends ListRenderer
 {
-
     /**
      * Renders the cell content.
      *
@@ -21,8 +20,8 @@ class DatabaseRender extends ListRenderer
      */
     public function renderCellContent($column, $index)
     {
-        $id    = $column->getElementId($index);
-        $name  = $column->getElementName($index);
+        $id = $column->getElementId($index);
+        $name = $column->getElementName($index);
         $input = $column->renderInput($name, [
             'id' => $id
         ]);
@@ -34,10 +33,10 @@ class DatabaseRender extends ListRenderer
         $hasError = false;
         $error = '';
         $layoutConfig = array_merge([
-            'offsetClass' => 'col-sm-offset-3',
-            'labelClass' => 'col-sm-12',
+            'offsetClass'  => 'col-sm-offset-3',
+            'labelClass'   => 'col-sm-12',
             'wrapperClass' => 'col-sm-12',
-            'errorClass' => 'col-sm-offset-3 col-sm-6',
+            'errorClass'   => 'col-sm-offset-3 col-sm-6',
         ], $this->layoutConfig);
 
         Html::addCssClass($column->errorOptions, $layoutConfig['errorClass']);
@@ -83,8 +82,8 @@ class DatabaseRender extends ListRenderer
     /**
      * Returns template for using in js.
      *
-     * @return string
      * @throws \Exception
+     * @return string
      */
     protected function prepareTemplate()
     {
@@ -92,110 +91,10 @@ class DatabaseRender extends ListRenderer
     }
 
     /**
-     * Renders the row content.
-     *
-     * @param int $index
-     * @param ActiveRecordInterface|array $item
-     * @return mixed
-     * @throws \Exception
-     */
-    private function renderRowContent($index = null, $item = null)
-    {
-        $elements = [];
-        foreach ($this->columns as $column) {
-            /* @var $column BaseColumn */
-            $column->setModel($item);
-            $elements[] = $this->renderCellContent($column, $index);
-        }
-
-        $content = [];
-        $content[] = Html::tag('td', implode("\n", $elements), ['class' => 'row']);
-        if ($this->max !== $this->min) {
-            $content[] = $this->renderActionColumn($index);
-        }
-
-        if ($this->cloneButton) {
-            $content[] = $this->renderCloneColumn();
-        }
-
-        $content = Html::tag('tr', implode("\n", $content), $this->prepareRowOptions($index, $item));
-
-        if ($index !== null) {
-            $content = str_replace('{' . $this->getIndexPlaceholder() . '}', $index, $content);
-        }
-        return $content;
-    }
-
-    /**
-     * Renders the action column.
-     *
-     * @param null|int $index
-     * @param null|ActiveRecordInterface|array $item
-     * @return string
-     * @throws \Exception
-     */
-    private function renderActionColumn($index = null, $item = null)
-    {
-        $content = $this->getActionButton($index) . $this->getExtraButtons($index, $item);
-
-        return Html::tag('td', $content, [
-            'class' => 'list-cell__button',
-        ]);
-    }
-
-    private function getActionButton($index)
-    {
-        if ($index === null || $this->min === 0) {
-            return $this->renderRemoveButton();
-        }
-
-        $index++;
-        if ($index < $this->min) {
-            return '';
-        } elseif ($index === $this->min) {
-            return $this->isAddButtonPositionRow() ? $this->renderAddButton() : '';
-        } else {
-            return $this->renderRemoveButton();
-        }
-    }
-
-    /**
-     * Renders remove button.
-     *
-     * @return string
-     * @throws \Exception
-     */
-    private function renderRemoveButton()
-    {
-        $options = [
-            'class' => 'btn multiple-input-list__btn js-input-remove',
-        ];
-        Html::addCssClass($options, $this->removeButtonOptions['class']);
-
-        return Html::tag('div', $this->removeButtonOptions['label'], $options);
-    }
-
-    /**
-     * Renders clone button.
-     *
-     * @return string
-     * @throws \Exception
-     */
-    private function renderCloneButton()
-    {
-        $options = [
-            'class' => 'btn multiple-input-list__btn js-input-clone',
-        ];
-        Html::addCssClass($options, $this->cloneButtonOptions['class']);
-
-        return Html::tag('div', $this->cloneButtonOptions['label'], $options);
-    }
-
-    /**
      * Renders the body.
      *
-     * @return string
      * @throws \Exception
+     * @return string
      */
     protected function renderBody()
     {
@@ -223,6 +122,107 @@ class DatabaseRender extends ListRenderer
         return Html::tag('tbody', implode("\n", $rows));
     }
 
+    /**
+     * Renders the row content.
+     *
+     * @param int $index
+     * @param ActiveRecordInterface|array $item
+     * @throws \Exception
+     * @return mixed
+     */
+    private function renderRowContent($index = null, $item = null)
+    {
+        $elements = [];
+        foreach ($this->columns as $column) {
+            /* @var $column BaseColumn */
+            $column->setModel($item);
+            $elements[] = $this->renderCellContent($column, $index);
+        }
+
+        $content = [];
+        $content[] = Html::tag('td', implode("\n", $elements), ['class' => 'row']);
+        if ($this->max !== $this->min) {
+            $content[] = $this->renderActionColumn($index);
+        }
+
+        if ($this->cloneButton) {
+            $content[] = $this->renderCloneColumn();
+        }
+
+        $content = Html::tag('tr', implode("\n", $content), $this->prepareRowOptions($index, $item));
+
+        if ($index !== null) {
+            $content = str_replace('{' . $this->getIndexPlaceholder() . '}', $index, $content);
+        }
+
+        return $content;
+    }
+
+    /**
+     * Renders the action column.
+     *
+     * @param null|int $index
+     * @param null|ActiveRecordInterface|array $item
+     * @throws \Exception
+     * @return string
+     */
+    private function renderActionColumn($index = null, $item = null)
+    {
+        $content = $this->getActionButton($index) . $this->getExtraButtons($index, $item);
+
+        return Html::tag('td', $content, [
+            'class' => 'list-cell__button',
+        ]);
+    }
+
+    private function getActionButton($index)
+    {
+        if ($index === null || $this->min === 0) {
+            return $this->renderRemoveButton();
+        }
+
+        $index++;
+        if ($index < $this->min) {
+            return '';
+        } elseif ($index === $this->min) {
+            return $this->isAddButtonPositionRow() ? $this->renderAddButton() : '';
+        }
+  
+            return $this->renderRemoveButton();
+    }
+
+    /**
+     * Renders remove button.
+     *
+     * @throws \Exception
+     * @return string
+     */
+    private function renderRemoveButton()
+    {
+        $options = [
+            'class' => 'btn multiple-input-list__btn js-input-remove',
+        ];
+        Html::addCssClass($options, $this->removeButtonOptions['class']);
+
+        return Html::tag('div', $this->removeButtonOptions['label'], $options);
+    }
+
+    /**
+     * Renders clone button.
+     *
+     * @throws \Exception
+     * @return string
+     */
+    private function renderCloneButton()
+    {
+        $options = [
+            'class' => 'btn multiple-input-list__btn js-input-clone',
+        ];
+        Html::addCssClass($options, $this->cloneButtonOptions['class']);
+
+        return Html::tag('div', $this->cloneButtonOptions['label'], $options);
+    }
+
     private function renderAddButton()
     {
         $options = [
@@ -232,5 +232,4 @@ class DatabaseRender extends ListRenderer
 
         return Html::tag('div', $this->addButtonOptions['label'], $options);
     }
-
 }

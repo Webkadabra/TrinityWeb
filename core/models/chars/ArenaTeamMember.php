@@ -2,9 +2,8 @@
 
 namespace core\models\chars;
 
-use Yii;
-
 use core\base\models\CharacterCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "arena_team_member".
@@ -46,12 +45,12 @@ class ArenaTeamMember extends CharacterCoreModel
     public function attributeLabels()
     {
         return [
-            'arenaTeamId' => 'Arena Team ID',
-            'guid' => 'Guid',
-            'weekGames' => Yii::t('common', 'Недельных игр'),
-            'weekWins' => Yii::t('common', 'Недельных побед'),
-            'seasonGames' => Yii::t('common', 'Игр в сезоне'),
-            'seasonWins' => Yii::t('common', 'Побед в сезоне'),
+            'arenaTeamId'    => 'Arena Team ID',
+            'guid'           => 'Guid',
+            'weekGames'      => Yii::t('common', 'Недельных игр'),
+            'weekWins'       => Yii::t('common', 'Недельных побед'),
+            'seasonGames'    => Yii::t('common', 'Игр в сезоне'),
+            'seasonWins'     => Yii::t('common', 'Побед в сезоне'),
             'personalRating' => Yii::t('common', 'личный рейтинг'),
         ];
     }
@@ -63,5 +62,4 @@ class ArenaTeamMember extends CharacterCoreModel
     public function getTeam() {
         return $this->hasOne(ArenaTeam::class,['arenaTeamId' => 'arenaTeamId']);
     }
-    
 }

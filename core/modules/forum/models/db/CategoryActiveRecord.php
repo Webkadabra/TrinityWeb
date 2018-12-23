@@ -3,10 +3,10 @@
 namespace core\modules\forum\models\db;
 
 use core\modules\forum\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
-use yii\helpers\HtmlPurifier;
 use core\modules\forum\Podium;
 use core\modules\forum\slugs\PodiumSluggableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\helpers\HtmlPurifier;
 
 /**
  * Category model
@@ -40,9 +40,9 @@ class CategoryActiveRecord extends ActiveRecord
         return [
             TimestampBehavior::class,
             [
-                'class' => Podium::getInstance()->slugGenerator,
+                'class'     => Podium::getInstance()->slugGenerator,
                 'attribute' => 'name',
-                'type' => PodiumSluggableBehavior::CATEGORY
+                'type'      => PodiumSluggableBehavior::CATEGORY
             ]
         ];
     }

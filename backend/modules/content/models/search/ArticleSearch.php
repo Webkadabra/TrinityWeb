@@ -2,10 +2,9 @@
 
 namespace backend\modules\content\models\search;
 
+use core\models\Article;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use core\models\Article;
 
 class ArticleSearch extends Article
 {
@@ -51,12 +50,12 @@ class ArticleSearch extends Article
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'slug' => $this->slug,
-            'created_by' => $this->created_by,
+            'id'          => $this->id,
+            'slug'        => $this->slug,
+            'created_by'  => $this->created_by,
             'category_id' => $this->category_id,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'updated_by'  => $this->updated_by,
+            'status'      => $this->status,
         ]);
 
         if ($this->published_at !== null) {

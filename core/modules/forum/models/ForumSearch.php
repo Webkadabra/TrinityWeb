@@ -47,10 +47,10 @@ class ForumSearch extends Forum
         $query = static::find();
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query'      => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
-                'forcePageParam' => false
+                'forcePageParam'  => false
             ],
         ]);
 

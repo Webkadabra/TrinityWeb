@@ -3,6 +3,6 @@
         <i class="fa fa-bullhorn tw-orange"></i>
     </div>
     <div class="col align-self-center">
-        <marquee direction="left" scrollamount="infinity"><?=$text?></marquee>
+        <marquee direction="left" scrollamount="infinity"><?php echo $text;?></marquee>
     </div>
 </div>

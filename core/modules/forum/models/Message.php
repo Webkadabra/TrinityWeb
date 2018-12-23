@@ -2,12 +2,12 @@
 
 namespace core\modules\forum\models;
 
+use cebe\markdown\GithubMarkdown;
 use core\modules\forum\db\Query;
 use core\modules\forum\log\Log;
 use core\modules\forum\models\db\MessageActiveRecord;
 use core\modules\forum\models\User;
 use core\modules\forum\Podium;
-use cebe\markdown\GithubMarkdown;
 use Exception;
 use Yii;
 use yii\helpers\Html;
@@ -25,7 +25,7 @@ class Message extends MessageActiveRecord
      */
     const MAX_RECEIVERS = 10;
     const SPAM_MESSAGES = 10;
-    const SPAM_WAIT     = 1;
+    const SPAM_WAIT = 1;
 
     /**
      * Returns Re: prefix for subject.
@@ -45,11 +45,12 @@ class Message extends MessageActiveRecord
     {
         if ($this->messageReceivers) {
             foreach ($this->messageReceivers as $receiver) {
-                if ($receiver->receiver_id == $userId) {
+                if ($receiver->receiver_id === $userId) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
@@ -71,7 +72,7 @@ class Message extends MessageActiveRecord
             $count = count($this->receiversId);
             foreach ($this->receiversId as $receiver) {
                 if (!(new Query())->select('id')->from(User::tableName())->where(['id' => $receiver, 'status' => User::STATUS_ACTIVE])->exists()) {
-                    if ($count == 1) {
+                    if ($count === 1) {
                         throw new Exception('No active receivers to send message to!');
                     }
                     continue;
@@ -94,11 +95,13 @@ class Message extends MessageActiveRecord
             } else {
                 Yii::$app->session->set($sessionKey, time());
             }
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), $this->id, __METHOD__);
         }
+
         return false;
     }
 
@@ -126,6 +129,7 @@ class Message extends MessageActiveRecord
                 return true;
             }
         }
+
         return false;
     }
 
@@ -138,7 +142,7 @@ class Message extends MessageActiveRecord
         $transaction = static::getDb()->beginTransaction();
         try {
             $clearCache = false;
-            if ($this->sender_status == self::STATUS_NEW) {
+            if ($this->sender_status === self::STATUS_NEW) {
                 $clearCache = true;
             }
             $this->scenario = 'remove';
@@ -150,11 +154,12 @@ class Message extends MessageActiveRecord
                     Podium::getInstance()->podiumCache->deleteElement('user.newmessages', $this->sender_id);
                 }
                 $transaction->commit();
+
                 return true;
             }
             $allDeleted = true;
             foreach ($this->messageReceivers as $mr) {
-                if ($mr->receiver_status != MessageReceiver::STATUS_DELETED) {
+                if ($mr->receiver_status !== MessageReceiver::STATUS_DELETED) {
                     $allDeleted = false;
                     break;
                 }
@@ -172,6 +177,7 @@ class Message extends MessageActiveRecord
                     Podium::getInstance()->podiumCache->deleteElement('user.newmessages', $this->sender_id);
                 }
                 $transaction->commit();
+
                 return true;
             }
             $this->sender_status = self::STATUS_DELETED;
@@ -182,11 +188,13 @@ class Message extends MessageActiveRecord
                 Podium::getInstance()->podiumCache->deleteElement('user.newmessages', $this->sender_id);
             }
             $transaction->commit();
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), $this->id, __METHOD__);
         }
+
         return false;
     }
 
@@ -205,7 +213,7 @@ class Message extends MessageActiveRecord
             $logged = User::loggedId();
             $this->sender_id = $logged;
             $this->topic = Yii::t('podium/view', 'Complaint about the post #{id}', ['id' => $post->id]);
-            if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
+            if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
                 $this->content .= "\n\n---\n"
                             . '[' . Yii::t('podium/view', 'Direct link to this post') . '](' . Url::to(['forum/show', 'id' => $post->id]) . ')'
                             . "\n\n---\n"
@@ -227,7 +235,7 @@ class Message extends MessageActiveRecord
             $mods = $post->forum->mods;
             $stamp = time();
             foreach ($mods as $mod) {
-                if ($mod != $logged) {
+                if ($mod !== $logged) {
                     $receivers[] = [$this->id, $mod, self::STATUS_NEW, $stamp, $stamp];
                 }
             }
@@ -244,10 +252,12 @@ class Message extends MessageActiveRecord
 
             Podium::getInstance()->podiumCache->delete('user.newmessages');
             Log::info('Post reported', $post->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -257,7 +267,7 @@ class Message extends MessageActiveRecord
      */
     public function markRead()
     {
-        if ($this->sender_status == self::STATUS_NEW) {
+        if ($this->sender_status === self::STATUS_NEW) {
             $this->sender_status = self::STATUS_READ;
             if ($this->save()) {
                 Podium::getInstance()->podiumCache->deleteElement('user.newmessages', $this->sender_id);
@@ -272,11 +282,13 @@ class Message extends MessageActiveRecord
      */
     public function getParsedContent()
     {
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
+        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
             $parser = new GithubMarkdown();
             $parser->html5 = true;
+
             return $parser->parse($this->content);
         }
+
         return $this->content;
     }
 }

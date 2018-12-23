@@ -2,10 +2,10 @@
 
 namespace backend\modules\rbac\models\searchs;
 
+use backend\modules\rbac\components\Configs;
 use Yii;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
-use backend\modules\rbac\components\Configs;
 use yii\rbac\Item;
 
 /**
@@ -38,12 +38,12 @@ class AuthItem extends Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('rbac-admin', 'Name'),
-            'item_name' => Yii::t('rbac-admin', 'Name'),
-            'type' => Yii::t('rbac-admin', 'Type'),
+            'name'        => Yii::t('rbac-admin', 'Name'),
+            'item_name'   => Yii::t('rbac-admin', 'Name'),
+            'type'        => Yii::t('rbac-admin', 'Type'),
             'description' => Yii::t('rbac-admin', 'Description'),
-            'ruleName' => Yii::t('rbac-admin', 'Rule Name'),
-            'data' => Yii::t('rbac-admin', 'Data'),
+            'ruleName'    => Yii::t('rbac-admin', 'Rule Name'),
+            'data'        => Yii::t('rbac-admin', 'Data'),
         ];
     }
 
@@ -56,23 +56,22 @@ class AuthItem extends Model
     {
         /* @var \yii\rbac\Manager $authManager */
         $authManager = Configs::authManager();
-        if ($this->type == Item::TYPE_ROLE) {
+        if ($this->type === Item::TYPE_ROLE) {
             $items = $authManager->getRoles();
         } else {
             $items = array_filter($authManager->getPermissions(), function($item) {
-                return $this->type == Item::TYPE_PERMISSION xor strncmp($item->name, '/', 1) === 0;
+                return $this->type === Item::TYPE_PERMISSION xor strncmp($item->name, '/', 1) === 0;
             });
         }
         $this->load($params);
         if ($this->validate()) {
-
             $search = mb_strtolower(trim($this->name));
             $desc = mb_strtolower(trim($this->description));
             $ruleName = $this->ruleName;
             foreach ($items as $name => $item) {
                 $f = (empty($search) || mb_strpos(mb_strtolower($item->name), $search) !== false) &&
                     (empty($desc) || mb_strpos(mb_strtolower($item->description), $desc) !== false) &&
-                    (empty($ruleName) || $item->ruleName == $ruleName);
+                    (empty($ruleName) || $item->ruleName === $ruleName);
                 if (!$f) {
                     unset($items[$name]);
                 }

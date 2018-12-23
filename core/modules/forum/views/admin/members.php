@@ -23,50 +23,50 @@ $this->registerJs("$('#podiumModalUnBan').on('show.bs.modal', function(e) { var 
 $loggedId = User::loggedId();
 
 ?>
-<?= $this->render('/elements/admin/_navbar', ['active' => 'members']); ?>
+<?php echo $this->render('/elements/admin/_navbar', ['active' => 'members']); ?>
 <br>
-<?= GridView::widget([
+<?php echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'columns' => [
+    'filterModel'  => $searchModel,
+    'columns'      => [
         [
-            'attribute' => 'id',
-            'label' => Yii::t('podium/view', 'ID'),
+            'attribute'      => 'id',
+            'label'          => Yii::t('podium/view', 'ID'),
             'contentOptions' => ['class' => 'col-sm-1 text-right'],
-            'headerOptions' => ['class' => 'col-sm-1 text-right'],
+            'headerOptions'  => ['class' => 'col-sm-1 text-right'],
         ],
         [
             'attribute' => 'username',
-            'label' => Yii::t('podium/view', 'Username'),
+            'label'     => Yii::t('podium/view', 'Username'),
         ],
         [
             'attribute' => 'email',
-            'label' => Yii::t('podium/view', 'E-mail'),
-            'format' => 'raw',
-            'value' => function ($model) {
+            'label'     => Yii::t('podium/view', 'E-mail'),
+            'format'    => 'raw',
+            'value'     => function ($model) {
                 return Html::mailto($model->email);
             },
         ],
         [
             'attribute' => 'role',
-            'label' => Yii::t('podium/view', 'Role'),
-            'filter' => User::getRoles(),
-            'value' => function ($model) {
+            'label'     => Yii::t('podium/view', 'Role'),
+            'filter'    => User::getRoles(),
+            'value'     => function ($model) {
                 return ArrayHelper::getValue(User::getRoles(), $model->role);
             },
         ],
         [
             'attribute' => 'status',
-            'label' => Yii::t('podium/view', 'Status'),
-            'filter' => User::getStatuses(),
-            'value' => function ($model) {
+            'label'     => Yii::t('podium/view', 'Status'),
+            'filter'    => User::getStatuses(),
+            'value'     => function ($model) {
                 return ArrayHelper::getValue(User::getStatuses(), $model->status);
             },
         ],
         [
-            'class' => ActionColumn::class,
+            'class'    => ActionColumn::class,
             'template' => '{view} {pm} {ban} {delete}',
-            'buttons' => [
+            'buttons'  => [
                 'view' => function($url) {
                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ActionColumn::buttonOptions([
                         'title' => Yii::t('podium/view', 'View Member')
@@ -78,6 +78,7 @@ $loggedId = User::loggedId();
                             'title' => Yii::t('podium/view', 'Send Message')
                         ]));
                     }
+
                     return ActionColumn::mutedButton('glyphicon glyphicon-envelope');
                 },
                 'ban' => function($url, $model) use ($loggedId) {
@@ -88,11 +89,13 @@ $loggedId = User::loggedId();
                                 'title' => Yii::t('podium/view', 'Ban Member')
                             ])), ['data-toggle' => 'modal', 'data-target' => '#podiumModalBan', 'data-url' => $url]);
                         }
+
                         return Html::tag('span', Html::tag('button', '<span class="glyphicon glyphicon-ok-circle"></span>', ActionColumn::buttonOptions([
                             'class' => 'btn btn-success btn-xs',
                             'title' => Yii::t('podium/view', 'Unban Member')
                         ])), ['data-toggle' => 'modal', 'data-target' => '#podiumModalUnBan', 'data-url' => $url]);
                     }
+
                     return ActionColumn::mutedButton('glyphicon glyphicon-ban-circle');
                 },
                 'delete' => function($url, $model) use ($loggedId) {
@@ -102,6 +105,7 @@ $loggedId = User::loggedId();
                             'title' => Yii::t('podium/view', 'Delete Member')
                         ])), ['data-toggle' => 'modal', 'data-target' => '#podiumModalDelete', 'data-url' => $url]);
                     }
+
                     return ActionColumn::mutedButton('glyphicon glyphicon-trash');
                 },
             ],
@@ -110,31 +114,31 @@ $loggedId = User::loggedId();
 ]); ?>
 
 <?php Modal::begin([
-    'id' => 'podiumModalDelete',
-    'header' => Yii::t('podium/view', 'Delete User'),
-    'footer' => Yii::t('podium/view', 'Delete User'),
+    'id'                   => 'podiumModalDelete',
+    'header'               => Yii::t('podium/view', 'Delete User'),
+    'footer'               => Yii::t('podium/view', 'Delete User'),
     'footerConfirmOptions' => ['class' => 'btn btn-danger', 'id' => 'deleteUrl']
- ]) ?>
-<p><?= Yii::t('podium/view', 'Are you sure you want to delete this user?') ?></p>
-<p><?= Yii::t('podium/view', 'The user can register again using the same name but all previously created posts will not be linked back to him.') ?></p>
-<p><strong><?= Yii::t('podium/view', 'This action can not be undone.') ?></strong></p>
-<?php Modal::end() ?>
+ ]); ?>
+<p><?php echo Yii::t('podium/view', 'Are you sure you want to delete this user?'); ?></p>
+<p><?php echo Yii::t('podium/view', 'The user can register again using the same name but all previously created posts will not be linked back to him.'); ?></p>
+<p><strong><?php echo Yii::t('podium/view', 'This action can not be undone.'); ?></strong></p>
+<?php Modal::end(); ?>
 <?php Modal::begin([
-    'id' => 'podiumModalBan',
-    'header' => Yii::t('podium/view', 'Ban User'),
-    'footer' => Yii::t('podium/view', 'Ban User'),
+    'id'                   => 'podiumModalBan',
+    'header'               => Yii::t('podium/view', 'Ban User'),
+    'footer'               => Yii::t('podium/view', 'Ban User'),
     'footerConfirmOptions' => ['class' => 'btn btn-danger', 'id' => 'banUrl']
- ]) ?>
-<p><?= Yii::t('podium/view', 'Are you sure you want to ban this user?') ?></p>
-<p><?= Yii::t('podium/view', 'The user will not be deleted but will not be able to sign in again.') ?></p>
-<p><strong><?= Yii::t('podium/view', 'You can always unban the user if you change your mind later on.') ?></strong></p>
-<?php Modal::end() ?>
+ ]); ?>
+<p><?php echo Yii::t('podium/view', 'Are you sure you want to ban this user?'); ?></p>
+<p><?php echo Yii::t('podium/view', 'The user will not be deleted but will not be able to sign in again.'); ?></p>
+<p><strong><?php echo Yii::t('podium/view', 'You can always unban the user if you change your mind later on.'); ?></strong></p>
+<?php Modal::end(); ?>
 <?php Modal::begin([
-    'id' => 'podiumModalUnBan',
-    'header' => Yii::t('podium/view', 'Unban User'),
-    'footer' => Yii::t('podium/view', 'Unban User'),
+    'id'                   => 'podiumModalUnBan',
+    'header'               => Yii::t('podium/view', 'Unban User'),
+    'footer'               => Yii::t('podium/view', 'Unban User'),
     'footerConfirmOptions' => ['class' => 'btn btn-success', 'id' => 'unbanUrl']
- ]) ?>
-<p><?= Yii::t('podium/view', 'Are you sure you want to unban this user?') ?></p>
-<p><?= Yii::t('podium/view', 'The user will be able to sign in again.') ?></p>
+ ]); ?>
+<p><?php echo Yii::t('podium/view', 'Are you sure you want to unban this user?'); ?></p>
+<p><?php echo Yii::t('podium/view', 'The user will be able to sign in again.'); ?></p>
 <?php Modal::end();

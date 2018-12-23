@@ -9,7 +9,6 @@ use yii\base\Model;
  */
 class MultyDatabaseForm extends Model
 {
-
     public $_name = 'Default name';
     public $dbs = [];
     
@@ -39,7 +38,7 @@ class MultyDatabaseForm extends Model
         foreach($dbs as $db) {
             $this->dbs[] = new DatabaseForm($db);
         }
+
         return true;
     }
-
 }

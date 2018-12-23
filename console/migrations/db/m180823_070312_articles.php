@@ -12,18 +12,17 @@ class m180823_070312_articles extends Migration
      */
     public function safeUp()
     {
-
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
         $this->createTable('{{%article_category}}', [
-            'id' => $this->primaryKey(),
-            'slug' => $this->string(1024)->notNull(),
-            'title' => $this->string(512)->notNull(),
-            'parent_id' => $this->integer(),
-            'status' => $this->smallInteger()->notNull()->defaultValue(0),
+            'id'         => $this->primaryKey(),
+            'slug'       => $this->string(1024)->notNull(),
+            'title'      => $this->string(512)->notNull(),
+            'parent_id'  => $this->integer(),
+            'status'     => $this->smallInteger()->notNull()->defaultValue(0),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer()
         ], $tableOptions);
@@ -31,18 +30,18 @@ class m180823_070312_articles extends Migration
         $this->addForeignKey('fk_article_category_section', '{{%article_category}}', 'parent_id', '{{%article_category}}', 'id', 'cascade', 'cascade');
 
         $this->createTable('{{%article}}', [
-            'id' => $this->primaryKey(),
-            'category_id' => $this->integer(),
-            'slug' => $this->string(1024)->notNull(),
-            'view' => $this->string(),
+            'id'                 => $this->primaryKey(),
+            'category_id'        => $this->integer(),
+            'slug'               => $this->string(1024)->notNull(),
+            'view'               => $this->string(),
             'thumbnail_base_url' => $this->string(1024),
-            'thumbnail_path' => $this->string(1024),
-            'status' => $this->smallInteger()->notNull()->defaultValue(0),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
-            'published_at' => $this->integer()
+            'thumbnail_path'     => $this->string(1024),
+            'status'             => $this->smallInteger()->notNull()->defaultValue(0),
+            'created_by'         => $this->integer(),
+            'updated_by'         => $this->integer(),
+            'created_at'         => $this->integer(),
+            'updated_at'         => $this->integer(),
+            'published_at'       => $this->integer()
         ], $tableOptions);
 
         $this->addForeignKey('fk_article_author', '{{%article}}', 'created_by', '{{%users}}', 'id', 'cascade', 'cascade');
@@ -50,12 +49,12 @@ class m180823_070312_articles extends Migration
         $this->addForeignKey('fk_article_category', '{{%article}}', 'category_id', '{{%article_category}}', 'id', 'cascade', 'cascade');
 
         $this->createTable('{{%article_i18n}}', [
-            'id' => $this->primaryKey(),
+            'id'         => $this->primaryKey(),
             'article_id' => $this->integer()->notNull(),
-            'language' => $this->integer()->notNull(),
-            'title' => $this->string(512)->notNull(),
-            'announce' => $this->string(512)->notNull(),
-            'body' => $this->text()->notNull(),
+            'language'   => $this->integer()->notNull(),
+            'title'      => $this->string(512)->notNull(),
+            'announce'   => $this->string(512)->notNull(),
+            'body'       => $this->text()->notNull(),
             'updated_at' => $this->integer(),
             'created_at' => $this->integer()
         ], $tableOptions);
@@ -66,19 +65,18 @@ class m180823_070312_articles extends Migration
         $this->addForeignKey('fk_article_i18n_to_language', '{{%article_i18n}}', 'language', '{{%language}}', 'ident', 'cascade', 'cascade');
 
         $this->createTable('{{%article_attachment}}', [
-            'id' => $this->primaryKey(),
+            'id'         => $this->primaryKey(),
             'article_id' => $this->integer()->notNull(),
-            'path' => $this->string()->notNull(),
-            'base_url' => $this->string(),
-            'type' => $this->string(),
-            'size' => $this->integer(),
-            'order' => $this->integer(),
-            'name' => $this->string(),
+            'path'       => $this->string()->notNull(),
+            'base_url'   => $this->string(),
+            'type'       => $this->string(),
+            'size'       => $this->integer(),
+            'order'      => $this->integer(),
+            'name'       => $this->string(),
             'created_at' => $this->integer()
         ], $tableOptions);
 
         $this->addForeignKey('fk_article_attachment_article', '{{%article_attachment}}', 'article_id', '{{%article}}', 'id', 'cascade', 'cascade');
-
     }
 
     /**

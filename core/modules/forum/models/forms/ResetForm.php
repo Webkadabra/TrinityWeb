@@ -24,6 +24,8 @@ class ResetForm extends Model
      */
     public $username;
 
+    private $_user = false;
+
     /**
      * @inheritdoc
      */
@@ -31,8 +33,6 @@ class ResetForm extends Model
     {
         return [['username', 'required']];
     }
-
-    private $_user = false;
 
     /**
      * Returns user.
@@ -44,6 +44,7 @@ class ResetForm extends Model
         if ($this->_user === false) {
             $this->_user = User::findByKeyfield($this->username, $status);
         }
+
         return $this->_user;
     }
 
@@ -80,6 +81,7 @@ class ResetForm extends Model
                 true
             ];
         }
+
         return [
             false,
             Yii::t('podium/flash', 'The password reset link has been sent to your e-mail address.'),
@@ -99,6 +101,7 @@ class ResetForm extends Model
         $email = Content::fill(Content::EMAIL_PASSWORD);
         if ($email !== false) {
             $link = Url::to(['account/password', 'token' => $user->password_reset_token], true);
+
             return Email::queue(
                 $user->email,
                 str_replace('{forum}', $forum, $email->topic),
@@ -107,6 +110,7 @@ class ResetForm extends Model
                 !empty($user->id) ? $user->id : null
             );
         }
+
         return false;
     }
 }

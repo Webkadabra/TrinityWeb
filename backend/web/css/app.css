@@ -26,6 +26,15 @@ ul.nav > li.nav-item > ul > li.nav-item > a.nav-link.active {
     }
 }
 .hide {display: none;}
-#widget-tree-forum input[type="checkbox"] {
-    display: inline;
+#widget-tree-forum input[type="checkbox"] {display: inline;}
+.kv-tree-root, .kv-tree-list, .kv-node-indicators {background-color: inherit;}
+.sortable li:focus, .sortable li:hover, .kv-node-detail:hover {background-color: #30353b;}
+.sortable {border: none;}
+.kv-tree li.kv-parent {border-bottom: none;}
+.kv-tree > li:last-child > ul, .kv-parent ul li:last-child > ul {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
+.kv-detail-heading {border-bottom: 1px solid #323644;background-color: inherit;}
+.kv-detail-container {border: 1px solid #323644;}

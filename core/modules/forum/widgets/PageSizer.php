@@ -26,11 +26,11 @@ class PageSizer extends Widget
     {
         $size = 20;
         $saved = Yii::$app->session->get('per-page');
-        if (in_array($saved, $this->pageSizes)) {
+        if (in_array($saved, $this->pageSizes, true)) {
             $size = $saved;
         }
         $selected = Yii::$app->request->get('per-page');
-        if (in_array($selected, $this->pageSizes)) {
+        if (in_array($selected, $this->pageSizes, true)) {
             $size = $selected;
         }
 

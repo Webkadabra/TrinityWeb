@@ -2,37 +2,36 @@
 
 namespace core\modules\forum\rbac;
 
+use core\models\User;
 use yii\rbac\DbManager;
 use yii\rbac\Permission;
 use yii\rbac\Role;
-
-use core\models\User;
 
 /**
  * RBAC helper
  */
 class Rbac
 {
-    const PERM_VIEW_THREAD     = 'forum_access_viewPodiumThread';
-    const PERM_VIEW_FORUM      = 'forum_access_viewPodiumForum';
-    const PERM_CREATE_THREAD   = 'forum_access_createPodiumThread';
-    const PERM_CREATE_POST     = 'forum_access_createPodiumPost';
-    const PERM_UPDATE_POST     = 'forum_access_updatePodiumPost';
+    const PERM_VIEW_THREAD = 'forum_access_viewPodiumThread';
+    const PERM_VIEW_FORUM = 'forum_access_viewPodiumForum';
+    const PERM_CREATE_THREAD = 'forum_access_createPodiumThread';
+    const PERM_CREATE_POST = 'forum_access_createPodiumPost';
+    const PERM_UPDATE_POST = 'forum_access_updatePodiumPost';
     const PERM_UPDATE_OWN_POST = 'forum_access_updateOwnPodiumPost';
-    const PERM_DELETE_POST     = 'forum_access_deletePodiumPost';
+    const PERM_DELETE_POST = 'forum_access_deletePodiumPost';
     const PERM_DELETE_OWN_POST = 'forum_access_deleteOwnPodiumPost';
-    const PERM_UPDATE_THREAD   = 'forum_access_updatePodiumThread';
-    const PERM_DELETE_THREAD   = 'forum_access_deletePodiumThread';
-    const PERM_PIN_THREAD      = 'forum_access_pinPodiumThread';
-    const PERM_LOCK_THREAD     = 'forum_access_lockPodiumThread';
-    const PERM_MOVE_THREAD     = 'forum_access_movePodiumThread';
-    const PERM_MOVE_POST       = 'forum_access_movePodiumPost';
-    const PERM_BAN_USER        = 'forum_access_banPodiumUser';
-    const PERM_DELETE_USER     = 'forum_access_deletePodiumUser';
-    const PERM_PROMOTE_USER    = 'forum_access_promotePodiumUser';
-    const PERM_CREATE_FORUM    = 'forum_access_createPodiumForum';
-    const PERM_UPDATE_FORUM    = 'forum_access_updatePodiumForum';
-    const PERM_DELETE_FORUM    = 'forum_access_deletePodiumForum';
+    const PERM_UPDATE_THREAD = 'forum_access_updatePodiumThread';
+    const PERM_DELETE_THREAD = 'forum_access_deletePodiumThread';
+    const PERM_PIN_THREAD = 'forum_access_pinPodiumThread';
+    const PERM_LOCK_THREAD = 'forum_access_lockPodiumThread';
+    const PERM_MOVE_THREAD = 'forum_access_movePodiumThread';
+    const PERM_MOVE_POST = 'forum_access_movePodiumPost';
+    const PERM_BAN_USER = 'forum_access_banPodiumUser';
+    const PERM_DELETE_USER = 'forum_access_deletePodiumUser';
+    const PERM_PROMOTE_USER = 'forum_access_promotePodiumUser';
+    const PERM_CREATE_FORUM = 'forum_access_createPodiumForum';
+    const PERM_UPDATE_FORUM = 'forum_access_updatePodiumForum';
+    const PERM_DELETE_FORUM = 'forum_access_deletePodiumForum';
     const PERM_CREATE_CATEGORY = 'forum_access_createPodiumCategory';
     const PERM_UPDATE_CATEGORY = 'forum_access_updatePodiumCategory';
     const PERM_DELETE_CATEGORY = 'forum_access_deletePodiumCategory';
@@ -84,7 +83,7 @@ class Rbac
         if (!($updatePost instanceof Permission)) {
             $updatePost = $authManager->createPermission(self::PERM_UPDATE_POST);
             $updatePost->description = 'Update Podium post';
-            $updatePost->ruleName    = $moderatorRule->name;
+            $updatePost->ruleName = $moderatorRule->name;
             $authManager->add($updatePost);
         }
 
@@ -98,7 +97,7 @@ class Rbac
         if (!($updateOwnPost instanceof Permission)) {
             $updateOwnPost = $authManager->createPermission(self::PERM_UPDATE_OWN_POST);
             $updateOwnPost->description = 'Update own Podium post';
-            $updateOwnPost->ruleName    = $authorRule->name;
+            $updateOwnPost->ruleName = $authorRule->name;
             $authManager->add($updateOwnPost);
             $authManager->addChild($updateOwnPost, $updatePost);
         }
@@ -107,7 +106,7 @@ class Rbac
         if (!($deletePost instanceof Permission)) {
             $deletePost = $authManager->createPermission(self::PERM_DELETE_POST);
             $deletePost->description = 'Delete Podium post';
-            $deletePost->ruleName    = $moderatorRule->name;
+            $deletePost->ruleName = $moderatorRule->name;
             $authManager->add($deletePost);
         }
 
@@ -115,7 +114,7 @@ class Rbac
         if (!($deleteOwnPost instanceof Permission)) {
             $deleteOwnPost = $authManager->createPermission(self::PERM_DELETE_OWN_POST);
             $deleteOwnPost->description = 'Delete own Podium post';
-            $deleteOwnPost->ruleName    = $authorRule->name;
+            $deleteOwnPost->ruleName = $authorRule->name;
             $authManager->add($deleteOwnPost);
             $authManager->addChild($deleteOwnPost, $deletePost);
         }
@@ -134,7 +133,7 @@ class Rbac
         if (!($updateThread instanceof Permission)) {
             $updateThread = $authManager->createPermission(self::PERM_UPDATE_THREAD);
             $updateThread->description = 'Update Podium thread';
-            $updateThread->ruleName    = $moderatorRule->name;
+            $updateThread->ruleName = $moderatorRule->name;
             $authManager->add($updateThread);
         }
 
@@ -142,7 +141,7 @@ class Rbac
         if (!($deleteThread instanceof Permission)) {
             $deleteThread = $authManager->createPermission(self::PERM_DELETE_THREAD);
             $deleteThread->description = 'Delete Podium thread';
-            $deleteThread->ruleName    = $moderatorRule->name;
+            $deleteThread->ruleName = $moderatorRule->name;
             $authManager->add($deleteThread);
         }
 
@@ -150,7 +149,7 @@ class Rbac
         if (!($pinThread instanceof Permission)) {
             $pinThread = $authManager->createPermission(self::PERM_PIN_THREAD);
             $pinThread->description = 'Pin Podium thread';
-            $pinThread->ruleName    = $moderatorRule->name;
+            $pinThread->ruleName = $moderatorRule->name;
             $authManager->add($pinThread);
         }
 
@@ -158,7 +157,7 @@ class Rbac
         if (!($lockThread instanceof Permission)) {
             $lockThread = $authManager->createPermission(self::PERM_LOCK_THREAD);
             $lockThread->description = 'Lock Podium thread';
-            $lockThread->ruleName    = $moderatorRule->name;
+            $lockThread->ruleName = $moderatorRule->name;
             $authManager->add($lockThread);
         }
 
@@ -166,7 +165,7 @@ class Rbac
         if (!($moveThread instanceof Permission)) {
             $moveThread = $authManager->createPermission(self::PERM_MOVE_THREAD);
             $moveThread->description = 'Move Podium thread';
-            $moveThread->ruleName    = $moderatorRule->name;
+            $moveThread->ruleName = $moderatorRule->name;
             $authManager->add($moveThread);
         }
 
@@ -174,7 +173,7 @@ class Rbac
         if (!($movePost instanceof Permission)) {
             $movePost = $authManager->createPermission(self::PERM_MOVE_POST);
             $movePost->description = 'Move Podium post';
-            $movePost->ruleName    = $moderatorRule->name;
+            $movePost->ruleName = $moderatorRule->name;
             $authManager->add($movePost);
         }
 

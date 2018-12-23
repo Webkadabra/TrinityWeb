@@ -23,13 +23,13 @@ class EditorBasic extends InputWidget
     public function init()
     {
         $config = [
-            'model' => $this->model,
+            'model'     => $this->model,
             'attribute' => $this->attribute,
-            'name' => $this->name,
-            'value' => $this->value,
-            'options' => $this->options
+            'name'      => $this->name,
+            'value'     => $this->value,
+            'options'   => $this->options
         ];
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
+        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
             $this->editor = new CodeMirror($config);
         } else {
             if (empty($this->options)) {

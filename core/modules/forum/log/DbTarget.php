@@ -45,7 +45,7 @@ class DbTarget extends YiiDbTarget
             } else {
                 $extracted['msg'] = VarDumper::export($text);
             }
-            if (substr($category, 0, 14) == 'core\modules\forum\\') {
+            if (substr($category, 0, 14) === 'core\modules\forum\\') {
                 $category = substr($category, 14);
             }
             $request = Yii::$app->getRequest();

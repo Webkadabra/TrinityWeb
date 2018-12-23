@@ -17,19 +17,19 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?php echo $form->field($model, 'id'); ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?php echo $form->field($model, 'name'); ?>
 
-    <?= $form->field($model, 'parent') ?>
+    <?php echo $form->field($model, 'parent'); ?>
 
-    <?= $form->field($model, 'route') ?>
+    <?php echo $form->field($model, 'route'); ?>
 
-    <?= $form->field($model, 'data') ?>
+    <?php echo $form->field($model, 'data'); ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('rbac-admin', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('rbac-admin', 'Reset'), ['class' => 'btn btn-default']) ?>
+        <?php echo Html::submitButton(Yii::t('rbac-admin', 'Search'), ['class' => 'btn btn-primary']); ?>
+        <?php echo Html::resetButton(Yii::t('rbac-admin', 'Reset'), ['class' => 'btn btn-default']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -2,10 +2,10 @@
 
 namespace backend\modules\rbac\models;
 
-use Exception;
 use backend\modules\rbac\components\Configs;
 use backend\modules\rbac\components\Helper;
 use backend\modules\rbac\components\RouteRule;
+use Exception;
 use Yii;
 use yii\caching\TagDependency;
 use yii\helpers\VarDumper;
@@ -87,6 +87,7 @@ class Route extends \yii\base\BaseObject
         if (!$this->_routePrefix) {
             $this->_routePrefix = Configs::instance()->advanced ? self::PREFIX_ADVANCED : self::PREFIX_BASIC;
         }
+
         return $this->_routePrefix;
     }
 
@@ -97,11 +98,11 @@ class Route extends \yii\base\BaseObject
      */
     public function getPermissionName($route)
     {
-        if (self::PREFIX_BASIC == $this->routePrefix) {
+        if (self::PREFIX_BASIC === $this->routePrefix) {
             return self::PREFIX_BASIC . trim($route, self::PREFIX_BASIC);
-        } else {
-            return self::PREFIX_ADVANCED . ltrim(trim($route, self::PREFIX_BASIC), self::PREFIX_ADVANCED);
         }
+  
+            return self::PREFIX_ADVANCED . ltrim(trim($route, self::PREFIX_BASIC), self::PREFIX_ADVANCED);
     }
 
     /**
@@ -162,14 +163,16 @@ class Route extends \yii\base\BaseObject
             $exists[] = $name;
             unset($routes[$name]);
         }
+
         return [
             'available' => array_keys($routes),
-            'assigned' => $exists,
+            'assigned'  => $exists,
         ];
     }
 
     /**
      * Get list of application routes
+     * @param null|mixed $module
      * @return array
      */
     public function getAppRoutes($module = null)
@@ -192,6 +195,16 @@ class Route extends \yii\base\BaseObject
         }
 
         return $result;
+    }
+
+    /**
+     * Ivalidate cache
+     */
+    public static function invalidate()
+    {
+        if (Configs::cache() !== null) {
+            TagDependency::invalidate(Configs::cache(), self::CACHE_TAG);
+        }
     }
 
     /**
@@ -242,7 +255,7 @@ class Route extends \yii\base\BaseObject
                 return;
             }
             foreach (scandir($path) as $file) {
-                if ($file == '.' || $file == '..') {
+                if ($file === '.' || $file === '..') {
                     continue;
                 }
                 if (is_dir($path . '/' . $file) && preg_match('%^[a-z0-9_/]+$%i', $file . '/')) {
@@ -313,16 +326,6 @@ class Route extends \yii\base\BaseObject
             Yii::error($exc->getMessage(), __METHOD__);
         }
         Yii::endProfile($token, __METHOD__);
-    }
-
-    /**
-     * Ivalidate cache
-     */
-    public static function invalidate()
-    {
-        if (Configs::cache() !== null) {
-            TagDependency::invalidate(Configs::cache(), self::CACHE_TAG);
-        }
     }
 
     /**

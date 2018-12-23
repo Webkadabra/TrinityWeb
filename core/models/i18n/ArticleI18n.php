@@ -18,7 +18,6 @@ use yii\db\ActiveRecord;
  * @property integer $created_at
  */
 class ArticleI18n extends ActiveRecord {
-
     /**
      * @inheritdoc
      */
@@ -48,5 +47,4 @@ class ArticleI18n extends ActiveRecord {
             [['body'], 'string']
         ];
     }
-
 }

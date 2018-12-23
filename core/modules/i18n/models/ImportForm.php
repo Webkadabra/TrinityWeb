@@ -36,7 +36,7 @@ class ImportForm extends Model
                 ['importFile'],
                 'file',
                 'skipOnEmpty' => false,
-                'mimeTypes' => [
+                'mimeTypes'   => [
                     'text/xml',
                     'application/xml',
                     'application/json',
@@ -51,16 +51,16 @@ class ImportForm extends Model
      * Import the uploaded file. Existing languages and translations will be updated, new ones will be created.
      * Source messages won't be updated, only created if they not exist.
      *
-     * @return array
-     *
      * @throws BadRequestHttpException
      * @throws Exception
+     * @return array
+     *
      */
     public function import()
     {
         $result = [
-            'languages' => ['new' => 0, 'updated' => 0],
-            'languageSources' => ['new' => 0, 'updated' => 0],
+            'languages'            => ['new' => 0, 'updated' => 0],
+            'languageSources'      => ['new' => 0, 'updated' => 0],
             'languageTranslations' => ['new' => 0, 'updated' => 0],
         ];
 
@@ -119,8 +119,8 @@ class ImportForm extends Model
 
             //check if id exist and if category and messages are matching
             if (isset($languageSources[$importedLanguageSource['id']]) &&
-                ($languageSources[$importedLanguageSource['id']]->category == $importedLanguageSource['category']) &&
-                ($languageSources[$importedLanguageSource['id']]->message == $importedLanguageSource['message'])
+                ($languageSources[$importedLanguageSource['id']]->category === $importedLanguageSource['category']) &&
+                ($languageSources[$importedLanguageSource['id']]->message === $importedLanguageSource['message'])
             ) {
                 $languageSource = $languageSources[$importedLanguageSource['id']];
             }
@@ -128,8 +128,8 @@ class ImportForm extends Model
             if (is_null($languageSource)) {
                 //no match by id, search by message
                 foreach ($languageSources as $languageSourceSearch) {
-                    if (($languageSourceSearch->category == $importedLanguageSource['category']) &&
-                        ($languageSourceSearch->message == $importedLanguageSource['message'])
+                    if (($languageSourceSearch->category === $importedLanguageSource['category']) &&
+                        ($languageSourceSearch->message === $importedLanguageSource['message'])
                     ) {
                         $languageSource = $languageSourceSearch;
                         break;
@@ -141,7 +141,7 @@ class ImportForm extends Model
                 //still no match, create new
                 $languageSource = new LanguageSource([
                     'category' => $importedLanguageSource['category'],
-                    'message' => $importedLanguageSource['message'],
+                    'message'  => $importedLanguageSource['message'],
                 ]);
 
                 if ($languageSource->save()) {
@@ -192,17 +192,17 @@ class ImportForm extends Model
     /**
      * Parse the uploaded file (xml or json) and return it as an array
      *
+     * @throws BadRequestHttpException
      * @return array[]
      *
-     * @throws BadRequestHttpException
      */
     protected function parseImportFile()
     {
         $importFileContent = file_get_contents($this->importFile->tempName);
 
-        if ($this->importFile->extension == Response::FORMAT_JSON) {
+        if ($this->importFile->extension === Response::FORMAT_JSON) {
             $data = Json::decode($importFileContent);
-        } elseif ($this->importFile->extension == Response::FORMAT_XML) {
+        } elseif ($this->importFile->extension === Response::FORMAT_XML) {
             $xml = simplexml_load_string($importFileContent);
             $json = json_encode($xml);
             $data = json_decode($json, true);

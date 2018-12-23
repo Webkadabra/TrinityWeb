@@ -2,18 +2,16 @@
 
 namespace frontend\modules\ladder\controllers;
 
-use Yii;
-
 use frontend\base\controllers\SystemController;
-
 use frontend\modules\ladder\models\LadderFormModel;
+use Yii;
 
 class DefaultController extends SystemController
 {
     /**
      * @param $action
-     * @return bool
      * @throws \yii\base\Exception
+     * @return bool
      */
     public function beforeAction($action) {
         if(parent::beforeAction($action)) {
@@ -23,19 +21,22 @@ class DefaultController extends SystemController
                 $user_server = Yii::$app->DBHelper->setDefault();
                 $type = LadderFormModel::TYPE_2;
                 $this->redirect(['default/index', 'server' => $user_server->realm_name, 'type' => $type]);
+
                 return false;
             }
+
             return true;
         }
+
         return false;
     }
 
     /**
      * @param string $server
      * @param string $type
-     * @return string|\yii\web\Response
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
+     * @return string|\yii\web\Response
      */
     public function actionIndex($server = '',$type = '')
     {
@@ -62,7 +63,7 @@ class DefaultController extends SystemController
         }
 
         return $this->render('index', [
-            'data' => $data,
+            'data'        => $data,
             'searchModel' => $formModel,
         ]);
     }

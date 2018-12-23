@@ -66,8 +66,8 @@ class ExportForm extends Model
         $languageTranslations = LanguageTranslate::findAll(['language' => $this->exportLanguages]);
 
         $data = [
-            'languages' => $languages,
-            'languageSources' => $languageSources,
+            'languages'            => $languages,
+            'languageSources'      => $languageSources,
             'languageTranslations' => $languageTranslations,
         ];
 

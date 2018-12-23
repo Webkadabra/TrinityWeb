@@ -2,11 +2,11 @@
 
 namespace core\modules\i18n\controllers\actions;
 
+use core\modules\i18n\models\ImportForm;
 use core\modules\i18n\models\Language;
 use core\modules\i18n\services\Generator;
 use Yii;
 use yii\web\UploadedFile;
-use core\modules\i18n\models\ImportForm;
 
 /**
  * Class for exporting translations.
@@ -16,9 +16,9 @@ class ImportAction extends \yii\base\Action
     /**
      * Show import form and import the uploaded file if posted
      *
+     * @throws \Exception
      * @return string
      *
-     * @throws \Exception
      */
     public function run()
     {
@@ -35,8 +35,8 @@ class ImportAction extends \yii\base\Action
                     $message .= "<br/>\n";
                     foreach ($result as $type => $typeResult) {
                         $message .= "<br/>\n" . Yii::t('language', '{type}: {new} new, {updated} updated', [
-                            'type' => $type,
-                            'new' => $typeResult['new'],
+                            'type'    => $type,
+                            'new'     => $typeResult['new'],
                             'updated' => $typeResult['updated'],
                         ]);
                     }
@@ -55,9 +55,8 @@ class ImportAction extends \yii\base\Action
                 } catch (\Exception $e) {
                     if (YII_DEBUG) {
                         throw $e;
-                    } else {
+                    }  
                         Yii::$app->getSession()->setFlash('danger', str_replace("\n", "<br/>\n", $e->getMessage()));
-                    }
                 }
             }
         }

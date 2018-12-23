@@ -57,20 +57,19 @@ class SystemLog extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('backend', 'ID'),
-            'level' => Yii::t('backend', 'Level'),
+            'id'       => Yii::t('backend', 'ID'),
+            'level'    => Yii::t('backend', 'Level'),
             'category' => Yii::t('backend', 'Category'),
             'log_time' => Yii::t('backend', 'Log Time'),
-            'prefix' => Yii::t('backend', 'Prefix'),
-            'ip' => Yii::t('backend', 'Ip'),
-            'message' => Yii::t('backend', 'Message'),
-            'model' => Yii::t('backend', 'Model'),
-            'user_id' => Yii::t('backend', 'User'),
+            'prefix'   => Yii::t('backend', 'Prefix'),
+            'ip'       => Yii::t('backend', 'Ip'),
+            'message'  => Yii::t('backend', 'Message'),
+            'model'    => Yii::t('backend', 'Model'),
+            'user_id'  => Yii::t('backend', 'User'),
         ];
     }
 
     public function getUser() {
         return $this->hasOne(User::class,['id' => 'user_id']);
     }
-
 }

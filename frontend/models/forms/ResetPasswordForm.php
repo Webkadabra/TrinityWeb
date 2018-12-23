@@ -2,11 +2,10 @@
 
 namespace frontend\models\forms;
 
+use core\models\UserToken;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
-
-use core\models\UserToken;
 
 /**
  * Password reset form
@@ -62,9 +61,9 @@ class ResetPasswordForm extends Model
     /**
      * Resets password.
      *
-     * @return boolean if password was reset.
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
+     * @return boolean if password was reset.
      */
     public function resetPassword()
     {
@@ -73,6 +72,7 @@ class ResetPasswordForm extends Model
         if ($user->updatePassword()) {
             $this->token->delete();
         };
+
         return true;
     }
 

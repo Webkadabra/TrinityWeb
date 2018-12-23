@@ -13,8 +13,6 @@ use yii\web\Request;
  */
 class LogsDbTarget extends YiiDbTarget
 {
-
-
     public function init()
     {
         parent::init();

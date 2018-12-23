@@ -80,22 +80,22 @@ class Helper
         switch ($type) {
             case 'full':
                 $config = [
-                    'HTML.Allowed' => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,span[style|class],h1,h2,h3,h4,h5,h6,sub,sup,blockquote,pre[class],img[src|alt],iframe[class|frameborder|src],hr',
-                    'CSS.AllowedProperties' => 'color,background-color',
-                    'HTML.SafeIframe' => true,
-                    'URI.SafeIframeRegexp' => '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
+                    'HTML.Allowed'             => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,span[style|class],h1,h2,h3,h4,h5,h6,sub,sup,blockquote,pre[class],img[src|alt],iframe[class|frameborder|src],hr',
+                    'CSS.AllowedProperties'    => 'color,background-color',
+                    'HTML.SafeIframe'          => true,
+                    'URI.SafeIframeRegexp'     => '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
                     'Attr.AllowedFrameTargets' => ['_blank']
                 ];
                 break;
             case 'markdown':
                 $config = [
-                    'HTML.Allowed' => 'p,br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr,h1,h2,h3,h4,h5,h6,span,pre,code,table,tr,td,th,blockquote,img[src|alt]',
+                    'HTML.Allowed'             => 'p,br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr,h1,h2,h3,h4,h5,h6,span,pre,code,table,tr,td,th,blockquote,img[src|alt]',
                     'Attr.AllowedFrameTargets' => ['_blank']
                 ];
             case 'default':
             default:
                 $config = [
-                    'HTML.Allowed' => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr',
+                    'HTML.Allowed'             => 'p[class],br,b,strong,i,em,u,s,a[href|target],ul,li,ol,hr',
                     'Attr.AllowedFrameTargets' => ['_blank']
                 ];
         }
@@ -109,6 +109,7 @@ class Helper
      * @param int $role user role
      * @param int|null $id user ID
      * @param bool $simple whether to return simple tag instead of full
+     * @param null|mixed $slug
      * @return string tag
      */
     public static function podiumUserTag($name, $role, $id = null, $slug = null, $simple = false)
@@ -146,11 +147,13 @@ class Helper
      */
     public static function prepareQuote($post, $quote = '')
     {
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
+        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
             $content = !empty($quote) ? '[...] ' . HtmlPurifier::process($quote) . ' [...]' : $post->content;
+
             return '> ' . $post->author->podiumTag . ' @ ' . Podium::getInstance()->formatter->asDatetime($post->created_at) . "\n> " . $content . "\n";
         }
         $content = !empty($quote) ? '[...] ' . nl2br(HtmlPurifier::process($quote)) . ' [...]' : $post->content;
+
         return Html::tag('blockquote', $post->author->podiumTag . ' @ ' . Podium::getInstance()->formatter->asDatetime($post->created_at) . '<br>' . $content) . '<br>';
     }
 
@@ -196,10 +199,10 @@ class Helper
     {
         if (!empty($attribute)) {
             $sort = Yii::$app->request->get('sort');
-            if ($sort == $attribute) {
+            if ($sort === $attribute) {
                 return ' ' . Html::tag('span', '', ['class' => 'glyphicon glyphicon-sort-by-alphabet']);
             }
-            if ($sort == '-' . $attribute) {
+            if ($sort === '-' . $attribute) {
                 return ' ' . Html::tag('span', '', ['class' => 'glyphicon glyphicon-sort-by-alphabet-alt']);
             }
         }
@@ -245,13 +248,13 @@ class Helper
         $timeZones['UTC'] = Yii::t('podium/view', 'default (UTC)');
 
         foreach ($timezone_identifiers as $zone) {
-            if ($zone != 'UTC') {
+            if ($zone !== 'UTC') {
                 $zoneName = $zone;
                 $timeForZone = new DateTime(null, new DateTimeZone($zone));
                 $offset = $timeForZone->getOffset();
                 if (is_numeric($offset)) {
                     $zoneName .= ' (UTC';
-                    if ($offset != 0) {
+                    if ($offset !== 0) {
                         $offset = $offset / 60 / 60;
                         $offsetDisplay = floor($offset) . ':' . str_pad(60 * ($offset - floor($offset)), 2, '0', STR_PAD_LEFT);
                         $zoneName .= ' ' . ($offset < 0 ? '' : '+') . $offsetDisplay;
@@ -300,6 +303,7 @@ class Helper
                 return '>';
             }
         }
+
         return '=';
     }
 }

@@ -1,9 +1,10 @@
 <?php
+
 return [
-    'class' => yii\web\UrlManager::class,
+    'class'           => yii\web\UrlManager::class,
     'enablePrettyUrl' => true,
-    'showScriptName' => false,
-    'rules' => [
+    'showScriptName'  => false,
+    'rules'           => [
         '<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_c>/<_a>',
-    ]
+    ],
 ];

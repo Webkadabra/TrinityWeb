@@ -2,15 +2,15 @@
 
 namespace backend\modules\system\controllers;
 
+use Probe\ProviderFactory;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 
-use Probe\ProviderFactory;
-
 class InformationController extends Controller
 {
+    public $layout = '@backend/views/layouts/common';
 
     public function behaviors()
     {
@@ -19,7 +19,7 @@ class InformationController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_INFORMATION
                         ]
@@ -28,8 +28,6 @@ class InformationController extends Controller
             ]
         ];
     }
-
-    public $layout = '@backend/views/layouts/common';
 
     public function actionIndex()
     {

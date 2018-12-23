@@ -2,8 +2,8 @@
 
 namespace core\validators;
 
-use Yii;
 use himiklab\yii2\recaptcha\ReCaptchaValidator as BaseReCaptchaValidator;
+use Yii;
 
 class ReCaptchaValidator extends BaseReCaptchaValidator {
     public function init()

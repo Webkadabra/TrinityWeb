@@ -1,16 +1,14 @@
 <?php
 namespace core\components\helpers;
 
+use core\modules\i18n\models\Language;
 use Yii;
 use yii\base\Component;
 use yii\base\ErrorException;
-
-use core\modules\i18n\models\Language;
 use yii\web\NotFoundHttpException;
 
 class i18nHelper extends Component
 {
-
     /**
      * get locales
      * @param bool $as_associated
@@ -22,15 +20,16 @@ class i18nHelper extends Component
             $langs = Yii::$app->cache->get('core.langs_assoc');
             if($langs === false) {
                 $langs = Language::getLanguageNames(true);
-                Yii::$app->cache->set('core.langs_assoc',$langs,60*15);
+                Yii::$app->cache->set('core.langs_assoc',$langs,60 * 15);
             }
         } else {
             $langs = Yii::$app->cache->get('core.langs');
             if($langs === false) {
                 $langs = Language::getLanguages(true,true);
-                Yii::$app->cache->set('core.langs',$langs,60*15);
+                Yii::$app->cache->set('core.langs',$langs,60 * 15);
             }
         }
+
         return $langs;
     }
 
@@ -40,8 +39,9 @@ class i18nHelper extends Component
             foreach (Language::getLanguages(true, true) as $language) {
                 $langs[$language['ident']] = $language['name'];
             }
-            Yii::$app->cache->set('core.langs_assoc_ident',$langs,60*15);
+            Yii::$app->cache->set('core.langs_assoc_ident',$langs,60 * 15);
         }
+
         return $langs;
     }
 
@@ -62,8 +62,8 @@ class i18nHelper extends Component
      * @param $model
      * @param $attribute
      * @param null $lang
-     * @return mixed
      * @throws NotFoundHttpException
+     * @return mixed
      */
     public static function getLangAttributeValue($model, $attribute, $lang = null)
     {
@@ -71,20 +71,18 @@ class i18nHelper extends Component
             $lang = str_replace('-','_',strtolower($lang));
             if(!empty($model->{$attribute."_$lang"})) {
                 return $model->{$attribute."_$lang"};
-            } else {
+            }  
                 throw new NotFoundHttpException('Application cant find translation for this page');
-            }
         }
 
         if(!empty($model->{$attribute})) {
             return $model->{$attribute};
-        } else {
+        }  
             $lang = str_replace('-','_',strtolower(Yii::$app->language));
             if(!empty($model->{$attribute})) {
                 return $model->{$attribute."_$lang"};
             }
-            return self::getLangAttributeValue($model,$attribute,Yii::$app->sourceLanguage);
-        }
-    }
 
+            return self::getLangAttributeValue($model,$attribute,Yii::$app->sourceLanguage);
+    }
 }

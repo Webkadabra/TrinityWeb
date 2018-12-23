@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace api\controllers;
 
@@ -15,7 +17,7 @@ class SiteController extends Controller
 
     public function actionError()
     {
-        if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
+        if (null === ($exception = Yii::$app->getErrorHandler()->exception)) {
             $exception = new NotFoundHttpException(Yii::t('yii', 'Page not found.'));
         }
 

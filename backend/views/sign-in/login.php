@@ -1,6 +1,6 @@
 <?php
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -18,10 +18,10 @@ $this->params['body-class'] = 'login-page';
             <div class="body">
                 <?php echo $form->field($model, 'username')->textInput([
                     'placeholder' => $model->getAttributeLabel('username')
-                ])->error(false)->label(false) ?>
+                ])->error(false)->label(false); ?>
                 <?php echo $form->field($model, 'password')->passwordInput([
                     'placeholder' => $model->getAttributeLabel('password')
-                ])->error(false)->label(false) ?>
+                ])->error(false)->label(false); ?>
                 <?php
                 $field = $form->field($model, 'rememberMe', ['options' => [
                     'class' => 'position-relative'
@@ -29,15 +29,15 @@ $this->params['body-class'] = 'login-page';
                 $field->template = '{input} {label}';
                 echo $field->checkbox([], false)->label($model->getAttributeLabel('rememberMe'),[
                     'class' => 'checkbox-label'
-                ])?>
+                ]);?>
             </div>
             <div>
                 <?php echo Html::submitButton(Yii::t('backend', 'Sign me in'), [
                     'class' => 'btn btn-primary btn-flat btn-block',
-                    'name' => 'login-button'
-                ]) ?>
+                    'name'  => 'login-button'
+                ]); ?>
             </div>
-            <?php ActiveForm::end() ?>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>

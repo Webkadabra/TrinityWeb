@@ -52,7 +52,6 @@ class CacheInvalidateBehavior extends Behavior
      */
     private $cache;
 
-
     /**
      * Get events list.
      * @return array
@@ -78,6 +77,7 @@ class CacheInvalidateBehavior extends Behavior
         if (!empty($this->tags)) {
             $this->invalidateTags();
         }
+
         return true;
     }
 
@@ -113,6 +113,7 @@ class CacheInvalidateBehavior extends Behavior
                 if (is_callable($tag)) {
                     $tag = call_user_func($tag, $this->owner);
                 }
+
                 return $tag;
             }, $this->tags)
         );

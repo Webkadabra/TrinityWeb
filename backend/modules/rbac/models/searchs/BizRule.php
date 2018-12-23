@@ -2,12 +2,12 @@
 
 namespace backend\modules\rbac\models\searchs;
 
+use backend\modules\rbac\components\Configs;
+use backend\modules\rbac\components\RouteRule;
+use backend\modules\rbac\models\BizRule as MBizRule;
 use Yii;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
-use backend\modules\rbac\models\BizRule as MBizRule;
-use backend\modules\rbac\components\RouteRule;
-use backend\modules\rbac\components\Configs;
 
 /**
  * Description of BizRule
@@ -48,7 +48,7 @@ class BizRule extends Model
         $models = [];
         $included = !($this->load($params) && $this->validate() && trim($this->name) !== '');
         foreach ($authManager->getRules() as $name => $item) {
-            if ($name != RouteRule::RULE_NAME && ($included || stripos($item->name, $this->name) !== false)) {
+            if ($name !== RouteRule::RULE_NAME && ($included || stripos($item->name, $this->name) !== false)) {
                 $models[$name] = new MBizRule($item);
             }
         }

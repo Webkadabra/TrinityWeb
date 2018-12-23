@@ -2,28 +2,25 @@
 
 namespace backend\controllers;
 
+use backend\models\AccountForm;
+use backend\models\LoginForm;
+use Intervention\Image\ImageManagerStatic;
+use trntv\filekit\actions\DeleteAction;
+use trntv\filekit\actions\UploadAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
-use Intervention\Image\ImageManagerStatic;
-use trntv\filekit\actions\DeleteAction;
-use trntv\filekit\actions\UploadAction;
-
-use backend\models\AccountForm;
-use backend\models\LoginForm;
-
 class SignInController extends Controller
 {
-
     public $defaultAction = 'login';
 
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post']
                 ]
@@ -32,13 +29,13 @@ class SignInController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
-                        'roles' => ['?'],
+                        'allow'   => true,
+                        'roles'   => ['?'],
                         'actions' => ['login'],
                     ],
                     [
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'allow'   => true,
+                        'roles'   => ['@'],
                         'actions' => ['logout', 'profile', 'account'],
                     ]
                 ],
@@ -53,8 +50,8 @@ class SignInController extends Controller
     {
         return [
             'avatar-upload' => [
-                'class' => UploadAction::class,
-                'deleteRoute' => 'avatar-delete',
+                'class'        => UploadAction::class,
+                'deleteRoute'  => 'avatar-delete',
                 'on afterSave' => function ($event) {
                     /* @var $file \League\Flysystem\File */
                     $file = $event->file;
@@ -67,7 +64,6 @@ class SignInController extends Controller
             ]
         ];
     }
-
 
     /**
      * @return string|\yii\web\Response
@@ -82,16 +78,17 @@ class SignInController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        } else {
+        }
+  
             return $this->render('login', [
                 'model' => $model
             ]);
-        }
     }
 
     public function actionLogout()
     {
         Yii::$app->user->logout();
+
         return $this->goHome();
     }
 
@@ -101,10 +98,12 @@ class SignInController extends Controller
         if ($model->load($_POST) && $model->save()) {
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class' => 'alert-success'],
-                'body' => Yii::t('backend', 'Your profile has been successfully saved', [], $model->locale)
+                'body'    => Yii::t('backend', 'Your profile has been successfully saved', [], $model->locale)
             ]);
+
             return $this->refresh();
         }
+
         return $this->render('profile', ['model' => $model]);
     }
 
@@ -117,7 +116,7 @@ class SignInController extends Controller
         $model = new AccountForm();
         $model->email = $user->email;
         if ($model->load($_POST) && $model->validate()) {
-            if($user->email != $model->email && $model->email) {
+            if($user->email !== $model->email && $model->email) {
                 $user->email = $model->email;
                 $user->relationGameAccount->email = $model->email;
                 $user->relationGameAccount->save();
@@ -125,16 +124,18 @@ class SignInController extends Controller
             if ($model->password) {
                 $user->setPassword($model->password);
             }
-            if($model->external_account != $user->external_id) {
+            if($model->external_account !== $user->external_id) {
                 $user->external_id = $model->external_account;
             }
             $user->save();
             Yii::$app->session->setFlash('alert', [
                 'options' => ['class' => 'alert-success'],
-                'body' => Yii::t('backend', 'Your account has been successfully saved')
+                'body'    => Yii::t('backend', 'Your account has been successfully saved')
             ]);
+
             return $this->refresh();
         }
+
         return $this->render('account', ['model' => $model]);
     }
 }

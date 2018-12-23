@@ -15,52 +15,6 @@ use Yii;
 class Activity extends ActivityActiveRecord
 {
     /**
-     * Adds guest activity.
-     * @param string $ip
-     * @param string $url
-     * @return bool
-     * @since 0.6
-     */
-    protected static function addGuest($ip, $url)
-    {
-        $activity = static::find()->where(['ip' => $ip, 'user_id' => null])->limit(1)->one();
-        if (empty($activity)) {
-            $activity = new static;
-            $activity->ip = $ip;
-        }
-        $activity->url = $url;
-        return $activity->save();
-    }
-
-    /**
-     * Adds registered user activity.
-     * @param string $ip
-     * @param string $url
-     * @return bool
-     * @since 0.6
-     */
-    protected static function addUser($ip, $url)
-    {
-        if (!$user = User::findMe()) {
-            return false;
-        }
-
-        $activity = static::find()->where(['user_id' => $user->id])->limit(1)->one();
-        if (!$activity) {
-            $activity = new static;
-            $activity->user_id = $user->id;
-        }
-        $activity->username = $user->podiumName;
-        $activity->user_role = $user->role;
-        $activity->user_slug = $user->podiumSlug;
-        $activity->url = $url;
-        $activity->ip = $ip;
-        $activity->anonymous = !empty($user->userProfile) ? $user->userProfile->anonymous : 0;
-
-        return $activity->save();
-    }
-
-    /**
      * Adds user activity.
      * @return bool
      */
@@ -85,6 +39,7 @@ class Activity extends ActivityActiveRecord
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -97,6 +52,7 @@ class Activity extends ActivityActiveRecord
         $activity = static::find()->where(['user_id' => $id])->limit(1)->one();
         if (empty($activity) || !$activity->delete()) {
             Log::error('Cannot delete user activity', $id, __METHOD__);
+
             return;
         }
         Podium::getInstance()->podiumCache->delete('forum.lastactive');
@@ -113,12 +69,14 @@ class Activity extends ActivityActiveRecord
         $activity = static::find()->where(['user_id' => $id])->limit(1)->one();
         if (empty($activity)) {
             Log::error('Cannot update user activity', $id, __METHOD__);
+
             return;
         }
         $activity->username = $username;
         $activity->user_slug = $slug;
         if (!$activity->save()) {
             Log::error('Cannot update user activity', $id, __METHOD__);
+
             return;
         }
         Podium::getInstance()->podiumCache->delete('forum.lastactive');
@@ -134,11 +92,13 @@ class Activity extends ActivityActiveRecord
         $activity = static::find()->where(['user_id' => $id])->limit(1)->one();
         if (empty($activity)) {
             Log::error('Cannot update user activity', $id, __METHOD__);
+
             return;
         }
         $activity->user_role = $role;
         if (!$activity->save()) {
             Log::error('Cannot update user activity', $id, __METHOD__);
+
             return;
         }
         Podium::getInstance()->podiumCache->delete('forum.lastactive');
@@ -154,7 +114,7 @@ class Activity extends ActivityActiveRecord
         if ($last === false) {
             $time = time() - 15 * 60;
             $last = [
-                'count' => static::find()->where(['>', 'updated_at', $time])->count(),
+                'count'   => static::find()->where(['>', 'updated_at', $time])->count(),
                 'members' => static::find()->where(['and',
                         ['>', 'updated_at', $time],
                         ['is not', 'user_id', null],
@@ -185,6 +145,7 @@ class Activity extends ActivityActiveRecord
             }
             Podium::getInstance()->podiumCache->set('forum.lastactive', $last, 60);
         }
+
         return $last;
     }
 
@@ -199,6 +160,7 @@ class Activity extends ActivityActiveRecord
             $members = User::find()->where(['!=', 'status', User::STATUS_REGISTERED])->count();
             Podium::getInstance()->podiumCache->set('forum.memberscount', $members);
         }
+
         return $members;
     }
 
@@ -213,6 +175,7 @@ class Activity extends ActivityActiveRecord
             $posts = Post::find()->count();
             Podium::getInstance()->podiumCache->set('forum.postscount', $posts);
         }
+
         return $posts;
     }
 
@@ -227,6 +190,53 @@ class Activity extends ActivityActiveRecord
             $threads = Thread::find()->count();
             Podium::getInstance()->podiumCache->set('forum.threadscount', $threads);
         }
+
         return $threads;
+    }
+    /**
+     * Adds guest activity.
+     * @param string $ip
+     * @param string $url
+     * @return bool
+     * @since 0.6
+     */
+    protected static function addGuest($ip, $url)
+    {
+        $activity = static::find()->where(['ip' => $ip, 'user_id' => null])->limit(1)->one();
+        if (empty($activity)) {
+            $activity = new static;
+            $activity->ip = $ip;
+        }
+        $activity->url = $url;
+
+        return $activity->save();
+    }
+
+    /**
+     * Adds registered user activity.
+     * @param string $ip
+     * @param string $url
+     * @return bool
+     * @since 0.6
+     */
+    protected static function addUser($ip, $url)
+    {
+        if (!$user = User::findMe()) {
+            return false;
+        }
+
+        $activity = static::find()->where(['user_id' => $user->id])->limit(1)->one();
+        if (!$activity) {
+            $activity = new static;
+            $activity->user_id = $user->id;
+        }
+        $activity->username = $user->podiumName;
+        $activity->user_role = $user->role;
+        $activity->user_slug = $user->podiumSlug;
+        $activity->url = $url;
+        $activity->ip = $ip;
+        $activity->anonymous = !empty($user->userProfile) ? $user->userProfile->anonymous : 0;
+
+        return $activity->save();
     }
 }

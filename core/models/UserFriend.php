@@ -42,7 +42,7 @@ class UserFriend extends ActiveRecord {
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('common', 'User'),
+            'user_id'   => Yii::t('common', 'User'),
             'friend_id' => Yii::t('common', 'Friend user'),
         ];
     }
@@ -54,5 +54,4 @@ class UserFriend extends ActiveRecord {
     public function getFriendUser() {
         return $this->hasOne(User::class,['id' => 'friend_id']);
     }
-
 }

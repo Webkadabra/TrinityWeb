@@ -2,20 +2,19 @@
 
 namespace backend\modules\rbac\controllers;
 
-use Yii;
+use backend\modules\rbac\components\Helper;
 use backend\modules\rbac\models\Menu;
 use backend\modules\rbac\models\searchs\Menu as MenuSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use backend\modules\rbac\components\Helper;
 
 /**
  * MenuController implements the CRUD actions for Menu model.
  */
 class MenuController extends Controller
 {
-
     /**
      * @inheritdoc
      */
@@ -23,7 +22,7 @@ class MenuController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -42,7 +41,7 @@ class MenuController extends Controller
 
         return $this->render('index', [
                 'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
+                'searchModel'  => $searchModel,
         ]);
     }
 
@@ -69,12 +68,13 @@ class MenuController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Helper::invalidate();
+
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+  
             return $this->render('create', [
                     'model' => $model,
             ]);
-        }
     }
 
     /**
@@ -91,12 +91,13 @@ class MenuController extends Controller
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Helper::invalidate();
+
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+  
             return $this->render('update', [
                     'model' => $model,
             ]);
-        }
     }
 
     /**
@@ -117,15 +118,14 @@ class MenuController extends Controller
      * Finds the Menu model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param  integer $id
-     * @return Menu the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return Menu the loaded model
      */
     protected function findModel($id)
     {
         if (($model = Menu::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

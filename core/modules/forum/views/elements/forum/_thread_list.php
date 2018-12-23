@@ -21,7 +21,7 @@ if (!empty($filters)) {
     }
 }
 ?>
-<?= ListView::widget([
+<?php echo ListView::widget([
     'dataProvider'     => (new Thread())->search($forum, $filters),
     'itemView'         => '/elements/forum/_thread',
     'summary'          => '',
@@ -30,5 +30,5 @@ if (!empty($filters)) {
                             : Yii::t('podium/view', 'No threads have been added yet.'),
     'emptyTextOptions' => ['tag' => 'td', 'class' => 'text-muted', 'colspan' => 4],
     'options'          => ['tag' => 'tbody'],
-    'itemOptions'      => ['tag' => 'tr', 'class' => 'podium-thread-line']
+    'itemOptions'      => ['tag' => 'tr', 'class' => 'podium-thread-line d-flex']
 ]);

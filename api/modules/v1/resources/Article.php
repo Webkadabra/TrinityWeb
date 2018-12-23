@@ -8,8 +8,7 @@ use yii\web\Link;
 use yii\web\Linkable;
 
 /**
- *
- * @property array $links
+ * @property array  $links
  * @property string $url
  */
 class Article extends \core\models\Article implements Linkable
@@ -27,7 +26,7 @@ class Article extends \core\models\Article implements Linkable
             'thumbnail_path',
             'author',
             'articleAttachments',
-            'url'
+            'url',
         ];
     }
 
@@ -39,7 +38,7 @@ class Article extends \core\models\Article implements Linkable
     public function getLinks()
     {
         return [
-            Link::REL_SELF => Url::to(['article/view', 'id' => $this->id], true)
+            Link::REL_SELF => Url::to(['article/view', 'id' => $this->id], true),
         ];
     }
 
@@ -48,16 +47,16 @@ class Article extends \core\models\Article implements Linkable
      */
     public function getAuthor()
     {
-        return parent::getAuthor()->select(['id','username','email','created_at']);
+        return parent::getAuthor()->select(['id', 'username', 'email', 'created_at']);
     }
 
     /**
-     * Return link to page with article
+     * Return link to page with article.
+     *
      * @return string
      */
     public function getUrl()
     {
-        return Yii::$app->urlManagerFrontend->createAbsoluteUrl(['article/view','slug' => $this->slug],true);
+        return Yii::$app->urlManagerFrontend->createAbsoluteUrl(['article/view', 'slug' => $this->slug], true);
     }
-
 }

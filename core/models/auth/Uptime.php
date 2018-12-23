@@ -2,9 +2,8 @@
 
 namespace core\models\auth;
 
-use Yii;
-
 use core\base\models\AuthCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "{{%uptime}}".
@@ -45,16 +44,15 @@ class Uptime extends AuthCoreModel
     public function attributeLabels()
     {
         return [
-            'realmid' => Yii::t('core', 'Realmid'),
-            'starttime' => Yii::t('core', 'Starttime'),
-            'uptime' => Yii::t('core', 'Uptime'),
+            'realmid'    => Yii::t('core', 'Realmid'),
+            'starttime'  => Yii::t('core', 'Starttime'),
+            'uptime'     => Yii::t('core', 'Uptime'),
             'maxplayers' => Yii::t('core', 'Maxplayers'),
-            'revision' => Yii::t('core', 'Revision'),
+            'revision'   => Yii::t('core', 'Revision'),
         ];
     }
 
     public function getRealm() {
         return $this->hasOne(Realmlist::class, ['id' => 'realmid']);
     }
-
 }

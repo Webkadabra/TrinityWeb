@@ -18,24 +18,24 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
         <div class="panel panel-default">
-            <?= Html::beginForm(); ?>
+            <?php echo Html::beginForm(); ?>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::label(Yii::t('podium/view', 'Select a forum for this thread to be moved to'), 'forum') ?>
-                            <p>* <?= Yii::t('podium/view', 'Forums you can moderate are marked with asterisk.') ?></p>
-                            <?= Html::dropDownList('forum', null, $list, ['id' => 'forum', 'class' => 'form-control', 'options' => $options, 'encode' => false]) ?>
+                            <?php echo Html::label(Yii::t('podium/view', 'Select a forum for this thread to be moved to'), 'forum'); ?>
+                            <p>* <?php echo Yii::t('podium/view', 'Forums you can moderate are marked with asterisk.'); ?></p>
+                            <?php echo Html::dropDownList('forum', null, $list, ['id' => 'forum', 'class' => 'form-control', 'options' => $options, 'encode' => false]); ?>
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Move Thread'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Move Thread'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
                         </div>
                     </div>
                 </div>
-            <?= Html::endForm(); ?>
+            <?php echo Html::endForm(); ?>
         </div>
     </div>
 </div><br>

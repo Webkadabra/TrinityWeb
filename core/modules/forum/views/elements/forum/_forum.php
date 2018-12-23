@@ -5,21 +5,21 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<td class="forum-icon">
-    <a href="<?= Url::to(['forum/forum', 'cid' => $model->category_id, 'id' => $model->id, 'slug' => $model->slug]) ?>" class="rf-aqua">
-        <?= Html::encode($model->name) ?>
+<td class="forum-icon col-6">
+    <a href="<?php echo Url::to(['forum/forum', 'cid' => $model->category_id, 'id' => $model->id, 'slug' => $model->slug]); ?>" class="rf-aqua">
+        <?php echo Html::decode($model->name); ?>
     </a>
     <?php if (!empty($model->sub)): ?>
         <div>
-            <small class="text-muted"><?= Html::encode($model->sub) ?></small>
+            <small class="text-muted"><?php echo Html::encode($model->sub); ?></small>
         </div>
     <?php endif; ?>
     <div class="row child-forums"><?php
         foreach($model->children()->all() as $child) {
             ?>
             <div class="ml-2 col-xs-11 col-md-5 child-forum">
-                <a href="<?= Url::to(['forum/forum', 'cid' => $child->category_id, 'id' => $child->id, 'slug' => $child->slug]) ?>" class="child-forum-link fz-12">
-                    <?= Html::encode($child->name) ?>
+                <a href="<?php echo Url::to(['forum/forum', 'cid' => $child->category_id, 'id' => $child->id, 'slug' => $child->slug]); ?>" class="child-forum-link fz-12">
+                    <?php echo Html::encode($child->name); ?>
                 </a>
             </div>
             <?php
@@ -27,18 +27,19 @@ use yii\helpers\Url;
         ?>
     </div>
 </td>
-<td class="forum-icon text-right"><?= $model->threads ?></td>
-<td class="forum-icon text-right"><?= $model->posts ?></td>
-<td>
+<td class="forum-icon text-right col-1">
+    <?php echo $model->threads; ?>
+</td>
+<td class="forum-icon text-right col-2">
+    <?php echo $model->posts; ?>
+</td>
+<td class="col-3">
     <?php
     $latest = $model->findLatestPost();
     ?>
     <?php if (!empty($latest) && !empty($latest->thread)): ?>
-        <a href="<?= Url::to(['forum/thread', 'cid' => $latest->thread->category_id, 'fid' => $latest->thread->forum_id, 'id' => $latest->thread->id, 'slug' => $latest->thread->slug]) ?>" class="center-block rf-aqua"><?= Html::encode($latest->thread->name) ?></a>
-        <small>
-            <?= $latest->author->podiumTag ?>
-            <span class="d-none"><?= Podium::getInstance()->formatter->asDatetime($latest->created_at, 'medium') ?></span>
-            <span class="d-sm-none d-md-none hidden-lg"><?= Podium::getInstance()->formatter->asDatetime($latest->created_at, 'short') ?></span>
-        </small>
+        <a href="<?php echo Url::to(['forum/thread', 'cid' => $latest->thread->category_id, 'fid' => $latest->thread->forum_id, 'id' => $latest->thread->id, 'slug' => $latest->thread->slug]); ?>" class="center-block rf-aqua">
+            <?php echo Html::encode($latest->thread->name); ?>
+        </a>
     <?php endif; ?>
 </td>

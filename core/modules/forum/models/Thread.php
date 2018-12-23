@@ -2,12 +2,12 @@
 
 namespace core\modules\forum\models;
 
+use cebe\markdown\GithubMarkdown;
 use core\modules\forum\log\Log;
 use core\modules\forum\models\db\ThreadActiveRecord;
 use core\modules\forum\Podium;
 use core\modules\forum\PodiumCache;
 use core\modules\forum\rbac\Rbac;
-use cebe\markdown\GithubMarkdown;
 use Exception;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -24,15 +24,15 @@ class Thread extends ThreadActiveRecord
      * Color classes.
      */
     const CLASS_DEFAULT = 'default';
-    const CLASS_EDITED  = 'warning';
-    const CLASS_NEW     = 'success';
+    const CLASS_EDITED = 'warning';
+    const CLASS_NEW = 'success';
 
     /**
      * Icon classes.
      */
-    const ICON_HOT    = 'fire';
+    const ICON_HOT = 'fire';
     const ICON_LOCKED = 'lock';
-    const ICON_NEW    = 'leaf';
+    const ICON_NEW = 'leaf';
     const ICON_NO_NEW = 'comment';
     const ICON_PINNED = 'pushpin';
 
@@ -48,12 +48,14 @@ class Thread extends ThreadActiveRecord
         if ($this->firstEditedNotSeen) {
             return $this->firstEditedNotSeen;
         }
+
         return $this->latest;
     }
 
     /**
      * Searches for thread.
      * @param int $forumId
+     * @param null|mixed $filters
      * @return ActiveDataProvider
      */
     public function search($forumId = null, $filters = null)
@@ -64,16 +66,16 @@ class Thread extends ThreadActiveRecord
         }
         if (!empty($filters)) {
             $loggedId = User::loggedId();
-            if (!empty($filters['pin']) && $filters['pin'] == 1) {
+            if (!empty($filters['pin']) && $filters['pin'] === 1) {
                 $query->andWhere(['pinned' => 1]);
             }
-            if (!empty($filters['lock']) && $filters['lock'] == 1) {
+            if (!empty($filters['lock']) && $filters['lock'] === 1) {
                 $query->andWhere(['locked' => 1]);
             }
-            if (!empty($filters['hot']) && $filters['hot'] == 1) {
+            if (!empty($filters['hot']) && $filters['hot'] === 1) {
                 $query->andWhere(['>=', 'posts', Podium::getInstance()->podiumConfig->get('hot_minimum')]);
             }
-            if (!empty($filters['new']) && $filters['new'] == 1 && !Podium::getInstance()->user->isGuest) {
+            if (!empty($filters['new']) && $filters['new'] === 1 && !Podium::getInstance()->user->isGuest) {
                 $query->joinWith(['threadView tvn' => function ($q) use ($loggedId) {
                     $q->onCondition(['tvn.user_id' => $loggedId]);
                     $q->andWhere(['or',
@@ -82,7 +84,7 @@ class Thread extends ThreadActiveRecord
                         ]);
                 }], false);
             }
-            if (!empty($filters['edit']) && $filters['edit'] == 1 && !Podium::getInstance()->user->isGuest) {
+            if (!empty($filters['edit']) && $filters['edit'] === 1 && !Podium::getInstance()->user->isGuest) {
                 $query->joinWith(['threadView tve' => function ($q) use ($loggedId) {
                     $q->onCondition(['tve.user_id' => $loggedId]);
                     $q->andWhere(['or',
@@ -94,13 +96,13 @@ class Thread extends ThreadActiveRecord
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query'      => $query,
             'pagination' => false,
         ]);
         $dataProvider->sort->defaultOrder = [
-            'pinned' => SORT_DESC,
+            'pinned'     => SORT_DESC,
             'updated_at' => SORT_DESC,
-            'id' => SORT_ASC
+            'id'         => SORT_ASC
         ];
 
         return $dataProvider;
@@ -122,12 +124,12 @@ class Thread extends ThreadActiveRecord
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query'      => $query,
             'pagination' => false,
         ]);
         $dataProvider->sort->defaultOrder = [
             'updated_at' => SORT_DESC,
-            'id' => SORT_ASC
+            'id'         => SORT_ASC
         ];
 
         return $dataProvider;
@@ -139,7 +141,7 @@ class Thread extends ThreadActiveRecord
      */
     public function getIcon()
     {
-        $icon   = self::ICON_NO_NEW;
+        $icon = self::ICON_NO_NEW;
         $append = false;
 
         if ($this->locked) {
@@ -167,6 +169,7 @@ class Thread extends ThreadActiveRecord
                 $icon = self::ICON_NEW;
             }
         }
+
         return $icon;
     }
 
@@ -210,6 +213,7 @@ class Thread extends ThreadActiveRecord
                 $description .= ' (' . Yii::t('podium/view', 'New Posts') . ')';
             }
         }
+
         return $description;
     }
 
@@ -230,6 +234,7 @@ class Thread extends ThreadActiveRecord
         } else {
             $class = self::CLASS_NEW;
         }
+
         return $class;
     }
 
@@ -243,9 +248,10 @@ class Thread extends ThreadActiveRecord
         if (User::can(User::ROLE_ADMINISTRATOR)) {
             return true;
         }
-        if (in_array($userId, $this->forum->getMods())) {
+        if (in_array($userId, $this->forum->getMods(), true)) {
             return true;
         }
+
         return false;
     }
 
@@ -268,19 +274,21 @@ class Thread extends ThreadActiveRecord
             $transaction->commit();
             PodiumCache::clearAfter('threadDelete');
             Log::info('Thread deleted', $this->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
     /**
      * Performs thread posts delete with parent forum counters update.
      * @param array $posts posts IDs
-     * @return bool
      * @throws Exception
+     * @return bool
      * @since 0.2
      */
     public function podiumDeletePosts($posts)
@@ -293,9 +301,9 @@ class Thread extends ThreadActiveRecord
                 }
                 $nPost = Post::find()
                             ->where([
-                                'id' => $post,
+                                'id'        => $post,
                                 'thread_id' => $this->id,
-                                'forum_id' => $this->forum->id
+                                'forum_id'  => $this->forum->id
                             ])
                             ->limit(1)
                             ->one();
@@ -320,11 +328,13 @@ class Thread extends ThreadActiveRecord
             $transaction->commit();
             PodiumCache::clearAfter('postDelete');
             Log::info('Posts deleted', null, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -338,8 +348,10 @@ class Thread extends ThreadActiveRecord
         $this->locked = !$this->locked;
         if ($this->save()) {
             Log::info($this->locked ? 'Thread locked' : 'Thread unlocked', $this->id, __METHOD__);
+
             return true;
         }
+
         return false;
     }
 
@@ -354,6 +366,7 @@ class Thread extends ThreadActiveRecord
         $newParent = Forum::find()->where(['id' => $target])->limit(1)->one();
         if (empty($newParent)) {
             Log::error('No parent forum of given ID found', $this->id, __METHOD__);
+
             return false;
         }
 
@@ -371,11 +384,13 @@ class Thread extends ThreadActiveRecord
             $transaction->commit();
             PodiumCache::clearAfter('threadMove');
             Log::info('Thread moved', $this->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -385,15 +400,15 @@ class Thread extends ThreadActiveRecord
      * @param array $posts IDs of posts to move
      * @param string $name new thread name if $target = 0
      * @param type $forum new thread parent forum if $target = 0
-     * @return bool
      * @throws Exception
+     * @return bool
      * @since 0.2
      */
     public function podiumMovePostsTo($target = null, $posts = [], $name = null, $forum = null)
     {
         $transaction = static::getDb()->beginTransaction();
         try {
-            if ($target == 0) {
+            if ($target === 0) {
                 $parent = Forum::find()->where(['id' => $forum])->limit(1)->one();
                 if (empty($parent)) {
                     throw new Exception('No parent forum of given ID found');
@@ -454,11 +469,13 @@ class Thread extends ThreadActiveRecord
             $transaction->commit();
             PodiumCache::clearAfter('postMove');
             Log::info('Posts moved', null, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -534,11 +551,13 @@ class Thread extends ThreadActiveRecord
             $transaction->commit();
             PodiumCache::clearAfter('newThread');
             Log::info('Thread added', $this->id, __METHOD__);
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -552,15 +571,17 @@ class Thread extends ThreadActiveRecord
         $this->pinned = !$this->pinned;
         if ($this->save()) {
             Log::info($this->pinned ? 'Thread pinned' : 'Thread unpinned', $this->id, __METHOD__);
+
             return true;
         }
+
         return false;
     }
 
     /**
      * Performs marking all unread threads as seen for user.
-     * @return bool
      * @throws Exception
+     * @return bool
      * @since 0.2
      */
     public static function podiumMarkAllSeen()
@@ -584,7 +605,7 @@ class Thread extends ThreadActiveRecord
             }
             if (!empty($updateBatch)) {
                 Podium::getInstance()->db->createCommand()->update(ThreadView::tableName(), [
-                    'new_last_seen' => $time,
+                    'new_last_seen'    => $time,
                     'edited_last_seen' => $time
                 ], ['thread_id' => $updateBatch, 'user_id' => $loggedId])->execute();
             }
@@ -602,10 +623,12 @@ class Thread extends ThreadActiveRecord
                     'user_id', 'thread_id', 'new_last_seen', 'edited_last_seen'
                 ], $insertBatch)->execute();
             }
+
             return true;
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -616,11 +639,13 @@ class Thread extends ThreadActiveRecord
      */
     public function getParsedPost()
     {
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
+        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
             $parser = new GithubMarkdown();
             $parser->html5 = true;
+
             return $parser->parse($this->post);
         }
+
         return $this->post;
     }
 }

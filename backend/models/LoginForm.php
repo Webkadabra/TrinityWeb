@@ -2,13 +2,11 @@
 
 namespace backend\models;
 
+use cheatsheet\Time;
+use core\models\User;
 use Yii;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;
-
-use cheatsheet\Time;
-
-use core\models\User;
 
 /**
  * Login form
@@ -42,8 +40,8 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('backend', 'Username'),
-            'password' => Yii::t('backend', 'Password'),
+            'username'   => Yii::t('backend', 'Username'),
+            'password'   => Yii::t('backend', 'Password'),
             'rememberMe' => Yii::t('backend', 'Remember Me')
         ];
     }
@@ -80,8 +78,8 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
      * @throws ForbiddenHttpException
+     * @return bool whether the user is logged in successfully
      */
     public function login()
     {
@@ -94,6 +92,7 @@ class LoginForm extends Model
                 Yii::$app->user->logout();
                 throw new ForbiddenHttpException;
             }
+
             return true;
         }
 

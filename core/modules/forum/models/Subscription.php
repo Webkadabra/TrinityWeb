@@ -20,7 +20,7 @@ class Subscription extends SubscriptionActiveRecord
      * Posts read statuses.
      */
     const POST_SEEN = 1;
-    const POST_NEW  = 0;
+    const POST_NEW = 0;
 
     /**
      * Searches for subscription
@@ -29,14 +29,15 @@ class Subscription extends SubscriptionActiveRecord
     public function search()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => static::find()->where(['user_id' => User::loggedId()]),
+            'query'      => static::find()->where(['user_id' => User::loggedId()]),
             'pagination' => [
                 'defaultPageSize' => 10,
-                'forcePageParam' => false
+                'forcePageParam'  => false
             ],
         ]);
         $dataProvider->sort->defaultOrder = ['post_seen' => SORT_ASC, 'id' => SORT_DESC];
         $dataProvider->pagination->pageSize = Yii::$app->session->get('per-page', 20);
+
         return $dataProvider;
     }
 
@@ -51,6 +52,7 @@ class Subscription extends SubscriptionActiveRecord
             return false;
         }
         Podium::getInstance()->podiumCache->deleteElement('user.subscriptions', User::loggedId());
+
         return true;
     }
 
@@ -65,6 +67,7 @@ class Subscription extends SubscriptionActiveRecord
             return false;
         }
         Podium::getInstance()->podiumCache->deleteElement('user.subscriptions', User::loggedId());
+
         return true;
     }
 
@@ -120,6 +123,7 @@ class Subscription extends SubscriptionActiveRecord
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -138,6 +142,7 @@ class Subscription extends SubscriptionActiveRecord
         $sub->thread_id = $thread;
         $sub->user_id = User::loggedId();
         $sub->post_seen = self::POST_SEEN;
+
         return $sub->save();
     }
 }

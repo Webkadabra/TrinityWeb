@@ -4,6 +4,7 @@ namespace core\modules\forum\console;
 
 use core\modules\forum\log\Log;
 use core\modules\forum\models\Email;
+use core\modules\forum\Podium;
 use Exception;
 use Yii;
 use yii\base\Action;
@@ -13,14 +14,12 @@ use yii\db\Query;
 use yii\di\Instance;
 use yii\helpers\Console;
 use yii\mail\BaseMailer;
-use core\modules\forum\Podium;
 
 /**
  * Podium command line tool to send emails.
  */
 class QueueController extends Controller
 {
-
     const DEFAULT_BATCH_LIMIT = 100;
 
     /**
@@ -72,11 +71,13 @@ class QueueController extends Controller
             if (parent::beforeAction($action)) {
                 $this->db = !$this->db ? Podium::getInstance()->getDb() : Instance::ensure($this->db, Connection::class);
                 $this->mailer = Instance::ensure($this->mailer, BaseMailer::class);
+
                 return true;
             }
         } catch (Exception $e) {
             $this->stderr("ERROR: " . $e->getMessage() . "\n");
         }
+
         return false;
     }
 
@@ -91,6 +92,7 @@ class QueueController extends Controller
             if (!is_numeric($limit) || $limit <= 0) {
                 $limit = $this->limit;
             }
+
             return (new Query)
                     ->from($this->queueTable)
                     ->where(['status' => Email::STATUS_PENDING])
@@ -122,6 +124,7 @@ class QueueController extends Controller
                 "\n",
                 $email['content']
             )));
+
             return $mailer->send();
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
@@ -146,9 +149,10 @@ class QueueController extends Controller
                     ->update(
                         $this->queueTable,
                         ['status' => Email::STATUS_SENT],
-                        ['id' => $email['id']]
+                        ['id'     => $email['id']]
                     )
                     ->execute();
+
                 return true;
             }
 
@@ -160,7 +164,7 @@ class QueueController extends Controller
                     ->update(
                         $this->queueTable,
                         ['attempt' => $attempt],
-                        ['id' => $email['id']]
+                        ['id'      => $email['id']]
                     )
                     ->execute();
             } else {
@@ -170,13 +174,14 @@ class QueueController extends Controller
                     ->update(
                         $this->queueTable,
                         ['status' => Email::STATUS_GAVEUP],
-                        ['id' => $email['id']]
+                        ['id'     => $email['id']]
                     )
                     ->execute();
             }
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 
@@ -194,6 +199,7 @@ class QueueController extends Controller
         $emails = $this->getNewBatch($limit);
         if (empty($emails)) {
             $this->stdout("No pending emails in the queue found.\n\n", Console::FG_GREEN);
+
             return self::EXIT_CODE_NORMAL;
         }
 
@@ -222,6 +228,7 @@ class QueueController extends Controller
         } else {
             $this->stdout("\nBatch sent successfully.\n\n", Console::FG_GREEN);
         }
+
         return self::EXIT_CODE_NORMAL;
     }
 
@@ -257,6 +264,7 @@ class QueueController extends Controller
         $this->stdout(" sent    | $showSent\n");
         $this->stdout(" stucked | $showGaveup\n");
         $this->stdout("------------------------------\n\n");
+
         return self::EXIT_CODE_NORMAL;
     }
 }

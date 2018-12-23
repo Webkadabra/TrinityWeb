@@ -2,15 +2,12 @@
 
 namespace core\models;
 
+use core\behaviors\MultilingualBehavior;
+use core\models\i18n\MetaI18n;
+use core\models\query\MetaQuery;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
-use core\behaviors\MultilingualBehavior;
-
-use core\models\i18n\MetaI18n;
-
-use core\models\query\MetaQuery;
 
 /** @noinspection PropertiesInspection */
 
@@ -27,7 +24,6 @@ use core\models\query\MetaQuery;
  */
 class Meta extends ActiveRecord
 {
-
     const INDEX = 'INDEX';
     const NOINDEX = 'NOINDEX';
     const FOLLOW = "FOLLOW";
@@ -56,14 +52,14 @@ class Meta extends ActiveRecord
                 'class' => TimestampBehavior::class,
             ],
             'ml' => [
-                'class' => MultilingualBehavior::class,
-                'languages' => Yii::$app->i18nHelper::getLocales(true),
-                'langClassName' => MetaI18n::class,
+                'class'           => MultilingualBehavior::class,
+                'languages'       => Yii::$app->i18nHelper::getLocales(true),
+                'langClassName'   => MetaI18n::class,
                 'defaultLanguage' => Yii::$app->language,
-                'langForeignKey' => 'meta_id',
-                'tableName' => MetaI18n::tableName(),
-                'abridge' => false,
-                'attributes' => [
+                'langForeignKey'  => 'meta_id',
+                'tableName'       => MetaI18n::tableName(),
+                'abridge'         => false,
+                'attributes'      => [
                     'title', 'keywords', 'description',
                 ]
             ],
@@ -95,9 +91,9 @@ class Meta extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'route' => Yii::t('core', 'Route'),
+            'route'         => Yii::t('core', 'Route'),
             'robots_follow' => Yii::t('core', 'Robots Follow'),
-            'robots_index' => Yii::t('core', 'Robots Index'),
+            'robots_index'  => Yii::t('core', 'Robots Index'),
         ];
     }
 }

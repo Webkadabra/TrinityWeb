@@ -2,12 +2,12 @@
 
 namespace backend\modules\rbac\controllers;
 
-use Yii;
 use backend\modules\rbac\models\Assignment;
 use backend\modules\rbac\models\searchs\Assignment as AssignmentSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AssignmentController implements the CRUD actions for Assignment model.
@@ -40,7 +40,7 @@ class AssignmentController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'assign' => ['post'],
                     'assign' => ['post'],
@@ -51,7 +51,7 @@ class AssignmentController extends Controller
                 'class' => \yii\filters\AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ASSIGNMENT]
                     ]
                 ]
@@ -65,7 +65,6 @@ class AssignmentController extends Controller
      */
     public function actionIndex()
     {
-
         if ($this->searchClass === null) {
             $searchModel = new AssignmentSearch;
             $dataProvider = $searchModel->search(Yii::$app->getRequest()->getQueryParams(), $this->userClassName, $this->usernameField);
@@ -76,11 +75,11 @@ class AssignmentController extends Controller
         }
 
         return $this->render('index', [
-                'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
-                'idField' => $this->idField,
+                'dataProvider'  => $dataProvider,
+                'searchModel'   => $searchModel,
+                'idField'       => $this->idField,
                 'usernameField' => $this->usernameField,
-                'extraColumns' => $this->extraColumns,
+                'extraColumns'  => $this->extraColumns,
         ]);
     }
 
@@ -94,8 +93,8 @@ class AssignmentController extends Controller
         $model = $this->findModel($id);
 
         return $this->render('view', [
-                'model' => $model,
-                'idField' => $this->idField,
+                'model'         => $model,
+                'idField'       => $this->idField,
                 'usernameField' => $this->usernameField,
                 'fullnameField' => $this->fullnameField,
         ]);
@@ -112,6 +111,7 @@ class AssignmentController extends Controller
         $model = new Assignment($id);
         $success = $model->assign($items);
         Yii::$app->getResponse()->format = 'json';
+
         return array_merge($model->getItems(), ['success' => $success]);
     }
 
@@ -126,6 +126,7 @@ class AssignmentController extends Controller
         $model = new Assignment($id);
         $success = $model->revoke($items);
         Yii::$app->getResponse()->format = 'json';
+
         return array_merge($model->getItems(), ['success' => $success]);
     }
 
@@ -133,16 +134,15 @@ class AssignmentController extends Controller
      * Finds the Assignment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param  integer $id
-     * @return Assignment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return Assignment the loaded model
      */
     protected function findModel($id)
     {
         $class = $this->userClassName;
         if (($user = $class::findIdentity($id)) !== null) {
             return new Assignment($id, $user);
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

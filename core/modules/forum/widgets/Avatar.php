@@ -2,9 +2,9 @@
 
 namespace core\modules\forum\widgets;
 
+use cebe\gravatar\Gravatar;
 use core\modules\forum\helpers\Helper;
 use core\modules\forum\models\User;
-use cebe\gravatar\Gravatar;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
@@ -34,7 +34,7 @@ class Avatar extends Widget
     {
         $avatar = Html::img(Helper::defaultAvatar(), [
             'class' => 'podium-avatar img-responsive center-block',
-            'alt' => Yii::t('podium/view', 'user deleted')
+            'alt'   => Yii::t('podium/view', 'user deleted')
         ]);
         $name = Helper::deletedUserTag(true);
         if ($this->author instanceof User) {
@@ -53,6 +53,7 @@ class Avatar extends Widget
                 }
             }
         }
+
         return $avatar . ($this->showName ? Html::tag('p', $name, ['class' => 'avatar-name']) : '');
     }
 }

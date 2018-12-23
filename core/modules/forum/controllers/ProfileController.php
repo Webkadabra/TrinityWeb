@@ -31,7 +31,7 @@ class ProfileController extends BaseController
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class'        => AccessControl::class,
                 'denyCallback' => function ($rule, $action) {
                     return $this->redirect(['account/login']);
                 },
@@ -67,7 +67,7 @@ class ProfileController extends BaseController
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 if ($model->saveChanges()) {
-                    if ($previous_new_email != $model->new_email) {
+                    if ($previous_new_email !== $model->new_email) {
                         $forum = $this->module->podiumConfig->get('name');
                         $email = Content::fill(Content::EMAIL_NEW);
                         if ($email !== false && Email::queue(
@@ -89,11 +89,13 @@ class ProfileController extends BaseController
                         Log::info('Details updated', $model->id, __METHOD__);
                         $this->success(Yii::t('podium/flash', 'Your account has been updated.'));
                     }
+
                     return $this->refresh();
                 }
             }
         }
         $model->currentPassword = null;
+
         return $this->render('details', ['model' => $model]);
     }
 
@@ -147,11 +149,13 @@ class ProfileController extends BaseController
                         }
                         Log::info('Profile updated', $model->id, __METHOD__);
                         $this->success(Yii::t('podium/flash', 'Your profile details have been updated.'));
+
                         return $this->refresh();
                     }
                 }
             }
         }
+
         return $this->render('forum', ['model' => $model, 'user' => $user]);
     }
 
@@ -166,8 +170,10 @@ class ProfileController extends BaseController
             if ($this->module->userComponent === true) {
                 return $this->redirect(['account/login']);
             }
+
             return $this->module->goPodium();
         }
+
         return $this->render('profile', ['model' => $model]);
     }
 
@@ -178,6 +184,7 @@ class ProfileController extends BaseController
     public function actionLogout()
     {
         Podium::getInstance()->user->logout();
+
         return $this->module->goPodium();
     }
 
@@ -194,8 +201,10 @@ class ProfileController extends BaseController
             } else {
                 $this->error(Yii::t('podium/flash', 'Sorry! There was an error while unsubscribing the thread list.'));
             }
+
             return $this->refresh();
         }
+
         return $this->render('subscriptions', [
             'dataProvider' => (new Subscription())->search(Yii::$app->request->get())
         ]);
@@ -211,27 +220,31 @@ class ProfileController extends BaseController
         $model = Subscription::find()->where(['id' => $id, 'user_id' => User::loggedId()])->limit(1)->one();
         if (empty($model)) {
             $this->error(Yii::t('podium/flash', 'Sorry! We can not find Subscription with this ID.'));
+
             return $this->redirect(['profile/subscriptions']);
         }
-        if ($model->post_seen == Subscription::POST_SEEN) {
+        if ($model->post_seen === Subscription::POST_SEEN) {
             if ($model->unseen()) {
                 $this->success(Yii::t('podium/flash', 'Thread has been marked unseen.'));
             } else {
                 Log::error('Error while marking thread', $model->id, __METHOD__);
                 $this->error(Yii::t('podium/flash', 'Sorry! There was some error while marking the thread.'));
             }
+
             return $this->redirect(['profile/subscriptions']);
         }
-        if ($model->post_seen == Subscription::POST_NEW) {
+        if ($model->post_seen === Subscription::POST_NEW) {
             if ($model->seen()) {
                 $this->success(Yii::t('podium/flash', 'Thread has been marked seen.'));
             } else {
                 Log::error('Error while marking thread', $model->id, __METHOD__);
                 $this->error(Yii::t('podium/flash', 'Sorry! There was some error while marking the thread.'));
             }
+
             return $this->redirect(['profile/subscriptions']);
         }
         $this->error(Yii::t('podium/flash', 'Sorry! Subscription has got the wrong status.'));
+
         return $this->redirect(['profile/subscriptions']);
     }
 
@@ -245,6 +258,7 @@ class ProfileController extends BaseController
         $model = Subscription::find()->where(['id' => (int)$id, 'user_id' => User::loggedId()])->limit(1)->one();
         if (empty($model)) {
             $this->error(Yii::t('podium/flash', 'Sorry! We can not find Subscription with this ID.'));
+
             return $this->redirect(['profile/subscriptions']);
         }
         if ($model->delete()) {
@@ -254,6 +268,7 @@ class ProfileController extends BaseController
             Log::error('Error while deleting subscription', $model->id, __METHOD__);
             $this->error(Yii::t('podium/flash', 'Sorry! There was some error while deleting the subscription.'));
         }
+
         return $this->redirect(['profile/subscriptions']);
     }
 
@@ -270,7 +285,7 @@ class ProfileController extends BaseController
 
         $data = [
             'error' => 1,
-            'msg' => Html::tag('span',
+            'msg'   => Html::tag('span',
                 Html::tag('span', '', ['class' => 'glyphicon glyphicon-warning-sign'])
                 . ' ' . Yii::t('podium/view', 'Error while adding this subscription!'),
                 ['class' => 'text-danger']
@@ -306,6 +321,7 @@ class ProfileController extends BaseController
                 }
             }
         }
+
         return Json::encode($data);
     }
 }

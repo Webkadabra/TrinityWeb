@@ -18,7 +18,6 @@ use yii\db\ActiveRecord;
  * @property int $meta_id [int(11)]
  */
 class MetaI18n extends ActiveRecord {
-
     /**
      * @inheritdoc
      */
@@ -48,5 +47,4 @@ class MetaI18n extends ActiveRecord {
             [['keywords','description'], 'string']
         ];
     }
-
 }

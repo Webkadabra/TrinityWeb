@@ -12,7 +12,7 @@ echo "<?php\n";
 use yii\db\Schema;
 use core\rbac\Migration;
 
-class <?= $className ?> extends Migration
+class <?php echo $className; ?> extends Migration
 {
 public function up()
 {
@@ -21,7 +21,7 @@ public function up()
 
 public function down()
 {
-echo "<?= $className ?> cannot be reverted.\n";
+echo "<?php echo $className; ?> cannot be reverted.\n";
 
 return false;
 }

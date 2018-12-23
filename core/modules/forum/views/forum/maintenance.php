@@ -12,6 +12,6 @@ $this->registerJs("var deg = 0; var rotate = function () { $('#cog1').css({'-web
 <div class="jumbotron">
     <span id="cog1" style="font-size:5em" class="float-right glyphicon glyphicon-cog"></span>
     <span id="cog2" style="font-size:8em" class="float-right glyphicon glyphicon-cog"></span>
-    <h1><?= $this->title ?></h1>
-    <p><?= Yii::t('podium/view', 'We will get back to you shortly') ?></p>
+    <h1><?php echo $this->title; ?></h1>
+    <p><?php echo Yii::t('podium/view', 'We will get back to you shortly'); ?></p>
 </div>

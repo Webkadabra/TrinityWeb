@@ -3,8 +3,8 @@
 namespace core\modules\forum;
 
 use core\modules\forum\models\User;
-use yii\base\InvalidConfigException;
 use yii\base\BaseObject;
+use yii\base\InvalidConfigException;
 use yii\base\View;
 use yii\caching\Cache;
 use yii\di\Instance;
@@ -46,8 +46,8 @@ class PodiumCache extends BaseObject
 
     /**
      * Returns cache engine.
-     * @return Cache
      * @throws InvalidConfigException
+     * @return Cache
      * @since 0.2
      */
     public function getEngine()
@@ -77,8 +77,10 @@ class PodiumCache extends BaseObject
         $cache = FragmentCache::begin($properties);
         if ($cache->getCachedContent() !== false) {
             $this->end();
+
             return false;
         }
+
         return true;
     }
 
@@ -148,8 +150,10 @@ class PodiumCache extends BaseObject
         $cache = $this->get($key);
         if ($cache !== false && isset($cache[$element])) {
             unset($cache[$element]);
+
             return $this->set($key, $cache);
         }
+
         return true;
     }
 
@@ -193,6 +197,7 @@ class PodiumCache extends BaseObject
         if ($cache !== false && isset($cache[$element])) {
             return $cache[$element];
         }
+
         return false;
     }
 
@@ -223,6 +228,7 @@ class PodiumCache extends BaseObject
             $cache = [];
         }
         $cache[$element] = $value;
+
         return $this->set($key, $cache, $duration);
     }
 }

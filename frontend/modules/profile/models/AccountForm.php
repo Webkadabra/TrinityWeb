@@ -2,11 +2,10 @@
 
 namespace frontend\modules\profile\models;
 
+use core\models\User;
 use Yii;
 use yii\base\Model;
 use yii\web\JsExpression;
-
-use core\models\User;
 
 /**
  * Account form
@@ -51,8 +50,8 @@ class AccountForm extends Model
             ['email', 'email'],
             ['email', 'unique',
                 'targetClass' => User::class,
-                'message' => Yii::t('frontend', 'This email has already been taken.'),
-                'filter' => function ($query) {
+                'message'     => Yii::t('frontend', 'This email has already been taken.'),
+                'filter'      => function ($query) {
                     $query->andWhere(['not', ['id' => Yii::$app->user->getId()]]);
                 }
             ],
@@ -68,7 +67,6 @@ class AccountForm extends Model
                 }")
             ],
             ['password_confirm', 'compare', 'compareAttribute' => 'password', 'skipOnEmpty' => false],
-
         ];
     }
 
@@ -78,8 +76,8 @@ class AccountForm extends Model
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('frontend', 'Email'),
-            'password' => Yii::t('frontend', 'Password'),
+            'email'            => Yii::t('frontend', 'Email'),
+            'password'         => Yii::t('frontend', 'Password'),
             'password_confirm' => Yii::t('frontend', 'Confirm Password')
         ];
     }
@@ -93,6 +91,7 @@ class AccountForm extends Model
         if ($this->password) {
             $this->user->setPassword($this->password);
         }
+
         return $this->user->save();
     }
 }

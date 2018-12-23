@@ -2,10 +2,9 @@
 
 namespace backend\modules\content\models\search;
 
+use core\models\ArticleCategory;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use core\models\ArticleCategory;
 
 class ArticleCategorySearch extends ArticleCategory
 {
@@ -32,6 +31,7 @@ class ArticleCategorySearch extends ArticleCategory
     /**
      * Creates data provider instance with search query applied
      *
+     * @param mixed $params
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -47,7 +47,7 @@ class ArticleCategorySearch extends ArticleCategory
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'     => $this->id,
             'status' => $this->status,
         ]);
 

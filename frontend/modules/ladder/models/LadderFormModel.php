@@ -2,17 +2,20 @@
 
 namespace frontend\modules\ladder\models;
 
+use core\models\chars\ArenaTeam;
+use core\models\chars\ArenaTeamMember;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use core\models\chars\ArenaTeam;
-use core\models\chars\ArenaTeamMember;
 
 /**
  * LadderFormModel
  */
 class LadderFormModel extends Model
 {
+    const TYPE_2 = 2;// 2vs2
+    const TYPE_3 = 3;// 3vs3
+    const TYPE_5 = 5;// 5vs5 / soloq
     public $server = null;
     public $type = null;
 
@@ -22,16 +25,12 @@ class LadderFormModel extends Model
         5 => '5x5'
     ];
 
-    const TYPE_2 = 2;// 2vs2
-    const TYPE_3 = 3;// 3vs3
-    const TYPE_5 = 5;// 5vs5 / soloq
-
     /**
      * LadderFormModel constructor.
      * @param array $config
      * @throws \yii\base\Exception
      */
-    public function __construct($config = array()) {
+    public function __construct($config = []) {
         parent::__construct($config);
         $this->server = Yii::$app->DBHelper->getServerName();
         $this->type = $this->_arr_types[2];
@@ -61,7 +60,7 @@ class LadderFormModel extends Model
     {
         return [
             'server' => Yii::t('ladder', 'Игровой мир'),
-            'type' => Yii::t('ladder', 'Тип')
+            'type'   => Yii::t('ladder', 'Тип')
         ];
     }
 
@@ -69,7 +68,7 @@ class LadderFormModel extends Model
         $query = ArenaTeam::find()->orderBy(['rating' => SORT_DESC])->with(['members.character'])->asArray();
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query'      => $query,
             'pagination' => [
                 'pageSize' => Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_LADDER_PER_PAGE),
             ]
@@ -92,7 +91,7 @@ class LadderFormModel extends Model
         foreach($servers as $server) {
             $data[$server] = $server;
         }
+
         return $data;
     }
-
 }

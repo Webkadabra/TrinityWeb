@@ -1,7 +1,7 @@
 <?php
 
 $cache = [
-    'class' => \yii\caching\FileCache::class,
+    'class'     => \yii\caching\FileCache::class,
     'cachePath' => '@frontend/runtime/cache'
 ];
 

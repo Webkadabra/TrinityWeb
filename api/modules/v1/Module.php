@@ -4,8 +4,8 @@ namespace api\modules\v1;
 
 use Yii;
 use yii\filters\ContentNegotiator;
-use yii\filters\RateLimiter;
 use yii\filters\Cors;
+use yii\filters\RateLimiter;
 use yii\web\Response;
 
 class Module extends \yii\base\Module
@@ -14,7 +14,7 @@ class Module extends \yii\base\Module
     public $controllerNamespace = 'api\modules\v1\controllers';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -32,10 +32,10 @@ class Module extends \yii\base\Module
         $behaviors = parent::behaviors();
 
         $behaviors['contentNegotiator'] = [
-            'class' => ContentNegotiator::class,
+            'class'   => ContentNegotiator::class,
             'formats' => [
                 'application/json' => Response::FORMAT_JSON,
-                'application/xml' => Response::FORMAT_XML,
+                'application/xml'  => Response::FORMAT_XML,
             ],
         ];
 
@@ -46,10 +46,10 @@ class Module extends \yii\base\Module
                     Yii::$app->urlManagerBackend->hostInfo,
                     Yii::$app->urlManagerFrontend->hostInfo,
                 ],
-                'Access-Control-Request-Method' => ['*'],
+                'Access-Control-Request-Method'    => ['*'],
                 'Access-Control-Allow-Credentials' => true,
-                'Access-Control-Max-Age' => 3600,
-            ]
+                'Access-Control-Max-Age'           => 3600,
+            ],
         ];
 
         $behaviors['rateLimiter'] = [

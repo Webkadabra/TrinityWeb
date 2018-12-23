@@ -2,10 +2,10 @@
 
 namespace core\modules\forum\console;
 
-use yii\console\Controller;
-use core\modules\forum\Podium;
 use core\modules\forum\models\User;
+use core\modules\forum\Podium;
 use core\modules\forum\rbac\Rbac;
+use yii\console\Controller;
 use yii\rbac\Role;
 
 /**
@@ -13,7 +13,6 @@ use yii\rbac\Role;
  */
 class UserController extends Controller
 {
-
     /**
      * Changes forum user role.
      * @param int|string $idOrEmail internal podium user id or email
@@ -27,6 +26,7 @@ class UserController extends Controller
         $rbac = Podium::getInstance()->getRbac();
         if (!$role = $rbac->getRole($role)) {
             $this->stderr('No such role.' . PHP_EOL);
+
             return self::EXIT_CODE_ERROR;
         }
         if (strpos($role->name, 'podium') === 0) {
@@ -50,6 +50,7 @@ class UserController extends Controller
         $rbac = Podium::getInstance()->getRbac();
         if (!$role = $rbac->getRole($role)) {
             $this->stderr('No such role.' . PHP_EOL);
+
             return self::EXIT_CODE_ERROR;
         }
         if (strpos($role->name, 'podium') === 0) {
@@ -103,6 +104,7 @@ class UserController extends Controller
         if (!$user = User::find()->andWhere(is_numeric($idOrEmail) ? ['id' => $idOrEmail] : ['email' => $idOrEmail])->limit(1)->one()) {
             $this->stderr('User not found.' . PHP_EOL);
         }
+
         return $user;
     }
 }

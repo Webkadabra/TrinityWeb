@@ -2,9 +2,8 @@
 
 namespace core\models\query;
 
-use omgdef\multilingual\MultilingualQuery;
-
 use core\models\Page;
+use omgdef\multilingual\MultilingualQuery;
 
 /**
  * Class PageQuery
@@ -18,6 +17,7 @@ class PageQuery extends MultilingualQuery
     public function published()
     {
         $this->andWhere(['status' => Page::STATUS_PUBLISHED]);
+
         return $this;
     }
 }

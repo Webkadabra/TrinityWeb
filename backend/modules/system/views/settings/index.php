@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php echo $form->field($model, 'application_name', [
                     'template' => '<i class="fas fa-heading input-icon"></i>{input}{hint}{error}'
                 ])->textInput([
-                    'class' => 'form-control parent-input-icon',
+                    'class'       => 'form-control parent-input-icon',
                     'placeholder' => $model->getAttributeLabel('application_name')
-                ]) ?>
+                ]); ?>
             </div>
             <div class="col-12">
                 <?php echo $form->field($model, 'application_announce')
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div>
             <?php
             echo Tabs::widget([
-                'id' => 'app_tabs',
+                'id'      => 'app_tabs',
                 'options' => [
                     'class' => 'justify-content-center'
                 ],
@@ -45,38 +45,38 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'items' => [
                     [
-                        'label' => Yii::t('backend','Mailer'),
+                        'label'   => Yii::t('backend','Mailer'),
                         'content' => $this->render('tabs/mailer',[
-                            'form' => $form,
+                            'form'  => $form,
                             'model' => $model
                         ])
                     ],
                     [
-                        'label' => Yii::t('backend','REcaptcha'),
+                        'label'   => Yii::t('backend','REcaptcha'),
                         'content' => $this->render('tabs/recaptcha',[
-                            'form' => $form,
+                            'form'  => $form,
                             'model' => $model
                         ])
                     ],
                     [
-                        'label' => Yii::t('backend','Modules'),
+                        'label'   => Yii::t('backend','Modules'),
                         'content' => $this->render('tabs/modules',[
                             'model' => $model
                         ])
                     ],
                     [
-                        'label' => Yii::t('backend','Auth connections'),
+                        'label'   => Yii::t('backend','Auth connections'),
                         'content' => $this->render('tabs/auth_conn',[
-                            'form' => $form,
-                            'model' => $model,
+                            'form'     => $form,
+                            'model'    => $model,
                             'errorMsg' => $auth_errorMsg
                         ])
                     ],
                     [
-                        'label' => Yii::t('backend','Char connections'),
+                        'label'   => Yii::t('backend','Char connections'),
                         'content' => $this->render('tabs/chars_conn',[
-                            'form' => $form,
-                            'model' => $model,
+                            'form'     => $form,
+                            'model'    => $model,
                             'errorMsg' => $char_errorMsg
                         ])
                     ]
@@ -102,15 +102,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 $field->template = '{input} {label}';
                 echo $field->checkbox([], false)->label($model->getAttributeLabel('application_maintenance'),[
                     'class' => 'checkbox-label'
-                ])?>
+                ]);?>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-auto">
                 <?php echo Html::submitButton(Yii::t('backend', 'Save'), [
                     'class' => 'btn btn-primary btn-flat btn-block'
-                ]) ?>
+                ]); ?>
             </div>
         </div>
-    <?php ActiveForm::end() ?>
+    <?php ActiveForm::end(); ?>
 </div>

@@ -6,6 +6,9 @@
 composer.phar
 composer.lock
 
+# cs-fixer
+.php_cs.cache
+
 # JS
 node_modules
 spa/npm-debug.log

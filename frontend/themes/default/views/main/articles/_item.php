@@ -14,32 +14,32 @@ use yii\helpers\Html;
                         'path' => $model->thumbnail_path
                     ], true),
                     ['class' => 'article-thumb w-100']
-                ) ?>
+                ); ?>
                 <h2 class="article-title">
-                    <?php echo Html::a(Yii::$app->i18nHelper::getLangAttributeValue($model,'title'), ['article/view', 'slug'=>$model->slug]) ?>
+                    <?php echo Html::a(Yii::$app->i18nHelper::getLangAttributeValue($model,'title'), ['article/view', 'slug'=>$model->slug]); ?>
                 </h2>
             <?php endif; ?>
         </div>
         <div class="article-content">
             <?php if (!$model->thumbnail_path): ?>
                 <h2 class="article-title">
-                    <?php echo Html::a(Yii::$app->i18nHelper::getLangAttributeValue($model,'title'), ['article/view', 'slug'=>$model->slug]) ?>
+                    <?php echo Html::a(Yii::$app->i18nHelper::getLangAttributeValue($model,'title'), ['article/view', 'slug'=>$model->slug]); ?>
                 </h2>
             <?php endif; ?>
             <div class="article-announce">
-                <?php echo Yii::$app->i18nHelper::getLangAttributeValue($model,'announce')?>
+                <?php echo Yii::$app->i18nHelper::getLangAttributeValue($model,'announce');?>
             </div>
             <div class="article-meta">
-                <span class="article-date tltp" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('frontend','Дата публикации')?>">
+                <span class="article-date tltp" data-toggle="tooltip" data-placement="bottom" title="<?php echo Yii::t('frontend','Дата публикации');?>">
                     <i class="fa fa-clock"></i>&nbsp;
-                    <?php echo Yii::$app->formatter->asDatetime($model->published_at) ?>
+                    <?php echo Yii::$app->formatter->asDatetime($model->published_at); ?>
                 </span>
                 <span class="article-category ml-3">
                     <i class="fa fa-bookmark tw-aqua"></i>&nbsp;
                     <?php echo Html::a(
                         $model->category->title,
                         ['index', 'ArticleSearch[category_id]' => $model->category_id]
-                    )?>
+                    );?>
                 </span>
             </div>
         </div>

@@ -2,13 +2,11 @@
 
 namespace core\models;
 
+use core\behaviors\CacheInvalidateBehavior;
+use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
-use trntv\filekit\behaviors\UploadBehavior;
-
-use core\behaviors\CacheInvalidateBehavior;
 
 /**
  * This is the model class for table "{{%widget_carousel_item}}".
@@ -50,6 +48,7 @@ class WidgetCarouselItem extends ActiveRecord
         $scenarios = parent::scenarios();
         $key = array_search('carousel_id', $scenarios[self::SCENARIO_DEFAULT], true);
         $scenarios[self::SCENARIO_DEFAULT][$key] = '!carousel_id';
+
         return $scenarios;
     }
 
@@ -61,16 +60,16 @@ class WidgetCarouselItem extends ActiveRecord
         return [
             TimestampBehavior::class,
             [
-                'class' => UploadBehavior::class,
-                'attribute' => 'image',
-                'pathAttribute' => 'path',
+                'class'            => UploadBehavior::class,
+                'attribute'        => 'image',
+                'pathAttribute'    => 'path',
                 'baseUrlAttribute' => 'base_url',
-                'typeAttribute' => 'type'
+                'typeAttribute'    => 'type'
             ],
             'cacheInvalidate' => [
-                'class' => CacheInvalidateBehavior::class,
+                'class'          => CacheInvalidateBehavior::class,
                 'cacheComponent' => 'frontendCache',
-                'keys' => [
+                'keys'           => [
                     function ($model) {
                         return [
                             WidgetCarousel::class,
@@ -103,16 +102,16 @@ class WidgetCarouselItem extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
+            'id'          => Yii::t('common', 'ID'),
             'carousel_id' => Yii::t('common', 'Carousel ID'),
-            'image' => Yii::t('common', 'Image'),
-            'base_url' => Yii::t('common', 'Base URL'),
-            'path' => Yii::t('common', 'Path'),
-            'type' => Yii::t('common', 'File Type'),
-            'url' => Yii::t('common', 'Url'),
-            'caption' => Yii::t('common', 'Caption'),
-            'status' => Yii::t('common', 'Status'),
-            'order' => Yii::t('common', 'Order')
+            'image'       => Yii::t('common', 'Image'),
+            'base_url'    => Yii::t('common', 'Base URL'),
+            'path'        => Yii::t('common', 'Path'),
+            'type'        => Yii::t('common', 'File Type'),
+            'url'         => Yii::t('common', 'Url'),
+            'caption'     => Yii::t('common', 'Caption'),
+            'status'      => Yii::t('common', 'Status'),
+            'order'       => Yii::t('common', 'Order')
         ];
     }
 

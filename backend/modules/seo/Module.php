@@ -11,7 +11,6 @@ use yii\web\GroupUrlRule;
  */
 class Module extends \yii\base\Module implements BootstrapInterface
 {
-
     /**
      * @inheritdoc
      */
@@ -36,8 +35,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
     {
         $app->urlManager->addRules([new GroupUrlRule([
             'prefix' => $this->id,
-            'rules' => require __DIR__ . '/url-rules.php',
+            'rules'  => require __DIR__ . '/url-rules.php',
         ])], true);
     }
-
 }

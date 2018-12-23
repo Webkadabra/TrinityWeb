@@ -2,8 +2,8 @@
 
 namespace backend\modules\rbac\models;
 
-use Yii;
 use backend\modules\rbac\components\Configs;
+use Yii;
 use yii\db\Query;
 
 /**
@@ -22,9 +22,11 @@ use yii\db\Query;
 class Menu extends \yii\db\ActiveRecord
 {
     public $parent_name;
+    private static $_routes;
 
     /**
-     * @inheritdoc
+     * @return string
+     * @throws \yii\base\InvalidConfigException
      */
     public static function tableName()
     {
@@ -32,15 +34,16 @@ class Menu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * @return \yii\db\Connection
+     * @throws \yii\base\InvalidConfigException
      */
     public static function getDb()
     {
         if (Configs::instance()->db !== null) {
             return Configs::instance()->db;
-        } else {
-            return parent::getDb();
         }
+  
+            return parent::getDb();
     }
 
     /**
@@ -51,7 +54,7 @@ class Menu extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['parent_name'], 'in',
-                'range' => static::find()->select(['name'])->column(),
+                'range'   => static::find()->select(['name'])->column(),
                 'message' => 'Menu "{value}" not found.'],
             [['parent', 'route', 'data', 'order'], 'default'],
             [['parent'], 'filterParent', 'when' => function() {
@@ -59,7 +62,7 @@ class Menu extends \yii\db\ActiveRecord
             }],
             [['order'], 'integer'],
             [['route'], 'in',
-                'range' => static::getSavedRoutes(),
+                'range'   => static::getSavedRoutes(),
                 'message' => 'Route "{value}" not found.']
         ];
     }
@@ -75,8 +78,9 @@ class Menu extends \yii\db\ActiveRecord
             ->from(static::tableName())
             ->where('[[id]]=:id');
         while ($parent) {
-            if ($this->id == $parent) {
+            if ($this->id === $parent) {
                 $this->addError('parent_name', 'Loop detected.');
+
                 return;
             }
             $parent = $query->params([':id' => $parent])->scalar($db);
@@ -89,13 +93,13 @@ class Menu extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('rbac-admin', 'ID'),
-            'name' => Yii::t('rbac-admin', 'Name'),
-            'parent' => Yii::t('rbac-admin', 'Parent'),
+            'id'          => Yii::t('rbac-admin', 'ID'),
+            'name'        => Yii::t('rbac-admin', 'Name'),
+            'parent'      => Yii::t('rbac-admin', 'Parent'),
             'parent_name' => Yii::t('rbac-admin', 'Parent Name'),
-            'route' => Yii::t('rbac-admin', 'Route'),
-            'order' => Yii::t('rbac-admin', 'Order'),
-            'data' => Yii::t('rbac-admin', 'Data'),
+            'route'       => Yii::t('rbac-admin', 'Route'),
+            'order'       => Yii::t('rbac-admin', 'Order'),
+            'data'        => Yii::t('rbac-admin', 'Data'),
         ];
     }
 
@@ -116,7 +120,6 @@ class Menu extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Menu::class, ['parent' => 'id']);
     }
-    private static $_routes;
 
     /**
      * Get saved routes.
@@ -127,17 +130,19 @@ class Menu extends \yii\db\ActiveRecord
         if (self::$_routes === null) {
             self::$_routes = [];
             foreach (Configs::authManager()->getPermissions() as $name => $value) {
-		if (($name[0] === Route::PREFIX_BASIC || $name[0] === Route::PREFIX_ADVANCED) && substr($name, -1) != '*') {
+		if (($name[0] === Route::PREFIX_BASIC || $name[0] === Route::PREFIX_ADVANCED) && substr($name, -1) !== '*') {
                     self::$_routes[] = $name;
                 }
             }
         }
+
         return self::$_routes;
     }
 
     public static function getMenuSource()
     {
         $tableName = static::tableName();
+
         return (new \yii\db\Query())
                 ->select(['m.id', 'm.name', 'm.route', 'parent_name' => 'p.name'])
                 ->from(['m' => $tableName])

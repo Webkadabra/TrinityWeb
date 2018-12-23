@@ -1,18 +1,16 @@
 <?php
 namespace core\modules\installer;
 
+use core\modules\installer\helpers\TourHelper;
 use Yii;
+use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
 use yii\web\Application;
-use yii\web\GroupUrlRule;
-use yii\base\BootstrapInterface;
 use yii\web\ForbiddenHttpException;
-
-use core\modules\installer\helpers\TourHelper;
+use yii\web\GroupUrlRule;
 
 class ModuleInstall extends BaseModule implements BootstrapInterface
 {
-
     public $id = 'install';
     public $version = '@beta';
     public $layout = 'install';
@@ -35,7 +33,6 @@ class ModuleInstall extends BaseModule implements BootstrapInterface
         array_unique($this->allowedIPs);
 
         $this->setAliases(['@installer' => __DIR__]);
-
     }
 
     public function bootstrap($app)
@@ -54,12 +51,13 @@ class ModuleInstall extends BaseModule implements BootstrapInterface
             if($requested_step > $last_step) {
                 Yii::$app->session->setFlash('error',Yii::t('installer','Requested step not allowed now!'));
                 Yii::$app->response->redirect([TourHelper::getActionByStep($last_step)]);
+
                 return false;
             }
+
             return parent::beforeAction($action);
-        } else {
+        }  
             die('You are not allowed to access this page.');
-        }
     }
 
     /**
@@ -73,23 +71,24 @@ class ModuleInstall extends BaseModule implements BootstrapInterface
                 return true;
             }
         }
+
         return false;
+    }
+
+    public function registerTranslations()
+    {
+        \Yii::$app->i18n->translations['installer'] = [
+            'class'          => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en-US',
+            'basePath'       => '@installer/messages'
+        ];
     }
 
     protected function addUrlManagerRules($app)
     {
         $app->urlManager->addRules([new GroupUrlRule([
             'prefix' => $this->id,
-            'rules' => require __DIR__ . '/url-rules.php',
+            'rules'  => require __DIR__ . '/url-rules.php',
         ])], true);
-    }
-
-    public function registerTranslations()
-    {
-        \Yii::$app->i18n->translations['installer'] = [
-            'class' => 'yii\i18n\PhpMessageSource',
-            'sourceLanguage' => 'en-US',
-            'basePath' => '@installer/messages'
-        ];
     }
 }

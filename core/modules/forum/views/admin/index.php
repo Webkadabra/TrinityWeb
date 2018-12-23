@@ -17,19 +17,19 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
 $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
 
 ?>
-<?= $this->render('/elements/admin/_navbar', ['active' => 'index']); ?>
+<?php echo $this->render('/elements/admin/_navbar', ['active' => 'index']); ?>
 <br>
 <div class="row">
     <div class="col-sm-3">
         <div class="card panel-success">
-            <div class="card-header"><?= Yii::t('podium/view', 'Newest members') ?></div>
+            <div class="card-header"><?php echo Yii::t('podium/view', 'Newest members'); ?></div>
             <table class="table">
 <?php foreach ($members as $member): ?>
                 <tr>
                     <td>
-                        <a href="<?= Url::to(['admin/view', 'id' => $member->id]) ?>"><?= $member->podiumName ?></a>
-                        <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDateTime($member->created_at, 'long') ?>">
-                            <?= Podium::getInstance()->formatter->asRelativeTime($member->created_at) ?>
+                        <a href="<?php echo Url::to(['admin/view', 'id' => $member->id]); ?>"><?php echo $member->podiumName; ?></a>
+                        <span data-toggle="tooltip" data-placement="top" title="<?php echo Podium::getInstance()->formatter->asDateTime($member->created_at, 'long'); ?>">
+                            <?php echo Podium::getInstance()->formatter->asRelativeTime($member->created_at); ?>
                         </span>
                     </td>
                 </tr>
@@ -39,38 +39,38 @@ $this->registerJs("$('[data-toggle=\"popover\"]').popover();");
     </div>
     <div class="col-sm-9">
         <div class="card panel-info table-responsive">
-            <div class="card-header"><?= Yii::t('podium/view', 'Newest posts') ?></div>
+            <div class="card-header"><?php echo Yii::t('podium/view', 'Newest posts'); ?></div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th><?= Yii::t('podium/view', 'Thread') ?></th>
-                        <th><?= Yii::t('podium/view', 'Preview') ?></th>
-                        <th><?= Yii::t('podium/view', 'Author') ?></th>
-                        <th><?= Yii::t('podium/view', 'Date') ?></th>
-                        <th><?= Yii::t('podium/view', 'Thumbs') ?></th>
+                        <th><?php echo Yii::t('podium/view', 'Thread'); ?></th>
+                        <th><?php echo Yii::t('podium/view', 'Preview'); ?></th>
+                        <th><?php echo Yii::t('podium/view', 'Author'); ?></th>
+                        <th><?php echo Yii::t('podium/view', 'Date'); ?></th>
+                        <th><?php echo Yii::t('podium/view', 'Thumbs'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
 <?php foreach ($posts as $post): ?>
                     <tr>
                         <td>
-                            <a href="<?= Url::to(['forum/show', 'id' => $post->id]) ?>"><?= Html::encode($post->thread->name) ?></a>
+                            <a href="<?php echo Url::to(['forum/show', 'id' => $post->id]); ?>"><?php echo Html::encode($post->thread->name); ?></a>
                         </td>
                         <td>
-                            <span data-toggle="popover" data-container="body" data-placement="right" data-trigger="hover focus" data-html="true" data-content="<small><?= str_replace('"', '&quote;', StringHelper::truncateWords($post->parsedContent, 20, '...', true)) ?></small>" title="<?= Yii::t('podium/view', 'Post Preview') ?>">
+                            <span data-toggle="popover" data-container="body" data-placement="right" data-trigger="hover focus" data-html="true" data-content="<small><?php echo str_replace('"', '&quote;', StringHelper::truncateWords($post->parsedContent, 20, '...', true)); ?></small>" title="<?php echo Yii::t('podium/view', 'Post Preview'); ?>">
                                 <span class="glyphicon glyphicon-leaf"></span>
                             </span>
                         </td>
                         <td>
-                            <a href="<?= Url::to(['admin/view', 'id' => $post->author->id]) ?>"><?= $post->author->podiumName ?></a>
+                            <a href="<?php echo Url::to(['admin/view', 'id' => $post->author->id]); ?>"><?php echo $post->author->podiumName; ?></a>
                         </td>
                         <td>
-                            <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDateTime($post->created_at, 'long') ?>">
-                                <?= Podium::getInstance()->formatter->asRelativeTime($post->created_at) ?>
+                            <span data-toggle="tooltip" data-placement="top" title="<?php echo Podium::getInstance()->formatter->asDateTime($post->created_at, 'long'); ?>">
+                                <?php echo Podium::getInstance()->formatter->asRelativeTime($post->created_at); ?>
                             </span>
                         </td>
                         <td>
-                            +<?= $post->likes ?> / -<?= $post->dislikes ?>
+                            +<?php echo $post->likes; ?> / -<?php echo $post->dislikes; ?>
                         </td>
                     </tr>
 <?php endforeach; ?>

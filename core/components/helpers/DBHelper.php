@@ -2,6 +2,7 @@
 
 namespace core\components\helpers;
 
+use core\models\Server;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
@@ -9,11 +10,8 @@ use yii\helpers\ArrayHelper;
 use yii\web\Cookie;
 use yii\web\NotFoundHttpException;
 
-use core\models\Server;
-
 class DBHelper
 {
-
     const AUTH_SERVER_COOKIE = 'twA';
     const REALM_SERVER_COOKIE = 'twR';
 
@@ -21,8 +19,8 @@ class DBHelper
      * Get DB connection by componentPrefix & componentName
      * @param null|string $component_prefix
      * @param null $name
-     * @return \yii\db\Connection|Object
      * @throws InvalidConfigException
+     * @return \yii\db\Connection|Object
      */
     public function getConnection($component_prefix = null, $name = null)
     {
@@ -32,7 +30,7 @@ class DBHelper
             } catch (\Exception $exc) {
                 throw new InvalidConfigException(Yii::t('common','Error during connection to {component_prefix}{name}', [
                     'component_prefix' => $component_prefix,
-                    'name' => $name
+                    'name'             => $name
                 ]));
             }
         } else {
@@ -51,23 +49,24 @@ class DBHelper
         if(self::isServerExist($auth_id, $realm_id)) {
             if(Yii::$app->user->isGuest) {
                 Yii::$app->response->cookies->add(new Cookie([
-                    'name' => self::AUTH_SERVER_COOKIE,
+                    'name'  => self::AUTH_SERVER_COOKIE,
                     'value' => $auth_id
                 ]));
 
                 Yii::$app->response->cookies->add(new Cookie([
-                    'name' => self::REALM_SERVER_COOKIE,
+                    'name'  => self::REALM_SERVER_COOKIE,
                     'value' => $realm_id
                 ]));
-
             } else {
                 Yii::$app->user->identity->auth_id = $auth_id;
                 Yii::$app->user->identity->realm_id = $realm_id;
                 Yii::$app->user->identity->character_id = null;
                 Yii::$app->user->identity->save();
             }
+
             return Server::findOne(['realm_id' => $realm_id, 'auth_id' => $auth_id]);
         }
+
         return false;
     }
 
@@ -80,20 +79,20 @@ class DBHelper
     public function isServerExist($auth_id, $realm_id)
     {
         foreach(self::getServers() as $server_data) {
-            if($auth_id == $server_data['auth_id'] && $realm_id == $server_data['realm_id']) return true;
+            if($auth_id === $server_data['auth_id'] && $realm_id === $server_data['realm_id']) return true;
         }
+
         return false;
     }
 
     /**
      * Set default server (first in database)
-     * @return null | Server
      * @throws Exception
+     * @return null | Server
      */
     public function setDefault()
     {
         if(Yii::$app->user->isGuest) {
-
             $auth_id = Yii::$app->request->cookies->getValue(self::AUTH_SERVER_COOKIE);
             $realm_id = Yii::$app->request->cookies->getValue(self::REALM_SERVER_COOKIE);
 
@@ -118,15 +117,14 @@ class DBHelper
             }
             if(self::isServerExist(Yii::$app->user->identity->auth_id,Yii::$app->user->identity->realm_id)) {
                 return Server::findOne([
-                    'auth_id' => Yii::$app->user->identity->auth_id,
+                    'auth_id'  => Yii::$app->user->identity->auth_id,
                     'realm_id' => Yii::$app->user->identity->realm_id
                 ]);
-            } else {
+            }  
                 $server_data = self::getServers()[0];
                 if($server_data) {
                     if($server = self::setServerValue($server_data['auth_id'],$server_data['realm_id'])) return $server;
                 }
-            }
         }
         throw new Exception("Can not set auth & realm server");
     }
@@ -138,7 +136,7 @@ class DBHelper
      */
     public function getServers($as_associated = false)
     {
-        if($as_associated == true) {
+        if($as_associated === true) {
             $cache_key = 'core.helpers.list_servers_assoc';
             $data = Yii::$app->cache->get($cache_key);
             if($data === false) {
@@ -153,14 +151,15 @@ class DBHelper
                 Yii::$app->cache->set($cache_key,$data);
             }
         }
+
         return $data;
     }
 
     /**
      * Get server by NAME
      * @param string $name
-     * @return Server|null
      * @throws NotFoundHttpException
+     * @return Server|null
      */
     public function getServerByName($name)
     {
@@ -174,8 +173,8 @@ class DBHelper
     /**
      * Get NAME for current server
      * @param bool $to_lower
-     * @return string|null
      * @throws Exception
+     * @return string|null
      */
     public function getServerName($to_lower = false) {
         return $to_lower ? mb_strtolower(self::setDefault()->realm_name) : self::setDefault()->realm_name;
@@ -183,14 +182,15 @@ class DBHelper
 
     /**
      * Get server_id from GET(server) parameter
-     * @return Server|null
      * @throws NotFoundHttpException
+     * @return Server|null
      */
     public function getServerFromGet() {
         $name = Yii::$app->request->get('server');
         foreach($this::getServers(true) as $server_id => $server_name) {
-            if($name == $server_name) return $this->getServerByName($server_name);
+            if($name === $server_name) return $this->getServerByName($server_name);
         }
+
         return null;
     }
 
@@ -202,5 +202,4 @@ class DBHelper
         }
         throw new NotFoundHttpException("Server {$realm_id} on auth {$auth_id} not found");
     }
-
 }

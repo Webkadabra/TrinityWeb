@@ -67,8 +67,8 @@ class LanguageTranslate extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('model', 'ID'),
-            'language' => Yii::t('model', 'Language'),
+            'id'          => Yii::t('model', 'ID'),
+            'language'    => Yii::t('model', 'Language'),
             'translation' => Yii::t('model', 'Translation'),
         ];
     }
@@ -88,7 +88,7 @@ class LanguageTranslate extends \yii\db\ActiveRecord
         $languageTranslate = self::findOne(['id' => $id, 'language' => $languageId]);
         if (!$languageTranslate) {
             $languageTranslate = new self([
-                'id' => $id,
+                'id'       => $id,
                 'language' => $languageId,
             ]);
         }

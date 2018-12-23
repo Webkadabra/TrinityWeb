@@ -293,9 +293,8 @@ class Module extends \yii\base\Module
     {
         if ($this->checkAccess()) {
             return parent::beforeAction($action);
-        } else {
+        }  
             throw new ForbiddenHttpException('You are not allowed to access this page.');
-        }
     }
 
     /**

@@ -25,12 +25,12 @@ class MessageReceiver extends MessageReceiverActiveRecord
         $transaction = static::getDb()->beginTransaction();
         try {
             $clearCache = false;
-            if ($this->receiver_status == self::STATUS_NEW) {
+            if ($this->receiver_status === self::STATUS_NEW) {
                 $clearCache = true;
             }
             $deleteParent = null;
             $this->scenario = 'remove';
-            if ($this->message->sender_status != Message::STATUS_DELETED) {
+            if ($this->message->sender_status !== Message::STATUS_DELETED) {
                 $this->receiver_status = self::STATUS_DELETED;
                 if (!$this->save()) {
                     throw new Exception('Message status changing error!');
@@ -39,9 +39,10 @@ class MessageReceiver extends MessageReceiverActiveRecord
                     Podium::getInstance()->podiumCache->deleteElement('user.newmessages', $this->receiver_id);
                 }
                 $transaction->commit();
+
                 return true;
             }
-            if ($this->message->sender_status == Message::STATUS_DELETED && count($this->message->messageReceivers) == 1) {
+            if ($this->message->sender_status === Message::STATUS_DELETED && count($this->message->messageReceivers) === 1) {
                 $deleteParent = $this->message;
             }
             if (!$this->delete()) {
@@ -56,16 +57,19 @@ class MessageReceiver extends MessageReceiverActiveRecord
                 }
             }
             $transaction->commit();
+
             return true;
         } catch (Exception $e) {
             $transaction->rollBack();
             Log::error($e->getMessage(), $this->id, __METHOD__);
         }
+
         return false;
     }
 
     /**
      * Searches for messages.
+     * @param mixed $params
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -86,11 +90,11 @@ class MessageReceiver extends MessageReceiverActiveRecord
         $dataProvider->sort->attributes['senderName'] = [
             'asc' => [
                 User::tableName() . '.username' => SORT_ASC,
-                User::tableName() . '.id' => SORT_ASC
+                User::tableName() . '.id'       => SORT_ASC
             ],
             'desc' => [
                 User::tableName() . '.username' => SORT_DESC,
-                User::tableName() . '.id' => SORT_DESC
+                User::tableName() . '.id'       => SORT_DESC
             ],
             'default' => SORT_ASC
         ];
@@ -101,6 +105,7 @@ class MessageReceiver extends MessageReceiverActiveRecord
             $dataProvider->query->joinWith(['message' => function ($q) {
                 $q->joinWith(['sender']);
             }]);
+
             return $dataProvider;
         }
 
@@ -140,6 +145,7 @@ class MessageReceiver extends MessageReceiverActiveRecord
                 }]);
             }]);
         }
+
         return $dataProvider;
     }
 
@@ -149,7 +155,7 @@ class MessageReceiver extends MessageReceiverActiveRecord
      */
     public function markRead()
     {
-        if ($this->receiver_status == Message::STATUS_NEW) {
+        if ($this->receiver_status === Message::STATUS_NEW) {
             $this->receiver_status = Message::STATUS_READ;
             if ($this->save()) {
                 Podium::getInstance()->podiumCache->deleteElement('user.newmessages', $this->receiver_id);

@@ -2,9 +2,8 @@
 
 namespace core\models\auth;
 
-use Yii;
-
 use core\base\models\AuthCoreModel;
+use Yii;
 
 /**
  * This is the model class for table "{{%account}}".
@@ -72,36 +71,36 @@ class Accounts extends AuthCoreModel
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'username' => Yii::t('app', 'Имя учётной записи'),
-            'sha_pass_hash' => Yii::t('app', 'ХЭШ пароля'),
-            'sessionkey' => Yii::t('app', 'ключ сессии'),
-            'v' => 'V',
-            's' => 'S',
-            'token_key' => Yii::t('app', 'токен'),
-            'email' => Yii::t('app', 'email'),
-            'reg_mail' => 'registration email',
-            'joindate' => Yii::t('app', 'дата регистрации'),
-            'last_ip' => Yii::t('app', 'последний ip'),
+            'id'              => 'ID',
+            'username'        => Yii::t('app', 'Имя учётной записи'),
+            'sha_pass_hash'   => Yii::t('app', 'ХЭШ пароля'),
+            'sessionkey'      => Yii::t('app', 'ключ сессии'),
+            'v'               => 'V',
+            's'               => 'S',
+            'token_key'       => Yii::t('app', 'токен'),
+            'email'           => Yii::t('app', 'email'),
+            'reg_mail'        => 'registration email',
+            'joindate'        => Yii::t('app', 'дата регистрации'),
+            'last_ip'         => Yii::t('app', 'последний ip'),
             'last_attempt_ip' => Yii::t('app', 'последний входной ip'),
-            'failed_logins' => Yii::t('app', 'кол-во ошибок при авторизации'),
-            'locked' => Yii::t('app', 'заблокирован'),
-            'lock_country' => Yii::t('app', 'страна'),
-            'last_login' => Yii::t('app', 'дата последнего входа'),
-            'online' => Yii::t('app', 'Онлайн ?'),
-            'expansion' => Yii::t('app', 'Аддон'),
-            'mutetime' => Yii::t('app', 'Мут'),
-            'mutereason' => 'Mutereason',
-            'muteby' => Yii::t('app', 'Молчание от'),
-            'locale' => Yii::t('app', 'Язык'),
-            'os' => Yii::t('app', 'ОС'),
-            'recruiter' => Yii::t('app', 'От кого пришёл'),
+            'failed_logins'   => Yii::t('app', 'кол-во ошибок при авторизации'),
+            'locked'          => Yii::t('app', 'заблокирован'),
+            'lock_country'    => Yii::t('app', 'страна'),
+            'last_login'      => Yii::t('app', 'дата последнего входа'),
+            'online'          => Yii::t('app', 'Онлайн ?'),
+            'expansion'       => Yii::t('app', 'Аддон'),
+            'mutetime'        => Yii::t('app', 'Мут'),
+            'mutereason'      => 'Mutereason',
+            'muteby'          => Yii::t('app', 'Молчание от'),
+            'locale'          => Yii::t('app', 'Язык'),
+            'os'              => Yii::t('app', 'ОС'),
+            'recruiter'       => Yii::t('app', 'От кого пришёл'),
         ];
     }
 
     /**
-     * @return int|mixed|string
      * @throws \yii\base\InvalidConfigException
+     * @return int|mixed|string
      */
     public static function getTotalCount()
     {
@@ -120,14 +119,15 @@ class Accounts extends AuthCoreModel
             }
             Yii::$app->cache->set($cache_key,$cache_time_total);
         }
+
         return $totalCount;
     }
 
     /**
      * @param $beginOfDay
      * @param $endOfDay
-     * @return int|mixed|string
      * @throws \yii\base\InvalidConfigException
+     * @return int|mixed|string
      */
     public static function getCountByDates($beginOfDay, $endOfDay)
     {
@@ -150,7 +150,7 @@ class Accounts extends AuthCoreModel
             }
             Yii::$app->cache->set($cache_key,$cache_time_total);
         }
+
         return $totalCount;
     }
-
 }

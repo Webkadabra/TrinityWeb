@@ -28,6 +28,8 @@ class LoginForm extends Model
      */
     public $rememberMe = false;
 
+    private $_user = false;
+
     /**
      * @inheritdoc
      */
@@ -64,10 +66,9 @@ class LoginForm extends Model
         if ($this->validate()) {
             return Podium::getInstance()->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
+
         return false;
     }
-
-    private $_user = false;
 
     /**
      * Returns user.
@@ -78,6 +79,7 @@ class LoginForm extends Model
         if ($this->_user === false) {
             $this->_user = User::findByKeyfield($this->username);
         }
+
         return $this->_user;
     }
 }

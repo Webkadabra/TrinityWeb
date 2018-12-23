@@ -2,11 +2,10 @@
 
 namespace core\commands;
 
+use trntv\bus\interfaces\SelfHandlingCommand;
 use Yii;
 use yii\base\BaseObject;
 use yii\swiftmailer\Message;
-
-use trntv\bus\interfaces\SelfHandlingCommand;
 
 class SendEmailCommand extends BaseObject implements SelfHandlingCommand
 {
@@ -66,6 +65,7 @@ class SendEmailCommand extends BaseObject implements SelfHandlingCommand
         $message->setFrom($command->from);
         $message->setTo($command->to ?: Yii::$app->settings->get(\Yii::$app->settings::APP_MAILER_ADMIN));
         $message->setSubject($command->subject);
+
         return $message->send();
     }
 

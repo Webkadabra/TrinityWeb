@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\controllers\actions;
 
-use Yii;
 use core\modules\i18n\models\LanguageSource;
 use core\modules\i18n\models\LanguageTranslate;
+use Yii;
 
 /**
  * Class for returning messages in the given language
@@ -23,7 +23,7 @@ class MessageAction extends \yii\base\Action
     public function run()
     {
         $languageTranslate = LanguageTranslate::findOne([
-            'id' => Yii::$app->request->get('id', 0),
+            'id'       => Yii::$app->request->get('id', 0),
             'language' => Yii::$app->request->get('language_id', ''),
         ]);
 

@@ -2,17 +2,16 @@
 
 namespace backend\modules\rbac\models\searchs;
 
+use backend\modules\rbac\models\Menu as MenuModel;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\modules\rbac\models\Menu as MenuModel;
 
 /**
  * Menu represents the model behind the search form about [[\backend\modules\rbac\models\Menu]].
  */
 class Menu extends MenuModel
 {
-
     /**
      * @inheritdoc
      */
@@ -52,13 +51,13 @@ class Menu extends MenuModel
 
         $sort = $dataProvider->getSort();
         $sort->attributes['menuParent.name'] = [
-            'asc' => ['parent.name' => SORT_ASC],
-            'desc' => ['parent.name' => SORT_DESC],
+            'asc'   => ['parent.name' => SORT_ASC],
+            'desc'  => ['parent.name' => SORT_DESC],
             'label' => 'parent',
         ];
         $sort->attributes['order'] = [
-            'asc' => ['parent.order' => SORT_ASC, 't.order' => SORT_ASC],
-            'desc' => ['parent.order' => SORT_DESC, 't.order' => SORT_DESC],
+            'asc'   => ['parent.order' => SORT_ASC, 't.order' => SORT_ASC],
+            'desc'  => ['parent.order' => SORT_DESC, 't.order' => SORT_DESC],
             'label' => 'order',
         ];
         $sort->defaultOrder = ['menuParent.name' => SORT_ASC];
@@ -68,7 +67,7 @@ class Menu extends MenuModel
         }
 
         $query->andFilterWhere([
-            't.id' => $this->id,
+            't.id'     => $this->id,
             't.parent' => $this->parent,
         ]);
 

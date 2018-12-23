@@ -96,12 +96,12 @@ class Armory extends Component
      * Inventory index for trinket_1
      * @return integer
      */
-    const INV_TRINKET_1 = 12;
+    public const INV_TRINKET_1 = 12;
     /**
      * Inventory index for trinket_2
      * @return integer
      */
-    const INV_TRINKET_2 = 13;
+    public const INV_TRINKET_2 = 13;
     /**
      * Inventory index for clock
      * @return integer
@@ -182,15 +182,15 @@ class Armory extends Component
      * @return array
      */
     const CLASSES = [
-        1 => 'Warrior',
-        2 => 'Paladin',
-        3 => 'Hunter',
-        4 => 'Rogue',
-        5 => 'Priest',
-        6 => 'Death knight',
-        7 => 'Shaman',
-        8 => 'Mage',
-        9 => 'Warlock',
+        1  => 'Warrior',
+        2  => 'Paladin',
+        3  => 'Hunter',
+        4  => 'Rogue',
+        5  => 'Priest',
+        6  => 'Death knight',
+        7  => 'Shaman',
+        8  => 'Mage',
+        9  => 'Warlock',
         11 => 'Druid'
     ];
     /**
@@ -198,14 +198,14 @@ class Armory extends Component
      * @return array
      */
     const RACES = [
-        1 => 'Human',
-        2 => 'Orc',
-        3 => 'Dwarf',
-        4 => 'Night elf',
-        5 => 'Undead',
-        6 => 'Tauren',
-        7 => 'Gnome',
-        8 => 'Troll',
+        1  => 'Human',
+        2  => 'Orc',
+        3  => 'Dwarf',
+        4  => 'Night elf',
+        5  => 'Undead',
+        6  => 'Tauren',
+        7  => 'Gnome',
+        8  => 'Troll',
         10 => 'Blood elf',
         11 => 'Draenei'
     ];
@@ -241,11 +241,11 @@ class Armory extends Component
     public static function buildTagRaceImage($race, $gender)
     {
         return Html::img(self::buildPathToRaceImage($race,$gender),[
-            'class' => 'armory-icon armory-race-icon tltp',
-            'data-toggle' => 'tooltip',
+            'class'          => 'armory-icon armory-race-icon tltp',
+            'data-toggle'    => 'tooltip',
             'data-placement' => 'bottom',
-            'title' => self::getRaceName($race),
-            'alt' => self::getRaceName($race)
+            'title'          => self::getRaceName($race),
+            'alt'            => self::getRaceName($race)
         ]);
     }
 
@@ -258,7 +258,7 @@ class Armory extends Component
     public static function buildPathToRaceImage($race, $gender)
     {
         //TODO - get bundle and make path to image
-        return "/static/img/race/$race-$gender.png";
+        return "/resources/images/race/$race-$gender.png";
     }
 
     /**
@@ -269,11 +269,11 @@ class Armory extends Component
     public static function buildTagClassImage($class)
     {
         return Html::img(self::buildPathToClassImage($class),[
-            'class' => 'armory-icon armory-class-icon tltp',
-            'data-toggle' => 'tooltip',
+            'class'          => 'armory-icon armory-class-icon tltp',
+            'data-toggle'    => 'tooltip',
             'data-placement' => 'bottom',
-            'title' => self::getClassName($class),
-            'alt' => self::getClassName($class)
+            'title'          => self::getClassName($class),
+            'alt'            => self::getClassName($class)
         ]);
     }
 
@@ -285,7 +285,7 @@ class Armory extends Component
     public static function buildPathToClassImage($class)
     {
         //TODO - get bundle and make path to image
-        return "/static/img/class/$class.png";
+        return "/resources/images/class/$class.png";
     }
 
     /**
@@ -315,7 +315,7 @@ class Armory extends Component
      */
     public static function isHordeRace($raceIndex)
     {
-        return in_array($raceIndex,self::HORDE_RACES) ? true : false;
+        return in_array($raceIndex,self::HORDE_RACES, true) ? true : false;
     }
 
     /**
@@ -325,7 +325,6 @@ class Armory extends Component
      */
     public static function isAllianceRace($raceIndex)
     {
-        return in_array($raceIndex,self::ALLIANCE_RACES) ? true : false;
+        return in_array($raceIndex,self::ALLIANCE_RACES, true) ? true : false;
     }
-
 }

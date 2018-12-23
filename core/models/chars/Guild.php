@@ -49,18 +49,18 @@ class Guild extends CharacterCoreModel
     public function attributeLabels()
     {
         return [
-            'guildid' => 'Guildid',
-            'name' => 'Name',
-            'leaderguid' => 'Leaderguid',
-            'EmblemStyle' => 'Emblem Style',
-            'EmblemColor' => 'Emblem Color',
-            'BorderStyle' => 'Border Style',
-            'BorderColor' => 'Border Color',
+            'guildid'         => 'Guildid',
+            'name'            => 'Name',
+            'leaderguid'      => 'Leaderguid',
+            'EmblemStyle'     => 'Emblem Style',
+            'EmblemColor'     => 'Emblem Color',
+            'BorderStyle'     => 'Border Style',
+            'BorderColor'     => 'Border Color',
             'BackgroundColor' => 'Background Color',
-            'info' => 'Info',
-            'motd' => 'Motd',
-            'createdate' => 'Createdate',
-            'BankMoney' => 'Bank Money',
+            'info'            => 'Info',
+            'motd'            => 'Motd',
+            'createdate'      => 'Createdate',
+            'BankMoney'       => 'Bank Money',
         ];
     }
 }

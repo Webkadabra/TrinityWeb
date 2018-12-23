@@ -28,8 +28,8 @@ class MessageActiveRecord extends ActiveRecord
     /**
      * Statuses.
      */
-    const STATUS_NEW     = 1;
-    const STATUS_READ    = 10;
+    const STATUS_NEW = 1;
+    const STATUS_READ = 10;
     const STATUS_DELETED = 20;
 
     /**
@@ -37,7 +37,7 @@ class MessageActiveRecord extends ActiveRecord
      */
     const MAX_RECEIVERS = 10;
     const SPAM_MESSAGES = 10;
-    const SPAM_WAIT     = 1;
+    const SPAM_WAIT = 1;
 
     /**
      * @var int[] Receivers' IDs.
@@ -94,9 +94,10 @@ class MessageActiveRecord extends ActiveRecord
                 return HtmlPurifier::process(trim($value));
             }],
             ['content', 'filter', 'filter' => function($value) {
-                if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') == '0') {
+                if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
                     return HtmlPurifier::process(trim($value), Helper::podiumPurifierConfig('markdown'));
                 }
+
                 return HtmlPurifier::process(trim($value), Helper::podiumPurifierConfig());
             }],
         ];

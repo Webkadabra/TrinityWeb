@@ -2,10 +2,9 @@
 
 namespace core\models;
 
+use core\models\query\TimelineEventQuery;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
-use core\models\query\TimelineEventQuery;
 
 /**
  * This is the model class for table "{{%timeline_event}}".
@@ -42,7 +41,7 @@ class TimelineEvent extends ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::class,
+                'class'              => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => null
             ]

@@ -29,10 +29,12 @@ class Email extends EmailActiveRecord
             $email->content = $content;
             $email->status = self::STATUS_PENDING;
             $email->attempt = 0;
+
             return $email->save();
         } catch (Exception $e) {
             Log::error($e->getMessage(), null, __METHOD__);
         }
+
         return false;
     }
 }

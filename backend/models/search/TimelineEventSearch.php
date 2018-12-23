@@ -2,11 +2,9 @@
 
 namespace backend\models\search;
 
-
+use core\models\TimelineEvent;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use core\models\TimelineEvent;
 
 /**
  * TimelineEventSearch represents the model behind the search form about `core\models\TimelineEvent`.
@@ -52,7 +50,7 @@ class TimelineEventSearch extends TimelineEvent
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'         => $this->id,
             'created_at' => $this->created_at,
         ]);
 

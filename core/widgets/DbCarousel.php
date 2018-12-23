@@ -8,9 +8,9 @@ use core\models\WidgetCarouselItem;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\bootstrap\Carousel;
+use yii\di\Instance;
 use yii\helpers\Html;
 use yii\web\AssetManager;
-use yii\di\Instance;
 
 /**
  * Class DbCarousel
@@ -56,8 +56,8 @@ class DbCarousel extends Carousel
                 ->joinWith('carousel')
                 ->where([
                     '{{%widget_carousel_item}}.status' => 1,
-                    '{{%widget_carousel}}.status' => WidgetCarousel::STATUS_ACTIVE,
-                    '{{%widget_carousel}}.key' => $this->key,
+                    '{{%widget_carousel}}.status'      => WidgetCarousel::STATUS_ACTIVE,
+                    '{{%widget_carousel}}.key'         => $this->key,
                 ])
                 ->orderBy(['order' => SORT_ASC]);
             foreach ($query->all() as $k => $item) {
@@ -100,13 +100,14 @@ class DbCarousel extends Carousel
                 $this->renderProcessBar()
             ]);
         }
+
         return Html::tag('div', $content, $this->options);
     }
 
     /**
      * Renders carousel items as specified on [[items]].
-     * @return string the rendering result
      * @throws InvalidConfigException
+     * @return string the rendering result
      */
     public function renderItems()
     {
@@ -126,18 +127,17 @@ class DbCarousel extends Carousel
     {
         if (isset($this->controls[0], $this->controls[1])) {
             return Html::a($this->controls[0], '#' . $this->options['id'], [
-                    'class' => 'carousel-control-prev',
+                    'class'      => 'carousel-control-prev',
                     'data-slide' => 'prev',
                 ]) . "\n"
                 . Html::a($this->controls[1], '#' . $this->options['id'], [
-                    'class' => 'carousel-control-next',
+                    'class'      => 'carousel-control-next',
                     'data-slide' => 'next',
                 ]);
         } elseif ($this->controls === false) {
             return '';
-        } else {
+        }  
             throw new InvalidConfigException('The "controls" property must be either false or an array of two elements.');
-        }
     }
 
     /**

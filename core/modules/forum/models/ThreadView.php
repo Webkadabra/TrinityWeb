@@ -25,16 +25,16 @@ class ThreadView extends ThreadViewActiveRecord
             $q->andWhere(['or',
                     new Expression('new_last_seen < new_post_at'),
                     new Expression('edited_last_seen < edited_post_at'),
-                    ['new_last_seen' => null],
+                    ['new_last_seen'    => null],
                     ['edited_last_seen' => null],
                 ]);
         }], false);
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query'      => $query,
             'pagination' => [
                 'defaultPageSize' => 10,
-                'forcePageParam' => false
+                'forcePageParam'  => false
             ],
         ]);
 

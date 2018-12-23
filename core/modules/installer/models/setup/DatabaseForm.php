@@ -18,6 +18,7 @@ use yii\base\Model;
  */
 class DatabaseForm extends Model
 {
+    const SCENARIO_ARMORY = 'armory';
     public $_name;
 
     public $name;
@@ -27,19 +28,10 @@ class DatabaseForm extends Model
     public $login;
     public $password;
     public $table_prefix;
-
-    const SCENARIO_ARMORY = 'armory';
     
-    public function __construct($config = array()) {
+    public function __construct($config = []) {
         $this->setDefault();
         parent::__construct($config);
-    }
-    
-    protected function setDefault() {
-        $this->host = 'localhost';
-        $this->port = '3306';
-        $this->database = 'trinityweb';
-        $this->login = 'root';
     }
 
     /**
@@ -70,12 +62,19 @@ class DatabaseForm extends Model
     public function attributeLabels()
     {
         return [
-            'host' => Yii::t('installer','Host'),
-            'port' => Yii::t('installer','Port'),
-            'database' => Yii::t('installer','Name of database'),
-            'login' => Yii::t('installer','Username'),
-            'password' => Yii::t('installer','Password'),
+            'host'         => Yii::t('installer','Host'),
+            'port'         => Yii::t('installer','Port'),
+            'database'     => Yii::t('installer','Name of database'),
+            'login'        => Yii::t('installer','Username'),
+            'password'     => Yii::t('installer','Password'),
             'table_perfix' => Yii::t('installer','Table prefix')
         ];
+    }
+    
+    protected function setDefault() {
+        $this->host = 'localhost';
+        $this->port = '3306';
+        $this->database = 'trinityweb';
+        $this->login = 'root';
     }
 }

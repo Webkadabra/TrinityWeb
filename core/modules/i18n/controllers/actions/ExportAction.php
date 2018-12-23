@@ -2,12 +2,12 @@
 
 namespace core\modules\i18n\controllers\actions;
 
+use core\modules\i18n\models\ExportForm;
+use core\modules\i18n\Module;
 use Yii;
 use yii\web\JsonResponseFormatter;
 use yii\web\Response;
 use yii\web\XmlResponseFormatter;
-use core\modules\i18n\Module;
-use core\modules\i18n\models\ExportForm;
 
 /**
  * Class for exporting translations.
@@ -35,7 +35,7 @@ class ExportAction extends \yii\base\Action
 
             Yii::$app->response->formatters = [
                 Response::FORMAT_XML => [
-                    'class' => XmlResponseFormatter::className(),
+                    'class'   => XmlResponseFormatter::className(),
                     'rootTag' => 'translations',
                 ],
                 Response::FORMAT_JSON => [
@@ -46,7 +46,7 @@ class ExportAction extends \yii\base\Action
             Yii::$app->response->setDownloadHeaders($fileName);
 
             return $model->getExportData();
-        } else {
+        }  
             if (empty($model->languages)) {
                 $model->exportLanguages = $model->getDefaultExportLanguages($module->defaultExportStatus);
             }
@@ -54,6 +54,5 @@ class ExportAction extends \yii\base\Action
             return $this->controller->render('export', [
                 'model' => $model,
             ]);
-        }
     }
 }

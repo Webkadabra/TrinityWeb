@@ -2,8 +2,8 @@
 
 namespace core\modules\i18n\services\scanners;
 
-use yii\helpers\Console;
 use core\modules\i18n\services\Scanner;
+use yii\helpers\Console;
 
 /**
  * Class for processing PHP files.
@@ -62,13 +62,38 @@ class ScannerPhpArray extends ScannerFile
             foreach ($this->_getTranslators($file) as $translator) {
                 $this->extractMessages($file, [
                     'translator' => [$translator],
-                    'begin' => (preg_match('#array\s*$#i', $translator) != false) ? '(' : '[',
-                    'end' => ';',
+                    'begin'      => (preg_match('#array\s*$#i', $translator) !== false) ? '(' : '[',
+                    'end'        => ';',
                 ]);
             }
         }
 
         $this->scanner->stdout('Detect PhpArray - END', Console::FG_BLUE);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function getLanguageItem($buffer)
+    {
+        $index = -1;
+        $languageItems = [];
+        foreach ($buffer as $key => $data) {
+            if (isset($data[0], $data[1]) && $data[0] === T_CONSTANT_ENCAPSED_STRING) {
+                $message = stripcslashes($data[1]);
+                $message = mb_substr($message, 1, mb_strlen($message) - 2);
+                if (isset($buffer[$key - 1][0]) && $buffer[$key - 1][0] === '.') {
+                    $languageItems[$index]['message'] .= $message;
+                } else {
+                    $languageItems[++$index] = [
+                        'category' => Scanner::CATEGORY_ARRAY,
+                        'message'  => $message,
+                    ];
+                }
+            }
+        }
+
+        return $languageItems ?: null;
     }
 
     /**
@@ -90,30 +115,5 @@ class ScannerPhpArray extends ScannerFile
         }
 
         return array_keys($translators);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getLanguageItem($buffer)
-    {
-        $index = -1;
-        $languageItems = [];
-        foreach ($buffer as $key => $data) {
-            if (isset($data[0], $data[1]) && $data[0] === T_CONSTANT_ENCAPSED_STRING) {
-                $message = stripcslashes($data[1]);
-                $message = mb_substr($message, 1, mb_strlen($message) - 2);
-                if (isset($buffer[$key - 1][0]) && $buffer[$key - 1][0] === '.') {
-                    $languageItems[$index]['message'] .= $message;
-                } else {
-                    $languageItems[++$index] = [
-                        'category' => Scanner::CATEGORY_ARRAY,
-                        'message' => $message,
-                    ];
-                }
-            }
-        }
-
-        return $languageItems ?: null;
     }
 }

@@ -25,3 +25,6 @@
 #ladder-team-container .armory-image {
     width: 27px;
 }
+.armory-icon.armory-race-icon, .armory-icon.armory-class-icon {
+    width: 25px;
+}

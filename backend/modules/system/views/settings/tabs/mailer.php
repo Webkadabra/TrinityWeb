@@ -10,9 +10,9 @@
         <?php echo $form->field($model, 'mailer_admin', [
             'template' => '<i class="fas fa-user-shield input-icon"></i>{input}{hint}{error}'
         ])->textInput([
-            'class' => 'form-control parent-input-icon',
+            'class'       => 'form-control parent-input-icon',
             'placeholder' => $model->getAttributeLabel('mailer_admin')
-        ]) ?>
+        ]); ?>
     </div>
 </div>
 <div class="row justify-content-center">
@@ -20,8 +20,8 @@
         <?php echo $form->field($model, 'mailer_robot', [
             'template' => '<i class="fas fa-robot input-icon"></i>{input}{hint}{error}'
         ])->textInput([
-            'class' => 'form-control parent-input-icon',
+            'class'       => 'form-control parent-input-icon',
             'placeholder' => $model->getAttributeLabel('mailer_robot')
-        ]) ?>
+        ]); ?>
     </div>
 </div>

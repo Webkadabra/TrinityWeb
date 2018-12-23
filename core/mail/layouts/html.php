@@ -6,13 +6,13 @@ use yii\helpers\Html;
 /* @var $message \yii\mail\MessageInterface the message bing composed */
 /* @var $content string main view render result */
 ?>
-<?php $this->beginPage() ?>
+<?php $this->beginPage(); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::$app->charset ?>"/>
-    <title><?php echo Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::$app->charset; ?>"/>
+    <title><?php echo Html::encode($this->title); ?></title>
+    <?php $this->head(); ?>
     <style>
         h1,h2,h3,h4,h5,h6 {margin: 0px; padding: 0px;}
         
@@ -75,19 +75,19 @@ use yii\helpers\Html;
     </style>
 </head>
 <body>
-<?php $this->beginBody() ?>
+<?php $this->beginBody(); ?>
     <div id="letter">
         <div id="letter-header">
             <span class="font-size-20 trinityweb-orange">TrinityWeb</span>
         </div>
-        <?php echo $content ?>
+        <?php echo $content; ?>
         <div id="letter-footer">
             <h6 class="trinityweb-aqua font-weight-normal">
-                <?=Yii::t('mail','С уважением администрация проекта')?>
+                <?php echo Yii::t('mail','С уважением администрация проекта');?>
             </h6>
         </div>
     </div>
-<?php $this->endBody() ?>
+<?php $this->endBody(); ?>
 </body>
 </html>
-<?php $this->endPage() ?>
+<?php $this->endPage(); ?>

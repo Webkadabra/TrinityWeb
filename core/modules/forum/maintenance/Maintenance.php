@@ -31,12 +31,13 @@ class Maintenance extends SchemaOperation
         if ($percent > 100) {
             $percent = 100;
         }
-        if ($percent == 100 && $currentStep != $maxStep) {
+        if ($percent === 100 && $currentStep !== $maxStep) {
             $percent = 99;
         }
-        if ($percent == 100) {
+        if ($percent === 100) {
             $this->clearCache();
         }
+
         return $percent;
     }
 
@@ -54,6 +55,7 @@ class Maintenance extends SchemaOperation
             // No log because table might not be available.
             return false;
         }
+
         return true;
     }
 

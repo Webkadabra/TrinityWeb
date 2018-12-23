@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\controllers\actions;
 
+use core\modules\i18n\models\LanguageSource;
 use Yii;
 use yii\web\Response;
-use core\modules\i18n\models\LanguageSource;
 
 /**
  * Deletes an existing LanguageSource model.

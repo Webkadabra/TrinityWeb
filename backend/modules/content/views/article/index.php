@@ -25,24 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo Html::a(
         Yii::t('backend', 'Create {modelClass}', ['modelClass' => 'Article']),
         ['create'],
-        ['class' => 'btn btn-success']) ?>
+        ['class' => 'btn btn-success']); ?>
 </p>
 
 <?php echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'options' => [
+    'filterModel'  => $searchModel,
+    'options'      => [
         'class' => 'grid-view table-responsive',
     ],
     'tableOptions' => ['class' => 'table table-dark table-hover'],
-    'columns' => [
+    'columns'      => [
         [
             'attribute' => 'id',
-            'options' => ['style' => 'width: 5%'],
+            'options'   => ['style' => 'width: 5%'],
         ],
         [
             'attribute' => 'slug',
-            'options' => ['style' => 'width: 15%'],
+            'options'   => ['style' => 'width: 15%'],
         ],
         [
             'label' => 'title',
@@ -53,57 +53,57 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'category_id',
-            'options' => ['style' => 'width: 10%'],
-            'value' => function ($model) {
+            'options'   => ['style' => 'width: 10%'],
+            'value'     => function ($model) {
                 return $model->category ? $model->category->title : null;
             },
             'filter' => ArrayHelper::map(ArticleCategory::find()->all(), 'id', 'title'),
         ],
         [
             'attribute' => 'created_by',
-            'options' => ['style' => 'width: 10%'],
-            'value' => function ($model) {
+            'options'   => ['style' => 'width: 10%'],
+            'value'     => function ($model) {
                 return $model->author->username;
             },
         ],
         [
-            'class' => EnumColumn::class,
+            'class'     => EnumColumn::class,
             'attribute' => 'status',
-            'options' => ['style' => 'width: 10%'],
-            'enum' => Article::statuses(),
-            'filter' => Article::statuses(),
+            'options'   => ['style' => 'width: 10%'],
+            'enum'      => Article::statuses(),
+            'filter'    => Article::statuses(),
         ],
         [
             'attribute' => 'published_at',
-            'options' => ['style' => 'width: 10%'],
-            'format' => 'datetime',
-            'filter' => DateTimeWidget::widget([
-                'model' => $searchModel,
-                'attribute' => 'published_at',
-                'phpDatetimeFormat' => 'dd.MM.yyyy',
+            'options'   => ['style' => 'width: 10%'],
+            'format'    => 'datetime',
+            'filter'    => DateTimeWidget::widget([
+                'model'                => $searchModel,
+                'attribute'            => 'published_at',
+                'phpDatetimeFormat'    => 'dd.MM.yyyy',
                 'momentDatetimeFormat' => 'DD.MM.YYYY',
-                'clientEvents' => [
+                'clientEvents'         => [
                     'dp.change' => new JsExpression('(e) => $(e.target).find("input").trigger("change.yiiGridView")'),
                 ],
             ]),
         ],
         [
             'attribute' => 'created_at',
-            'options' => ['style' => 'width: 10%'],
-            'format' => 'datetime',
-            'filter' => DateTimeWidget::widget([
-                'model' => $searchModel,
-                'attribute' => 'created_at',
-                'phpDatetimeFormat' => 'dd.MM.yyyy',
+            'options'   => ['style' => 'width: 10%'],
+            'format'    => 'datetime',
+            'filter'    => DateTimeWidget::widget([
+                'model'                => $searchModel,
+                'attribute'            => 'created_at',
+                'phpDatetimeFormat'    => 'dd.MM.yyyy',
                 'momentDatetimeFormat' => 'DD.MM.YYYY',
-                'clientEvents' => [
+                'clientEvents'         => [
                     'dp.change' => new JsExpression('(e) => $(e.target).find("input").trigger("change.yiiGridView")'),
                 ],
             ]),
         ],
         [
-            'class' => 'yii\grid\ActionColumn',
-            'options' => ['style' => 'width: 5%'],
+            'class'    => 'yii\grid\ActionColumn',
+            'options'  => ['style' => 'width: 5%'],
             'template' => '{update} {delete}',
         ],
     ],

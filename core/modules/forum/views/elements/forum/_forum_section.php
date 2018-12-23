@@ -13,20 +13,20 @@ use yii\helpers\Url;
 <div class="card">
     <div class="card-header" role="tab">
         <h4 class="card-title mb-0">
-            <a href="<?= Url::to(['forum/forum', 'cid' => $model->category_id, 'id' => $model->id, 'slug' => $model->slug]) ?>"><?= Html::encode($model->name) ?></a>
+            <a href="<?php echo Url::to(['forum/forum', 'cid' => $model->category_id, 'id' => $model->id, 'slug' => $model->slug]); ?>"><?php echo Html::encode($model->name); ?></a>
         </h4>
 <?php if (!empty($model->sub)): ?>
-        <small class="text-muted"><?= Html::encode($model->sub) ?></small>
+        <small class="text-muted"><?php echo Html::encode($model->sub); ?></small>
 <?php endif; ?>
     </div>
     <div class="card-body px-0 pt-0 pb-0 table-responsive">
-        <?= $this->render('/elements/forum/_threads', ['forum' => $model->id, 'category' => $model->category_id, 'slug' => $model->slug, 'filters' => $filters]) ?>
+        <?php echo $this->render('/elements/forum/_threads', ['forum' => $model->id, 'category' => $model->category_id, 'slug' => $model->slug, 'filters' => $filters]); ?>
     </div>
 </div>
 
 <div class="card mt-4">
     <div class="card-body small">
-        <?= $this->render('/elements/forum/_icons') ?>
-        <?= Readers::widget(['what' => 'forum']) ?>
+        <?php echo $this->render('/elements/forum/_icons'); ?>
+        <?php echo Readers::widget(['what' => 'forum']); ?>
     </div>
 </div>

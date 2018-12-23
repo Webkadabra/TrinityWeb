@@ -41,8 +41,8 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
      * Statuses.
      */
     const STATUS_REGISTERED = 1;
-    const STATUS_BANNED     = 9;
-    const STATUS_ACTIVE     = 10;
+    const STATUS_BANNED = 9;
+    const STATUS_ACTIVE = 10;
 
     /**
      * @inheritdoc
@@ -52,9 +52,9 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
         return array_merge(parent::behaviors(),[
             TimestampBehavior::class,
             [
-                'class' => Podium::getInstance()->slugGenerator,
+                'class'     => Podium::getInstance()->slugGenerator,
                 'attribute' => 'username',
-                'type' => PodiumSluggableBehavior::USER
+                'type'      => PodiumSluggableBehavior::USER
             ],
         ]);
     }
@@ -94,6 +94,7 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
         if (!static::isEmailTokenValid($token)) {
             return null;
         }
+
         return static::find()->where(['email_token' => $token, 'status' => self::STATUS_ACTIVE])->limit(1)->one();
     }
 
@@ -108,6 +109,7 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
         if ($status === null) {
             return static::find()->where(['or', ['email' => $keyfield], ['username' => $keyfield]])->limit(1)->one();
         }
+
         return static::find()->where(['and', ['status' => $status], ['or', ['email' => $keyfield], ['username' => $keyfield]]])->limit(1)->one();
     }
 
@@ -122,9 +124,10 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
-        if ($status == null) {
+        if ($status === null) {
             return static::find()->where(['password_reset_token' => $token])->limit(1)->one();
         }
+
         return static::find()->where(['password_reset_token' => $token, 'status' => $status])->limit(1)->one();
     }
 
@@ -147,6 +150,7 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
             return static::find()->where(['id' => $id, 'status' => self::STATUS_ACTIVE])->limit(1)->one();
         } catch (Exception $exc) {
             Log::warning('Podium is not installed correctly!', null, __METHOD__);
+
             return null;
         }
     }
@@ -207,6 +211,7 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
         if ($expire === null) {
             $expire = 24 * 60 * 60;
         }
+
         return static::isTokenValid($token, $expire);
     }
 
@@ -221,6 +226,7 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
         if ($expire === null) {
             $expire = 24 * 60 * 60;
         }
+
         return static::isTokenValid($token, $expire);
     }
 
@@ -237,6 +243,7 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
         }
         $parts = explode('_', $token);
         $timestamp = (int)end($parts);
+
         return $timestamp + (int)$expire >= time();
     }
 
@@ -302,8 +309,10 @@ abstract class UserActiveRecord extends \core\models\User implements IdentityInt
             if (!empty($podium->user->identity->$password_hash)) {
                 return Yii::$app->security->validatePassword($password, $podium->user->identity->$password_hash);
             }
+
             return false;
         }
+
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 

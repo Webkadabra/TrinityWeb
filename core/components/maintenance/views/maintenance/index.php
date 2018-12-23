@@ -9,6 +9,6 @@
         <?php echo Yii::t('common', $maintenanceText, [
             'retryAfter' => $retryAfter,
             'adminEmail' => Yii::$app->settings->get(Yii::$app->settings::APP_MAILER_ADMIN)
-        ]) ?>
+        ]); ?>
     </p>
 </div>

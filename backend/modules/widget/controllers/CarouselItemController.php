@@ -2,6 +2,8 @@
 
 namespace backend\modules\widget\controllers;
 
+use core\models\WidgetCarousel;
+use core\models\WidgetCarouselItem;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -9,12 +11,8 @@ use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
-use core\models\WidgetCarousel;
-use core\models\WidgetCarouselItem;
-
 class CarouselItemController extends Controller
 {
-
     /** @inheritdoc */
     public function getViewPath()
     {
@@ -26,7 +24,7 @@ class CarouselItemController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -35,7 +33,7 @@ class CarouselItemController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_REMOVE_CAROUSEL_ITEM,
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_UPDATE_CAROUSEL_ITEM,
@@ -50,8 +48,8 @@ class CarouselItemController extends Controller
     /**
      * @param $carousel_id
      *
-     * @return mixed
      * @throws HttpException
+     * @return mixed
      */
     public function actionCreate($carousel_id)
     {
@@ -71,7 +69,7 @@ class CarouselItemController extends Controller
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model'    => $model,
             'carousel' => $carousel,
         ]);
     }
@@ -79,8 +77,8 @@ class CarouselItemController extends Controller
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
+     * @return mixed
      */
     public function actionUpdate($id)
     {
@@ -100,11 +98,11 @@ class CarouselItemController extends Controller
     /**
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \Exception
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
+     * @return mixed
      */
     public function actionDelete($id)
     {
@@ -116,15 +114,14 @@ class CarouselItemController extends Controller
     /**
      * @param integer $id
      *
-     * @return WidgetCarouselItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return WidgetCarouselItem the loaded model
      */
     protected function findItem($id)
     {
         if (($model = WidgetCarouselItem::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

@@ -10,7 +10,6 @@ use yii\widgets\ActiveForm;
 
 trait FormAjaxValidationTrait
 {
-
     /**
      * @param array|Model $model
      *
@@ -26,5 +25,4 @@ trait FormAjaxValidationTrait
             }
         }
     }
-
 }

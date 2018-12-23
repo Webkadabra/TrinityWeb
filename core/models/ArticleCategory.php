@@ -2,12 +2,11 @@
 
 namespace core\models;
 
+use core\models\query\ArticleCategoryQuery;
 use Yii;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
-use core\models\query\ArticleCategoryQuery;
 
 /**
  * This is the model class for table "{{%article_category}}".
@@ -25,7 +24,7 @@ use core\models\query\ArticleCategoryQuery;
 class ArticleCategory extends ActiveRecord
 {
     const STATUS_ACTIVE = 1;
-    const STATUS_DRAFT  = 0;
+    const STATUS_DRAFT = 0;
 
     /**
      * @inheritdoc
@@ -49,7 +48,7 @@ class ArticleCategory extends ActiveRecord
     public static function statuses()
     {
         return [
-            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
+            self::STATUS_DRAFT  => Yii::t('common', 'Draft'),
             self::STATUS_ACTIVE => Yii::t('common', 'Active'),
         ];
     }
@@ -60,13 +59,12 @@ class ArticleCategory extends ActiveRecord
         return [
             TimestampBehavior::class,
             [
-                'class' => SluggableBehavior::class,
+                'class'     => SluggableBehavior::class,
                 'attribute' => 'title',
                 'immutable' => true,
             ],
         ];
     }
-
 
     /**
      * @inheritdoc
@@ -89,11 +87,11 @@ class ArticleCategory extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'slug' => Yii::t('common', 'Slug'),
-            'title' => Yii::t('common', 'Title'),
+            'id'        => Yii::t('common', 'ID'),
+            'slug'      => Yii::t('common', 'Slug'),
+            'title'     => Yii::t('common', 'Title'),
             'parent_id' => Yii::t('common', 'Parent Category'),
-            'status' => Yii::t('common', 'Active'),
+            'status'    => Yii::t('common', 'Active'),
         ];
     }
 

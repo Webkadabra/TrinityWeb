@@ -54,8 +54,8 @@ class BaseController extends YiiController
      * Redirects all users except administrators (if this mode is on).
      * Adds warning about missing email.
      * @param Action $action the action to be executed.
-     * @return bool|Response
      * @throws \yii\web\BadRequestHttpException
+     * @return bool|Response
      */
     public function beforeAction($action)
     {
@@ -75,6 +75,7 @@ class BaseController extends YiiController
         if ($upgrade !== false) {
             return $upgrade;
         }
+
         return true;
     }
 
@@ -88,7 +89,7 @@ class BaseController extends YiiController
         return [
             'maintenance' => Yii::t('podium/flash', 'Podium is currently in the Maintenance mode. All users without Administrator privileges are redirected to {maintenancePage}. You can switch the mode off at {settingsPage}.', [
                 'maintenancePage' => Html::a(Yii::t('podium/flash', 'Maintenance page'), ['forum/maintenance']),
-                'settingsPage' => Html::a(Yii::t('podium/flash', 'Settings page'), ['admin/settings']),
+                'settingsPage'    => Html::a(Yii::t('podium/flash', 'Settings page'), ['admin/settings']),
             ]),
             'email' => Yii::t('podium/flash', 'No e-mail address has been set for your account! Go to {link} to add one.', [
                 'link' => Html::a(Yii::t('podium/view', 'Profile') . ' > ' . Yii::t('podium/view', 'Account Details'), ['profile/details'])
@@ -109,7 +110,7 @@ class BaseController extends YiiController
      */
     public function maintenanceCheck($action, $warnings)
     {
-        if ($this->module->podiumConfig->get('maintenance_mode') != '1') {
+        if ($this->module->podiumConfig->get('maintenance_mode') !== '1') {
             return false;
         }
         if ($action->id === 'maintenance') {
@@ -121,6 +122,7 @@ class BaseController extends YiiController
                     if (!User::can(User::ROLE_ADMINISTRATOR)) {
                         return $this->redirect(['forum/maintenance']);
                     }
+
                     return false;
                 }
             }
@@ -129,6 +131,7 @@ class BaseController extends YiiController
         if (!User::can(User::ROLE_ADMINISTRATOR)) {
             return $this->redirect(['forum/maintenance']);
         }
+
         return false;
     }
 
@@ -151,6 +154,7 @@ class BaseController extends YiiController
         if ($user && empty($user->email)) {
             $this->warning(static::warnings()['email'], false);
         }
+
         return false;
     }
 
@@ -184,6 +188,7 @@ class BaseController extends YiiController
         } elseif ($result === '<') {
             $this->warning(static::warnings()['new_version'], false);
         }
+
         return false;
     }
 
@@ -202,14 +207,16 @@ class BaseController extends YiiController
             if ($this->accessType === -1) {
                 if (!empty($this->module->denyCallback)) {
                     call_user_func($this->module->denyCallback, $this->module->user);
+
                     return false;
                 }
+
                 return $this->goHome();
             }
 
             if (!$this->module->user->isGuest) {
                 $user = User::findMe();
-                if ($user && $user->status == User::STATUS_BANNED) {
+                if ($user && $user->status === User::STATUS_BANNED) {
                     return $this->redirect(['forum/ban']);
                 }
                 if ($user && !empty($user->userProfile->timezone)) {

@@ -18,16 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>
     <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
         'class' => 'btn btn-danger',
-        'data' => [
+        'data'  => [
             'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
-            'method' => 'post',
+            'method'  => 'post',
         ],
-    ]) ?>
+    ]); ?>
 </p>
 
 <?php echo DetailView::widget([
-    'model' => $model,
-    'options' => ['class' => 'table table-dark table-hover table-responsive'],
+    'model'      => $model,
+    'options'    => ['class' => 'table table-dark table-hover table-responsive'],
     'attributes' => [
         'id',
         'component',
@@ -39,4 +39,4 @@ $this->params['breadcrumbs'][] = $this->title;
         'upload_ip',
         'created_at:datetime',
     ],
-]) ?>
+]); ?>

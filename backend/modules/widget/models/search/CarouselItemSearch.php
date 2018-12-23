@@ -2,10 +2,9 @@
 
 namespace backend\modules\widget\models\search;
 
+use core\models\WidgetCarouselItem;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use core\models\WidgetCarouselItem;
 
 /**
  * WidgetCarouselItemSearch represents the model behind the search form about `core\models\WidgetCarouselItem`.
@@ -52,10 +51,10 @@ class CarouselItemSearch extends WidgetCarouselItem
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'          => $this->id,
             'carousel_id' => $this->carousel_id,
-            'status' => $this->status,
-            'order' => $this->order,
+            'status'      => $this->status,
+            'order'       => $this->order,
         ]);
 
         $query->andFilterWhere(['like', 'path', $this->path])

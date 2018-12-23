@@ -16,7 +16,7 @@ class RoleController extends ItemController
     public function labels()
     {
         return[
-            'Item' => 'Role',
+            'Item'  => 'Role',
             'Items' => 'Roles',
         ];
     }

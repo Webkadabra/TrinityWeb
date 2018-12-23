@@ -2,10 +2,9 @@
 
 namespace core\models;
 
+use core\behaviors\CacheInvalidateBehavior;
 use Yii;
 use yii\db\ActiveRecord;
-
-use core\behaviors\CacheInvalidateBehavior;
 
 /**
  * This is the model class for table "{{%widget_carousel}}".
@@ -35,7 +34,7 @@ class WidgetCarousel extends ActiveRecord
     public static function statuses()
     {
         return [
-            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
+            self::STATUS_DRAFT  => Yii::t('common', 'Draft'),
             self::STATUS_ACTIVE => Yii::t('common', 'Active'),
         ];
     }
@@ -47,9 +46,9 @@ class WidgetCarousel extends ActiveRecord
     {
         return [
             'cacheInvalidate' => [
-                'class' => CacheInvalidateBehavior::class,
+                'class'          => CacheInvalidateBehavior::class,
                 'cacheComponent' => 'frontendCache',
-                'keys' => [
+                'keys'           => [
                     function ($model) {
                         return [
                             self::class,
@@ -80,8 +79,8 @@ class WidgetCarousel extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'key' => Yii::t('common', 'Key'),
+            'id'     => Yii::t('common', 'ID'),
+            'key'    => Yii::t('common', 'Key'),
             'status' => Yii::t('common', 'Active'),
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use core\models\User;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
@@ -9,8 +10,6 @@ use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\Controller;
 use yii\rest\OptionsAction;
-
-use core\models\User;
 
 class UserController extends Controller
 {
@@ -22,27 +21,27 @@ class UserController extends Controller
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
+            'class'       => CompositeAuth::class,
             'authMethods' => [
                 HttpBasicAuth::class,
                 HttpBearerAuth::class,
                 HttpHeaderAuth::class,
-                QueryParamAuth::class
-            ]
+                QueryParamAuth::class,
+            ],
         ];
 
         return $behaviors;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function actions()
     {
         return [
             'options' => [
-                'class' => OptionsAction::class
-            ]
+                'class' => OptionsAction::class,
+            ],
         ];
     }
 
@@ -53,6 +52,7 @@ class UserController extends Controller
     {
         $resource = new User();
         $resource->load(\Yii::$app->user->getIdentity()->attributes, '');
+
         return  $resource;
     }
 }

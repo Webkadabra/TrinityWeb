@@ -2,10 +2,9 @@
 
 namespace backend\modules\widget\models\search;
 
+use core\models\WidgetCarousel;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use core\models\WidgetCarousel;
 
 /**
  * WidgetCarouselSearch represents the model behind the search form about `core\models\WidgetCarousel`.
@@ -35,6 +34,7 @@ class CarouselSearch extends WidgetCarousel
     /**
      * Creates data provider instance with search query applied
      *
+     * @param mixed $params
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -50,7 +50,7 @@ class CarouselSearch extends WidgetCarousel
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'     => $this->id,
             'status' => $this->status,
         ]);
 

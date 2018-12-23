@@ -2,10 +2,10 @@
 
 namespace core\modules\i18n\behaviors;
 
-use Yii;
-use yii\db\BaseActiveRecord;
-use yii\behaviors\AttributeBehavior;
 use core\modules\i18n\helpers\Language;
+use Yii;
+use yii\behaviors\AttributeBehavior;
+use yii\db\BaseActiveRecord;
 
 /**
  * TranslateManager Database translate behavior.
@@ -61,7 +61,7 @@ class TranslateBehavior extends AttributeBehavior
     public function events()
     {
         return [
-            BaseActiveRecord::EVENT_AFTER_FIND => 'translateAttributes',
+            BaseActiveRecord::EVENT_AFTER_FIND    => 'translateAttributes',
             BaseActiveRecord::EVENT_BEFORE_INSERT => 'saveAttributes',
             BaseActiveRecord::EVENT_BEFORE_UPDATE => 'saveAttributes',
         ];

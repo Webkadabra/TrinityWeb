@@ -38,7 +38,7 @@ class ArticleAttachment extends ActiveRecord
     {
         return [
             [
-                'class' => TimestampBehavior::class,
+                'class'              => TimestampBehavior::class,
                 'updatedAtAttribute' => false
             ]
         ];
@@ -62,14 +62,14 @@ class ArticleAttachment extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
+            'id'         => Yii::t('common', 'ID'),
             'article_id' => Yii::t('common', 'Article ID'),
-            'base_url' => Yii::t('common', 'Base Url'),
-            'path' => Yii::t('common', 'Path'),
-            'size' => Yii::t('common', 'Size'),
-            'order' => Yii::t('common', 'Order'),
-            'type' => Yii::t('common', 'Type'),
-            'name' => Yii::t('common', 'Name')
+            'base_url'   => Yii::t('common', 'Base Url'),
+            'path'       => Yii::t('common', 'Path'),
+            'size'       => Yii::t('common', 'Size'),
+            'order'      => Yii::t('common', 'Order'),
+            'type'       => Yii::t('common', 'Type'),
+            'name'       => Yii::t('common', 'Name')
         ];
     }
 

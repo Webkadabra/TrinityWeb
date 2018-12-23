@@ -1,7 +1,7 @@
 <?php
 
-use yii\bootstrap\NavBar;
 use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
@@ -10,49 +10,49 @@ use yii\helpers\Html;
 list(,$url) = Yii::$app->assetManager->publish('@backend\modules\rbac/admin/assets');
 $this->registerCssFile($url.'/main.css');
 ?>
-<?php $this->beginPage() ?>
+<?php $this->beginPage(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
-        <?php $this->head() ?>
+        <?php echo Html::csrfMetaTags(); ?>
+        <title><?php echo Html::encode($this->title); ?></title>
+        <?php $this->head(); ?>
     </head>
     <body>
-        <?php $this->beginBody() ?>
+        <?php $this->beginBody(); ?>
         <?php
         NavBar::begin([
             'brandLabel' => false,
-            'options' => ['class' => 'navbar-inverse navbar-fixed-top'],
+            'options'    => ['class' => 'navbar-inverse navbar-fixed-top'],
         ]);
 
         if (!empty($this->params['top-menu']) && isset($this->params['nav-items'])) {
             echo Nav::widget([
                 'options' => ['class' => 'nav navbar-nav'],
-                'items' => $this->params['nav-items'],
+                'items'   => $this->params['nav-items'],
             ]);
         }
 
         echo Nav::widget([
             'options' => ['class' => 'nav navbar-nav navbar-right'],
-            'items' => $this->context->module->navbar,
+            'items'   => $this->context->module->navbar,
          ]);
         NavBar::end();
         ?>
 
         <div class="container">
-            <?= $content ?>
+            <?php echo $content; ?>
         </div>
 
         <footer class="footer">
             <div class="container">
-                <p class="pull-right"><?= Yii::powered() ?></p>
+                <p class="pull-right"><?php echo Yii::powered(); ?></p>
             </div>
         </footer>
 
-        <?php $this->endBody() ?>
+        <?php $this->endBody(); ?>
     </body>
 </html>
-<?php $this->endPage() ?>
+<?php $this->endPage(); ?>

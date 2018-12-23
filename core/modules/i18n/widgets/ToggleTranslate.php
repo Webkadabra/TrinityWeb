@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\widgets;
 
+use core\modules\i18n\Module;
 use Yii;
 use yii\base\Widget;
-use core\modules\i18n\Module;
 
 /**
  * Widget that displays button for switching to translating mode.
@@ -103,17 +103,15 @@ class ToggleTranslate extends Widget
     {
         if(Yii::$app->user->isGuest) {
             return;
-        } else {
+        }  
             if(!Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n)) return;
-        }
-
         $this->_registerAssets();
         
         return strtr($this->template, [
-            '{text}' => Yii::t('language', 'Toggle translate'),
+            '{text}'     => Yii::t('language', 'Toggle translate'),
             '{position}' => $this->position,
             '{language}' => Yii::$app->language,
-            '{url}' => Yii::$app->urlManager->createUrl(self::DIALOG_URL),
+            '{url}'      => Yii::$app->urlManager->createUrl(self::DIALOG_URL),
         ]);
     }
 

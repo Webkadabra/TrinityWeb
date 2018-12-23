@@ -2,15 +2,13 @@
 
 namespace console\controllers;
 
+use core\models\auth\Realmlist;
+use core\models\Server;
 use Yii;
 use yii\base\Exception;
 use yii\console\Controller;
 use yii\helpers\Console;
 use yii\helpers\Inflector;
-
-use core\models\Server;
-
-use core\models\auth\Realmlist;
 
 class AppController extends Controller
 {
@@ -108,7 +106,7 @@ class AppController extends Controller
         foreach ($tables as $table) {
             /** @noinspection MissedParamInspection */
             $command = Yii::$app->db->createCommand("ALTER TABLE {$table} CONVERT TO CHARACTER SET :charset COLLATE :collation")->bindValues([
-                ':charset' => $charset,
+                ':charset'   => $charset,
                 ':collation' => $collation
             ]);
             $command->execute();
@@ -116,7 +114,6 @@ class AppController extends Controller
         Yii::$app->db->createCommand('SET FOREIGN_KEY_CHECKS = 1')->execute();
         Console::output('All ok!');
     }
-
 
     /**
      * Adds write permissions
@@ -132,6 +129,60 @@ class AppController extends Controller
     public function actionSetExecutable()
     {
         $this->setExecutable($this->executablePaths);
+    }
+
+    /**
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
+     */
+    public function actionSyncServers()
+    {
+        $configPath = Yii::getAlias('@core/config') . '/app/database-auth.php';
+        if(file_exists($configPath)) {
+            $config = require($configPath);
+        } else {
+            throw new Exception("File with connections to auth databases doesnt exist");
+        }
+        if(!empty($config)) {
+            Yii::$app->db->createCommand()->truncateTable(Server::tableName())->execute();
+            foreach($config['components'] as $auth_key => $configuration) {
+                if(Yii::$app->TrinityWeb::checkDBConnection($auth_key) === true) {
+                    $auth_id = str_replace('auth_','',$auth_key);
+                    Realmlist::setDb(Yii::$app->get($auth_key));
+                    $realms = Realmlist::find()->all();
+                    if($realms) {
+                        foreach ($realms as $key => $realm) {
+                            /* @var \core\models\auth\Realmlist $realm */
+                            $slug = Inflector::slug($realm->name);
+                            $serverModel = Server::find()->where([
+                                'auth_id'    => $auth_id,
+                                'realm_id'   => $realm->id,
+                                'realm_slug' => $slug
+                            ])->one();
+                            if(!$serverModel) {
+                                $serverModel = new Server([
+                                    'auth_id'            => $auth_id,
+                                    'realm_id'           => $realm->id,
+                                    'realm_name'         => $realm->name,
+                                    'realm_slug'         => $slug,
+                                    'realm_address'      => $realm->address,
+                                    'realm_localAddress' => $realm->localAddress,
+                                    'realm_port'         => $realm->port,
+                                    'realm_build'        => $realm->gamebuild,
+                                ]);
+                            }
+                            $serverModel->save();
+                        }
+                    }
+                } else {
+                    Console::error("Data from connection {$auth_key} not parsed. Check configuration!");
+                }
+            }
+            Console::output("All servers are parsed");
+        } else {
+            throw new Exception("File with connections to auth databases doesnt exist");
+        }
     }
 
     /**
@@ -170,64 +221,10 @@ class AppController extends Controller
             $content = preg_replace_callback('/<generated_key>/', function () {
                 $length = 32;
                 $bytes = openssl_random_pseudo_bytes(32, $cryptoStrong);
+
                 return strtr(substr(base64_encode($bytes), 0, $length), '+/', '_-');
             }, $content);
             file_put_contents($file, $content);
         }
     }
-
-    /**
-     * @throws Exception
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\db\Exception
-     */
-    public function actionSyncServers()
-    {
-        $configPath = Yii::getAlias('@core/config') . '/app/database-auth.php';
-        if(file_exists($configPath)) {
-            $config = require($configPath);
-        } else {
-            throw new Exception("File with connections to auth databases doesnt exist");
-        }
-        if(!empty($config)) {
-            Yii::$app->db->createCommand()->truncateTable(Server::tableName())->execute();
-            foreach($config['components'] as $auth_key => $configuration) {
-                if(Yii::$app->TrinityWeb::checkDBConnection($auth_key) === true) {
-                    $auth_id = str_replace('auth_','',$auth_key);
-                    Realmlist::setDb(Yii::$app->get($auth_key));
-                    $realms = Realmlist::find()->all();
-                    if($realms) {
-                        foreach ($realms as $key => $realm) {
-                            /* @var \core\models\auth\Realmlist $realm */
-                            $slug = Inflector::slug($realm->name);
-                            $serverModel = Server::find()->where([
-                                'auth_id' => $auth_id,
-                                'realm_id' => $realm->id,
-                                'realm_slug' => $slug
-                            ])->one();
-                            if(!$serverModel) {
-                                $serverModel = new Server([
-                                    'auth_id' => $auth_id,
-                                    'realm_id' => $realm->id,
-                                    'realm_name' => $realm->name,
-                                    'realm_slug' => $slug,
-                                    'realm_address' => $realm->address,
-                                    'realm_localAddress' => $realm->localAddress,
-                                    'realm_port' => $realm->port,
-                                    'realm_build' => $realm->gamebuild,
-                                ]);
-                            }
-                            $serverModel->save();
-                        }
-                    }
-                } else {
-                    Console::error("Data from connection {$auth_key} not parsed. Check configuration!");
-                }
-            }
-            Console::output("All servers are parsed");
-        } else {
-            throw new Exception("File with connections to auth databases doesnt exist");
-        }
-    }
-
 }

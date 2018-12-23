@@ -2,10 +2,9 @@
 
 namespace backend\modules\content\models\search;
 
+use core\models\Page;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
-use core\models\Page;
 
 /**
  * PageSearch represents the model behind the search form about `core\models\Page`.
@@ -34,6 +33,7 @@ class PageSearch extends Page
 
     /**
      * Creates data provider instance with search query applied
+     * @param mixed $params
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -49,7 +49,7 @@ class PageSearch extends Page
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'id'     => $this->id,
             'status' => $this->status,
         ]);
 

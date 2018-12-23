@@ -12,16 +12,15 @@ class m180823_070752_settings extends Migration
      */
     public function safeUp()
     {
-
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
         $this->createTable('{{%settings}}', [
-            'key' => $this->string(128)->notNull(),
-            'value' => $this->text()->notNull(),
-            'comment' => $this->text(),
+            'key'        => $this->string(128)->notNull(),
+            'value'      => $this->text()->notNull(),
+            'comment'    => $this->text(),
             'updated_at' => $this->integer(),
             'created_at' => $this->integer()
         ], $tableOptions);

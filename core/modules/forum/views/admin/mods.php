@@ -16,12 +16,12 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('podium/view', 'Administrati
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<?= $this->render('/elements/admin/_navbar', ['active' => 'mods']); ?>
+<?php echo $this->render('/elements/admin/_navbar', ['active' => 'mods']); ?>
 <br>
 <?php if (empty($moderators)): ?>
 <div class="row">
     <div class="col-sm-12">
-        <h3><?= Yii::t('podium/view', 'No moderators have been added yet.') ?></h3>
+        <h3><?php echo Yii::t('podium/view', 'No moderators have been added yet.'); ?></h3>
     </div>
 </div>
 <?php else: ?>
@@ -30,46 +30,46 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-3">
         <ul class="nav nav-pills nav-stacked">
 <?php foreach ($moderators as $moderator): ?>
-            <li role="presentation" class="<?= $moderator->id == $mod->id ? 'active' : '' ?>">
-                <a href="<?= Url::to(['admin/mods', 'id' => $moderator->id]) ?>">
-                    <span class="glyphicon glyphicon-chevron-right"></span> <?= Html::encode($moderator->podiumName) ?>
+            <li role="presentation" class="<?php echo $moderator->id === $mod->id ? 'active' : ''; ?>">
+                <a href="<?php echo Url::to(['admin/mods', 'id' => $moderator->id]); ?>">
+                    <span class="glyphicon glyphicon-chevron-right"></span> <?php echo Html::encode($moderator->podiumName); ?>
                 </a>
             </li>
 <?php endforeach; ?>
         </ul>
     </div>
     <div class="col-sm-9">
-        <h4><?= Yii::t('podium/view', 'List Forums') ?></h4>
-        <?= Html::beginForm(); ?>
-<?= GridView::widget([
+        <h4><?php echo Yii::t('podium/view', 'List Forums'); ?></h4>
+        <?php echo Html::beginForm(); ?>
+<?php echo GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'columns' => [
+    'filterModel'  => $searchModel,
+    'columns'      => [
         [
-            'class' => CheckboxColumn::class,
-            'headerOptions' => ['class' => 'col-sm-1 text-center'],
-            'contentOptions' => ['class' => 'col-sm-1 text-center'],
+            'class'           => CheckboxColumn::class,
+            'headerOptions'   => ['class' => 'col-sm-1 text-center'],
+            'contentOptions'  => ['class' => 'col-sm-1 text-center'],
             'checkboxOptions' => function($model) use ($mod) {
                 return ['value' => $model->id, 'checked' => $model->isMod($mod->id)];
             }
         ],
         [
-            'attribute' => 'id',
-            'label' => Yii::t('podium/view', 'ID'),
+            'attribute'      => 'id',
+            'label'          => Yii::t('podium/view', 'ID'),
             'contentOptions' => ['class' => 'col-sm-1 text-center'],
-            'headerOptions' => ['class' => 'col-sm-1 text-center'],
+            'headerOptions'  => ['class' => 'col-sm-1 text-center'],
         ],
         [
             'attribute' => 'name',
-            'label' => Yii::t('podium/view', 'Name'),
-            'format' => 'raw',
-            'value' => function ($model) use ($mod) {
+            'label'     => Yii::t('podium/view', 'Name'),
+            'format'    => 'raw',
+            'value'     => function ($model) use ($mod) {
                 return Html::encode($model->name) . ($model->isMod($mod->id) ? Html::hiddenInput('pre[]', $model->id) : '');
             },
         ],
         [
-            'class' => ActionColumn::class,
-            'template' => '{mod}',
+            'class'      => ActionColumn::class,
+            'template'   => '{mod}',
             'urlCreator' => function ($action, $model) use ($mod) {
                 return Url::toRoute([$action, 'fid' => $model->id, 'uid' => $mod->id]);
             },
@@ -81,6 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'title' => Yii::t('podium/view', 'Remove from moderation list')
                         ]));
                     }
+
                     return Html::a('<span class="glyphicon glyphicon-plus"></span> ' . Yii::t('podium/view', 'Add'), $url, ActionColumn::buttonOptions([
                         'class' => 'btn btn-success btn-xs',
                         'title' => Yii::t('podium/view', 'Add to moderation list')
@@ -90,16 +91,16 @@ $this->params['breadcrumbs'][] = $this->title;
         ]
     ],
 ]); ?>
-        <?= Html::hiddenInput('mod_id', $mod->id) ?>
+        <?php echo Html::hiddenInput('mod_id', $mod->id); ?>
         <div class="row">
             <div class="col-sm-12">
-                <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Selected Moderation List'), [
+                <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Save Selected Moderation List'), [
                     'class' => 'btn btn-primary btn-sm',
-                    'name' => 'save-button'
-                ]) ?>
+                    'name'  => 'save-button'
+                ]); ?>
             </div>
         </div>
-        <?= Html::endForm(); ?>
+        <?php echo Html::endForm(); ?>
     </div>
 </div><br>
 <?php endif;

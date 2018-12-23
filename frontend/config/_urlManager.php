@@ -3,10 +3,10 @@
 use Sitemaped\Sitemap;
 
 return [
-    'class' => yii\web\UrlManager::class,
+    'class'           => yii\web\UrlManager::class,
     'enablePrettyUrl' => true,
-    'showScriptName' => false,
-    'rules' => [
+    'showScriptName'  => false,
+    'rules'           => [
         //Main page
         ['pattern' => '/', 'route' => 'main/index'],
         //Articles

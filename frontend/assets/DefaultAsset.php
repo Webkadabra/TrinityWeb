@@ -21,5 +21,4 @@ class DefaultAsset extends BaseFrontendAsset
      */
     public $js = [
     ];
-
 }

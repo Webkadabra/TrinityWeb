@@ -2,10 +2,10 @@
 
 namespace core\modules\i18n\services;
 
-use Yii;
-use yii\helpers\Json;
-use yii\base\InvalidConfigException;
 use core\modules\i18n\models\LanguageSource;
+use Yii;
+use yii\base\InvalidConfigException;
+use yii\helpers\Json;
 
 /**
  * Generator class for producing JavaScript files containing language elements.
@@ -85,6 +85,22 @@ class Generator
     }
 
     /**
+     * @return string returns the language id of the translation.
+     */
+    public function getLanguageId()
+    {
+        return $this->_languageId;
+    }
+
+    /**
+     * @param string $language_id Stores the language id of the translation.
+     */
+    public function setLanguageId($language_id)
+    {
+        $this->_languageId = $language_id;
+    }
+
+    /**
      * Creating JavaScript language file in current language.
      */
     private function _generateJSFile()
@@ -113,21 +129,5 @@ class Generator
             ])
             ->where(['category' => Scanner::CATEGORY_JAVASCRIPT])
             ->all();
-    }
-
-    /**
-     * @return string returns the language id of the translation.
-     */
-    public function getLanguageId()
-    {
-        return $this->_languageId;
-    }
-
-    /**
-     * @param string $language_id Stores the language id of the translation.
-     */
-    public function setLanguageId($language_id)
-    {
-        $this->_languageId = $language_id;
     }
 }

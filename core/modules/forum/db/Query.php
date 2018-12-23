@@ -21,6 +21,7 @@ class Query extends YiiQuery
         if ($db === null) {
             $db = Podium::getInstance()->db;
         }
+
         return parent::createCommand($db);
     }
 }

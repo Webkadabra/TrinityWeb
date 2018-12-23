@@ -1,11 +1,10 @@
 <?php
 
-use yii\helpers\Html;
-use yii\data\Pagination;
-use yii\widgets\LinkPager;
-use yii\bootstrap\ActiveForm;
-
 use frontend\modules\ladder\models\LadderFormModel;
+use yii\bootstrap\ActiveForm;
+use yii\data\Pagination;
+use yii\helpers\Html;
+use yii\widgets\LinkPager;
 
 $pagination = new Pagination(['totalCount' => $data['totalCount']]);
 $pagination->setPageSize($data['pageSize']);
@@ -14,7 +13,7 @@ $pagination->setPageSize($data['pageSize']);
         <div class="ladder-search">
             <?php /** @var LadderFormModel $form */
             $form = ActiveForm::begin([
-                'id' => 'ladder-form',
+                'id'     => 'ladder-form',
                 'method' => 'get',
                 'action' => ['default/index'],
             ]); ?>
@@ -24,18 +23,18 @@ $pagination->setPageSize($data['pageSize']);
                         <div class="col-sm-12 col-md-12 col-lg-4">
                             <?php echo $form->field($searchModel, 'server')->dropDownList($searchModel->getServers(),[
                                 'prompt' => Yii::t('cp','Выберите сервер'),
-                                'name' => 'server',
-                            ])->label(false) ?>
+                                'name'   => 'server',
+                            ])->label(false); ?>
                         </div>
                         <div class="col-sm-12 col-md-7 col-lg-4">
                             <?php echo $form->field($searchModel, 'type')->dropDownList($searchModel->_arr_types,[
                                 'prompt' => Yii::t('cp','Выберите тип'),
-                                'name' => 'type',
-                            ])->label(false) ?>
+                                'name'   => 'type',
+                            ])->label(false); ?>
                         </div>
                         <div class="col-sm-12 col-md-5 col-lg-4">
                             <div class="form-group text-center-sm text-center">
-                                <?php echo Html::submitButton(Yii::t('common', 'Отобразить'), ['class' => 'btn btn-primary']) ?>
+                                <?php echo Html::submitButton(Yii::t('common', 'Отобразить'), ['class' => 'btn btn-primary']); ?>
                             </div>
                         </div>
                     </div>
@@ -53,19 +52,19 @@ $pagination->setPageSize($data['pageSize']);
                         <i class="fas fa-list-ol"></i>
                     </th>
                     <th scope="col">
-                        <?=Yii::t('ladder','Team name')?>
+                        <?php echo Yii::t('ladder','Team name');?>
                     </th>
                     <th scope="col">
-                        <?=Yii::t('ladder','Games')?>
+                        <?php echo Yii::t('ladder','Games');?>
                     </th>
                     <th scope="col">
-                        <?=Yii::t('ladder','Wins')?>
+                        <?php echo Yii::t('ladder','Wins');?>
                     </th>
                     <th class="d-none d-sm-table-cell" scope="col">
-                        <?=Yii::t('ladder','Loses')?>
+                        <?php echo Yii::t('ladder','Loses');?>
                     </th>
                     <th scope="col">
-                        <?=Yii::t('ladder','Rating')?>
+                        <?php echo Yii::t('ladder','Rating');?>
                     </th>
                 </tr>
                 </thead>
@@ -76,26 +75,26 @@ $pagination->setPageSize($data['pageSize']);
                     ?>
                     <tr class="ladder-list-item">
                         <th scope="row" class="d-none d-lg-table-cell">
-                            <?=$_rank++?>
+                            <?php echo $_rank++;?>
                         </th>
                         <td>
-                            <?=Html::a($item['name'],[
+                            <?php echo Html::a($item['name'],[
                                 'team/index',
                                 'teamId' => $item['arenaTeamId'],
                                 'server' => Yii::$app->DBHelper->getServerFromGet()->realm_name,
-                            ])?>
+                            ]);?>
                         </td>
                         <td>
-                            <?=$item['seasonGames']?>
+                            <?php echo $item['seasonGames'];?>
                         </td>
                         <td>
-                            <?=$item['seasonWins']?>
+                            <?php echo $item['seasonWins'];?>
                         </td>
                         <td class="d-none d-sm-table-cell">
-                            <?=($item['seasonGames'] - $item['seasonWins'])?>
+                            <?php echo ($item['seasonGames'] - $item['seasonWins']);?>
                         </td>
                         <td>
-                            <?=$item['rating']?>
+                            <?php echo $item['rating'];?>
                         </td>
                     </tr>
                     <?php
@@ -107,16 +106,16 @@ $pagination->setPageSize($data['pageSize']);
         } else {
             ?>
             <h3>
-                <?=Yii::t('ladder','На данный момент список пуст.')?>
+                <?php echo Yii::t('ladder','На данный момент список пуст.');?>
             </h3>
             <?php
         }
         ?>
     </div>
-<?=LinkPager::widget([
-    'pagination' => $pagination,
-    'pageCssClass' => 'page-item',
-    'disabledPageCssClass' => 'disabled page-item',
+<?php echo LinkPager::widget([
+    'pagination'                    => $pagination,
+    'pageCssClass'                  => 'page-item',
+    'disabledPageCssClass'          => 'disabled page-item',
     'disabledListItemSubTagOptions' => ['class' => 'page-link'],
-    'linkOptions' => ['class' => 'page-link']
+    'linkOptions'                   => ['class' => 'page-link']
 ]);?>

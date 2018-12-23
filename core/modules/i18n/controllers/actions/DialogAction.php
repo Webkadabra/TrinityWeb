@@ -2,9 +2,9 @@
 
 namespace core\modules\i18n\controllers\actions;
 
-use Yii;
 use core\modules\i18n\models\LanguageSource;
 use core\modules\i18n\models\LanguageTranslate;
+use Yii;
 
 /**
  * Class for creating front end translation dialoge box
@@ -23,7 +23,7 @@ class DialogAction extends \yii\base\Action
     public function run()
     {
         $languageSource = LanguageSource::findOne([
-            'category' => Yii::$app->request->post('category', ''),
+            'category'     => Yii::$app->request->post('category', ''),
             'MD5(message)' => Yii::$app->request->post('hash', ''),
         ]);
 
@@ -32,7 +32,7 @@ class DialogAction extends \yii\base\Action
         }
 
         return $this->controller->renderPartial('dialog', [
-            'languageSource' => $languageSource,
+            'languageSource'    => $languageSource,
             'languageTranslate' => $this->_getTranslation($languageSource),
         ]);
     }
@@ -52,7 +52,7 @@ class DialogAction extends \yii\base\Action
 
         if (!$languageTranslate) {
             $languageTranslate = new LanguageTranslate([
-                'id' => $languageSource->id,
+                'id'       => $languageSource->id,
                 'language' => $languageId,
             ]);
         }

@@ -14,13 +14,13 @@ use core\widgets\GridView;
 
 <?php if ($newDataProvider->totalCount > 0) : ?>
 
-    <?=
+    <?php echo
 
     GridView::widget([
-        'id' => 'added-source',
+        'id'           => 'added-source',
         'dataProvider' => $newDataProvider,
         'tableOptions' => ['class' => 'table table-dark table-hover'],
-        'columns' => [
+        'columns'      => [
             ['class' => 'yii\grid\SerialColumn'],
             'category',
             'message',
@@ -29,4 +29,4 @@ use core\widgets\GridView;
 
     ?>
 
-<?php endif ?>
+<?php endif; ?>

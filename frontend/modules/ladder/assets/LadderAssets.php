@@ -2,17 +2,15 @@
 
 namespace frontend\modules\ladder\assets;
 
+use frontend\assets\DefaultAsset;
 use Yii;
 use yii\web\AssetBundle;
-
-use frontend\assets\DefaultAsset;
 
 /**
  * LadderAsset module assets
  */
 class LadderAssets extends AssetBundle
 {
-
     /**
      * @var array
      */
@@ -25,6 +23,13 @@ class LadderAssets extends AssetBundle
      */
     public $js = [
         'js/ladder.js',
+    ];
+
+    /**
+     * @var array
+     */
+    public $depends = [
+        DefaultAsset::class,
     ];
 
     /**
@@ -43,11 +48,4 @@ class LadderAssets extends AssetBundle
             $this->baseUrl = rtrim(Yii::getAlias($this->baseUrl), '/');
         }
     }
-
-    /**
-     * @var array
-     */
-    public $depends = [
-        DefaultAsset::class,
-    ];
 }

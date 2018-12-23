@@ -15,35 +15,35 @@ use yii\helpers\Html;
     <div class="translate-manager-message">
         <div class="clearfix">
             <?php $form = ActiveForm::begin([
-                'id' => 'transslate-manager-change-source-form',
+                'id'     => 'transslate-manager-change-source-form',
                 'action' => ['/translatemanager/language/message'],
             ]); ?>
-            <?= $form->field($languageTranslate, 'id', ['enableLabel' => false])->hiddenInput(['name' => 'id', 'id' => 'language-source-id']) ?>
-            <?= $form->field($languageTranslate, 'language')->dropDownList(array_merge([
+            <?php echo $form->field($languageTranslate, 'id', ['enableLabel' => false])->hiddenInput(['name' => 'id', 'id' => 'language-source-id']); ?>
+            <?php echo $form->field($languageTranslate, 'language')->dropDownList(array_merge([
                     '' => Yii::t('language', 'Source'),
                 ], $languageTranslate->getTranslatedLanguageNames()), [
                     'name' => 'language_id',
-                    'id' => 'translate-manager-language-source',
-                ])->label(Yii::t('language', 'Choosing the language of translation'))
+                    'id'   => 'translate-manager-language-source',
+                ])->label(Yii::t('language', 'Choosing the language of translation'));
             ?>
             <?php ActiveForm::end(); ?>
         </div>
         <div class="clearfix">
-            <?= Html::label(Yii::t('language', 'Text to be translated'), 'translate-manager-message') ?>
-            <?= Html::textarea('translate-manager-message', $languageSource->message, ['readonly' => 'readonly', 'id' => 'translate-manager-message']) ?>
+            <?php echo Html::label(Yii::t('language', 'Text to be translated'), 'translate-manager-message'); ?>
+            <?php echo Html::textarea('translate-manager-message', $languageSource->message, ['readonly' => 'readonly', 'id' => 'translate-manager-message']); ?>
         </div>
     </div>
 
     <div class="translate-manager-message">
         <div class="clearfix">
             <?php $form = ActiveForm::begin([
-                'id' => 'transslate-manager-translation-form',
+                'id'     => 'transslate-manager-translation-form',
                 'method' => 'POST',
                 'action' => ['/translatemanager/language/save'],
             ]); ?>
-            <?= $form->field($languageTranslate, 'id', ['enableLabel' => false])->hiddenInput(['name' => 'id']) ?>
-            <?= $form->field($languageTranslate, 'language', ['enableLabel' => false])->hiddenInput(['name' => 'language_id']) ?>
-            <?= $form->field($languageTranslate, 'translation')->textarea(['name' => 'translation', 'class' => $languageTranslate->language]) ?>
+            <?php echo $form->field($languageTranslate, 'id', ['enableLabel' => false])->hiddenInput(['name' => 'id']); ?>
+            <?php echo $form->field($languageTranslate, 'language', ['enableLabel' => false])->hiddenInput(['name' => 'language_id']); ?>
+            <?php echo $form->field($languageTranslate, 'translation')->textarea(['name' => 'translation', 'class' => $languageTranslate->language]); ?>
             <?php ActiveForm::end(); ?>
         </div>
     </div>

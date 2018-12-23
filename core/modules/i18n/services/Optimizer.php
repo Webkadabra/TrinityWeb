@@ -2,8 +2,8 @@
 
 namespace core\modules\i18n\services;
 
-use yii\helpers\Console;
 use core\modules\i18n\models\LanguageSource;
+use yii\helpers\Console;
 
 /**
  * Optimizer class for optimizing database tables

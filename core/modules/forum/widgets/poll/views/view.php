@@ -19,56 +19,56 @@ $loggedId = User::loggedId();
 
 /* @var $model Poll */
 ?>
-<div class="card podium-poll" id="poll<?= $model->id ?>">
+<div class="card podium-poll" id="poll<?php echo $model->id; ?>">
     <div class="card-header">
         <div class="card-title">
             <div class="popover-title">
                 <?php if (!empty($model->end_at)): ?>
                     <small class="float-right">
-                    <span data-toggle="tooltip" data-placement="top" title="<?= Podium::getInstance()->formatter->asDatetime($model->end_at, 'long') ?>">
-                        <?= Yii::t('podium/view', 'Poll ends') ?>: <?= Podium::getInstance()->formatter->asRelativeTime($model->end_at) ?>
+                    <span data-toggle="tooltip" data-placement="top" title="<?php echo Podium::getInstance()->formatter->asDatetime($model->end_at, 'long'); ?>">
+                        <?php echo Yii::t('podium/view', 'Poll ends'); ?>: <?php echo Podium::getInstance()->formatter->asRelativeTime($model->end_at); ?>
                     </span>
                     </small>
                 <?php endif; ?>
-                <?= Yii::t('podium/view', 'Poll') ?>: <strong><?= Html::encode($model->question) ?></strong>
+                <?php echo Yii::t('podium/view', 'Poll'); ?>: <strong><?php echo Html::encode($model->question); ?></strong>
             </div>
         </div>
     </div>
     <div class="card-body popover-content">
         <?php if (!$voted): ?>
-            <?= Html::beginForm('#', 'post', ['class' => 'podium-poll-form']) ?>
-            <?= Html::hiddenInput('poll_id', $model->id) ?>
-            <p class="small"><?= Yii::t('podium/view', 'Select {n, plural, =1{only # answer} other{max # answers}}', ['n' => $model->votes]) ?>:</p>
+            <?php echo Html::beginForm('#', 'post', ['class' => 'podium-poll-form']); ?>
+            <?php echo Html::hiddenInput('poll_id', $model->id); ?>
+            <p class="small"><?php echo Yii::t('podium/view', 'Select {n, plural, =1{only # answer} other{max # answers}}', ['n' => $model->votes]); ?>:</p>
             <?php foreach ($model->answers as $answer): ?>
                 <p>
                     <label>
                         <?php if ($model->votes > 1): ?>
-                            <?= Html::checkbox('poll_vote[]', false, ['class' => 'podium-poll-answer', 'value' => $answer->id]) ?>
+                            <?php echo Html::checkbox('poll_vote[]', false, ['class' => 'podium-poll-answer', 'value' => $answer->id]); ?>
                         <?php else: ?>
-                            <?= Html::radio('poll_vote[]', false, ['class' => 'podium-poll-answer', 'value' => $answer->id]) ?>
+                            <?php echo Html::radio('poll_vote[]', false, ['class' => 'podium-poll-answer', 'value' => $answer->id]); ?>
                         <?php endif; ?>
-                        <?= Html::encode($answer->answer) ?>
+                        <?php echo Html::encode($answer->answer); ?>
                     </label>
                 </p>
             <?php endforeach; ?>
             <ul class="list-inline">
-                <li class="list-inline-item"><button class="btn btn-primary podium-poll-vote"><span class="glyphicon glyphicon-ok-sign"></span> <?= Yii::t('podium/view', 'Vote') ?></button></li>
+                <li class="list-inline-item"><button class="btn btn-primary podium-poll-vote"><span class="glyphicon glyphicon-ok-sign"></span> <?php echo Yii::t('podium/view', 'Vote'); ?></button></li>
                 <?php if (!$hidden): ?>
-                    <li class="list-inline-item"><button class="btn btn-default podium-poll-show-results"><?= Yii::t('podium/view', 'See results') ?></button></li>
+                    <li class="list-inline-item"><button class="btn btn-default podium-poll-show-results"><?php echo Yii::t('podium/view', 'See results'); ?></button></li>
                 <?php endif; ?>
                 <li class="podium-pol l-info list-inline-item"></li>
             </ul>
-            <?= Html::endForm() ?>
+            <?php echo Html::endForm(); ?>
 
-            <?php if ($display === false && ($model->author_id == $loggedId || User::can(Rbac::PERM_UPDATE_POST, ['item' => $model->thread]))): ?>
+            <?php if ($display === false && ($model->author_id === $loggedId || User::can(Rbac::PERM_UPDATE_POST, ['item' => $model->thread]))): ?>
                 <ul class="podium-action-bar list-inline">
                     <li class="list-inline-item">
-                        <a href="<?= Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-info btn-xs <?= $model->votesCount ? 'disabled text-muted' : '' ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Edit Poll') ?>">
+                        <a href="<?php echo Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]); ?>" class="btn btn-info btn-xs <?php echo $model->votesCount ? 'disabled text-muted' : ''; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Edit Poll'); ?>">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="<?= Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Delete Poll') ?>">
+                        <a href="<?php echo Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]); ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Delete Poll'); ?>">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </li>
@@ -76,14 +76,14 @@ $loggedId = User::loggedId();
             <?php endif; ?>
 
         <?php endif; ?>
-        <div class="podium-poll-results <?= $voted ? '' : 'd-none' ?>">
+        <div class="podium-poll-results <?php echo $voted ? '' : 'd-none'; ?>">
             <?php if (!$hidden || $voted): ?>
                 <?php foreach ($model->sortedAnswers as $answer): $perc = $model->votesCount > 0 ? ceil($answer->votes * 100 / $model->votesCount) : 0; ?>
                     <div>
-                        <?= Html::encode($answer->answer) ?>
+                        <?php echo Html::encode($answer->answer); ?>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success podium-poll-answer-<?= $answer->id ?>" role="progressbar" aria-valuenow="<?= $perc ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $perc ?>%">
-                                <?= $perc ?>%
+                            <div class="progress-bar progress-bar-success podium-poll-answer-<?php echo $answer->id; ?>" role="progressbar" aria-valuenow="<?php echo $perc; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $perc; ?>%">
+                                <?php echo $perc; ?>%
                             </div>
                         </div>
                     </div>
@@ -91,10 +91,10 @@ $loggedId = User::loggedId();
             <?php else: ?>
                 <?php foreach ($model->answers as $answer): ?>
                     <div>
-                        <span class="label label-default float-right podium-poll-answer-votes-<?= $answer->id ?>">?</span>
-                        <?= Html::encode($answer->answer) ?>
+                        <span class="label label-default float-right podium-poll-answer-votes-<?php echo $answer->id; ?>">?</span>
+                        <?php echo Html::encode($answer->answer); ?>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success podium-poll-answer-<?= $answer->id ?>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <div class="progress-bar progress-bar-success podium-poll-answer-<?php echo $answer->id; ?>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                 ?
                             </div>
                         </div>
@@ -102,18 +102,18 @@ $loggedId = User::loggedId();
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php if (!$hidden && !$voted): ?>
-                <button class="btn btn-default podium-poll-show-form"><?= Yii::t('podium/view', 'Back to poll') ?></button>
+                <button class="btn btn-default podium-poll-show-form"><?php echo Yii::t('podium/view', 'Back to poll'); ?></button>
             <?php endif; ?>
 
-            <?php if ($display === false && ($model->author_id == $loggedId || User::can(Rbac::PERM_UPDATE_POST, ['item' => $model->thread]))): ?>
+            <?php if ($display === false && ($model->author_id === $loggedId || User::can(Rbac::PERM_UPDATE_POST, ['item' => $model->thread]))): ?>
                 <ul class="podium-action-bar list-inline">
                     <li class="list-inline-item">
-                        <a href="<?= Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-info btn-xs <?= $model->votesCount ? 'disabled text-muted' : '' ?>" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Edit Poll') ?>">
+                        <a href="<?php echo Url::to(['forum/editpoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]); ?>" class="btn btn-info btn-xs <?php echo $model->votesCount ? 'disabled text-muted' : ''; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Edit Poll'); ?>">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="<?= Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]) ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?= Yii::t('podium/view', 'Delete Poll') ?>">
+                        <a href="<?php echo Url::to(['forum/deletepoll', 'cid' => $model->thread->category_id, 'fid' => $model->thread->forum_id, 'tid' => $model->thread_id, 'pid' => $model->id]); ?>" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="<?php echo Yii::t('podium/view', 'Delete Poll'); ?>">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </li>

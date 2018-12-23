@@ -2,27 +2,25 @@
 
 namespace frontend\modules\armory\controllers;
 
-use Yii;
-
 use frontend\base\controllers\SystemController;
-
 use frontend\modules\armory\models\SearchForm;
+use Yii;
 
 class DefaultController extends SystemController
 {
-
     /**
-     * @return string|\yii\web\Response
      * @throws \yii\base\Exception
+     * @return string|\yii\web\Response
      */
     public function actionIndex()
     {
         $searchModel = new SearchForm();
         $data = $searchModel->findCharacters(Yii::$app->request->queryParams);
+
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'searchResult' => $data['result'],
-            'counter' => $data['counter']
+            'counter'      => $data['counter']
         ]);
     }
 }

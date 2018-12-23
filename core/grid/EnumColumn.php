@@ -44,6 +44,7 @@ class EnumColumn extends DataColumn
     public function getDataCellValue($model, $key, $index)
     {
         $value = parent::getDataCellValue($model, $key, $index);
+
         return ArrayHelper::getValue($this->enum, $value, $value);
     }
 }

@@ -22,7 +22,7 @@ class MembersController extends BaseController
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class'        => AccessControl::class,
                 'denyCallback' => function ($rule, $action) {
                     return $this->redirect(['account/login']);
                 },
@@ -47,11 +47,11 @@ class MembersController extends BaseController
         return [
             'posts' => [
                 'class' => 'core\modules\forum\actions\MemberAction',
-                'view' => 'posts',
+                'view'  => 'posts',
             ],
             'threads' => [
                 'class' => 'core\modules\forum\actions\MemberAction',
-                'view' => 'threads',
+                'view'  => 'threads',
             ],
         ];
     }
@@ -66,6 +66,7 @@ class MembersController extends BaseController
         if (!Yii::$app->request->isAjax) {
             return $this->redirect(['forum/index']);
         }
+
         return User::getMembersList($q);
     }
 
@@ -87,18 +88,21 @@ class MembersController extends BaseController
             ])->limit(1)->one();
         if (empty($model)) {
             $this->error(Yii::t('podium/flash', 'Sorry! We can not find Member with this ID.'));
+
             return $this->redirect(['members/index']);
         }
 
         $logged = User::loggedId();
 
-        if ($model->id == $logged) {
+        if ($model->id === $logged) {
             $this->error(Yii::t('podium/flash', 'Sorry! You can not ignore your own account.'));
+
             return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
         }
 
-        if ($model->id == User::ROLE_ADMINISTRATOR) {
+        if ($model->id === User::ROLE_ADMINISTRATOR) {
             $this->error(Yii::t('podium/flash', 'Sorry! You can not ignore Administrator.'));
+
             return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
         }
 
@@ -111,6 +115,7 @@ class MembersController extends BaseController
         } else {
             $this->error(Yii::t('podium/flash', 'Sorry! There was some error while performing this action.'));
         }
+
         return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
     }
 
@@ -121,9 +126,10 @@ class MembersController extends BaseController
     public function actionIndex()
     {
         $searchModel = new UserSearch();
+
         return $this->render('index', [
             'dataProvider' => $searchModel->search(Yii::$app->request->get(), true),
-            'searchModel' => $searchModel
+            'searchModel'  => $searchModel
         ]);
     }
 
@@ -134,9 +140,10 @@ class MembersController extends BaseController
     public function actionMods()
     {
         $searchModel = new UserSearch();
+
         return $this->render('mods', [
             'dataProvider' => $searchModel->search(Yii::$app->request->get(), true, true),
-            'searchModel' => $searchModel
+            'searchModel'  => $searchModel
         ]);
     }
 
@@ -159,8 +166,10 @@ class MembersController extends BaseController
             ])->limit(1)->one();
         if (empty($model)) {
             $this->error(Yii::t('podium/flash', 'Sorry! We can not find Member with this ID.'));
+
             return $this->redirect(['members/index']);
         }
+
         return $this->render('view', ['model' => $model]);
     }
 
@@ -182,13 +191,15 @@ class MembersController extends BaseController
             ])->limit(1)->one();
         if (empty($model)) {
             $this->error(Yii::t('podium/flash', 'Sorry! We can not find Member with this ID.'));
+
             return $this->redirect(['members/index']);
         }
 
         $logged = User::loggedId();
 
-        if ($model->id == $logged) {
+        if ($model->id === $logged) {
             $this->error(Yii::t('podium/flash', 'Sorry! You can not befriend your own account.'));
+
             return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
         }
 
@@ -201,6 +212,7 @@ class MembersController extends BaseController
         } else {
             $this->error(Yii::t('podium/flash', 'Sorry! There was some error while performing this action.'));
         }
+
         return $this->redirect(['members/view', 'id' => $model->id, 'slug' => $model->podiumSlug]);
     }
 }

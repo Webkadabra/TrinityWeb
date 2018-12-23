@@ -2,11 +2,10 @@
 
 namespace backend\controllers;
 
+use backend\models\search\TimelineEventSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-
-use backend\models\search\TimelineEventSearch;
 
 /**
  * Application timeline controller
@@ -22,8 +21,8 @@ class TimelineEventController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index'],
-                        'allow' => true,
+                        'actions'     => ['index'],
+                        'allow'       => true,
                         'permissions' => [Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_TIMELINE]
                     ]
                 ]
@@ -37,7 +36,6 @@ class TimelineEventController extends Controller
      */
     public function actionIndex()
     {
-
         $searchModel = new TimelineEventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort = [

@@ -16,6 +16,7 @@ class UserTokenQuery extends ActiveQuery
     public function notExpired()
     {
         $this->andWhere(['>', 'expire_at', time()]);
+
         return $this;
     }
 
@@ -26,6 +27,7 @@ class UserTokenQuery extends ActiveQuery
     public function byType($type)
     {
         $this->andWhere(['type' => $type]);
+
         return $this;
     }
 
@@ -36,6 +38,7 @@ class UserTokenQuery extends ActiveQuery
     public function byToken($token)
     {
         $this->andWhere(['token' => $token]);
+
         return $this;
     }
 }

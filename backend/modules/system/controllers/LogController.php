@@ -2,37 +2,35 @@
 
 namespace backend\modules\system\controllers;
 
+use backend\modules\system\models\search\SystemLogSearch;
+use backend\modules\system\models\SystemLog;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-use backend\modules\system\models\search\SystemLogSearch;
-use backend\modules\system\models\SystemLog;
-
 /**
  * LogController implements the CRUD actions for SystemLog model.
  */
 class LogController extends Controller
 {
-
     /** @inheritdoc */
     public function behaviors()
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
-                    'clear' => ['post'],
+                    'clear'  => ['post'],
                 ],
             ],
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'       => true,
                         'permissions' => [
                             Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LOGS
                         ]
@@ -52,7 +50,7 @@ class LogController extends Controller
         $searchModel = new SystemLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if (strcasecmp(Yii::$app->request->method, 'delete') == 0) {
+        if (strcasecmp(Yii::$app->request->method, 'delete') === 0) {
             SystemLog::deleteAll($dataProvider->query->where);
 
             return $this->refresh();
@@ -62,7 +60,7 @@ class LogController extends Controller
         ];
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -72,8 +70,8 @@ class LogController extends Controller
      *
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
+     * @return mixed
      */
     public function actionView($id)
     {
@@ -88,11 +86,11 @@ class LogController extends Controller
      *
      * @param integer $id
      *
-     * @return mixed
      * @throws NotFoundHttpException
      * @throws \Exception
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
+     * @return mixed
      */
     public function actionDelete($id)
     {
@@ -107,15 +105,14 @@ class LogController extends Controller
      *
      * @param integer $id
      *
-     * @return SystemLog the loaded model
      * @throws NotFoundHttpException if the model cannot be found
+     * @return SystemLog the loaded model
      */
     protected function findModel($id)
     {
         if (($model = SystemLog::findOne($id)) !== null) {
             return $model;
-        } else {
+        }  
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

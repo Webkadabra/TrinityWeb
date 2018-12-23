@@ -34,7 +34,7 @@ class LatestPosts extends Widget
             $out .= Html::beginTag('table', ['class' => 'table mb-0 table-hover']) . "\n";
             foreach ($latest as $post) {
                 $out .= Html::beginTag('tr');
-                $out .= Html::beginTag('td');
+                $out .= Html::beginTag('td',['class' => 'text-center']);
                 $out .= Html::a($post['title'], ['forum/show', 'id' => $post['id']], ['class' => 'center-block']) . "\n";
                 $out .= Html::tag('small', Podium::getInstance()->formatter->asRelativeTime($post['created']) . "\n" . $post['author']) . "\n";
                 $out .= Html::endTag('td');

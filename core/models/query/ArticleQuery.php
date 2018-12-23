@@ -2,9 +2,8 @@
 
 namespace core\models\query;
 
-use omgdef\multilingual\MultilingualQuery;
-
 use core\models\Article;
+use omgdef\multilingual\MultilingualQuery;
 
 /**
  * Class ArticleQuery
@@ -12,7 +11,6 @@ use core\models\Article;
  */
 class ArticleQuery extends MultilingualQuery
 {
-
     /**
      * @return $this
      */
@@ -20,6 +18,7 @@ class ArticleQuery extends MultilingualQuery
     {
         $this->andWhere(['status' => Article::STATUS_PUBLISHED]);
         $this->andWhere(['<', '{{%article}}.published_at', time()]);
+
         return $this;
     }
 }

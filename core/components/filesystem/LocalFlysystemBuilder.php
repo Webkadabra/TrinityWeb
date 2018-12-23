@@ -19,6 +19,7 @@ class LocalFlysystemBuilder implements FilesystemBuilderInterface
     public function build()
     {
         $adapter = new Local(\Yii::getAlias($this->path));
+
         return new Filesystem($adapter);
     }
 }

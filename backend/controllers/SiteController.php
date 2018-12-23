@@ -9,7 +9,6 @@ use Yii;
  */
 class SiteController extends \yii\web\Controller
 {
-
     public function behaviors()
     {
         return [
@@ -17,8 +16,8 @@ class SiteController extends \yii\web\Controller
                 'class' => \yii\filters\AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
-                        'roles' => ['?', '@'],
+                        'allow'   => true,
+                        'roles'   => ['?', '@'],
                         'actions' => ['error'],
                     ]
                 ],
@@ -41,6 +40,7 @@ class SiteController extends \yii\web\Controller
     public function beforeAction($action)
     {
         $this->layout = Yii::$app->user->isGuest || !Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_TO_BACKEND) ? 'base' : 'common';
+
         return parent::beforeAction($action);
     }
 }

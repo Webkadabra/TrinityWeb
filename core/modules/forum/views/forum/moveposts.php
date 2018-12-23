@@ -21,15 +21,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <div class="panel panel-warning">
             <div class="panel-heading">
-                <strong><?= Yii::t('podium/view', 'Select posts to move') ?></strong>:
+                <strong><?php echo Yii::t('podium/view', 'Select posts to move'); ?></strong>:
             </div>
         </div>
     </div>
 </div><br>
 
-<?= Html::beginForm(); ?>
+<?php echo Html::beginForm(); ?>
 <?php Pjax::begin(); ?>
-<?= ListView::widget([
+<?php echo ListView::widget([
     'dataProvider'     => $dataProvider,
     'itemView'         => '/elements/forum/_post_select',
     'summary'          => '',
@@ -46,26 +46,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <?= Html::label(Yii::t('podium/view', 'Select a thread for this posts to be moved to'), 'newthread') ?>
-                                <p>* <?= Yii::t('podium/view', 'Forums you can moderate are marked with asterisk.') ?></p>
-                                <?= Html::dropDownList('newthread', null, $list, ['id' => 'newthread', 'class' => 'form-control', 'options' => $options, 'encode' => false]) ?>
+                                <?php echo Html::label(Yii::t('podium/view', 'Select a thread for this posts to be moved to'), 'newthread'); ?>
+                                <p>* <?php echo Yii::t('podium/view', 'Forums you can moderate are marked with asterisk.'); ?></p>
+                                <?php echo Html::dropDownList('newthread', null, $list, ['id' => 'newthread', 'class' => 'form-control', 'options' => $options, 'encode' => false]); ?>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <?= Html::label(Yii::t('podium/view', 'Name of the new thread'), 'newname') ?>
-                                <?= Html::textInput('newname', null, ['id' => 'newname', 'class' => 'form-control']) ?>
+                                <?php echo Html::label(Yii::t('podium/view', 'Name of the new thread'), 'newname'); ?>
+                                <?php echo Html::textInput('newname', null, ['id' => 'newname', 'class' => 'form-control']); ?>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <?= Html::label(Yii::t('podium/view', 'Parent forum of the new thread'), 'newforum') ?>
-                                <p>* <?= Yii::t('podium/view', 'Forums you can moderate are marked with asterisk.') ?></p>
-                                <?= Html::dropDownList('newforum', null, $listforum, ['id' => 'newforum', 'class' => 'form-control', 'encode' => false]) ?>
+                                <?php echo Html::label(Yii::t('podium/view', 'Parent forum of the new thread'), 'newforum'); ?>
+                                <p>* <?php echo Yii::t('podium/view', 'Forums you can moderate are marked with asterisk.'); ?></p>
+                                <?php echo Html::dropDownList('newforum', null, $listforum, ['id' => 'newforum', 'class' => 'form-control', 'encode' => false]); ?>
                             </div>
                         </div>
                     </div>
@@ -73,11 +73,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Move Posts'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']) ?>
+                            <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Move Posts'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div><br>
-<?= Html::endForm();
+<?php echo Html::endForm();

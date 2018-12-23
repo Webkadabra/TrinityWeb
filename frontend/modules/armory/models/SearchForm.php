@@ -2,17 +2,16 @@
 
 namespace frontend\modules\armory\models;
 
+use core\models\chars\Characters;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use core\models\chars\Characters;
 
 /**
  * SearchForm
  */
 class SearchForm extends Model
 {
-    
     public $server;
     public $query = '';
 
@@ -21,7 +20,7 @@ class SearchForm extends Model
      * @param array $config
      * @throws \yii\base\Exception
      */
-    public function __construct($config = array()) {
+    public function __construct($config = []) {
         parent::__construct($config);
         $this->server = Yii::$app->DBHelper->getServerName();
     }
@@ -43,7 +42,7 @@ class SearchForm extends Model
     {
         return [
             'server' => Yii::t('core', 'Realm'),
-            'query' => Yii::t('armory', 'Search...'),
+            'query'  => Yii::t('armory', 'Search...'),
         ];
     }
     
@@ -53,6 +52,7 @@ class SearchForm extends Model
         foreach($servers as $server) {
             $data[$server] = $server;
         }
+
         return $data;
     }
     
@@ -73,7 +73,7 @@ class SearchForm extends Model
 		]);
         $data = Yii::$app->cache->get(Yii::$app->request->url);
         $counter = Yii::$app->cache->get(Yii::$app->request->url . '_counter');
-        if($this->query) {    
+        if($this->query) {
             if($data === false || $counter === false) {
                 $data = $dataProvider->getModels();
                 $counter = $dataProvider->getTotalCount();
@@ -81,9 +81,9 @@ class SearchForm extends Model
                 Yii::$app->cache->set(Yii::$app->request->url,$data,Yii::$app->settings->get(Yii::$app->settings::APP_MODULE_ARMORY_CACHE_DURATION));
             }
         }
+
         return ['result' => $data, 'counter' => $counter];
     }
     
     public function formName() {return '';}
-    
 }

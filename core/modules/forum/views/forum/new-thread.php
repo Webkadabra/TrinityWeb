@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if ($preview): ?>
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1">
-        <?= Alert::widget([
+        <?php echo Alert::widget([
             'body' => '<strong><small>'
                         . Yii::t('podium/view', 'Post Preview')
                         . '</small></strong>:<hr>'
@@ -41,12 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'name')->textInput(['autofocus' => true])->label(Yii::t('podium/view', 'Topic')); ?>
+                            <?php echo $form->field($model, 'name')->textInput(['autofocus' => true])->label(Yii::t('podium/view', 'Topic')); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= $form->field($model, 'post')->label(false)->widget(EditorFull::class); ?>
+                            <?php echo $form->field($model, 'post')->label(false)->widget(EditorFull::class); ?>
                         </div>
                     </div>
                     <div class="row">
@@ -58,14 +58,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             $field->template = '{input} {label}';
                             echo $field->checkbox([], false)->label('subscribe',[
                                 'class' => 'checkbox-label'
-                            ])
+                            ]);
                             ?>
                         </div>
                     </div>
 <?php if (Podium::getInstance()->podiumConfig->get('allow_polls')): ?>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?= Poll::create($form, $model); ?>
+                            <?php echo Poll::create($form, $model); ?>
                         </div>
                     </div>
 <?php endif; ?>
@@ -73,13 +73,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-sm-8">
-                            <?= Html::submitButton(
+                            <?php echo Html::submitButton(
                                 '<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Create new thread'),
                                 ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']
                             ); ?>
                         </div>
                         <div class="col-sm-4">
-                            <?= Html::submitButton(
+                            <?php echo Html::submitButton(
                                 '<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'),
                                 ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']
                             ); ?>

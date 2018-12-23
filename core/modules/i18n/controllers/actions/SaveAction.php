@@ -2,10 +2,10 @@
 
 namespace core\modules\i18n\controllers\actions;
 
+use core\modules\i18n\models\LanguageTranslate;
+use core\modules\i18n\services\Generator;
 use Yii;
 use yii\web\Response;
-use core\modules\i18n\services\Generator;
-use core\modules\i18n\models\LanguageTranslate;
 
 /**
  * Class for saving translations.

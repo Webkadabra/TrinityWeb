@@ -2,14 +2,12 @@
 
 namespace api\modules\v1\resources;
 
-use Yii;
 use yii\helpers\Url;
 use yii\web\Link;
 use yii\web\Linkable;
 
 /**
- *
- * @property array $links
+ * @property array  $links
  * @property string $url
  */
 class Accounts extends \core\models\auth\Accounts implements Linkable
@@ -22,7 +20,7 @@ class Accounts extends \core\models\auth\Accounts implements Linkable
             'email',
             'joindate',
             'online',
-            'expansion'
+            'expansion',
         ];
     }
 
@@ -34,8 +32,7 @@ class Accounts extends \core\models\auth\Accounts implements Linkable
     public function getLinks()
     {
         return [
-            Link::REL_SELF => Url::to(['accounts/view', 'id' => $this->id], true)
+            Link::REL_SELF => Url::to(['accounts/view', 'id' => $this->id], true),
         ];
     }
-
 }

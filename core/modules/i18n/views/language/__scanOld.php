@@ -14,25 +14,25 @@ use yii\helpers\Url;
 ?>
 <?php if ($oldDataProvider->totalCount > 1) : ?>
 
-    <?= Html::button(Yii::t('language', 'Select all'), ['id' => 'select-all', 'class' => 'btn btn-primary']) ?>
+    <?php echo Html::button(Yii::t('language', 'Select all'), ['id' => 'select-all', 'class' => 'btn btn-primary']); ?>
 
-    <?= Html::button(Yii::t('language', 'Delete selected'), ['id' => 'delete-selected', 'class' => 'btn btn-danger']) ?>
+    <?php echo Html::button(Yii::t('language', 'Delete selected'), ['id' => 'delete-selected', 'class' => 'btn btn-danger']); ?>
 
-<?php endif ?>
+<?php endif; ?>
 
 <?php if ($oldDataProvider->totalCount > 0) : ?>
 
-    <?=
+    <?php echo
 
     GridView::widget([
-        'id' => 'delete-source',
+        'id'           => 'delete-source',
         'dataProvider' => $oldDataProvider,
         'tableOptions' => ['class' => 'table table-dark table-hover'],
-        'columns' => [
+        'columns'      => [
             [
-                'format' => 'raw',
+                'format'    => 'raw',
                 'attribute' => '#',
-                'content' => function ($languageSource) {
+                'content'   => function ($languageSource) {
                     return Html::checkbox('LanguageSource[]', false, ['value' => $languageSource['id'], 'class' => 'language-source-cb']);
                 },
             ],
@@ -41,9 +41,9 @@ use yii\helpers\Url;
             'message',
             'languages',
             [
-                'format' => 'raw',
+                'format'    => 'raw',
                 'attribute' => Yii::t('language', 'Action'),
-                'content' => function ($languageSource) {
+                'content'   => function ($languageSource) {
                     return Html::a(Yii::t('language', 'Delete'), Url::toRoute('/translatemanager/language/delete-source'), ['data-id' => $languageSource['id'], 'class' => 'delete-item btn btn-xs btn-danger']);
                 },
             ],
@@ -52,4 +52,4 @@ use yii\helpers\Url;
 
     ?>
 
-<?php endif ?>
+<?php endif; ?>

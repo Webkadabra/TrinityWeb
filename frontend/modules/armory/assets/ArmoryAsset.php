@@ -2,17 +2,15 @@
 
 namespace frontend\modules\armory\assets;
 
+use frontend\assets\DefaultAsset;
 use Yii;
 use yii\web\AssetBundle;
-
-use frontend\assets\DefaultAsset;
 
 /**
  * LadderAsset module assets
  */
 class ArmoryAsset extends AssetBundle
 {
-
     /**
      * @var array
      */
@@ -25,6 +23,13 @@ class ArmoryAsset extends AssetBundle
      */
     public $js = [
         'js/armory.js',
+    ];
+
+    /**
+     * @var array
+     */
+    public $depends = [
+        DefaultAsset::class,
     ];
 
     /**
@@ -43,11 +48,4 @@ class ArmoryAsset extends AssetBundle
             $this->baseUrl = rtrim(Yii::getAlias($this->baseUrl), '/');
         }
     }
-
-    /**
-     * @var array
-     */
-    public $depends = [
-        DefaultAsset::class,
-    ];
 }
