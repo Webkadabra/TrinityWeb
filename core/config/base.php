@@ -82,7 +82,8 @@ $config = [
             'itemTable'       => '{{%rbac_auth_item}}',
             'itemChildTable'  => '{{%rbac_auth_item_child}}',
             'assignmentTable' => '{{%rbac_auth_assignment}}',
-            'ruleTable'       => '{{%rbac_auth_rule}}'
+            'ruleTable'       => '{{%rbac_auth_rule}}',
+            'cache' => 'cache',
         ],
 
         'commandBus' => [

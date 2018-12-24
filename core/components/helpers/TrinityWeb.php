@@ -15,6 +15,10 @@ class TrinityWeb extends Component
     const OFFLINE = 'offline';
     const ONLINE = 'online';
 
+    /**
+     * @return array
+     * @throws \yii\base\InvalidArgumentException
+     */
     public static function getThemes() {
         $appThemesAlias = Yii::getAlias('@frontend') . DIRECTORY_SEPARATOR . 'themes';
         $existThemes = FileHelper::findDirectories(Yii::getAlias('@frontend') . DIRECTORY_SEPARATOR . 'themes', ['recursive' => false]);
@@ -56,7 +60,7 @@ class TrinityWeb extends Component
      */
     public static function isDBImported()
     {
-        if (Yii::$app->db->schema->getTableSchema(WidgetCarouselItem::tableName(), true) !== null) {
+        if (Yii::$app->db->schema->getTableSchema(WidgetCarouselItem::tableName()) !== null) {
             return true;
         }
         Yii::$app->cache->flush();
@@ -73,7 +77,7 @@ class TrinityWeb extends Component
     {
         try {
             Yii::$app->{$key}->open();
-            if(Yii::$app->{$key}->isActive) return true;
+            if (Yii::$app->{$key}->isActive) return true;
         } catch (\Exception $ex) {
             return $ex;
         }

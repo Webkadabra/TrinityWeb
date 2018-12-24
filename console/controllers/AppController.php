@@ -187,6 +187,7 @@ class AppController extends Controller
 
     /**
      * @param $paths
+     * @throws \yii\base\InvalidArgumentException
      */
     private function setWritable($paths)
     {

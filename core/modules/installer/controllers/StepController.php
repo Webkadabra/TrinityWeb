@@ -90,7 +90,7 @@ class StepController extends Controller
                 'success_msg' => []
             ],
             5 => [
-                'command'     => 'app/set-executable--interactive=0',
+                'command'     => 'app/set-executable --interactive=0',
                 'success_msg' => []
             ],
             15 => [
@@ -119,7 +119,7 @@ class StepController extends Controller
             if ($percent !== null && Yii::$app->request->isAjax) {
                 $command = $command_list[$percent];
                 $keys = array_keys($command_list);
-                $set_percent = $keys[array_search($percent, $keys, true) + 1];
+                $set_percent = $keys[array_search($percent, $keys) + 1];
                 if($command) {
                     $data = Yii::$app->TrinityWeb::executeCommand($command['command']);
                     if(in_array($data['last_line'], $command['success_msg'], true) || empty($command['success_msg'])) {
@@ -155,8 +155,9 @@ class StepController extends Controller
     }
 
     /**
-     * @throws \yii\base\InvalidConfigException
      * @return string|\yii\web\Response
+     * @throws InvalidConfigException
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionAuthDatabase()
     {
@@ -222,8 +223,9 @@ class StepController extends Controller
     }
 
     /**
-     * @throws \yii\base\InvalidConfigException
      * @return string
+     * @throws InvalidConfigException
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionCharactersDatabase()
     {

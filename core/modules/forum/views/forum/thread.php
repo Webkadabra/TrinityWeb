@@ -114,9 +114,12 @@ $this->registerJs("var anchor = window.location.hash; if (anchor.match(/^#post[0
             <li class="list-inline-item"><a href="<?php echo Url::to(['account/login']); ?>" class="btn btn-primary btn-sm"><?php echo Yii::t('podium/view', 'Sign in to reply'); ?></a></li>
             <li class="list-inline-item"><a href="<?php echo Url::to(['account/register']); ?>" class="btn btn-success btn-sm"><?php echo Yii::t('podium/view', 'Register new account'); ?></a></li>
 <?php else: ?>
-<?php if (User::can(Rbac::PERM_CREATE_THREAD)): ?>
-            <li class="list-inline-item"><a href="<?php echo Url::to(['forum/new-thread', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum_id]); ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('podium/view', 'Create new thread'); ?></a></li>
-<?php endif; ?>
+            <?php if (
+                User::can(Rbac::PERM_CREATE_THREAD,['category' => $thread->forum->category]) ||
+                User::can(Rbac::PERM_CREATE_IN_CLOSED_CATEGORY)
+            ): ?>
+                <li class="list-inline-item"><a href="<?php echo Url::to(['forum/new-thread', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum_id]); ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('podium/view', 'Create new thread'); ?></a></li>
+            <?php endif; ?>
             <li class="list-inline-item"><a href="<?php echo Url::to(['forum/unread-posts']); ?>" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-flash"></span> <?php echo Yii::t('podium/view', 'Unread posts'); ?></a></li>
 <?php endif; ?>
         </ul>

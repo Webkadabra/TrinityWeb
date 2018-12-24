@@ -61,11 +61,14 @@ class AccountAccess extends AuthCoreModel
         if($totalCount === false) {
             $totalCount = 0;
             foreach (Yii::$app->DBHelper->getServers() as $server) {
-                self::setDb(self::getDb($server['auth_id']));
-                $count = self::find()->cache($cache_time_query)->count();
-                if($count) $totalCount += $count;
+                $db = self::getDb($server['auth_id']);
+                if ($db->schema->getTableSchema(self::tableName())) {
+                    self::setDb($db);
+                    $count = self::find()->cache($cache_time_query)->count();
+                    if ($count) $totalCount += $count;
+                }
             }
-            Yii::$app->cache->set($cache_key,$cache_time_total);
+            Yii::$app->cache->set($cache_key,$totalCount,$cache_time_total);
         }
 
         return $totalCount;

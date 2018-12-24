@@ -190,18 +190,20 @@ class ForumThreadController extends BaseController
      * @param int $cid category ID
      * @param int $fid forum ID
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionNewThread($cid = null, $fid = null)
     {
-        if (!User::can(Rbac::PERM_CREATE_THREAD)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
+        $forum = Forum::find()->where(['id' => $fid, 'category_id' => $cid])->limit(1)->one();
+
+        if (empty($forum)) {
+            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the forum you are looking for.'));
 
             return $this->redirect(['forum/index']);
         }
 
-        $forum = Forum::find()->where(['id' => $fid, 'category_id' => $cid])->limit(1)->one();
-        if (empty($forum)) {
-            $this->error(Yii::t('podium/flash', 'Sorry! We can not find the forum you are looking for.'));
+        if (!User::can(Rbac::PERM_CREATE_THREAD,['category' => $forum->category])) {
+            $this->error(Yii::t('podium/flash', 'Sorry! You do not have the required permission to perform this action.'));
 
             return $this->redirect(['forum/index']);
         }

@@ -73,7 +73,7 @@ class AccountBanned extends AuthCoreModel
                 $count = self::find()->cache($cache_time_query)->count();
                 if($count) $totalCount += $count;
             }
-            Yii::$app->cache->set($cache_key,$cache_time_total);
+            Yii::$app->cache->set($cache_key, $totalCount, $cache_time_total);
         }
 
         return $totalCount;
@@ -104,7 +104,7 @@ class AccountBanned extends AuthCoreModel
                     ->count();
                 if($count) $totalCount += $count;
             }
-            Yii::$app->cache->set($cache_key,$cache_time_total);
+            Yii::$app->cache->set($cache_key, $totalCount, $cache_time_total);
         }
 
         return $totalCount;

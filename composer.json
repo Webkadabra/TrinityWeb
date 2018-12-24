@@ -72,7 +72,7 @@
     "trntv/yii2-glide": "^1.2",
     "trntv/yii2-command-bus": "^3.0",
     "trntv/sitemaped": "^0.1",
-    "kartik-v/yii2-tree-manager": "dev-master",
+    "kartik-v/yii2-tree-manager": "~1.1",
     "kartik-v/yii2-sortable": "dev-master",
     "bizley/quill": "2.3",
     "kartik-v/yii2-widget-datepicker": "@dev"

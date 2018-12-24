@@ -12,6 +12,33 @@ use yii\helpers\Html;
 class DatabaseRender extends ListRenderer
 {
     /**
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function internalRender()
+    {
+        $content = [];
+
+        $content[] = $this->renderHeader();
+        $content[] = $this->renderBody();
+        $content[] = $this->renderFooter();
+
+        $options = [];
+        Html::addCssClass($options, 'multiple-input-list list-renderer');
+
+        if ($this->isBootstrapTheme()) {
+            Html::addCssClass($options, 'table table-dark form-horizontal');
+        }
+
+        $content = Html::tag('table', implode("\n", $content), $options);
+
+        return Html::tag('div', $content, [
+            'id' => $this->id,
+            'class' => 'multiple-input'
+        ]);
+    }
+
+    /**
      * Renders the cell content.
      *
      * @param BaseColumn $column

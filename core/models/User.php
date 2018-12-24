@@ -4,6 +4,7 @@ namespace core\models;
 
 use core\commands\AddToTimelineCommand;
 use core\models\auth\Accounts;
+use core\models\auth\BattlenetAccout;
 use core\models\query\UserQuery;
 use Yii;
 use yii\behaviors\AttributeBehavior;
@@ -46,20 +47,20 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_NOT_ACTIVE = 1;
-    const STATUS_ACTIVE = 2;
-    const STATUS_DELETED = 3;
+    public const STATUS_NOT_ACTIVE = 1;
+    public const STATUS_ACTIVE = 2;
+    public const STATUS_DELETED = 3;
 
-    const ROLE_USER = 'user';
-    const ROLE_MODERATOR = 'moderator';
-    const ROLE_ADMINISTRATOR = 'administrator';
+    public const ROLE_USER = 'user';
+    public const ROLE_MODERATOR = 'moderator';
+    public const ROLE_ADMINISTRATOR = 'administrator';
 
-    const ROLE_INT_USER = 1;
-    const ROLE_INT_MODERATOR = 9;
-    const ROLE_INT_ADMINISTRATOR = 10;
+    public const ROLE_INT_USER = 1;
+    public const ROLE_INT_MODERATOR = 9;
+    public const ROLE_INT_ADMINISTRATOR = 10;
 
-    const EVENT_AFTER_SIGNUP = 'afterSignup';
-    const EVENT_AFTER_LOGIN = 'afterLogin';
+    public const EVENT_AFTER_SIGNUP = 'afterSignup';
+    public const EVENT_AFTER_LOGIN = 'afterLogin';
 
     /**
      * @inheritdoc
@@ -129,6 +130,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * @inheritdoc
+     * @throws \yii\base\Exception
      */
     public function behaviors()
     {
@@ -249,9 +251,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        $hash_password = self::generatePassword($this->username,$password);
+        $hash_password = $this->generatePassword($this->username,$password);
 
-        return $this->password_hash === $hash_password ? true : false;
+        return $this->password_hash === $hash_password;
     }
 
     public function generatePassword($username, $password) {
@@ -265,7 +267,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = self::generatePassword($this->username, $password);
+        $this->password_hash = $this->generatePassword($this->username, $password);
     }
 
     /**
@@ -273,7 +275,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param array $profileData
      * @throws \trntv\bus\exceptions\MissingHandlerException
      * @throws \yii\base\ErrorException
+     * @throws \yii\base\InvalidCallException
      * @throws \yii\base\InvalidConfigException
+     * @throws \Exception
      */
     public function afterSignup(array $profileData = [])
     {
@@ -294,7 +298,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->trigger(self::EVENT_AFTER_SIGNUP);
         $auth = Yii::$app->authManager;
         $this->save();
-        $auth->assign($auth->getRole(User::ROLE_USER), $this->getId());
+        $auth->assign($auth->getRole(self::ROLE_USER), $this->getId());
     }
 
     /**
@@ -314,14 +318,26 @@ class User extends ActiveRecord implements IdentityInterface
                 $transactions[] = $dbConnection->beginTransaction();
                 try {
                     Accounts::setDb($dbConnection);
+
                     $account = new Accounts([
                         'username'      => $this->username,
                         'sha_pass_hash' => $this->password_hash,
                         'email'         => $this->email,
                         'expansion'     => $server->getExpansion()
                     ]);
-                    $saved = $account->save();
-                    $resultSaved[$server->auth_id] = $saved;
+                    $accountSaved = $account->save();
+
+                    $battlenetAccountSaved = true;
+                    if ($dbConnection->schema->getTableSchema(BattlenetAccout::tableName())) {
+                        BattlenetAccout::setDb($dbConnection);
+                        $battlenetAccount = new BattlenetAccout([
+                            'sha_pass_hash' => $this->password_hash,
+                            'email' => $this->email,
+                        ]);
+                        $battlenetAccountSaved = $battlenetAccount->save();
+                    }
+
+                    $resultSaved[$server->auth_id] = $battlenetAccountSaved && $accountSaved;
                 } catch (Exception $ex) {
                     $resultSaved[$server->auth_id] = false;
                 }
@@ -367,12 +383,24 @@ class User extends ActiveRecord implements IdentityInterface
                 $transactions[] = $dbConnection->beginTransaction();
                 try {
                     Accounts::setDb($dbConnection);
+                    $accountSaved = true;
+                    $battlenetAccountSaved = true;
+
                     $account = Accounts::find()->where(['username' => $this->username])->one();
                     if($account) {
                         $account->sha_pass_hash = $this->password_hash;
-                        $saved = $account->save();
-                        $resultSaved[$server->auth_id] = $saved;
+                        $accountSaved = $account->save();
                     }
+
+                    if ($dbConnection->schema->getTableSchema(BattlenetAccout::tableName())) {
+                        BattlenetAccout::setDb($dbConnection);
+                        $battlenetAccount = BattlenetAccout::find()->where(['email' => $this->email])->one();
+                        if ($battlenetAccount) {
+                            $battlenetAccount->sha_pass_hash = $this->password_hash;
+                            $battlenetAccountSaved = $battlenetAccount->save();
+                        }
+                    }
+                    $resultSaved[$server->auth_id] = $battlenetAccountSaved && $accountSaved;
                 } catch (Exception $ex) {
                     $resultSaved[$server->auth_id] = false;
                 }

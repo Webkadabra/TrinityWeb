@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<td class="forum-icon col-6">
+<td class="forum-icon col-4 col-lg-6">
     <a href="<?php echo Url::to(['forum/forum', 'cid' => $model->category_id, 'id' => $model->id, 'slug' => $model->slug]); ?>" class="rf-aqua">
         <?php echo Html::decode($model->name); ?>
     </a>
@@ -27,10 +27,10 @@ use yii\helpers\Url;
         ?>
     </div>
 </td>
-<td class="forum-icon text-right col-1">
+<td class="forum-icon text-right col-2 col-lg-1">
     <?php echo $model->threads; ?>
 </td>
-<td class="forum-icon text-right col-2">
+<td class="forum-icon text-right col-3 col-lg-2">
     <?php echo $model->posts; ?>
 </td>
 <td class="col-3">

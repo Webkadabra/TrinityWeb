@@ -81,7 +81,7 @@ class ForumNodeController extends Controller
 
             return ['out' => $out, 'status' => 'success'];
         }
-  
+
             return ['out' => $error, 'status' => 'error'];
     }
 
@@ -106,7 +106,7 @@ class ForumNodeController extends Controller
          * @var Tree $node
          * @var Tree $parent
          */
-        
+
         if ($treeNodeModify) {
             $node = new $modelClass;
             $successMsg = Yii::t('kvtree', 'The node was successfully created.');
@@ -131,7 +131,7 @@ class ForumNodeController extends Controller
             }
         }
         $errors = $success = false;
-        
+
         if ($node->save()) {
             // check if active status was changed
             if (!$isNewRecord && $node->activeOrig !== $node->active) {
@@ -219,7 +219,8 @@ class ForumNodeController extends Controller
                     'nodeSelected'    => $nodeSelected,
                     'breadcrumbs'     => empty($breadcrumbs) ? [] : $breadcrumbs,
                     'noNodesMessage'  => ''
-                ];
+                ] + $data;
+
             if (!empty($module->unsetAjaxBundles)) {
                 Event::on(
                     View::class, View::EVENT_AFTER_RENDER, function ($e) use ($module) {
@@ -229,7 +230,6 @@ class ForumNodeController extends Controller
                 }
                 );
             }
-
             return $this->renderAjax($nodeView, ['params' => $params, 'showNameAttribute' => true]);
         };
 
@@ -331,7 +331,7 @@ class ForumNodeController extends Controller
         }
         $out = [];
         foreach ($_POST as $key => $value) {
-            $out[$key] = in_array($key, static::$boolKeys, true) ? filter_var($value, FILTER_VALIDATE_BOOLEAN) : $value;
+            $out[$key] = in_array($key, static::$boolKeys) ? filter_var($value, FILTER_VALIDATE_BOOLEAN) : $value;
         }
 
         return $out;

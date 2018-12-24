@@ -12,30 +12,31 @@ use yii\rbac\Role;
  */
 class Rbac
 {
-    const PERM_VIEW_THREAD = 'forum_access_viewPodiumThread';
-    const PERM_VIEW_FORUM = 'forum_access_viewPodiumForum';
-    const PERM_CREATE_THREAD = 'forum_access_createPodiumThread';
-    const PERM_CREATE_POST = 'forum_access_createPodiumPost';
-    const PERM_UPDATE_POST = 'forum_access_updatePodiumPost';
-    const PERM_UPDATE_OWN_POST = 'forum_access_updateOwnPodiumPost';
-    const PERM_DELETE_POST = 'forum_access_deletePodiumPost';
-    const PERM_DELETE_OWN_POST = 'forum_access_deleteOwnPodiumPost';
-    const PERM_UPDATE_THREAD = 'forum_access_updatePodiumThread';
-    const PERM_DELETE_THREAD = 'forum_access_deletePodiumThread';
-    const PERM_PIN_THREAD = 'forum_access_pinPodiumThread';
-    const PERM_LOCK_THREAD = 'forum_access_lockPodiumThread';
-    const PERM_MOVE_THREAD = 'forum_access_movePodiumThread';
-    const PERM_MOVE_POST = 'forum_access_movePodiumPost';
-    const PERM_BAN_USER = 'forum_access_banPodiumUser';
-    const PERM_DELETE_USER = 'forum_access_deletePodiumUser';
-    const PERM_PROMOTE_USER = 'forum_access_promotePodiumUser';
-    const PERM_CREATE_FORUM = 'forum_access_createPodiumForum';
-    const PERM_UPDATE_FORUM = 'forum_access_updatePodiumForum';
-    const PERM_DELETE_FORUM = 'forum_access_deletePodiumForum';
-    const PERM_CREATE_CATEGORY = 'forum_access_createPodiumCategory';
-    const PERM_UPDATE_CATEGORY = 'forum_access_updatePodiumCategory';
-    const PERM_DELETE_CATEGORY = 'forum_access_deletePodiumCategory';
-    const PERM_CHANGE_SETTINGS = 'forum_access_changePodiumSettings';
+    public const PERM_VIEW_THREAD = 'forum_access_viewPodiumThread';
+    public const PERM_VIEW_FORUM = 'forum_access_viewPodiumForum';
+    public const PERM_CREATE_THREAD = 'forum_access_createPodiumThread';
+    public const PERM_CREATE_POST = 'forum_access_createPodiumPost';
+    public const PERM_UPDATE_POST = 'forum_access_updatePodiumPost';
+    public const PERM_UPDATE_OWN_POST = 'forum_access_updateOwnPodiumPost';
+    public const PERM_DELETE_POST = 'forum_access_deletePodiumPost';
+    public const PERM_DELETE_OWN_POST = 'forum_access_deleteOwnPodiumPost';
+    public const PERM_UPDATE_THREAD = 'forum_access_updatePodiumThread';
+    public const PERM_DELETE_THREAD = 'forum_access_deletePodiumThread';
+    public const PERM_PIN_THREAD = 'forum_access_pinPodiumThread';
+    public const PERM_LOCK_THREAD = 'forum_access_lockPodiumThread';
+    public const PERM_MOVE_THREAD = 'forum_access_movePodiumThread';
+    public const PERM_MOVE_POST = 'forum_access_movePodiumPost';
+    public const PERM_BAN_USER = 'forum_access_banPodiumUser';
+    public const PERM_DELETE_USER = 'forum_access_deletePodiumUser';
+    public const PERM_PROMOTE_USER = 'forum_access_promotePodiumUser';
+    public const PERM_CREATE_FORUM = 'forum_access_createPodiumForum';
+    public const PERM_UPDATE_FORUM = 'forum_access_updatePodiumForum';
+    public const PERM_DELETE_FORUM = 'forum_access_deletePodiumForum';
+    public const PERM_CREATE_CATEGORY = 'forum_access_createPodiumCategory';
+    public const PERM_UPDATE_CATEGORY = 'forum_access_updatePodiumCategory';
+    public const PERM_DELETE_CATEGORY = 'forum_access_deletePodiumCategory';
+    public const PERM_CHANGE_SETTINGS = 'forum_access_changePodiumSettings';
+    public const PERM_CREATE_IN_CLOSED_CATEGORY = 'forum_access_createInClosedCategory';
 
     /**
      * Adds RBAC rules.
@@ -59,10 +60,17 @@ class Rbac
             $authManager->add($viewForum);
         }
 
+        $isCreateInClosedCategoryRule = $authManager->getRule('isCreateInClosedCategory');
+        if (!($isCreateInClosedCategoryRule instanceof isCreateInClosedCategory)) {
+            $isCreateInClosedCategoryRule = new isCreateInClosedCategory();
+            $authManager->add($isCreateInClosedCategoryRule);
+        }
+
         $createThread = $authManager->getPermission(self::PERM_CREATE_THREAD);
         if (!($createThread instanceof Permission)) {
             $createThread = $authManager->createPermission(self::PERM_CREATE_THREAD);
             $createThread->description = 'Create Podium thread';
+            $createThread->ruleName = $isCreateInClosedCategoryRule->name;
             $authManager->add($createThread);
         }
 
@@ -260,6 +268,13 @@ class Rbac
             $authManager->add($settings);
         }
 
+        $createInClosedCategory = $authManager->getPermission(self::PERM_CREATE_IN_CLOSED_CATEGORY);
+        if (!($createInClosedCategory instanceof Permission)) {
+            $createInClosedCategory = $authManager->createPermission(self::PERM_CREATE_IN_CLOSED_CATEGORY);
+            $createInClosedCategory->description = 'Allow create forums in closed category';
+            $authManager->add($createInClosedCategory);
+        }
+
         $admin = $authManager->getRole(User::ROLE_ADMINISTRATOR);
         if ($admin instanceof Role) {
             $authManager->addChild($admin, $deleteUser);
@@ -271,6 +286,7 @@ class Rbac
             $authManager->addChild($admin, $updateCategory);
             $authManager->addChild($admin, $deleteCategory);
             $authManager->addChild($admin, $settings);
+            $authManager->addChild($admin, $createInClosedCategory);
         }
     }
 }

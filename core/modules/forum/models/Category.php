@@ -60,4 +60,12 @@ class Category extends CategoryActiveRecord
 
         return $sorter->run();
     }
+
+    /**
+     * @return bool
+     */
+    public function isLocked(): bool
+    {
+        return $this->locked ? true : false;
+    }
 }

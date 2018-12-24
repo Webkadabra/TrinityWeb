@@ -34,8 +34,6 @@ class PodiumConfig extends Component
     const META_DESCRIPTION = 'TrinityWeb Forum';
     const META_KEYWORDS = 'yii2, forum, trinityweb';
     const PODIUM_NAME = 'Forum';
-    const SECONDS_EMAIL_TOKEN_EXPIRE = 86400;
-    const SECONDS_PASSWORD_RESET_TOKEN_EXPIRE = 86400;
 
     private $_config;
 
