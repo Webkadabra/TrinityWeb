@@ -45,9 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="col-md-3 d-sm-none d-none">
-        <?php echo Avatar::widget([
-            'author'   => $model,
-            'showName' => false
-        ]); ?>
+        <div class="position-sticky sticky-header">
+            <?php echo Avatar::widget([
+                'author'   => $model,
+                'showName' => false
+            ]); ?>
+        </div>
     </div>
 </div><br>

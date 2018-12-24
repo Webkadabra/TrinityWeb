@@ -44,7 +44,9 @@ $loggedId = User::loggedId();
         <div <?php echo Helper::replyBgd(); ?>>
             <div class="row">
                 <div class="col-sm-3 text-center">
-                    <?php echo Avatar::widget(['author' => $model->sender]); ?>
+                    <div class="position-sticky sticky-header">
+                        <?php echo Avatar::widget(['author' => $model->sender]); ?>
+                    </div>
                 </div>
                 <div class="col-sm-9">
                     <div class="popover right podium">

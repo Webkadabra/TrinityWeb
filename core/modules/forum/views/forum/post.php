@@ -32,7 +32,9 @@ $author = User::findMe();
 
 <div class="row">
     <div class="col-sm-2 text-center">
-        <?php echo Avatar::widget(['author' => $author, 'showName' => false]); ?>
+        <div class="position-sticky sticky-header">
+            <?php echo Avatar::widget(['author' => $author, 'showName' => false]); ?>
+        </div>
     </div>
     <div class="col-sm-10">
         <div class="popover right podium">

@@ -83,7 +83,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
     <div class="card-body">
         <div class="row podium-post" id="post<?php echo $model->id; ?>">
             <div class="col-sm-2 text-center" id="postAvatar<?php echo $model->id; ?>">
-                <div class="card">
+                <div class="card position-sticky sticky-header">
                     <div class="card-body px-0 pt-0 pb-0">
                         <?php echo Avatar::widget(['author' => $model->author, 'showName' => false]); ?>
 

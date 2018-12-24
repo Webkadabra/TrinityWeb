@@ -33,7 +33,7 @@ $this->beginContent('@frontend/views/layouts/base.php');
             <?php echo $content;?>
         </div>
         <div class="col-4 tw-right-side">
-            <div id="layout-widgets" class="mt-3">
+            <div id="layout-widgets" class="mt-3 sticky-header">
                 <?php echo StatusServersWidget::widget(); ?>
             </div>
         </div>

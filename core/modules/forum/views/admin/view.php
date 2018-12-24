@@ -90,10 +90,12 @@ $loggedId = User::loggedId();
         </div>
     </div>
     <div class="col-sm-3 d-none">
-        <?php echo Avatar::widget([
-            'author'   => $model,
-            'showName' => false
-        ]); ?>
+        <div class="position-sticky sticky-header">
+            <?php echo Avatar::widget([
+                'author'   => $model,
+                'showName' => false
+            ]); ?>
+        </div>
     </div>
 </div>
 

@@ -39,7 +39,7 @@ class Avatar extends Widget
         $name = Helper::deletedUserTag(true);
         if ($this->author instanceof User) {
             $avatar = Html::img(Helper::defaultAvatar(), [
-                'class' => 'podium-avatar img-responsive center-block',
+                'class' => 'podium-avatar w-100 img-responsive center-block',
                 'alt'   => Html::encode($this->author->podiumName)
             ]);
             $name = $this->author->podiumTag;

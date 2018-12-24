@@ -28,7 +28,9 @@ else {
 ?>
 <div class="row" id="post<?php echo $model->postData->id; ?>">
     <div class="col-sm-2 text-center" id="postAvatar<?php echo $model->postData->id; ?>">
-        <?php echo Avatar::widget(['author' => $model->postData->author, 'showName' => false]); ?>
+        <div class="position-sticky sticky-header">
+            <?php echo Avatar::widget(['author' => $model->postData->author, 'showName' => false]); ?>
+        </div>
     </div>
     <div class="col-sm-10" id="postContent<?php echo $model->postData->id; ?>">
         <div class="popover right podium">

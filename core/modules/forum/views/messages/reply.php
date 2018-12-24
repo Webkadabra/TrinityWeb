@@ -59,7 +59,9 @@ $loggedId = User::loggedId();
         <div <?php echo Helper::replyBgd(); ?>>
             <div class="row">
                 <div class="col-sm-2 text-center">
-                    <?php echo Avatar::widget(['author' => $reply->sender]); ?>
+                    <div class="position-sticky sticky-header">
+                        <?php echo Avatar::widget(['author' => $reply->sender]); ?>
+                    </div>
                 </div>
                 <div class="col-sm-10">
                     <div class="popover right podium">
@@ -79,7 +81,9 @@ $loggedId = User::loggedId();
 <?php if ($reply->reply->sender_id === $loggedId && $reply->reply->sender_status === Message::STATUS_DELETED) { $reply = $reply->reply; continue; } ?>
             <div class="row">
                 <div class="col-sm-2 text-center">
-                    <?php echo Avatar::widget(['author' => $reply->reply->sender]); ?>
+                    <div class="position-sticky sticky-header">
+                        <?php echo Avatar::widget(['author' => $reply->reply->sender]); ?>
+                    </div>
                 </div>
                 <div class="col-sm-10">
                     <div class="popover right podium">

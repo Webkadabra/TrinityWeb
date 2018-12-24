@@ -185,7 +185,7 @@ if ($thread->locked) {
     <div class="card-body">
         <div class="row">
             <div class="col-sm-2 text-center">
-                <div class="card">
+                <div class="card position-sticky sticky-header">
                     <div class="card-body px-0 pt-0 pb-0">
                         <?php echo Avatar::widget(['author' => User::findMe(), 'showName' => false]); ?>
                     </div>
