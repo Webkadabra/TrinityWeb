@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo $this->render('/elements/forum/_sections', ['dataProvider' => $dataProvider]); ?>
     </div>
     <div class="col-sm-3">
-        <div id="layout-widgets">
+        <div id="layout-widgets" class="sticky-header">
             <?php if (!Podium::getInstance()->user->isGuest): ?>
                 <a href="<?php echo Url::to(['forum/unread-posts']); ?>" class="btn btn-info btn-xs btn-block">
                     <span class="glyphicon glyphicon-flash"></span> <?php echo Yii::t('podium/view', 'Unread posts'); ?>
