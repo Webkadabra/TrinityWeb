@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php echo $this->render('/elements/forum/_post', ['model' => $post, 'category' => $post->forum->category->id, 'slug' => $post->thread->slug]); ?>
 <br>
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-2">
+    <div class="col-sm-10 mx-auto">
         <div class="panel panel-default">
             <?php $form = ActiveForm::begin(['id' => 'report-post-form']); ?>
                 <div class="panel-body">

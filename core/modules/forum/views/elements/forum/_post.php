@@ -31,7 +31,7 @@ JS
 $urlThumb = Url::to(['forum/thumb']);
 $this->registerJs(<<<JS
 function thumbVote(link, type, thumb, removeClass, addClass) {
-    var parent = link.closest('.popover.podium');
+    var parent = link.closest('.podium-post-container');
     link.removeClass(removeClass).addClass('disabled text-muted');
     $.post('$urlThumb', {thumb: type, post: link.data('post-id')}, null, 'json')
         .fail(function() {
@@ -56,20 +56,20 @@ JS
 );
 $this->registerJs("$('.podium-thumb-up').click(function(e) { e.preventDefault(); thumbVote($(this), 'up', '.podium-thumb-down', 'btn-success', 'btn-danger'); });");
 $this->registerJs("$('.podium-thumb-down').click(function(e) { e.preventDefault(); thumbVote($(this), 'down', '.podium-thumb-up', 'btn-danger', 'btn-success'); });");
-$this->registerJs("$('.podium-rating').click(function (e) { e.preventDefault(); $('.podium-rating-details').removeClass('hidden'); });");
-$this->registerJs("$('.podium-rating-details').click(function (e) { e.preventDefault(); $('.podium-rating-details').addClass('hidden'); });");
+$this->registerJs("$('.podium-rating').click(function (e) { e.preventDefault(); $('.podium-rating-details').removeClass('d-none'); });");
+$this->registerJs("$('.podium-rating-details').click(function (e) { e.preventDefault(); $('.podium-rating-details').addClass('d-none'); });");
 
 if (!Podium::getInstance()->user->isGuest) {
     $model->markSeen();
 }
 
-$rating = $model->likes - $model->dislikes;
+$rating = abs($model->likes) - abs($model->dislikes);
 $ratingClass = 'default';
+
 if ($rating > 0) {
     $ratingClass = 'success';
     $rating = '+' . $rating;
-}
-elseif ($rating < 0) {
+} elseif ($rating < 0) {
     $ratingClass = 'danger';
 }
 
@@ -94,7 +94,7 @@ if (strpos($model->content, '<pre class="ql-syntax">') !== false) {
                 </div>
             </div>
             <div class="col-sm-10" id="postContent<?php echo $model->id; ?>">
-                <div class="card">
+                <div class="card podium-post-container">
                     <div class="card-header">
                         <div class="card-title mb-0">
                             <small class="float-right">

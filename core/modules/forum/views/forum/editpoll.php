@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
+    <div class="col-sm-10 mx-auto">
         <div class="panel panel-default">
             <?php $form = ActiveForm::begin(['id' => 'edit-poll-form']); ?>
                 <div class="panel-body">

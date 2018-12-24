@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Pjax::end(); ?>
     <br>
     <div class="row">
-        <div class="col-sm-10 col-sm-offset-2">
+        <div class="col-sm-10 mx-auto">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">

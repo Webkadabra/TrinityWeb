@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php if (!empty($preview)): ?>
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
+    <div class="col-sm-10 mx-auto">
         <?php echo Alert::widget([
             'body' => '<strong><small>'
                         . Yii::t('podium/view', 'Post Preview')
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
+    <div class="col-sm-10 mx-auto">
         <div class="panel panel-default">
             <?php $form = ActiveForm::begin(['id' => 'edit-post-form']); ?>
                 <div class="panel-body">

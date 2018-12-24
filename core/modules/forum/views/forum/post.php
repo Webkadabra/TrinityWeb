@@ -19,7 +19,7 @@ $author = User::findMe();
 ?>
 <?php if ($preview): ?>
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-2">
+    <div class="col-sm-10 mx-auto">
         <?php echo Alert::widget([
             'body' => '<strong><small>'
                         . Yii::t('podium/view', 'Post Preview')
@@ -30,39 +30,43 @@ $author = User::findMe();
 </div>
 <?php endif; ?>
 
-<div class="row">
-    <div class="col-sm-2 text-center">
-        <div class="position-sticky sticky-header">
-            <?php echo Avatar::widget(['author' => $author, 'showName' => false]); ?>
-        </div>
-    </div>
-    <div class="col-sm-10">
-        <div class="popover right podium">
-            <div class="arrow"></div>
-            <div class="popover-title">
-                <small class="float-right"><span data-toggle="tooltip" data-placement="bottom" title="<?php echo Yii::t('podium/view', 'As soon as you click Post Reply'); ?>"><?php echo Yii::t('podium/view', 'In a while'); ?></span></small>
-                <?php echo $author->podiumTag; ?>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-2 text-center">
+                <div class="card position-sticky sticky-header">
+                    <div class="card-body px-0 pt-0 pb-0">
+                        <?php echo Avatar::widget(['author' => $author, 'showName' => false]); ?>
+                    </div>
+                    <div class="card-footer">
+                        <?php echo Html::tag('p', $author->podiumTag, ['class' => 'avatar-name']);?>
+                    </div>
+                </div>
             </div>
-            <div class="popover-content podium-content">
-                <?php $form = ActiveForm::begin(['id' => 'new-post-form', 'action' => ['post', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum->id, 'tid' => $thread->id]]); ?>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <?php echo $form->field($model, 'content')->label(false)->widget(EditorFull::class); ?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Post Reply'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
+            <div class="col-sm-10">
+                <div class="card podium-post-container">
+                    <div class="card-body">
+                        <?php $form = ActiveForm::begin(['id' => 'new-post-form', 'action' => ['post', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum->id, 'tid' => $thread->id]]); ?>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <?php echo $form->field($model, 'content')->label(false)->widget(EditorFull::class); ?>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <?php echo Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']); ?>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Post Reply'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <?php echo Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']); ?>
+                                </div>
                             </div>
                         </div>
+                        <?php ActiveForm::end(); ?>
                     </div>
-                <?php ActiveForm::end(); ?>
+                </div>
             </div>
         </div>
     </div>

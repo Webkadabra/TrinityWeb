@@ -262,7 +262,7 @@ if ($thread->locked) {
 <?php endif; ?>
 <?php else: ?>
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-2 text-center">
+    <div class="col-sm-10 mx-auto text-center">
         <div class="card card-danger">
             <div class="card-header">
                 <h3 class="panel-title"><span class="glyphicon glyphicon-lock"></span> <?php echo Yii::t('podium/view', 'This thread is locked.'); ?></h3>

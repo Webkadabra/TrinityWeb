@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php if ($preview): ?>
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
+    <div class="col-sm-10 mx-auto">
         <?php echo Alert::widget([
             'body' => '<strong><small>'
                         . Yii::t('podium/view', 'Post Preview')
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php endif; ?>
 
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
+    <div class="col-sm-10 mx-auto">
         <div class="card">
             <?php $form = ActiveForm::begin(['id' => 'new-thread-form']); ?>
                 <div class="card-body">
