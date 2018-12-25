@@ -11,72 +11,72 @@ class Armory extends Component
      * Type item
      * @return string
      */
-    const TYPE_ITEM = 'item';
+    public const TYPE_ITEM = 'item';
     /**
      * Type quest
      * @return string
      */
-    const TYPE_QUEST = 'quest';
+    public const TYPE_QUEST = 'quest';
     /**
      * Type spell
      * @return string
      */
-    const TYPE_SPELL = 'spell';
+    public const TYPE_SPELL = 'spell';
     /**
      * Type achievement
      * @return string
      */
-    const TYPE_ACHIEVEMENT = 'achievement';
+    public const TYPE_ACHIEVEMENT = 'achievement';
     /**
      * Array of allowed item slots for character
      * @return array
      */
-    const SLOTS = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
+    public const SLOTS = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
     /**
      * Inventory index for head
      * @return integer
      */
-    const INV_HEAD = 0;
+    public const INV_HEAD = 0;
     /**
      * Inventory index for neck
      * @return integer
      */
-    const INV_NECK = 1;
+    public const INV_NECK = 1;
     /**
      * Inventory index for shoulder
      * @return integer
      */
-    const INV_SHOULDER = 2;
+    public const INV_SHOULDER = 2;
     /**
      * Inventory index for shirt
      * @return integer
      */
-    const INV_SHIRT = 3;
+    public const INV_SHIRT = 3;
     /**
      * Inventory index for chest
      * @return integer
      */
-    const INV_CHEST = 4;
+    public const INV_CHEST = 4;
     /**
      * Inventory index for waist(belt)
      * @return integer
      */
-    const INV_BELT = 5;
+    public const INV_BELT = 5;
     /**
      * Inventory index for legs
      * @return integer
      */
-    const INV_LEGS = 6;
+    public const INV_LEGS = 6;
     /**
      * Inventory index for boots
      * @return integer
      */
-    const INV_BOOTS = 7;
+    public const INV_BOOTS = 7;
     /**
      * Inventory index for wrist
      * @return integer
      */
-    const INV_WRIST = 8;
+    public const INV_WRIST = 8;
     /**
      * Inventory index for gloves
      * @return integer

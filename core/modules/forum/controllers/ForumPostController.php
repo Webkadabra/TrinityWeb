@@ -44,6 +44,10 @@ class ForumPostController extends ForumThreadController
      * @param int $tid thread ID
      * @param int $pid post ID
      * @return string|Response
+     * @throws \Throwable
+     * @throws \yii\base\InvalidArgumentException
+     * @throws \yii\base\InvalidParamException
+     * @throws \yii\db\Exception
      */
     public function actionDeletepost($cid = null, $fid = null, $tid = null, $pid = null)
     {
@@ -74,12 +78,12 @@ class ForumPostController extends ForumThreadController
 
         $postData = Yii::$app->request->post('post');
         if ($postData) {
-            if ($postData !== $post->id) {
+            if ($postData != $post->id) {
                 $this->error(Yii::t('podium/flash', 'Sorry! There was an error while deleting the post.'));
             } else {
                 if ($post->podiumDelete()) {
                     $this->success(Yii::t('podium/flash', 'Post has been deleted.'));
-                    if (Thread::find()->where(['id' => $post->thread->id])->exists()) {
+                    if (!Thread::find()->where(['id' => $postData])->exists()) {
                         return $this->redirect([
                             'forum/forum',
                             'cid'  => $post->forum->category->id,
@@ -110,6 +114,10 @@ class ForumPostController extends ForumThreadController
      * @param int $id thread ID
      * @param string $slug thread slug
      * @return string|Response
+     * @throws \Throwable
+     * @throws \yii\base\InvalidArgumentException
+     * @throws \yii\base\InvalidParamException
+     * @throws \yii\db\Exception
      */
     public function actionDeleteposts($cid = null, $fid = null, $id = null, $slug = null)
     {
@@ -173,6 +181,8 @@ class ForumPostController extends ForumThreadController
      * @param int $tid thread ID
      * @param int $pid post ID
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
+     * @throws \yii\base\InvalidParamException
      */
     public function actionEdit($cid = null, $fid = null, $tid = null, $pid = null)
     {
@@ -242,6 +252,9 @@ class ForumPostController extends ForumThreadController
      * @param int $id thread ID
      * @param string $slug thread slug
      * @return string|Response
+     * @throws \Throwable
+     * @throws \yii\base\InvalidArgumentException
+     * @throws \yii\base\InvalidParamException
      */
     public function actionMoveposts($cid = null, $fid = null, $id = null, $slug = null)
     {
@@ -358,6 +371,8 @@ class ForumPostController extends ForumThreadController
      * @param int $tid thread ID
      * @param int $pid ID of post to reply to
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
+     * @throws \yii\base\InvalidParamException
      */
     public function actionPost($cid = null, $fid = null, $tid = null, $pid = null)
     {
@@ -413,7 +428,7 @@ class ForumPostController extends ForumThreadController
                 } else {
                     if ($model->podiumNew($previous)) {
                         $this->success(Yii::t('podium/flash', 'New reply has been added.'));
-                        if (!empty($previous) && $previous->author_id === User::loggedId() && $this->module->podiumConfig->get('merge_posts')) {
+                        if (!empty($previous) && $previous->author_id === User::loggedId() && $this->module->podiumConfig->get('forum.merge_posts')) {
                             return $this->redirect(['forum/show', 'id' => $previous->id]);
                         }
 
@@ -440,6 +455,8 @@ class ForumPostController extends ForumThreadController
      * @param int $tid thread ID
      * @param int $pid post ID
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
+     * @throws \yii\base\InvalidParamException
      */
     public function actionReport($cid = null, $fid = null, $tid = null, $pid = null)
     {
@@ -497,6 +514,7 @@ class ForumPostController extends ForumThreadController
     /**
      * Voting on the post.
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionThumb()
     {
@@ -589,6 +607,7 @@ class ForumPostController extends ForumThreadController
     /**
      * Marking all unread posts as seen.
      * @return Response
+     * @throws \Exception
      */
     public function actionMarkSeen()
     {

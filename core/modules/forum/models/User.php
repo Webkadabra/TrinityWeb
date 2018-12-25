@@ -20,10 +20,10 @@ class User extends UserActiveRecord
     /**
      * Responses.
      */
-    const RESP_ERR = 0;
-    const RESP_OK = 1;
-    const RESP_EMAIL_SEND_ERR = 2;
-    const RESP_NO_EMAIL_ERR = 3;
+    public const RESP_ERR = 0;
+    public const RESP_OK = 1;
+    public const RESP_EMAIL_SEND_ERR = 2;
+    public const RESP_NO_EMAIL_ERR = 3;
 
     /**
      * @var string CAPTCHA.
@@ -76,24 +76,11 @@ class User extends UserActiveRecord
                 return true;
             } catch (Exception $e) {
                 $transaction->rollBack();
-                Log::error($e->getMefssage(), null, __METHOD__);
+                Log::error($e->getMessage(), null, __METHOD__);
             }
         }
 
         return false;
-    }
-
-    /**
-     * Changes email address.
-     * @return bool
-     */
-    public function changeEmail()
-    {
-        $this->email = $this->new_email;
-        $this->new_email = null;
-        $this->removeEmailToken();
-
-        return $this->save();
     }
 
     /**
@@ -446,12 +433,6 @@ class User extends UserActiveRecord
      */
     public function saveChanges()
     {
-        if (!empty($this->newPassword)) {
-            $this->setPassword($this->newPassword);
-        }
-        if (!empty($this->new_email)) {
-            $this->generateEmailToken();
-        }
         $updateActivityName = $this->isAttributeChanged('username');
         if (!$this->save(false)) {
             return false;
@@ -469,6 +450,7 @@ class User extends UserActiveRecord
      * @param array $params name-value pairs that would be passed to the rules.
      * @param bool $allowCaching whether to allow caching the result.
      * @return bool
+     * @throws \yii\base\InvalidParamException
      */
     public static function can($permissionName, $params = [], $allowCaching = true)
     {
@@ -603,6 +585,7 @@ class User extends UserActiveRecord
      * Returns JSON list of members matching query.
      * @param string $query
      * @return string
+     * @throws \yii\base\InvalidArgumentException
      * @since 0.2
      */
     public static function getMembersList($query = null)
@@ -700,7 +683,7 @@ class User extends UserActiveRecord
 
     /**
      * Returns current user based on module configuration.
-     * @return \core\models\User
+     * @return User
      */
     public static function findMe()
     {

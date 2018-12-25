@@ -211,7 +211,7 @@ class ForumController extends ForumPostController
             'slug' => $thread->slug
         ];
 
-        $count = $thread->postsCount;
+        $count = $thread->posts;
         $page = floor($count / 10) + 1;
         if ($page > 1) {
             $url['page'] = $page;
@@ -324,7 +324,7 @@ class ForumController extends ForumPostController
     public function setMetaTags($keywords = null, $description = null)
     {
         if (empty($keywords)) {
-            $keywords = $this->module->podiumConfig->get('meta_keywords');
+            $keywords = $this->module->podiumConfig->get('forum.meta_keywords');
         }
         if ($keywords) {
             $this->getView()->registerMetaTag([
@@ -333,7 +333,7 @@ class ForumController extends ForumPostController
             ]);
         }
         if (empty($description)) {
-            $description = $this->module->podiumConfig->get('meta_description');
+            $description = $this->module->podiumConfig->get('forum.meta_description');
         }
         if ($description) {
             $this->getView()->registerMetaTag([

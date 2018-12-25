@@ -16,10 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
-        <div class="panel panel-default">
+    <div class="col-sm-8 mx-auto">
+        <div class="card">
             <?php echo Html::beginForm(); ?>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
                             <?php echo Html::label(Yii::t('podium/view', 'Select a forum for this thread to be moved to'), 'forum'); ?>
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <div class="row">
                         <div class="col-sm-12">
                             <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Move Thread'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>

@@ -28,7 +28,7 @@ $config = [
             'cacheComponent' => 'cache',
             'userNameField'  => 'username',
             'layout'         => 'main-forum',
-            'layoutPath'     => '@frontend/views/layouts'
+            'layoutPath'     => '@frontend/views/layouts',
         ],
     ],
     'components' => [

@@ -133,6 +133,7 @@ class AppController extends Controller
 
     /**
      * @throws Exception
+     * @throws \yii\base\InvalidArgumentException
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
      */
@@ -200,6 +201,7 @@ class AppController extends Controller
 
     /**
      * @param $paths
+     * @throws \yii\base\InvalidArgumentException
      */
     private function setExecutable($paths)
     {

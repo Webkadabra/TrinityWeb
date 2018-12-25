@@ -4,6 +4,7 @@ namespace core\modules\forum\filters;
 
 use core\modules\forum\Podium;
 use Yii;
+use yii\helpers\Url;
 
 /**
  * Permission denied access rule
@@ -40,7 +41,7 @@ class LoginRequiredRule extends PodiumRoleRule
         $this->denyCallback = function () {
             Yii::$app->session->addFlash($this->type, $this->message, true);
 
-            return Yii::$app->response->redirect([Podium::getInstance()->prepareRoute('account/login')]);
+            return Yii::$app->response->redirect(Url::to(['/auth/sign-in']));
         };
     }
 }

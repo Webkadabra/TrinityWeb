@@ -19,9 +19,9 @@ use yii\helpers\VarDumper;
  */
 class Installation extends Maintenance
 {
-    const DEFAULT_USERNAME = 'admin';
-    const SESSION_KEY = 'podium-installation';
-    const SESSION_STEPS = 'steps';
+    public const DEFAULT_USERNAME = 'admin';
+    public const SESSION_KEY = 'podium-installation';
+    public const SESSION_STEPS = 'steps';
 
     /**
      * @var array Installation steps

@@ -67,10 +67,6 @@ class BaseController extends YiiController
         if ($maintenance !== false) {
             return $maintenance;
         }
-        $email = $this->emailCheck($warnings);
-        if ($email !== false) {
-            return $email;
-        }
         $upgrade = $this->upgradeCheck($warnings);
         if ($upgrade !== false) {
             return $upgrade;
@@ -110,7 +106,7 @@ class BaseController extends YiiController
      */
     public function maintenanceCheck($action, $warnings)
     {
-        if ($this->module->podiumConfig->get('maintenance_mode') !== '1') {
+        if ($this->module->podiumConfig->get('forum.maintenance_mode') !== '1') {
             return false;
         }
         if ($action->id === 'maintenance') {
@@ -130,29 +126,6 @@ class BaseController extends YiiController
         $this->warning(static::warnings()['maintenance'], false);
         if (!User::can(User::ROLE_ADMINISTRATOR)) {
             return $this->redirect(['forum/maintenance']);
-        }
-
-        return false;
-    }
-
-    /**
-     * Performs email check.
-     * @param array $warnings Flash warnings
-     * @return bool
-     * @since 0.2
-     */
-    public function emailCheck($warnings)
-    {
-        if ($warnings) {
-            foreach ($warnings as $warning) {
-                if ($warning === static::warnings()['email']) {
-                    return false;
-                }
-            }
-        }
-        $user = User::findMe();
-        if ($user && empty($user->email)) {
-            $this->warning(static::warnings()['email'], false);
         }
 
         return false;

@@ -1,17 +1,28 @@
 <?php
 
+use core\modules\forum\models\Thread;
 use core\modules\forum\Podium;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
-//$this->registerJs("$('[data-toggle=\"popover\"]').popover();");
+/** @var Thread $model */
 $firstToSee = $model->firstToSee();
 ?>
 <td class="podium-thread-line col-6">
-    <a href="<?php echo Url::to(['forum/show', 'id' => $firstToSee->id]); ?>" class="podium-go-to-new float-right" style="margin-right:10px" data-pjax="0" data-toggle="popover" data-container="body" data-placement="left" data-trigger="hover focus" data-html="true" data-content="<small><?php echo str_replace('"', '&quote;', StringHelper::truncateWords($firstToSee->parsedContent, 20, '...', true)); ?><br><strong><?php echo $firstToSee->author->podiumName; ?></strong> <?php echo Podium::getInstance()->formatter->asRelativeTime($firstToSee->updated_at); ?></small>" title="<?php echo Yii::t('podium/view', 'First New Post'); ?>">
-        <span class="glyphicon glyphicon-leaf"></span>
-    </a>
+    <?php
+    if($firstToSee) {
+        ?>
+        <a href="<?php echo Url::to(['forum/show', 'id' => $firstToSee->id]); ?>" class="podium-go-to-new float-right"
+           style="margin-right:10px" data-pjax="0" data-toggle="popover" data-container="body" data-placement="left"
+           data-trigger="hover focus" data-html="true"
+           data-content="<small><?php echo str_replace('"', '&quote;', StringHelper::truncateWords($firstToSee->parsedContent, 20, '...', true)); ?><br><strong><?php echo $firstToSee->author->podiumName; ?></strong> <?php echo Podium::getInstance()->formatter->asRelativeTime($firstToSee->updated_at); ?></small>"
+           title="<?php echo Yii::t('podium/view', 'First New Post'); ?>">
+            <span class="glyphicon glyphicon-leaf"></span>
+        </a>
+        <?php
+    }
+    ?>
     <a href="<?php echo Url::to(['forum/thread', 'cid' => $model->category_id, 'fid' => $model->forum_id, 'id' => $model->id, 'slug' => $model->slug]); ?>" class="d-none float-left btn btn-<?php echo $model->getCssClass(); ?>" style="margin-right:10px" data-pjax="0" data-toggle="tooltip" data-placement="top" title="<?php echo $model->getDescription(); ?>">
         <span class="glyphicon glyphicon-<?php echo $model->getIcon(); ?>"></span>
     </a>

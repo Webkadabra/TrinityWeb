@@ -27,7 +27,7 @@ class MessagesController extends BaseController
             'access' => [
                 'class'        => AccessControl::class,
                 'denyCallback' => function ($rule, $action) {
-                    return $this->redirect(['account/login']);
+                    return $this->redirect(['/auth/sign-in']);
                 },
                 'rules' => [
                     ['class' => 'core\modules\forum\filters\InstallRule'],
@@ -61,9 +61,17 @@ class MessagesController extends BaseController
         ];
     }
 
+    public function init()
+    {
+        $parentReturn = parent::init();
+        $this->layout = 'main';
+        return $parentReturn;
+    }
+
     /**
      * Listing the messages inbox.
      * @return string
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionInbox()
     {
@@ -79,6 +87,7 @@ class MessagesController extends BaseController
      * Adding a new message.
      * @param int $user message receiver's ID
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionNew($user = null)
     {
@@ -156,6 +165,7 @@ class MessagesController extends BaseController
      * Replying to the message of given ID.
      * @param int $id
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionReply($id = null)
     {
@@ -205,6 +215,7 @@ class MessagesController extends BaseController
     /**
      * Listing the sent messages.
      * @return string
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionSent()
     {
@@ -220,6 +231,7 @@ class MessagesController extends BaseController
      * Viewing the sent message of given ID.
      * @param int $id
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionViewSent($id = null)
     {
@@ -246,6 +258,7 @@ class MessagesController extends BaseController
      * Viewing the received message of given ID.
      * @param int $id
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionViewReceived($id = null)
     {
@@ -271,6 +284,7 @@ class MessagesController extends BaseController
     /**
      * Loads older messages in thread.
      * @return string
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionLoad()
     {

@@ -1,22 +1,12 @@
 <?php
 
-/**
- * Podium Module
- * Yii 2 Forum Module
- */
-
 use core\modules\forum\Podium;
 use core\modules\forum\widgets\Avatar;
 use yii\helpers\Html;
 
 ?>
-<div class="row">
-    <div class="col-sm-2 text-center">
-        <div class="position-sticky sticky-header">
-            <?php echo Avatar::widget(['author' => $reply->reply->sender]); ?>
-        </div>
-    </div>
-    <div class="col-sm-10">
+<div class="row mt-3">
+    <div class="col-12">
         <div class="popover right podium">
             <div class="arrow"></div>
             <div class="popover-title">

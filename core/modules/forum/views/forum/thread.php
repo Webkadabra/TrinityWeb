@@ -110,10 +110,7 @@ $this->registerJs("var anchor = window.location.hash; if (anchor.match(/^#post[0
 <div class="row mt-3">
     <div class="col-sm-12 text-right">
         <ul class="list-inline">
-<?php if (Podium::getInstance()->user->isGuest): ?>
-            <li class="list-inline-item"><a href="<?php echo Url::to(['account/login']); ?>" class="btn btn-primary btn-sm"><?php echo Yii::t('podium/view', 'Sign in to reply'); ?></a></li>
-            <li class="list-inline-item"><a href="<?php echo Url::to(['account/register']); ?>" class="btn btn-success btn-sm"><?php echo Yii::t('podium/view', 'Register new account'); ?></a></li>
-<?php else: ?>
+<?php if (!Podium::getInstance()->user->isGuest): ?>
             <?php if (
                 User::can(Rbac::PERM_CREATE_THREAD,['category' => $thread->forum->category]) ||
                 User::can(Rbac::PERM_CREATE_IN_CLOSED_CATEGORY)
@@ -173,93 +170,85 @@ if ($thread->locked) {
 <?php Pjax::end(); ?>
 
 <?php if ($thread->locked === 0 || ($thread->locked === 1 && User::can(Rbac::PERM_UPDATE_THREAD, ['item' => $thread]))): ?>
-<?php if (!Podium::getInstance()->user->isGuest): ?>
-<br>
-<div class="row">
-    <div class="col-sm-12 text-right">
-        <a href="<?php echo Url::to(['forum/post', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum->id, 'tid' => $thread->id]); ?>" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-leaf"></span> <?php echo Yii::t('podium/view', 'New Reply'); ?></a>
+    <?php if (!Podium::getInstance()->user->isGuest): ?>
+    <br>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <a href="<?php echo Url::to(['forum/post', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum->id, 'tid' => $thread->id]); ?>" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-leaf"></span> <?php echo Yii::t('podium/view', 'New Reply'); ?></a>
+        </div>
     </div>
-</div>
-<br>
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-2 text-center">
-                <div class="card position-sticky sticky-header">
-                    <div class="card-body px-0 pt-0 pb-0">
-                        <?php echo Avatar::widget(['author' => User::findMe(), 'showName' => false]); ?>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-2 text-center">
+                    <div class="card position-sticky sticky-header">
+                        <div class="card-body px-0 pt-0 pb-0">
+                            <?php echo Avatar::widget(['author' => User::findMe(), 'showName' => false]); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-10">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title mb-0">
-                            <small class="float-right">
-                                <?php echo Html::tag('span', Yii::t('podium/view', 'In a while'), [
-                                        'data-toggle'    => 'tooltip',
-                                        'data-placement' => 'top',
-                                        'title'          => Yii::t('podium/view', 'As soon as you click Post Reply')
-                                    ]
-                                ); ?>
-                            </small>
-                            <strong>
-                                <?php echo Yii::t('podium/view', 'Post Quick Reply'); ?>
-                            </strong>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <?php $form = ActiveForm::begin(['id' => 'new-quick-post-form', 'action' => ['post', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum->id, 'tid' => $thread->id]]); ?>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <?php echo $form->field($model, 'content')->label(false)->widget(\core\modules\forum\widgets\editor\EditorFull::class); ?>
+                <div class="col-sm-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title mb-0">
+                                <small class="float-right">
+                                    <?php echo Html::tag('span', Yii::t('podium/view', 'In a while'), [
+                                            'data-toggle'    => 'tooltip',
+                                            'data-placement' => 'top',
+                                            'title'          => Yii::t('podium/view', 'As soon as you click Post Reply')
+                                        ]
+                                    ); ?>
+                                </small>
+                                <strong>
+                                    <?php echo Yii::t('podium/view', 'Post Quick Reply'); ?>
+                                </strong>
                             </div>
                         </div>
-                        <?php if (!$thread->subscription): ?>
+                        <div class="card-body">
+                            <?php $form = ActiveForm::begin(['id' => 'new-quick-post-form', 'action' => ['post', 'cid' => $thread->forum->category->id, 'fid' => $thread->forum->id, 'tid' => $thread->id]]); ?>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <?php
-                                    $field = $form->field($model, 'subscribe', ['options' => [
-                                        'class' => 'position-relative'
-                                    ]]);
-                                    $field->template = '{input} {label}';
-                                    echo $field->checkbox([], false)->label(Yii::t('podium/view', 'Subscribe to this thread'),[
-                                        'class' => 'checkbox-label'
-                                    ]);
-                                    ?>
+                                    <?php echo $form->field($model, 'content')->label(false)->widget(\core\modules\forum\widgets\editor\EditorFull::class); ?>
                                 </div>
                             </div>
-                        <?php else: ?>
-                            <?php echo Html::activeHiddenInput($model, 'subscribe'); ?>
-                        <?php endif; ?>
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <div class="form-group">
-                                    <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Post Quick Reply'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
+                            <?php if (!$thread->subscription): ?>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <?php
+                                        $field = $form->field($model, 'subscribe', ['options' => [
+                                            'class' => 'position-relative'
+                                        ]]);
+                                        $field->template = '{input} {label}';
+                                        echo $field->checkbox([], false)->label(Yii::t('podium/view', 'Subscribe to this thread'),[
+                                            'class' => 'checkbox-label'
+                                        ]);
+                                        ?>
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <?php echo Html::activeHiddenInput($model, 'subscribe'); ?>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Post Quick Reply'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <?php echo Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']); ?>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <?php echo Html::submitButton('<span class="glyphicon glyphicon-eye-open"></span> ' . Yii::t('podium/view', 'Preview'), ['class' => 'btn btn-block btn-default', 'name' => 'preview-button']); ?>
-                                </div>
-                            </div>
+                            <?php ActiveForm::end(); ?>
                         </div>
-                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<?php else: ?>
-<div class="row mt-4">
-    <br>
-    <div class="col-sm-12 text-right">
-        <a href="<?php echo Url::to(['account/login']); ?>" class="btn btn-primary"><?php echo Yii::t('podium/view', 'Sign in to reply'); ?></a>
-        <a href="<?php echo Url::to(['account/register']); ?>" class="btn btn-success"><?php echo Yii::t('podium/view', 'Register new account'); ?></a>
-    </div>
-</div>
-<?php endif; ?>
+    <?php endif; ?>
 <?php else: ?>
 <div class="row">
     <div class="col-sm-10 mx-auto text-center">

@@ -604,6 +604,98 @@ return [
         ],
     ],
     [
+        'table' => 'message',
+        'call' => 'createTable',
+        'data' => [
+            'schema' => [
+                'id' => Schema::TYPE_PK,
+                'sender_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+                'topic' => Schema::TYPE_STRING . ' NOT NULL',
+                'content' => Schema::TYPE_TEXT . ' NOT NULL',
+                'sender_status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 1',
+                'replyto' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 0',
+                'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            ],
+        ],
+    ],
+    [
+        'table' => 'message',
+        'call' => 'addIndex',
+        'data' => [
+            'name' => 'topic',
+            'cols' => ['topic'],
+        ],
+    ],
+    [
+        'table' => 'message',
+        'call' => 'addIndex',
+        'data' => [
+            'name' => 'replyto',
+            'cols' => ['replyto'],
+        ],
+    ],
+    [
+        'table' => 'message',
+        'call' => 'addIndex',
+        'data' => [
+            'name' => 'sent',
+            'cols' => ['sender_id', 'sender_status'],
+        ],
+    ],
+    [
+        'table' => 'message',
+        'call' => 'addForeign',
+        'data' => [
+            'key' => 'sender_id',
+            'ref' => 'users',
+            'col' => 'id',
+            'update' => 'CASCADE',
+        ],
+    ],
+    [
+        'table' => 'message_receiver',
+        'call' => 'createTable',
+        'data' => [
+            'schema' => [
+                'id' => Schema::TYPE_PK,
+                'message_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+                'receiver_id' => Schema::TYPE_INTEGER . ' NOT NULL',
+                'receiver_status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 1',
+                'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+                'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            ],
+        ],
+    ],
+    [
+        'table' => 'message_receiver',
+        'call' => 'addIndex',
+        'data' => [
+            'name' => 'inbox',
+            'cols' => ['receiver_id', 'receiver_status'],
+        ],
+    ],
+    [
+        'table' => 'message_receiver',
+        'call' => 'addForeign',
+        'data' => [
+            'key' => 'message_id',
+            'ref' => 'message',
+            'col' => 'id',
+            'update' => 'CASCADE',
+        ],
+    ],
+    [
+        'table' => 'message_receiver',
+        'call' => 'addForeign',
+        'data' => [
+            'key' => 'receiver_id',
+            'ref' => 'users',
+            'col' => 'id',
+            'update' => 'CASCADE',
+        ],
+    ],
+    [
         'table' => 'content',
         'call'  => 'addContent',
         'data'  => [],

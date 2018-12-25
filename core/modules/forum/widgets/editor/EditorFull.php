@@ -29,7 +29,7 @@ class EditorFull extends InputWidget
             'value'     => $this->value,
             'options'   => $this->options
         ];
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+        if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
             $config['type'] = 'full';
             $this->editor = new CodeMirror($config);
         } else {

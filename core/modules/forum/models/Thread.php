@@ -17,24 +17,27 @@ use yii\db\Expression;
  * Thread model
  *
  * @property string $parsedPost
+ * @property string $icon
+ * @property string $description
+ * @property string $cssClass
  */
 class Thread extends ThreadActiveRecord
 {
     /**
      * Color classes.
      */
-    const CLASS_DEFAULT = 'default';
-    const CLASS_EDITED = 'warning';
-    const CLASS_NEW = 'success';
+    public const CLASS_DEFAULT = 'default';
+    public const CLASS_EDITED = 'warning';
+    public const CLASS_NEW = 'success';
 
     /**
      * Icon classes.
      */
-    const ICON_HOT = 'fire';
-    const ICON_LOCKED = 'lock';
-    const ICON_NEW = 'leaf';
-    const ICON_NO_NEW = 'comment';
-    const ICON_PINNED = 'pushpin';
+    public const ICON_HOT = 'fire';
+    public const ICON_LOCKED = 'lock';
+    public const ICON_NEW = 'leaf';
+    public const ICON_NO_NEW = 'comment';
+    public const ICON_PINNED = 'pushpin';
 
     /**
      * Returns first post to see.
@@ -73,7 +76,7 @@ class Thread extends ThreadActiveRecord
                 $query->andWhere(['locked' => 1]);
             }
             if (!empty($filters['hot']) && $filters['hot'] === 1) {
-                $query->andWhere(['>=', 'posts', Podium::getInstance()->podiumConfig->get('hot_minimum')]);
+                $query->andWhere(['>=', 'posts', Podium::getInstance()->podiumConfig->get('forum.hot_minimum')]);
             }
             if (!empty($filters['new']) && $filters['new'] === 1 && !Podium::getInstance()->user->isGuest) {
                 $query->joinWith(['threadView tvn' => function ($q) use ($loggedId) {
@@ -150,7 +153,7 @@ class Thread extends ThreadActiveRecord
         } elseif ($this->pinned) {
             $icon = self::ICON_PINNED;
             $append = true;
-        } elseif ($this->posts >= Podium::getInstance()->podiumConfig->get('hot_minimum')) {
+        } elseif ($this->posts >= Podium::getInstance()->podiumConfig->get('forum.hot_minimum')) {
             $icon = self::ICON_HOT;
             $append = true;
         }
@@ -188,7 +191,7 @@ class Thread extends ThreadActiveRecord
         } elseif ($this->pinned) {
             $description = Yii::t('podium/view', 'Pinned Thread');
             $append = true;
-        } elseif ($this->posts >= Podium::getInstance()->podiumConfig->get('hot_minimum')) {
+        } elseif ($this->posts >= Podium::getInstance()->podiumConfig->get('forum.hot_minimum')) {
             $description = Yii::t('podium/view', 'Hot Thread');
             $append = true;
         }
@@ -242,6 +245,7 @@ class Thread extends ThreadActiveRecord
      * Checks if user is this thread moderator.
      * @param int $userId
      * @return bool
+     * @throws \yii\base\InvalidParamException
      */
     public function isMod($userId = null)
     {
@@ -258,18 +262,20 @@ class Thread extends ThreadActiveRecord
     /**
      * Performs thread delete with parent forum counters update.
      * @return bool
+     * @throws \Throwable
+     * @throws \yii\db\Exception
      * @since 0.2
      */
     public function podiumDelete()
     {
-        $transaction = Thread::getDb()->beginTransaction();
+        $transaction = self::getDb()->beginTransaction();
         try {
             if (!$this->delete()) {
                 throw new Exception('Thread deleting error!');
             }
             $this->forum->updateCounters([
                 'threads' => -1,
-                'posts'   => -$this->postsCount
+                'posts'   => -$this->posts
             ]);
             $transaction->commit();
             PodiumCache::clearAfter('threadDelete');
@@ -287,8 +293,9 @@ class Thread extends ThreadActiveRecord
     /**
      * Performs thread posts delete with parent forum counters update.
      * @param array $posts posts IDs
-     * @throws Exception
      * @return bool
+     * @throws \Throwable
+     * @throws \yii\db\Exception
      * @since 0.2
      */
     public function podiumDeletePosts($posts)
@@ -315,8 +322,8 @@ class Thread extends ThreadActiveRecord
                 }
             }
             $wholeThread = false;
-            if ($this->postsCount) {
-                $this->updateCounters(['posts' => -count($posts)]);
+            $this->updateCounters(['posts' => -count($posts)]);
+            if ($this->posts) {
                 $this->forum->updateCounters(['posts' => -count($posts)]);
             } else {
                 $wholeThread = true;
@@ -359,6 +366,7 @@ class Thread extends ThreadActiveRecord
      * Performs thread move with counters update.
      * @param int $target new parent forum's ID
      * @return bool
+     * @throws \yii\db\Exception
      * @since 0.2
      */
     public function podiumMoveTo($target = null)
@@ -370,7 +378,7 @@ class Thread extends ThreadActiveRecord
             return false;
         }
 
-        $postsCount = $this->postsCount;
+        $postsCount = $this->posts;
         $transaction = Forum::getDb()->beginTransaction();
         try {
             $this->forum->updateCounters(['threads' => -1, 'posts' => -$postsCount]);
@@ -401,6 +409,7 @@ class Thread extends ThreadActiveRecord
      * @param string $name new thread name if $target = 0
      * @param type $forum new thread parent forum if $target = 0
      * @throws Exception
+     * @throws \Throwable
      * @return bool
      * @since 0.2
      */
@@ -408,12 +417,12 @@ class Thread extends ThreadActiveRecord
     {
         $transaction = static::getDb()->beginTransaction();
         try {
-            if ($target === 0) {
+            if ($target == 0) {
                 $parent = Forum::find()->where(['id' => $forum])->limit(1)->one();
                 if (empty($parent)) {
                     throw new Exception('No parent forum of given ID found');
                 }
-                $newThread = new Thread();
+                $newThread = new self();
                 $newThread->name = $name;
                 $newThread->posts = 0;
                 $newThread->views = 0;
@@ -423,8 +432,9 @@ class Thread extends ThreadActiveRecord
                 if (!$newThread->save()) {
                     throw new Exception('Thread saving error!');
                 }
+                $newThread->forum->updateCounters(['threads' => 1]);
             } else {
-                $newThread = Thread::find()->where(['id' => $target])->limit(1)->one();
+                $newThread = self::find()->where(['id' => $target])->limit(1)->one();
                 if (empty($newThread)) {
                     throw new Exception('No thread of given ID found');
                 }
@@ -454,8 +464,8 @@ class Thread extends ThreadActiveRecord
                 }
             }
             $wholeThread = false;
-            if ($this->postCount) {
-                $this->updateCounters(['posts' => -count($posts)]);
+            $this->updateCounters(['posts' => -count($posts)]);
+            if ($this->posts) {
                 $this->forum->updateCounters(['posts' => -count($posts)]);
             } else {
                 $wholeThread = true;
@@ -483,6 +493,7 @@ class Thread extends ThreadActiveRecord
      * Performs new thread with first post creation and subscription.
      * Saves thread poll.
      * @return bool
+     * @throws \yii\db\Exception
      * @since 0.2
      */
     public function podiumNew()
@@ -495,7 +506,7 @@ class Thread extends ThreadActiveRecord
 
             $loggedIn = User::loggedId();
 
-            if ($this->pollAdded && Podium::getInstance()->podiumConfig->get('allow_polls')) {
+            if ($this->pollAdded && Podium::getInstance()->podiumConfig->get('forum.allow_polls')) {
                 $poll = new Poll();
                 $poll->thread_id = $this->id;
                 $poll->question = $this->pollQuestion;
@@ -592,7 +603,7 @@ class Thread extends ThreadActiveRecord
                 throw new Exception('User ID missing');
             }
             $updateBatch = [];
-            $threadsPrevMarked = Thread::find()->joinWith(['threadView' => function ($q) use ($loggedId) {
+            $threadsPrevMarked = self::find()->joinWith(['threadView' => function ($q) use ($loggedId) {
                 $q->onCondition(['user_id' => $loggedId]);
                 $q->andWhere(['or',
                         new Expression('new_last_seen < new_post_at'),
@@ -611,7 +622,7 @@ class Thread extends ThreadActiveRecord
             }
 
             $insertBatch = [];
-            $threadsNew = Thread::find()->joinWith(['threadView' => function ($q) use ($loggedId) {
+            $threadsNew = self::find()->joinWith(['threadView' => function ($q) use ($loggedId) {
                 $q->onCondition(['user_id' => $loggedId]);
                 $q->andWhere(['new_last_seen' => null]);
             }], false);
@@ -639,7 +650,7 @@ class Thread extends ThreadActiveRecord
      */
     public function getParsedPost()
     {
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+        if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
             $parser = new GithubMarkdown();
             $parser->html5 = true;
 

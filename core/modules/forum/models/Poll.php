@@ -121,6 +121,8 @@ class Poll extends PollActiveRecord
     /**
      * Performs poll delete with answers and votes.
      * @return bool
+     * @throws \Throwable
+     * @throws \yii\db\Exception
      */
     public function podiumDelete()
     {

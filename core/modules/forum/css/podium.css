@@ -32,7 +32,6 @@ body { padding-top:20px; padding-bottom:20px }
 .select2-container--krajee .select2-results__option--highlighted[aria-selected] { background-color: #d9edf7 !important }
 @-moz-document url-prefix() { fieldset { display: table-cell }}
 .dropdown-menu {color: inherit;}
-.input-group-text {background-color: #252525;border: 1px solid #191919;}
 #forum-content .card {
     border: 0;
     -webkit-box-shadow: none;

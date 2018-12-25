@@ -17,18 +17,12 @@ $items = [['label' => Yii::t('podium/view', 'Home'), 'url' => ['forum/index']]];
 $podiumModule = Podium::getInstance();
 
 if (Podium::getInstance()->user->isGuest) {
-    if (Podium::getInstance()->podiumConfig->get('members_visible')) {
+    if (Podium::getInstance()->podiumConfig->get('forum.members_visible')) {
         $items[] = [
             'label'  => Yii::t('podium/view', 'Members'),
             'url'    => ['members/index'],
             'active' => $this->context->id === 'members'
         ];
-    }
-    if ($podiumModule->userComponent === true && $this->context->accessType === 1) {
-        if ($podiumModule->podiumConfig->get('registration_off') !== '1') {
-            $items[] = ['label' => Yii::t('podium/view', 'Register'), 'url' => $podiumModule->registerUrl];
-        }
-        $items[] = ['label' => Yii::t('podium/view', 'Sign in'), 'url' => $podiumModule->loginUrl];
     }
 } else {
     $podiumUser = User::findMe();
@@ -73,7 +67,7 @@ if (Podium::getInstance()->user->isGuest) {
 }
 
 NavBar::begin([
-    'brandLabel'            => $podiumModule->podiumConfig->get('name'),
+    'brandLabel'            => $podiumModule->podiumConfig->get('forum.name'),
     'brandUrl'              => ['forum/index'],
     'options'               => ['class' => 'navbar-inverse navbar-default', 'id' => 'top'],
     'innerContainerOptions' => ['class' => 'container-fluid',]

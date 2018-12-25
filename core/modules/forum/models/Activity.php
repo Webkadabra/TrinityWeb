@@ -46,6 +46,8 @@ class Activity extends ActivityActiveRecord
     /**
      * Deletes user activity.
      * @param int $id
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public static function deleteUser($id)
     {

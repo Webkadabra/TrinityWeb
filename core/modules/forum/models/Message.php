@@ -213,7 +213,7 @@ class Message extends MessageActiveRecord
             $logged = User::loggedId();
             $this->sender_id = $logged;
             $this->topic = Yii::t('podium/view', 'Complaint about the post #{id}', ['id' => $post->id]);
-            if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+            if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
                 $this->content .= "\n\n---\n"
                             . '[' . Yii::t('podium/view', 'Direct link to this post') . '](' . Url::to(['forum/show', 'id' => $post->id]) . ')'
                             . "\n\n---\n"
@@ -282,7 +282,7 @@ class Message extends MessageActiveRecord
      */
     public function getParsedContent()
     {
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+        if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
             $parser = new GithubMarkdown();
             $parser->html5 = true;
 

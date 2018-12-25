@@ -18,6 +18,8 @@ use yii\db\ActiveQuery;
  * @property string $ip
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $user_slug [varchar(255)]
+ * @property int $anonymous [smallint(6)]
  *
  * @property User $user
  */

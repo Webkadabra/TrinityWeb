@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Podium Module
- * Yii 2 Forum Module
- */
-
 use yii\helpers\Html;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
@@ -19,8 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
     <div class="col-sm-12">
-        <div class="panel panel-warning">
-            <div class="panel-heading">
+        <div class="card bg-warning">
+            <div class="card-header">
                 <strong><?php echo Yii::t('podium/view', 'Select posts to move'); ?></strong>:
             </div>
         </div>
@@ -29,20 +24,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php echo Html::beginForm(); ?>
 <?php Pjax::begin(); ?>
-<?php echo ListView::widget([
-    'dataProvider'     => $dataProvider,
-    'itemView'         => '/elements/forum/_post_select',
-    'summary'          => '',
-    'emptyText'        => Yii::t('podium/view', 'No posts have been added yet.'),
-    'emptyTextOptions' => ['tag' => 'h3', 'class' => 'text-muted'],
-    'pager'            => ['options' => ['class' => 'pagination float-right']]
-]);  ?>
+    <?php echo ListView::widget([
+        'dataProvider'     => $dataProvider,
+        'itemView'         => '/elements/forum/_post_select',
+        'summary'          => '',
+        'emptyText'        => Yii::t('podium/view', 'No posts have been added yet.'),
+        'emptyTextOptions' => ['tag' => 'h3', 'class' => 'text-muted'],
+        'pager'            => ['options' => ['class' => 'pagination float-right']]
+    ]);  ?>
 <?php Pjax::end(); ?>
     <br>
     <div class="row">
         <div class="col-sm-10 mx-auto">
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -70,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <div class="row">
                         <div class="col-sm-12">
                             <?php echo Html::submitButton('<span class="glyphicon glyphicon-ok-sign"></span> ' . Yii::t('podium/view', 'Move Posts'), ['class' => 'btn btn-block btn-primary', 'name' => 'save-button']); ?>

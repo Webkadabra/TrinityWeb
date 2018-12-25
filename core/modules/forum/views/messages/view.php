@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Podium Module
- * Yii 2 Forum Module
- */
-
 use core\modules\forum\helpers\Helper;
 use core\modules\forum\models\Message;
 use core\modules\forum\models\User;
@@ -34,13 +29,8 @@ $this->registerJs("var loading = false; $('.load-messages').click(function (e) {
 $loggedId = User::loggedId();
 
 ?>
-<div class="row">
-    <div class="col-md-3 col-sm-4">
-        <?php echo $this->render('/elements/profile/_navbar', ['active' => 'messages']); ?>
-    </div>
-    <div class="col-md-9 col-sm-8">
-        <?php echo $this->render('/elements/messages/_navbar', ['active' => 'view']); ?>
-        <br>
+<div class="row mt-3">
+    <div class="col-12">
         <div <?php echo Helper::replyBgd(); ?>>
             <div class="row">
                 <div class="col-sm-3 text-center">
@@ -58,33 +48,29 @@ $loggedId = User::loggedId();
                         <div class="popover-content">
                             <?php echo $model->parsedContent; ?>
                             <div class="text-right">
-<?php if ($type === 'received'): ?>
-                                <a href="<?php echo Url::to(['messages/reply', 'id' => $model->id]); ?>" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="<?php echo Yii::t('podium/view', 'Reply to Message'); ?>"><span class="glyphicon glyphicon-share-alt"></span></a>
-<?php endif; ?>
+                                <?php if ($type === 'received'): ?>
+                                    <a href="<?php echo Url::to(['messages/reply', 'id' => $model->id]); ?>" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="bottom" title="<?php echo Yii::t('podium/view', 'Reply to Message'); ?>"><span class="glyphicon glyphicon-share-alt"></span></a>
+                                <?php endif; ?>
                                 <span data-toggle="modal" data-target="#podiumModal"><button class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="bottom" title="<?php echo Yii::t('podium/view', 'Delete Message'); ?>"><span class="glyphicon glyphicon-trash"></span></button></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-<?php $stack = 0; $reply = clone $model; while ($reply->reply && $stack < 5): $more = 0; ?>
-<?php if ($reply->reply->sender_id === $loggedId && $reply->reply->sender_status === Message::STATUS_DELETED) { $reply = $reply->reply; continue; } ?>
-            <?php echo $this->render('load', ['reply' => $reply]); ?>
-<?php $reply = $reply->reply; if ($reply) { $more = $reply->id; } $stack++; endwhile; ?>
-
+            <?php $stack = 0; $reply = clone $model; while ($reply->reply && $stack < 5): $more = 0; ?>
+                <?php if ($reply->reply->sender_id === $loggedId && $reply->reply->sender_status === Message::STATUS_DELETED) { $reply = $reply->reply; continue; } ?>
+                    <?php echo $this->render('load', ['reply' => $reply]); ?>
+            <?php $reply = $reply->reply; if ($reply) { $more = $reply->id; } $stack++; endwhile; ?>
             <div id="loadedMessages"></div>
-
-<?php if (!empty($more)): ?>
-            <div class="row">
-                <div class="col-sm-12 text-right"><a href="#" data-last="<?php echo $more; ?>" class="load-messages btn btn-default"><?php echo $loadOlder; ?></a></div>
-            </div>
-<?php endif; ?>
-
+            <?php if (!empty($more)): ?>
+                <div class="row">
+                    <div class="col-sm-12 text-right"><a href="#" data-last="<?php echo $more; ?>" class="load-messages btn btn-default"><?php echo $loadOlder; ?></a></div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
-</div><br>
-
+</div>
+<br>
 <?php Modal::begin([
     'id'                   => 'podiumModal',
     'header'               => Yii::t('podium/view', 'Delete Message'),

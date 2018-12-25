@@ -7,7 +7,7 @@ use Yii;
 use yii\web\AssetBundle;
 
 /**
- * LadderAsset module assets
+ * ArmoryAsset module assets
  */
 class ArmoryAsset extends AssetBundle
 {

@@ -33,6 +33,15 @@ use yii\helpers\HtmlPurifier;
  * @property int $created_at
  * @property int $new_post_at
  * @property int $edited_post_at
+ *
+ * @property Post $firstNewNotSeen
+ * @property Post $firstEditedNotSeen
+ * @property Post $latest
+ * @property Forum $forum
+ * @property Poll $poll
+ * @property ThreadView $userView
+ * @property ThreadView[] $threadView
+ * @property Subscription $subscription
  */
 class ThreadActiveRecord extends ActiveRecord
 {
@@ -115,7 +124,7 @@ class ThreadActiveRecord extends ActiveRecord
             ['post', 'required', 'on' => ['new']],
             ['post', 'string', 'min' => 10, 'on' => ['new']],
             ['post', 'filter', 'filter' => function ($value) {
-                if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+                if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
                     return HtmlPurifier::process(trim($value), Helper::podiumPurifierConfig('markdown'));
                 }
 

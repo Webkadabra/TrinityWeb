@@ -10,6 +10,10 @@ use yii\data\ActiveDataProvider;
 
 /**
  * Forum model
+ * @property Category $category
+ * @property int $threads [int(11)]
+ * @property int $posts [int(11)]
+ * @property bool $child_allowed [tinyint(1)]
  */
 class Forum extends ForumActiveRecord
 {

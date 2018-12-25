@@ -78,7 +78,7 @@ class Subscription extends SubscriptionActiveRecord
     public static function notify($thread)
     {
         if (is_numeric($thread) && $thread > 0) {
-            $forum = Podium::getInstance()->podiumConfig->get('name');
+            $forum = Podium::getInstance()->podiumConfig->get('forum.name');
             $email = Content::fill(Content::EMAIL_SUBSCRIPTION);
             $subs = static::find()->where(['thread_id' => $thread, 'post_seen' => self::POST_SEEN]);
             foreach ($subs->each() as $sub) {

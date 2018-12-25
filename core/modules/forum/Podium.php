@@ -294,7 +294,7 @@ class Podium extends Module implements BootstrapInterface
             return null;
         }
 
-        return [$this->prepareRoute('account/login')];
+        return ['/auth/sign-in'];
     }
 
     /**
@@ -308,7 +308,7 @@ class Podium extends Module implements BootstrapInterface
             return null;
         }
 
-        return [$this->prepareRoute('account/register')];
+        return ['/auth/sign-up'];
     }
 
     /**

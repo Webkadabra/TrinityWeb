@@ -24,13 +24,13 @@ class MembersController extends BaseController
             'access' => [
                 'class'        => AccessControl::class,
                 'denyCallback' => function ($rule, $action) {
-                    return $this->redirect(['account/login']);
+                    return $this->redirect(['/auth/sign-in']);
                 },
                 'rules' => [
                     ['class' => 'core\modules\forum\filters\InstallRule'],
                     [
                         'allow' => true,
-                        'roles' => $this->module->podiumConfig->get('members_visible') ? ['@', '?'] : ['@'],
+                        'roles' => $this->module->podiumConfig->get('forum.members_visible') ? ['@', '?'] : ['@'],
                     ],
                 ],
             ],
@@ -60,6 +60,7 @@ class MembersController extends BaseController
      * Listing the active users for ajax.
      * @param string $q Username query
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionFieldlist($q = null)
     {
@@ -122,6 +123,7 @@ class MembersController extends BaseController
     /**
      * Listing the users.
      * @return string
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionIndex()
     {
@@ -136,6 +138,7 @@ class MembersController extends BaseController
     /**
      * Listing the moderation team.
      * @return string
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionMods()
     {
@@ -152,6 +155,7 @@ class MembersController extends BaseController
      * @param int $id
      * @param string $slug
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
      */
     public function actionView($id = null, $slug = null)
     {

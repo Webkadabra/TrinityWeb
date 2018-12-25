@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         . Yii::t('podium/view', 'Post Preview')
                         . '</small></strong>:<hr>'
                         . $model->parsedPost
-                        . (Podium::getInstance()->podiumConfig->get('allow_polls') ? Poll::preview($model) : null),
+                        . (Podium::getInstance()->podiumConfig->get('forum.allow_polls') ? Poll::preview($model) : null),
             'options' => ['class' => 'alert-info']
         ]); ?>
     </div>
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                         </div>
                     </div>
-<?php if (Podium::getInstance()->podiumConfig->get('allow_polls')): ?>
+<?php if (Podium::getInstance()->podiumConfig->get('forum.allow_polls')): ?>
                     <div class="row">
                         <div class="col-sm-12">
                             <?php echo Poll::create($form, $model); ?>

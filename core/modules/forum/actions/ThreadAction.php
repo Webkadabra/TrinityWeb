@@ -70,9 +70,11 @@ class ThreadAction extends Action
      * @param int $id
      * @param string $slug
      * @return Response
+     * @throws \yii\base\InvalidParamException
      */
     public function run($cid = null, $fid = null, $id = null, $slug = null)
     {
+        pre($cid,$fid,$id,$slug);
         $thread = $this->getThread($cid, $fid, $id, $slug);
         if (empty($thread)) {
             $this->controller->error(Yii::t('podium/flash', 'Sorry! We can not find the thread you are looking for.'));

@@ -161,3 +161,7 @@ input[type="checkbox"]:checked + label.checkbox-label:before {width: 10px;top: -
 .sticky-header {
     top: 81px;
 }
+.input-group-text {
+    background-color: inherit;
+    border: 1px solid #373737;
+}

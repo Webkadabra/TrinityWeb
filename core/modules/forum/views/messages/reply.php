@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Podium Module
- * Yii 2 Forum Module
- */
-
 use core\modules\forum\helpers\Helper;
 use core\modules\forum\models\Message;
 use core\modules\forum\models\User;
@@ -23,13 +18,8 @@ $this->registerJs("$('[data-toggle=\"tooltip\"]').tooltip();");
 $loggedId = User::loggedId();
 
 ?>
-<div class="row">
-    <div class="col-md-3 col-sm-4">
-        <?php echo $this->render('/elements/profile/_navbar', ['active' => 'messages']); ?>
-    </div>
-    <div class="col-md-9 col-sm-8">
-        <?php echo $this->render('/elements/messages/_navbar', ['active' => 'new']); ?>
-        <br>
+<div class="row mt-3">
+    <div class="col-12">
         <?php $form = ActiveForm::begin(['id' => 'message-form']); ?>
             <div class="row">
                 <div class="col-md-3 text-right"><p class="form-control-static"><?php echo Yii::t('podium/view', 'Send to'); ?></p></div>
@@ -76,30 +66,29 @@ $loggedId = User::loggedId();
                     </div>
                 </div>
             </div>
-
-<?php $stack = 0; while ($reply->reply && $stack < 4): ?>
-<?php if ($reply->reply->sender_id === $loggedId && $reply->reply->sender_status === Message::STATUS_DELETED) { $reply = $reply->reply; continue; } ?>
-            <div class="row">
-                <div class="col-sm-2 text-center">
-                    <div class="position-sticky sticky-header">
-                        <?php echo Avatar::widget(['author' => $reply->reply->sender]); ?>
-                    </div>
-                </div>
-                <div class="col-sm-10">
-                    <div class="popover right podium">
-                        <div class="arrow"></div>
-                        <div class="popover-title">
-                            <small class="float-right"><span data-toggle="tooltip" data-placement="top" title="<?php echo Podium::getInstance()->formatter->asDatetime($reply->reply->created_at, 'long'); ?>"><?php echo Podium::getInstance()->formatter->asRelativeTime($reply->reply->created_at); ?></span></small>
-                            <?php echo Html::encode($reply->reply->topic); ?>
+            <?php $stack = 0; while ($reply->reply && $stack < 4): ?>
+                <?php if ($reply->reply->sender_id === $loggedId && $reply->reply->sender_status === Message::STATUS_DELETED) { $reply = $reply->reply; continue; } ?>
+                    <div class="row">
+                        <div class="col-sm-2 text-center">
+                            <div class="position-sticky sticky-header">
+                                <?php echo Avatar::widget(['author' => $reply->reply->sender]); ?>
+                            </div>
                         </div>
-                        <div class="popover-content">
-                            <?php echo $reply->reply->parsedContent; ?>
+                        <div class="col-sm-10">
+                            <div class="popover right podium">
+                                <div class="arrow"></div>
+                                <div class="popover-title">
+                                    <small class="float-right"><span data-toggle="tooltip" data-placement="top" title="<?php echo Podium::getInstance()->formatter->asDatetime($reply->reply->created_at, 'long'); ?>"><?php echo Podium::getInstance()->formatter->asRelativeTime($reply->reply->created_at); ?></span></small>
+                                    <?php echo Html::encode($reply->reply->topic); ?>
+                                </div>
+                                <div class="popover-content">
+                                    <?php echo $reply->reply->parsedContent; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-<?php $reply = $reply->reply; $stack++; endwhile; ?>
+            <?php $reply = $reply->reply; $stack++; endwhile; ?>
         </div>
-
     </div>
-</div><br>
+</div>
+<br>

@@ -117,6 +117,9 @@ class ForumThreadController extends BaseController
      * @param int $id thread ID
      * @param string $slug thread slug
      * @return string|Response
+     * @throws \yii\base\InvalidArgumentException
+     * @throws \yii\base\InvalidParamException
+     * @throws \yii\db\Exception
      */
     public function actionMove($cid = null, $fid = null, $id = null, $slug = null)
     {
@@ -148,8 +151,8 @@ class ForumThreadController extends BaseController
 
                     return $this->redirect([
                         'forum/thread',
-                        'cid'  => $thread->forum->category->id,
-                        'fid'  => $thread->forum->id,
+                        'cid'  => $thread->category_id,
+                        'fid'  => $thread->forum_id,
                         'id'   => $thread->id,
                         'slug' => $thread->slug
                     ]);

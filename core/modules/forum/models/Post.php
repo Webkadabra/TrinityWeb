@@ -16,6 +16,10 @@ use yii\helpers\HtmlPurifier;
  * Post model
  *
  * @property string $parsedContent
+ * @property Thread $thread
+ * @property Forum $forum
+ * @property int $edited [smallint(6)]
+ * @property int $edited_at [int(11)]
  */
 class Post extends PostActiveRecord
 {
@@ -125,6 +129,7 @@ class Post extends PostActiveRecord
     /**
      * Marks post as seen by current user.
      * @param bool $updateCounters Whether to update view counter
+     * @throws \yii\db\Exception
      */
     public function markSeen($updateCounters = true)
     {
@@ -258,6 +263,8 @@ class Post extends PostActiveRecord
     /**
      * Performs post delete with parent forum and thread counters update.
      * @return bool
+     * @throws \Throwable
+     * @throws \yii\db\Exception
      * @since 0.2
      */
     public function podiumDelete()
@@ -268,10 +275,10 @@ class Post extends PostActiveRecord
                 throw new Exception('Post deleting error!');
             }
             $wholeThread = false;
-            if ($this->thread->postsCount) {
-                if (!$this->thread->updateCounters(['posts' => -1])) {
-                    throw new Exception('Thread Post counter subtracting error!');
-                }
+            if (!$this->thread->updateCounters(['posts' => -1])) {
+                throw new Exception('Thread Post counter subtracting error!');
+            }
+            if ($this->thread->posts) {
                 if (!$this->forum->updateCounters(['posts' => -1])) {
                     throw new Exception('Forum Post counter subtracting error!');
                 }
@@ -301,6 +308,7 @@ class Post extends PostActiveRecord
      * Performs post update with parent thread topic update in case of first post in thread.
      * @param bool $isFirstPost whether post is first in thread
      * @return bool
+     * @throws \yii\db\Exception
      * @since 0.2
      */
     public function podiumEdit($isFirstPost = false)
@@ -338,6 +346,7 @@ class Post extends PostActiveRecord
      * Depending on the settings previous post can be merged.
      * @param Post $previous previous post
      * @return bool
+     * @throws \yii\db\Exception
      * @since 0.2
      */
     public function podiumNew($previous = null)
@@ -347,9 +356,9 @@ class Post extends PostActiveRecord
             $id = null;
             $loggedId = User::loggedId();
             $sameAuthor = !empty($previous->author_id) && $previous->author_id === $loggedId;
-            if ($sameAuthor && Podium::getInstance()->podiumConfig->get('merge_posts')) {
+            if ($sameAuthor && Podium::getInstance()->podiumConfig->get('forum.merge_posts')) {
                 $separator = '<hr>';
-                if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+                if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
                     $separator = "\n\n---\n";
                 }
                 $previous->content .= $separator . $this->content;
@@ -475,7 +484,7 @@ class Post extends PostActiveRecord
      */
     public function getParsedContent()
     {
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+        if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
             $parser = new GithubMarkdown();
             $parser->html5 = true;
 

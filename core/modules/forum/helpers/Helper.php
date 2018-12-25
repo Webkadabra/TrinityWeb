@@ -147,7 +147,7 @@ class Helper
      */
     public static function prepareQuote($post, $quote = '')
     {
-        if (Podium::getInstance()->podiumConfig->get('use_wysiwyg') === '0') {
+        if (Podium::getInstance()->podiumConfig->get('forum.use_wysiwyg') === '0') {
             $content = !empty($quote) ? '[...] ' . HtmlPurifier::process($quote) . ' [...]' : $post->content;
 
             return '> ' . $post->author->podiumTag . ' @ ' . Podium::getInstance()->formatter->asDatetime($post->created_at) . "\n> " . $content . "\n";
@@ -275,7 +275,7 @@ class Helper
      */
     public static function title($title)
     {
-        return $title . ' - ' . Podium::getInstance()->podiumConfig->get('name');
+        return $title . ' - ' . Podium::getInstance()->podiumConfig->get('forum.name');
     }
 
     /**
