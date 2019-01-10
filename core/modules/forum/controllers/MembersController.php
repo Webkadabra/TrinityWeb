@@ -159,6 +159,9 @@ class MembersController extends BaseController
      */
     public function actionView($id = null, $slug = null)
     {
+        $theme = Yii::$app->view->theme->getCurrentTheme();
+        $this->layout = "@frontend/themes/$theme/modules/profile/views/layouts/main";
+
         $model = User::find()->where(['and',
                 ['id' => $id],
                 ['!=', 'status', User::STATUS_REGISTERED],
@@ -174,7 +177,7 @@ class MembersController extends BaseController
             return $this->redirect(['members/index']);
         }
 
-        return $this->render('view', ['model' => $model]);
+        return $this->render('view', ['user' => $model]);
     }
 
     /**

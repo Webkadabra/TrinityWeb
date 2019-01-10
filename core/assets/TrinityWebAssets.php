@@ -10,7 +10,10 @@ class TrinityWebAssets extends AssetBundle
     public $sourcePath = '@core/assets/resources';
     public $css = [
         'css/font-play.css',
-        'css/trinity-web.css'
+        'css/trinity-web.css',
+    ];
+    public $js = [
+        'js/soft-scroll.js',
     ];
     public $depends = [
         BootstrapAsset::class,

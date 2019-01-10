@@ -1,15 +1,15 @@
 <?php
 
-namespace frontend\modules\armory\assets;
+namespace frontend\modules\profile\assets;
 
 use frontend\assets\DefaultAsset;
 use Yii;
 use yii\web\AssetBundle;
 
 /**
- * ArmoryAsset module assets
+ * ProfileAssets module assets
  */
-class ArmoryAsset extends AssetBundle
+class ProfileAssets extends AssetBundle
 {
     /**
      * @var array
@@ -22,7 +22,7 @@ class ArmoryAsset extends AssetBundle
      * @var array
      */
     public $js = [
-        'js/armory.js',
+        'js/profile.js',
     ];
 
     /**
@@ -39,7 +39,7 @@ class ArmoryAsset extends AssetBundle
     public function init()
     {
         $theme = Yii::$app->view->theme->getCurrentTheme();
-        $this->sourcePath = rtrim(Yii::getAlias("@app/themes/$theme/modules/armory/assets/"), '/\\');
+        $this->sourcePath = rtrim(Yii::getAlias("@app/themes/$theme/modules/profile/assets/"), '/\\');
 
         if ($this->basePath !== null) {
             $this->basePath = rtrim(Yii::getAlias($this->basePath), '/\\');

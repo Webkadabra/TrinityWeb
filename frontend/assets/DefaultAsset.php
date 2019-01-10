@@ -20,5 +20,6 @@ class DefaultAsset extends BaseFrontendAsset
      * @var array
      */
     public $js = [
+        'js/app.js',
     ];
 }

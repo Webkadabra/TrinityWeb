@@ -26,9 +26,15 @@ use yii\helpers\Html;
                     <?php echo Html::a(Yii::$app->i18nHelper::getLangAttributeValue($model,'title'), ['article/view', 'slug'=>$model->slug]); ?>
                 </h2>
             <?php endif; ?>
-            <div class="article-announce">
-                <?php echo Yii::$app->i18nHelper::getLangAttributeValue($model,'announce');?>
-            </div>
+            <?php
+            if (Yii::$app->i18nHelper::getLangAttributeValue($model,'announce', Yii::$app->sourceLanguage)) {
+                ?>
+                <div class="article-announce">
+                    <?php echo Yii::$app->i18nHelper::getLangAttributeValue($model,'announce');?>
+                </div>
+                <?php
+            }
+            ?>
             <div class="article-meta">
                 <span class="article-date tltp" data-toggle="tooltip" data-placement="bottom" title="<?php echo Yii::t('frontend','Дата публикации');?>">
                     <i class="fa fa-clock"></i>&nbsp;

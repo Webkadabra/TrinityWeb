@@ -18,21 +18,6 @@ $this->title = Yii::t('podium/view', 'Moderation Team');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-<ul class="nav mr-auto">
-    <li role="presentation" class="nav-item">
-        <a href="<?php echo Url::to(['members/index']); ?>" class="nav-link">
-            <span class="glyphicon glyphicon-user"></span>
-            <?php echo Yii::t('podium/view', 'Members List'); ?>
-        </a>
-    </li>
-    <li role="presentation" class="nav-item active">
-        <a href="<?php echo Url::to(['members/mods']); ?>" class="nav-link">
-            <span class="glyphicon glyphicon-scissors"></span>
-            <?php echo Yii::t('podium/view', 'Moderation Team'); ?>
-        </a>
-    </li>
-</ul>
-<br>
 <?php echo GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,

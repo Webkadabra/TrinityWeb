@@ -25,11 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="list-group">
                 <a href="#maintenance" class="list-group-item"><?php echo Yii::t('podium/view', 'Maintenance mode'); ?></a>
                 <a href="#meta" class="list-group-item"><?php echo Yii::t('podium/view', 'Meta data'); ?></a>
-                <a href="#register" class="list-group-item"><?php echo Yii::t('podium/view', 'Registration'); ?></a>
                 <a href="#posts" class="list-group-item"><?php echo Yii::t('podium/view', 'Posts'); ?></a>
                 <a href="#guests" class="list-group-item"><?php echo Yii::t('podium/view', 'Guests privileges'); ?></a>
                 <a href="#emails" class="list-group-item"><?php echo Yii::t('podium/view', 'E-mails'); ?></a>
-                <a href="#tokens" class="list-group-item"><?php echo Yii::t('podium/view', 'Tokens'); ?></a>
                 <a href="#db" class="list-group-item"><?php echo Yii::t('podium/view', 'Database'); ?></a>
             </div>
         </div>
@@ -45,84 +43,91 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 id="maintenance"><span class="label label-primary"><?php echo Yii::t('podium/view', 'Maintenance mode'); ?></span></h3>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'maintenance_mode')->checkBox()->label(Yii::t('podium/view', 'Set forum to Maintenance mode'))
-                                ->hint(Yii::t('podium/view', 'All users without Administrator privileges will be redirected to {maintenancePage}.', ['maintenancePage' => Html::a(Yii::t('podium/view', 'Maintenance page'), ['forum/maintenance'])])); ?>
+                            <?php
+                            $field = $form->field($model, 'forum.maintenance_mode', ['options' => [
+                                'class' => 'position-relative'
+                            ]]);
+                            $field->template = '{input} {label}';
+                            echo $field->checkbox([], false)->label(Yii::t('podium/view', 'Set forum to Maintenance mode'),[
+                                'class' => 'checkbox-label'
+                            ])->hint(Yii::t('podium/view', 'All users without Administrator privileges will be redirected to {maintenancePage}.', ['maintenancePage' => Html::a(Yii::t('podium/view', 'Maintenance page'), ['forum/maintenance'])])); ?>
                         </div>
                     </div>
                     <h3 id="meta"><span class="label label-primary"><?php echo Yii::t('podium/view', 'Meta data'); ?></span></h3>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'name')->textInput()->label(Yii::t('podium/view', "Forum's Name")); ?>
+                            <?php echo $form->field($model, 'forum.name')->textInput()->label(Yii::t('podium/view', "Forum's Name")); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'meta_keywords')->textInput()->label(Yii::t('podium/view', 'Global meta keywords')); ?>
+                            <?php echo $form->field($model, 'forum.meta_keywords')->textInput()->label(Yii::t('podium/view', 'Global meta keywords')); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'meta_description')->textInput()->label(Yii::t('podium/view', 'Global meta description')); ?>
+                            <?php echo $form->field($model, 'forum.meta_description')->textInput()->label(Yii::t('podium/view', 'Global meta description')); ?>
                         </div>
                     </div>
                     <h3 id="posts"><span class="label label-primary"><?php echo Yii::t('podium/view', 'Posts'); ?></span></h3>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'hot_minimum')->textInput()->label(Yii::t('podium/view', 'Minimum number of posts for thread to become Hot')); ?>
+                            <?php echo $form->field($model, 'forum.hot_minimum')->textInput()->label(Yii::t('podium/view', 'Minimum number of posts for thread to become Hot')); ?>
                         </div>
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'merge_posts')->checkBox()->label(Yii::t('podium/view', 'Merge reply with post in case of the same author')); ?>
+                            <?php
+                            $field = $form->field($model, 'forum.merge_posts', ['options' => [
+                                'class' => 'position-relative'
+                            ]]);
+                            $field->template = '{input} {label}';
+                            echo $field->checkbox([], false)->label(Yii::t('podium/view', 'Merge reply with post in case of the same author'),[
+                                'class' => 'checkbox-label'
+                            ]);
+                            ?>
                         </div>
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'allow_polls')->checkBox()->label(Yii::t('podium/view', 'Allow polls adding')); ?>
+                            <?php
+                            $field = $form->field($model, 'forum.allow_polls', ['options' => [
+                                'class' => 'position-relative'
+                            ]]);
+                            $field->template = '{input} {label}';
+                            echo $field->checkbox([], false)->label(Yii::t('podium/view', 'Allow polls adding'),[
+                                'class' => 'checkbox-label'
+                            ]);
+                            ?>
                         </div>
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'use_wysiwyg')->checkBox()->label(Yii::t('podium/view', 'Use WYSIWYG editor'))
-                                ->hint(Yii::t('podium/view', '{WYSIWYG} stands for What You See Is What You Get and Podium uses {Quill} for this way of posting. If you would like to switch it off {CodeMirror} in {Markdown} mode will be used instead.', [
-                                    'WYSIWYG'    => Html::a('WYSIWYG', 'https://en.wikipedia.org/wiki/WYSIWYG'),
-                                    'Quill'      => Html::a('Quill', 'https://quilljs.com'),
-                                    'CodeMirror' => Html::a('CodeMirror', 'https://codemirror.net'),
-                                    'Markdown'   => Html::a('Markdown', 'https://en.wikipedia.org/wiki/Markdown')
-                                ])); ?>
+                            <?php
+                            $field = $form->field($model, 'forum.use_wysiwyg', ['options' => [
+                                'class' => 'position-relative'
+                            ]]);
+                            $field->template = '{input} {label}';
+                            echo $field->checkbox([], false)->label(Yii::t('podium/view', 'Use WYSIWYG editor'),[
+                                'class' => 'checkbox-label'
+                            ])->hint(Yii::t('podium/view', '{WYSIWYG} stands for What You See Is What You Get and Podium uses {Quill} for this way of posting. If you would like to switch it off {CodeMirror} in {Markdown} mode will be used instead.', [
+                                'WYSIWYG'    => Html::a('WYSIWYG', 'https://en.wikipedia.org/wiki/WYSIWYG'),
+                                'Quill'      => Html::a('Quill', 'https://quilljs.com'),
+                                'CodeMirror' => Html::a('CodeMirror', 'https://codemirror.net'),
+                                'Markdown'   => Html::a('Markdown', 'https://en.wikipedia.org/wiki/Markdown')
+                            ]));?>
                         </div>
                     </div>
                     <h3 id="guests"><span class="label label-primary"><?php echo Yii::t('podium/view', 'Guests privileges'); ?></span></h3>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'members_visible')->checkBox()->label(Yii::t('podium/view', 'Allow guests to list members')); ?>
+                            <?php echo $form->field($model, 'forum.members_visible')->checkBox()->label(Yii::t('podium/view', 'Allow guests to list members')); ?>
                         </div>
                     </div>
                     <h3 id="emails"><span class="label label-primary"><?php echo Yii::t('podium/view', 'E-mails'); ?></span></h3>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'from_email')->textInput()->label(Yii::t('podium/view', 'Podium "From" email address')); ?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <?php echo $form->field($model, 'from_name')->textInput()->label(Yii::t('podium/view', 'Podium "From" email name')); ?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <?php echo $form->field($model, 'max_attempts')->textInput()->label(Yii::t('podium/view', 'Maximum number of email sending attempts before giving up')); ?>
-                        </div>
-                    </div>
-                    <h3 id="tokens"><span class="label label-primary"><?php echo Yii::t('podium/view', 'Tokens'); ?></span></h3>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <?php echo $form->field($model, 'password_reset_token_expire')->textInput()->label(Yii::t('podium/view', 'Number of seconds for the Password Reset Token to expire')); ?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <?php echo $form->field($model, 'email_token_expire')->textInput()->label(Yii::t('podium/view', 'Number of seconds for the Email Change Token to expire')); ?>
+                            <?php echo $form->field($model, 'forum.max_attempts')->textInput()->label(Yii::t('podium/view', 'Maximum number of email sending attempts before giving up')); ?>
                         </div>
                     </div>
                     <h3 id="db"><span class="label label-primary"><?php echo Yii::t('podium/view', 'Database'); ?></span></h3>
                     <div class="row">
                         <div class="col-sm-12">
-                            <?php echo $form->field($model, 'version')->textInput(['readonly' => true])->label(Yii::t('podium/view', 'Database version (read only)')); ?>
+                            <?php echo $form->field($model, 'forum.version')->textInput(['readonly' => true])->label(Yii::t('podium/view', 'Database version (read only)')); ?>
                         </div>
                     </div>
                 </div>

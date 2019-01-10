@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\AccountForm;
 use backend\models\LoginForm;
+use core\models\User;
 use Intervention\Image\ImageManagerStatic;
 use trntv\filekit\actions\DeleteAction;
 use trntv\filekit\actions\UploadAction;
@@ -67,6 +68,7 @@ class SignInController extends Controller
 
     /**
      * @return string|\yii\web\Response
+     * @throws \yii\web\ForbiddenHttpException
      */
     public function actionLogin()
     {
@@ -79,7 +81,7 @@ class SignInController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-  
+
             return $this->render('login', [
                 'model' => $model
             ]);

@@ -69,7 +69,7 @@ class SetLocaleAction extends Action
         }
 
         if (!$exist) {
-            throw new InvalidArgumentException('Unacceptable locale');
+            $locale = Yii::$app->sourceLanguage;
         }
 
         $cookie = new Cookie([
@@ -82,10 +82,7 @@ class SetLocaleAction extends Action
         Yii::$app->getResponse()->getCookies()->add($cookie);
 
         if ($this->callback && $this->callback instanceof \Closure) {
-            return call_user_func_array($this->callback, [
-                $this,
-                $locale
-            ]);
+            return call_user_func($this->callback, $this, $locale);
         }
 
         return Yii::$app->response->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);

@@ -2,7 +2,6 @@
 
 namespace core\modules\forum\widgets;
 
-use cebe\gravatar\Gravatar;
 use core\modules\forum\helpers\Helper;
 use core\modules\forum\models\User;
 use Yii;
@@ -27,7 +26,7 @@ class Avatar extends Widget
 
     /**
      * Renders the image.
-     * Based on user settings the avatar can be uploaded image, Gravatar image or default one.
+     * Based on user settings the avatar can be uploaded image, default one.
      * @return string
      */
     public function run()

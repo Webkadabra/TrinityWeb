@@ -267,8 +267,10 @@ class StepController extends Controller
                                 'err'      => $err instanceof \Exception ? $err->getMessage() : null
                             ]);
                         }
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
+                        $success = false;
                         $errorMsg[$key_name] = $e->getMessage();
+                        break;
                     }
                 }
                 if(!$errorMsg) {

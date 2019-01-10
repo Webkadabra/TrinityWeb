@@ -24,13 +24,17 @@ $this->title = Yii::t('frontend', 'User Settings');
             );?>
         </div>
         <div class="col-12 col-md-8 col-lg-9">
-            <?php echo $form->field($model->getModel('profile'), 'locale')->dropDownlist(Yii::$app->i18nHelper::getIdentLocales()); ?>
-
-            <?php echo $form->field($model->getModel('profile'), 'gender')->dropDownlist([
-                UserProfile::GENDER_FEMALE => Yii::t('frontend', 'Female'),
-                UserProfile::GENDER_MALE   => Yii::t('frontend', 'Male')
-            ], ['prompt' => '']); ?>
-
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <?php echo $form->field($model->getModel('profile'), 'locale')->dropDownList(Yii::$app->i18nHelper::getIdentLocales()); ?>
+                </div>
+                <div class="col-12 col-md-6">
+                    <?php echo $form->field($model->getModel('profile'), 'gender')->dropDownList([
+                        UserProfile::GENDER_FEMALE => Yii::t('frontend', 'Female'),
+                        UserProfile::GENDER_MALE   => Yii::t('frontend', 'Male')
+                    ], ['prompt' => '']); ?>
+                </div>
+            </div>
             <?php echo $form->field($model->getModel('account'), 'email'); ?>
         </div>
     </div>

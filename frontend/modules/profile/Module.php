@@ -19,6 +19,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
     public function init()
     {
         parent::init();
+        $this->layout = 'main';
     }
 
     public function bootstrap($app)

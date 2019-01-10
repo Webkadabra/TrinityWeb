@@ -92,9 +92,8 @@ $bundle = BackendAsset::register($this);
                             'options' => ['class' => 'nav-item nav-category'],
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_TIMELINE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_DASHBOARD) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_USERS) ?
-                                    true : false,
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_DASHBOARD) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_USERS),
                         ],
                         [
                             'label'   => Yii::t('backend', 'Dashboard'),
@@ -115,7 +114,7 @@ $bundle = BackendAsset::register($this);
                             'url'     => ['/user/index'],
                             'icon'    => '<i class="fa fa-users"></i>',
                             'options' => ['class' => 'nav-item'],
-                            'active'  => (Yii::$app->controller->id === 'user'),
+                            'active'  => Yii::$app->controller->id === 'user',
                             'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_USERS)
                         ],
                         [
@@ -123,28 +122,26 @@ $bundle = BackendAsset::register($this);
                             'options' => ['class' => 'nav-item nav-category'],
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_ARTICLES) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_PAGES) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CATEGORIES) ?
-                                    true : false,
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_PAGES) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CATEGORIES),
                         ],
                         [
                             'label'   => Yii::t('backend', 'Articles'),
                             'url'     => '#',
                             'options' => ['class' => 'nav-item'],
                             'icon'    => '<i class="fa fa-archive"></i>',
-                            'active'  => (Yii::$app->controller->module->id === 'content'),
+                            'active'  => Yii::$app->controller->module->id === 'content',
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_ARTICLES) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_PAGES) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CATEGORIES) ?
-                                    true : false,
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_PAGES) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CATEGORIES),
                             'items' => [
                                 [
                                     'label'   => Yii::t('backend', 'Static pages'),
                                     'url'     => ['/content/page/index'],
                                     'icon'    => '<i class="fa fa-thumbtack"></i>',
                                     'options' => ['class' => 'nav-item'],
-                                    'active'  => (Yii::$app->controller->id === 'page'),
+                                    'active'  => Yii::$app->controller->id === 'page',
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_PAGES)
                                 ],
                                 [
@@ -152,7 +149,7 @@ $bundle = BackendAsset::register($this);
                                     'url'     => ['/content/article/index'],
                                     'options' => ['class' => 'nav-item'],
                                     'icon'    => '<i class="fa fa-file"></i>',
-                                    'active'  => (Yii::$app->controller->id === 'article'),
+                                    'active'  => Yii::$app->controller->id === 'article',
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_ARTICLES)
                                 ],
                                 [
@@ -160,7 +157,7 @@ $bundle = BackendAsset::register($this);
                                     'url'     => ['/content/category/index'],
                                     'options' => ['class' => 'nav-item'],
                                     'icon'    => '<i class="fa fa-folder-open"></i>',
-                                    'active'  => (Yii::$app->controller->id === 'category'),
+                                    'active'  => Yii::$app->controller->id === 'category',
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CATEGORIES)
                                 ],
                             ],
@@ -170,7 +167,7 @@ $bundle = BackendAsset::register($this);
                             'url'     => '#',
                             'icon'    => '<i class="fa fa-code"></i>',
                             'options' => ['class' => 'nav-item'],
-                            'active'  => (Yii::$app->controller->module->id === 'widget'),
+                            'active'  => Yii::$app->controller->module->id === 'widget',
                             'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LIST_CAROUSELS) ? true : false,
                             'items'   => [
                                 [
@@ -188,11 +185,10 @@ $bundle = BackendAsset::register($this);
                             'options' => ['class' => 'nav-item nav-category'],
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_SCAN) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_OPTIMIZE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_MANAGE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_IMPORT) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_EXPORT) ?
-                                    true : false,
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_OPTIMIZE) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_MANAGE) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_IMPORT) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_EXPORT),
                         ],
                         [
                             'label'   => Yii::t('backend', 'Translation'),
@@ -201,12 +197,11 @@ $bundle = BackendAsset::register($this);
                             'icon'    => '<i class="fa fa-language"></i>',
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_SCAN) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_OPTIMIZE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_MANAGE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_IMPORT) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_EXPORT) ?
-                                    true : false,
-                            'active' => (Yii::$app->controller->module->id === 'translatemanager'),
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_OPTIMIZE) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_MANAGE) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_IMPORT) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_GLOBAL_i18n_EXPORT),
+                            'active' => Yii::$app->controller->module->id === 'translatemanager',
                             'items'  => [
                                 [
                                     'label'   => Yii::t('language', 'List of languages'),
@@ -249,7 +244,7 @@ $bundle = BackendAsset::register($this);
                             'label'   => Yii::t('backend', 'Forum'),
                             'options' => ['class' => 'nav-item nav-category'],
                             'visible' =>
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_TO_BACKEND) ?
+                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_SETTINGS) ?
                                     true : false,
                         ],
                         [
@@ -258,9 +253,9 @@ $bundle = BackendAsset::register($this);
                             'options' => ['class' => 'nav-item'],
                             'icon'    => '<i class="fa fa-language"></i>',
                             'visible' =>
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_TO_BACKEND) ?
+                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_SETTINGS) ?
                                     true : false,
-                            'active' => (Yii::$app->controller->module->id === 'forum'),
+                            'active' => Yii::$app->controller->module->id === 'forum',
                             'items'  => [
                                 [
                                     'label'   => Yii::t('backend', 'Dashboard'),
@@ -299,27 +294,25 @@ $bundle = BackendAsset::register($this);
                             'options' => ['class' => 'nav-item nav-category'],
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ASSIGNMENT) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_PERMISSION) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_RULE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ROLE) ?
-                                    true : false,
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_PERMISSION) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_RULE) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ROLE),
                         ],
                         [
                             'label'   => Yii::t('backend', 'RBAC Rules'),
                             'icon'    => '<i class="fa fa-flag"></i>',
                             'options' => ['class' => 'nav-item'],
-                            'active'  => (Yii::$app->controller->module->id === 'rbac'),
+                            'active'  => Yii::$app->controller->module->id === 'rbac',
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ASSIGNMENT) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_PERMISSION) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_RULE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ROLE) ?
-                                    true : false,
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_PERMISSION) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_RULE) ||
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ROLE),
                             'items' => [
                                 [
                                     'label'   => Yii::t('rbac-admin','Roles'),
                                     'icon'    => '<i class="fa fa-angle-double-right"></i>',
-                                    'active'  => (\Yii::$app->controller->id === 'role'),
+                                    'active'  => \Yii::$app->controller->id === 'role',
                                     'options' => ['class' => 'nav-item'],
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ROLE),
                                     'url'     => ['/rbac/role/index'],
@@ -327,7 +320,7 @@ $bundle = BackendAsset::register($this);
                                 [
                                     'label'   => Yii::t('rbac-admin','Rules'),
                                     'icon'    => '<i class="fa fa-angle-double-right"></i>',
-                                    'active'  => (\Yii::$app->controller->id === 'rule'),
+                                    'active'  => \Yii::$app->controller->id === 'rule',
                                     'options' => ['class' => 'nav-item'],
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_RULE),
                                     'url'     => ['/rbac/rule/index'],
@@ -335,7 +328,7 @@ $bundle = BackendAsset::register($this);
                                 [
                                     'label'   => Yii::t('rbac-admin','Permissions'),
                                     'icon'    => '<i class="fa fa-angle-double-right"></i>',
-                                    'active'  => (\Yii::$app->controller->id === 'permission'),
+                                    'active'  => \Yii::$app->controller->id === 'permission',
                                     'options' => ['class' => 'nav-item'],
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_PERMISSION),
                                     'url'     => ['/rbac/permission/index'],
@@ -343,7 +336,7 @@ $bundle = BackendAsset::register($this);
                                 [
                                     'label'   => Yii::t('rbac-admin','Assignment'),
                                     'icon'    => '<i class="fa fa-angle-double-right"></i>',
-                                    'active'  => (\Yii::$app->controller->id === 'assignment'),
+                                    'active'  => \Yii::$app->controller->id === 'assignment',
                                     'options' => ['class' => 'nav-item'],
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_RBAC_ASSIGNMENT),
                                     'url'     => ['/rbac/assignment/index'],
@@ -354,11 +347,10 @@ $bundle = BackendAsset::register($this);
                             'label'   => Yii::t('backend', 'Files'),
                             'icon'    => '<i class="fa fa-th-large"></i>',
                             'options' => ['class' => 'nav-item'],
-                            'active'  => (Yii::$app->controller->module->id === 'file'),
+                            'active'  => Yii::$app->controller->module->id === 'file',
                             'visible' =>
                                 Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_STORAGE) ||
-                                Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_MANAGER) ?
-                                true : false,
+                                    Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_MANAGER),
                             'items' => [
                                 [
                                     'label'   => Yii::t('backend', 'Storage'),
@@ -366,7 +358,7 @@ $bundle = BackendAsset::register($this);
                                     'options' => ['class' => 'nav-item'],
                                     'icon'    => '<i class="fa fa-database"></i>',
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_STORAGE),
-                                    'active'  => (Yii::$app->controller->id === 'storage'),
+                                    'active'  => Yii::$app->controller->id === 'storage',
                                 ],
                                 [
                                     'label'   => Yii::t('backend', 'Manager'),
@@ -374,7 +366,7 @@ $bundle = BackendAsset::register($this);
                                     'options' => ['class' => 'nav-item'],
                                     'icon'    => '<i class="fa fa-tv"></i>',
                                     'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_MANAGER),
-                                    'active'  => (Yii::$app->controller->id === 'manager'),
+                                    'active'  => Yii::$app->controller->id === 'manager',
                                 ],
                             ],
                         ],
@@ -384,7 +376,7 @@ $bundle = BackendAsset::register($this);
                             'url'     => ['/system/cache/index'],
                             'icon'    => '<i class="fa fa-sync"></i>',
                             'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_CACHE),
-                            'active'  => (Yii::$app->controller->id === 'cache')
+                            'active'  => Yii::$app->controller->id === 'cache'
                         ],
                         [
                             'label'   => Yii::t('backend', 'System Information'),
@@ -392,7 +384,7 @@ $bundle = BackendAsset::register($this);
                             'url'     => ['/system/information/index'],
                             'icon'    => '<i class="fa fa-tachometer-alt"></i>',
                             'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_INFORMATION),
-                            'active'  => (Yii::$app->controller->id === 'information')
+                            'active'  => Yii::$app->controller->id === 'information'
                         ],
                         [
                             'label'   => Yii::t('backend', 'Application settings'),
@@ -400,7 +392,7 @@ $bundle = BackendAsset::register($this);
                             'options' => ['class' => 'nav-item'],
                             'icon'    => '<i class="fas fa-cogs"></i>',
                             'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_SETTINGS),
-                            'active'  => (Yii::$app->controller->id === 'settings')
+                            'active'  => Yii::$app->controller->id === 'settings'
                         ],
                         [
                             'label'   => Yii::t('backend', 'Logs'),
@@ -408,7 +400,7 @@ $bundle = BackendAsset::register($this);
                             'options' => ['class' => 'nav-item'],
                             'icon'    => '<i class="fa fa-exclamation-triangle"></i>',
                             'visible' => Yii::$app->user->can(Yii::$app->PermissionHelper::ACCESS_BACKEND_TO_LOGS),
-                            'active'  => (Yii::$app->controller->id === 'log')
+                            'active'  => Yii::$app->controller->id === 'log'
                         ],
                     ]
                 ]);?>

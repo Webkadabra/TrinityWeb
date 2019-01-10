@@ -71,8 +71,8 @@ class i18nHelper extends Component
             $lang = str_replace('-','_',strtolower($lang));
             if(!empty($model->{$attribute."_$lang"})) {
                 return $model->{$attribute."_$lang"};
-            }  
-                throw new NotFoundHttpException('Application cant find translation for this page');
+            }
+            return null;
         }
 
         if(!empty($model->{$attribute})) {

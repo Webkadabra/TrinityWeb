@@ -26,7 +26,7 @@ if (YII_DEBUG) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class'      => yii\debug\Module::class,
-        'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => array_merge(['127.0.0.1', '::1'],[env('ACCESS_INSTALL')]),
     ];
 }
 

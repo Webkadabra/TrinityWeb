@@ -48,3 +48,36 @@ ul.nav > li.nav-item > ul > li.nav-item > a.nav-link.active {
 #app_tabs .nav-item .nav-link:hover {
     color: #68C7B8;
 }
+.login-box .header {border: 0px;background: inherit;}
+.login-box-body {
+    border: 1px solid #191919;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.21), inset 0 0 0 1px rgba(255, 255, 255, .07);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.21), inset 0 0 0 1px rgba(255, 255, 255, .07);
+    background: #23262d;
+    padding: 18px 17px 10px 17px;
+    font-size: 14px;
+}
+.login-box-body:before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 75px;
+    right: 75px;
+    display: block;
+    height: 0;
+    border-top: 10px solid rgba(255, 255, 255, 0.14);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+.login-box-body:after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 75px;
+    right: 75px;
+    display: block;
+    height: 0;
+    border-top: 10px solid rgba(255, 255, 255, 0.14);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}

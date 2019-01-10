@@ -29,6 +29,7 @@ $config = [
             'userNameField'  => 'username',
             'layout'         => 'main-forum',
             'layoutPath'     => '@frontend/views/layouts',
+            'allowedIPs'     => [env('ACCESS_INSTALL')],
         ],
     ],
     'components' => [
